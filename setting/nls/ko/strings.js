@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "모든 레이어",
-    "title": "피처를 생성할 템플릿 선택",
+    "title": "피처를 생성할 템플릿을 선택하거나 맵에서 피처를 클릭하여 편집",
     "generalSettings": "일반 설정",
     "layerSettings": "레이어 설정",
     "webmapSettingsRadioBtnLabel": "웹 맵의 설정 적용",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "레코드 저장 시 설정 집합에서 피처를 제거하는 옵션입니다. 유일한 선택 레코드인 경우 패널이 템플릿 페이지로 다시 전환됩니다.",
     "useFilterEditor": "피처 템플릿 필터 사용",
     "useFilterEditorTip": "한 레이어의 템플릿을 확인하거나 이름별 템플릿을 검색하는 기능을 제공하는 필터 템플릿 선택기를 사용하는 옵션입니다.",
+    "groupFilteredTemplates": "검색 결과 그룹화",
+    "groupFilteredTemplatesTip": "레이어별로 검색 결과를 그룹화하는 옵션입니다.",
     "displayShapeSelector": "그리기 옵션 표시",
     "createNewFeaturesFromExisting": "사용자가 기존 피처에서 새 피처를 생성할 수 있음",
     "createNewFeaturesFromExistingTip": "사용자가 기존 피처를 복사하여 새 피처를 생성할 수 있는 옵션",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "그룹 필터 위젯의 필터 값을 프리셋 필드에 적용합니다.",
     "listenToGroupFilterTip": "필터가 그룹 필터 위젯에 적용되는 경우 값을 프리셋 값 목록에서 일치 필드에 적용합니다.",
     "keepTemplateActive": "선택한 템플릿 활성 유지",
+    "editLayerAddedFromAddData": "데이터 추가 위젯에서 편집 레이어를 추가하도록 허용",
+    "editLayerAddedFromAddDataTip": "데이터 추가 위젯을 사용하여 응용프로그램에 추가된 편집 가능한 레이어는 편집할 수 있음",
     "keepTemplateActiveTip": "템플릿이 이전에 선택된 경우에 템플릿 선택기가 표시되면 다시 선택합니다.",
     "geometryEditDefault": "기본 설정에 따라 지오메트리 편집 활성화",
     "autoSaveEdits": "자동으로 새 피처 저장",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "여러 줄 입력으로 전환 시 유효하지 않은 값",
     "featuresSelectionTolerance": "피처 선택(픽셀)에 대한 허용오차 설정",
     "featuresSelectionToleranceTooltip": "사용자가 피처를 클릭하여 패널을 편집하는 속성을 쉽게 열 수 있도록 합니다.",
-    "featuresSelectionToleranceErrorMsg": "유효하지 않은 피처 선택 허용오차 값"
+    "featuresSelectionToleranceErrorMsg": "유효하지 않은 피처 선택 허용오차 값",
+    "autoSaveAttrUpdates": "속성 업데이트를 자동으로 저장"
   },
   "editDescriptionPage": {
     "title": "<b>${layername}</b>에 대한 속성 개요 텍스트 정의 "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "속성",
     "geocoderHint": "지오코더를 변경하려면 일반 설정의 '지오코더 설정' 버튼으로 이동",
     "prevConfigruedFieldChangedMsg": "이전에 구성한 속성이 현재 지오코더 설정에 없습니다. 속성이 기본값으로 재설정되었습니다.",
-    "questionMark": "를 사용해야 합니까?"
+    "questionMark": "를 사용해야 합니까?",
+    "consumesCredits": "이 도구는 ArcGIS Online World Geocoding Service와 함께 사용할 때 크레딧을 사용합니다."
   },
   "coordinatesPage": {
     "popupTitle": "좌표",
     "checkboxLabel": "좌표 가져오기",
     "coordinatesSelectTitle": "기준 체계",
     "coordinatesAttributeTitle": "속성",
-    "mapSpatialReference": "맵 공간 참조",
-    "latlong": "위도/경도",
+    "mapSpatialReferenceOptionLabel": "맵 공간 참조",
+    "latLongOptionLabel": "위도/경도",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "해당되는 모든 그룹이 이미 생성되었음",
     "coordinatesSourceTitle": "좌표 원본",
     "featureLocation": "피처 위치",
-    "myLocation": "내 위치"
+    "myLocation": "내 위치",
+    "LatLong": {
+      "y": "위도",
+      "x": "경도",
+      "xy": "경도 위도",
+      "yx": "위도 경도"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "프리셋",

@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Todas as Camadas",
-    "title": "Selecione um modelo para criar feições",
+    "title": "Selecione um modelo para criar feições ou clique em uma feição no mapa para editá-lo",
     "generalSettings": "Configurações Gerais",
     "layerSettings": "Configurações da Camada",
     "webmapSettingsRadioBtnLabel": "Honrar configurações no mapa da web",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Opção para remover a feição do conjunto de seleção quando o registro for salvo.  Se ele for o único registro selecionado, o painel é trocado de volta para a página do modelo.",
     "useFilterEditor": "Utilizar filtro do modelo de feição",
     "useFilterEditorTip": "Opção para utilizar o seletor do Modelo de Filtro que fornece o recurso de visualizar o modelo de uma camada ou procurar modelos pelo nome.",
+    "groupFilteredTemplates": "Agrupar resultados da pesquisa",
+    "groupFilteredTemplatesTip": "Opção de agrupar resultados da pesquisa por camada.",
     "displayShapeSelector": "Mostrar opções de desenho",
     "createNewFeaturesFromExisting": "Permitir ao usuário criar novas feições a partir de feições existentes",
     "createNewFeaturesFromExistingTip": "Opção para permitir ao usuário copiar a feição existente para criar novas feições",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Aplica valores de filtro a partir do widget Filtrar Grupo para os campos Preset",
     "listenToGroupFilterTip": "Quando um filtro for aplicado no widget Filtrar Grupo, aplique o valor para um campo correspondente na lista de valor do Preset.",
     "keepTemplateActive": "Mantenha o modelo selecionado ativo",
+    "editLayerAddedFromAddData": "Permitir a edição de camadas adicionadas a partir do widget Adicionar Dados",
+    "editLayerAddedFromAddDataTip": "Camadas editáveis adicionadas ao aplicativo usando o widget Adicionar Dados podem ser editadas",
     "keepTemplateActiveTip": "Quando o seletor de modelo for exibido, se um modelo foi selecionado anteriormente, selecione-o novamente.",
     "geometryEditDefault": "Habilitar edição de geometria por padrão",
     "autoSaveEdits": "Salvar novas feições automaticamente",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Valor inválido na alternância para entrada de múltiplas linhas",
     "featuresSelectionTolerance": "Defina a tolerância para a seleção de feição (pixels)",
     "featuresSelectionToleranceTooltip": "Permite que os usuários abram facilmente o painel de edição de atributos clicando no elemento",
-    "featuresSelectionToleranceErrorMsg": "Valor de tolerância de seleção de feição inválido"
+    "featuresSelectionToleranceErrorMsg": "Valor de tolerância de seleção de feição inválido",
+    "autoSaveAttrUpdates": "Salvar atualizações de atributos automaticamente"
   },
   "editDescriptionPage": {
     "title": "Defina o texto de visão geral dos atributos para <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atributo",
     "geocoderHint": "Para alterar o geocodificador, vá até o botão 'Configurações do Geocodificador' em configurações gerais",
     "prevConfigruedFieldChangedMsg": "O atributo configurado anteriormente não é encontrado nas configurações atuais do geocodificador. O atributo foi redefinido para o padrão.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Esta ferramenta consome créditos quando utilizada com Serviços de Geocodificação Mundial do ArcGIS Online."
   },
   "coordinatesPage": {
     "popupTitle": "Coordenadas",
     "checkboxLabel": "Obter coordenadas",
     "coordinatesSelectTitle": "Sistema de Referência",
     "coordinatesAttributeTitle": "Atributo",
-    "mapSpatialReference": "Referência Espacial do Mapa",
-    "latlong": "Latitude/Longitude",
+    "mapSpatialReferenceOptionLabel": "Referência Espacial do Mapa",
+    "latLongOptionLabel": "Latitude/Longitude",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Todos os grupos possíveis já estão criados",
     "coordinatesSourceTitle": "Origem de coordenadas",
     "featureLocation": "Localização de Feição",
-    "myLocation": "Meu Local"
+    "myLocation": "Meu Local",
+    "LatLong": {
+      "y": "Latitude",
+      "x": "Longitude",
+      "xy": "Longitude Latitude",
+      "yx": "Latitude Longitude"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Ajustar",

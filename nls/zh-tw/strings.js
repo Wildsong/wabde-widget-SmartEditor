@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "智慧編輯器",
   "_featureAction_SmartEditor": "智慧編輯器",
   "noEditPrivileges": "您的帳號沒有建立或修改資料的權限。",
+  "loginPopupTitle": "登入",
+  "loginPopupMessage": "${widgetName} 需要權限和點數才能查詢和儲存地址資訊。 您是否要登入並使用此功能?",
+  "noCreditsOrPrivilegeWarningMessage": "您的帳號沒有使用 ${widgetName} 查詢和儲存地址資訊的權限和點數。 請聯絡您的組織管理員以申請權限和點數。",
+  "unableToUseLocator": "定位器無法存取。 不會執行地址屬性動作。",
+  "locatorDisabledWaning": "定位器未啟用。 請聯絡您的組織管理員以申請此功能。",
+  "noFeatureInAIWarning": "未選擇功能。 請選擇要執行編輯的功能，或按一下「取消」以返回主畫面。",
+  "noEditableLayerWarning": "您的帳號沒有建立或修改資料的權限，或此 Web 地圖不含任何可編輯圖層。",
+  "noVisibleCreateLayerWarning": "無法在目前的縮放級別下看到圖層。 放大或縮小以建立/修改圖徵。",
+  "noVisibleUpdateLayerWarning": "無法在目前的縮放級別下看到圖層。 放大或縮小以修改圖徵。",
+  "checkLayerVisibilityInWebMapWarning": "確定能在地圖上看見圖層，以建立或修改圖徵。",
+  "showSelectionInAITitle": "選擇的圖徵",
+  "showSelectionInAIMsg": "是否要在 ${widgetName} 中載入目前的選擇?",
   "widgetActive": "使用中",
   "widgetNotActive": "非使用中",
   "pressStr": "按 ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "複製圖徵",
     "createFeatures": "建立圖徽",
-    "createSingleFeature": "建立 1 個多重幾何圖徵",
+    "createSingleFeature": "建立 1 個多組件圖徵",
+    "createOneSingleFeature": "建立圖徽",
     "noFeaturesSelectedMessage": "未選擇任何圖徵",
-    "selectFeatureToCopyMessage": "請選擇要複製的圖徵。",
-    "multipleFeatureSaveWarning": "附註: 使用複製圖徵建立多個圖徵時，將立即儲存所有圖徵",
+    "selectFeatureToCopyMessage": "請選擇要複製的圖徵",
+    "multipleFeatureSaveWarning": "附註: 使用複製功能建立多個圖徵時，將立即儲存所有新圖徵",
     "copyFeatureUpdateGeometryError": "無法更新所選圖徵的幾何",
     "canNotSaveMultipleFeatureWarning": "附註: 無法使用唯一值欄位的相同值複製多個功能，請只選擇一個功能",
     "createOnlyOneMultipartFeatureWarning": "附註: 只能建立一個多組件功能"
   },
   "addingFeatureError": "在圖層上新增所選圖徵時發生錯誤。 請再試一次。",
-  "addingFeatureErrorCount": "'${copyFeatureErrorCount}’ 圖徵無法複製。",
+  "addingFeatureErrorCount": "無法複製 '${copyFeatureErrorCount}' 個圖徵。 是否要針對缺少的圖徵再試一次?",
   "selectingFeatureError": "在圖層中選擇圖徵時出錯。 請再試一次。",
   "customSelectOptionLabel": "選擇要複製的圖徵",
-  "noFeatureSelectedMessage": "未選擇任何圖徵。",
+  "noFeatureSelectedMessage": "未選擇圖徵",
   "multipleFeatureSaveMessage": "將立即儲存所有圖徵。 是否要繼續?",
   "relativeDates": {
     "dateTypeLabel": "日期類型",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "必須指定日期或時間值才能儲存預設值。",
     "customLabel": "自訂",
     "layerLabel": "圖層",
-    "domainFieldHintLabel": "所選值是編碼值網域。 將使用值 ${domainValue}"
+    "domainFieldHintLabel": "所選值是編碼值網域。 將使用值 \"${domainValue}\""
   },
   "valuePicker": {
     "popupTitle": "選擇值",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "配置 ArcGIS Maps 應用程式的相關",
     "foundNullRecordCount": "${fieldName} (找到 ${count} 筆記錄)"
   },
-  "cantLocateUserLocation": "無法確定您的位置"
+  "cantLocateUserLocation": "無法確定您的位置",
+  "tryAgainButtonLabel": "重試",
+  "copyFeatureFailedPopupTitle": "抱歉!"
 });

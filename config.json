@@ -9,6 +9,7 @@
         "removeOnSave": true,
         "useFilterEditor": false,
         "listenToGF": false,
+        "editAddDataLayers": false,
         "keepTemplateSelected": false,
         "editGeometryDefault": false,
         "autoSaveEdits": false,

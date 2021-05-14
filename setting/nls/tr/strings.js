@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Tüm Katmanlar",
-    "title": "Detay oluşturmak için şablon seç",
+    "title": "Detaylar oluşturmak için bir şablon seçin veya haritadaki bir detayı düzenlemek için detaya tıklayın",
     "generalSettings": "Genel Ayarlar",
     "layerSettings": "Katman Ayarları",
     "webmapSettingsRadioBtnLabel": "Web haritasındaki ayarları kullan",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Kayıt kaydedildiğinde detayın seçim kümesinden kaldırılması seçeneği. Bu, seçilen tek kayıt ise panel yeniden şablon sayfasına döndürülür.",
     "useFilterEditor": "Detay şablonu filtresini kullan",
     "useFilterEditorTip": "Bir katmanın şablonunu görüntüleme veya şablonları ada göre arama özelliğini sağlayan Filtre Şablonu seçiciyi kullanma seçeneği.",
+    "groupFilteredTemplates": "Arama sonuçlarını gruplandır",
+    "groupFilteredTemplatesTip": "Sonuçları katmana göre gruplandırma seçeneği.",
     "displayShapeSelector": "Çizim seçeneklerini göster",
     "createNewFeaturesFromExisting": "Kullanıcının mevcut detaylardan yeni detaylar oluşturmasına izin ver",
     "createNewFeaturesFromExistingTip": "Kullanıcının yeni detaylar oluşturma için mevcut detayı kopyalamasına olanak tanıyan seçenek",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Grup Filtresi aracından alınan filtre değerlerini Ön Ayarlı alanlara uygulama",
     "listenToGroupFilterTip": "Grup Filtresi aracında bir filtre uygulandığında, değeri Ön Ayarlı değer listesindeki eşleşen bir alana uygulayın.",
     "keepTemplateActive": "Seçilen şablonu etkin tutma",
+    "editLayerAddedFromAddData": "Veri Ekle aracından eklenen katmanları düzenlemeye izin ver",
+    "editLayerAddedFromAddDataTip": "Veri Ekle aracı kullanılarak uygulamaya eklenen düzenlenebilir katmanlar düzenlenebilirdir",
     "keepTemplateActiveTip": "Şablon seçici gösterildiğinde, daha önceden seçilmiş bir şablon varsa, bunu yeniden seçin.",
     "geometryEditDefault": "Geometri düzenlemesini varsayılan olarak etkinleştir",
     "autoSaveEdits": "Yeni detayları otomatik olarak kaydet",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Çok satırlı girdiye geçişte geçersiz değer",
     "featuresSelectionTolerance": "Detay seçimi (piksel) için toleransı ayarla",
     "featuresSelectionToleranceTooltip": "Kullanıcıların, detaya tıklayarak öznitelik düzenleme panelini kolaylıkla açmasını sağlar",
-    "featuresSelectionToleranceErrorMsg": "Geçersiz detay seçim toleransı değeri"
+    "featuresSelectionToleranceErrorMsg": "Geçersiz detay seçim toleransı değeri",
+    "autoSaveAttrUpdates": "Öznitelik güncellemelerini otomatik olarak kaydet"
   },
   "editDescriptionPage": {
     "title": "<b>${layername}</b> için öznitelik genel görünüm metnini tanımlayın "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Öznitelik",
     "geocoderHint": "Coğrafi kodlayıcıyı değiştirmek için genel ayarlarda ‘Coğrafi Kodlayıcı Ayarları’ düğmesine gidin",
     "prevConfigruedFieldChangedMsg": "Daha önce yapılandırılan öznitelik geçerli coğrafi kodlayıcı ayarlarında bulunmaz. Öznitelik, varsayılan olarak sıfırlandı.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Bu araç, ArcGIS Online World Geocoding Servisi ile kullanıldığında kredi tüketir."
   },
   "coordinatesPage": {
     "popupTitle": "Koordinatlar",
     "checkboxLabel": "Koordinatları al",
     "coordinatesSelectTitle": "Referans Sistemi",
     "coordinatesAttributeTitle": "Öznitelik",
-    "mapSpatialReference": "Harita Mekansal Referansı",
-    "latlong": "Enlem/Boylam",
+    "mapSpatialReferenceOptionLabel": "Harita Mekansal Referansı",
+    "latLongOptionLabel": "Enlem/Boylam",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Olası tüm gruplar önceden oluşturuldu",
     "coordinatesSourceTitle": "Koordinatlar Kaynağı",
     "featureLocation": "Detay Konumu",
-    "myLocation": "Konumum"
+    "myLocation": "Konumum",
+    "LatLong": {
+      "y": "Enlem",
+      "x": "Boylam",
+      "xy": "Boylam Enlem",
+      "yx": "Enlem Boylam"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Ön ayar",

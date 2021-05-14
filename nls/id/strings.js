@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Smart Editor",
   "_featureAction_SmartEditor": "Smart Editor",
   "noEditPrivileges": "Akun Anda tidak memiliki izin untuk membuat atau mengubah data.",
+  "loginPopupTitle": "Masuk",
+  "loginPopupMessage": "${widgetName} memerlukan izin dan kredit untuk mencari dan menyimpan informasi alamat. Apa Anda ingin masuk dan menggunakan kemampuan ini?",
+  "noCreditsOrPrivilegeWarningMessage": "Akun Anda tidak memiliki izin dan kredit untuk mencari serta menyimpan informasi alamat dengan ${widgetName}. Hubungilah administrator organisasi Anda untuk meminta izin dan kredit.",
+  "unableToUseLocator": "Penentu lokasi tidak dapat diakses. Tindakan atribut alamat tidak akan dijalankan.",
+  "locatorDisabledWaning": "Penanda lokasi tidak aktif. Hubungi administrator organisasi Anda untuk meminta kemampuan ini.",
+  "noFeatureInAIWarning": "Tidak ada fitur yang dipilih. Pilih fitur untuk mengedit atau klik batal untuk kembali ke layar utama.",
+  "noEditableLayerWarning": "Akun Anda tidak memiliki izin untuk membuat atau memodifikasi data, atau peta web ini tidak berisi layer yang dapat diedit.",
+  "noVisibleCreateLayerWarning": "Layer tidak dapat dilihat pada level zoom saat ini. Perbesar atau perkecil untuk membuat/memodifikasi fitur.",
+  "noVisibleUpdateLayerWarning": "Layer tidak dapat dilihat pada level zoom saat ini. Perbesar atau perkecil untuk memodifikasi fitur.",
+  "checkLayerVisibilityInWebMapWarning": "Pastikan layer dapat dilihat di peta untuk membuat atau memodifikasi fitur.",
+  "showSelectionInAITitle": "Fitur yang Dipilih",
+  "showSelectionInAIMsg": "Apa Anda ingin memuat pilihan saat ini di ${widgetName}?",
   "widgetActive": "Aktif",
   "widgetNotActive": "Tidak Aktif",
   "pressStr": "Tekan ",
@@ -62,20 +74,21 @@ define({
   "copyFeatures": {
     "title": "Salin Fitur",
     "createFeatures": "Buat Fitur",
-    "createSingleFeature": "Buat 1 Fitur Multi Geometri",
+    "createSingleFeature": "Buat 1 Fitur Multibagian",
+    "createOneSingleFeature": "Buat Fitur",
     "noFeaturesSelectedMessage": "Tidak Ada Fitur yang Dipilih",
-    "selectFeatureToCopyMessage": "Harap pilih fitur untuk disalin.",
-    "multipleFeatureSaveWarning": "Catatan: Membuat beberapa fitur menggunakan fitur salinan akan menyimpan semua fitur secara langsung",
+    "selectFeatureToCopyMessage": "Pilih fitur yang akan disalin",
+    "multipleFeatureSaveWarning": "Catatan: Membuat beberapa fitur menggunakan fungsi salin akan menyimpan semua fitur baru secara langsung",
     "copyFeatureUpdateGeometryError": "Tidak dapat memperbarui geometri fitur yang dipilih",
     "canNotSaveMultipleFeatureWarning": "Catatan: Tidak bisa menyalin beberapa fitur yang menggunakan nilai yang sama untuk kolom nilai unik, harap pilih satu fitur saja",
     "createOnlyOneMultipartFeatureWarning": "Catatan: Hanya satu fitur multi-bagian yang bisa dibuat"
   },
   "addingFeatureError": "Kesalahan saat menambahkan fitur pilihan dalam layer. Harap coba lagi.",
-  "addingFeatureErrorCount": "Fitur '${copyFeatureErrorCount}' gagal disalin.",
+  "addingFeatureErrorCount": "Fitur '${copyFeatureErrorCount}' gagal disalin. Apa Anda ingin mencoba lagi untuk fitur yang terlewat?",
   "selectingFeatureError": "Kesalahan saat memilih fitur dalam layer. Harap coba lagi.",
   "customSelectOptionLabel": "Pilih fitur untuk disalin",
-  "noFeatureSelectedMessage": "Tidak ada fitur yang dipilih.",
-  "multipleFeatureSaveMessage": "Semua fitur akan segera disimpan. Apakah Anda ingin melanjutkan?",
+  "noFeatureSelectedMessage": "Tidak ada fitur dipilih",
+  "multipleFeatureSaveMessage": "Semua fitur akan segera disimpan. Anda ingin melanjutkan?",
   "relativeDates": {
     "dateTypeLabel": "Tipe Data",
     "valueLabel": "Nilai",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Nilai untuk tanggal atau waktu harus ditetapkan untuk dapat menyimpan nilai prasetel default.",
     "customLabel": "Khusus",
     "layerLabel": "Layer",
-    "domainFieldHintLabel": "Nilai yang dipilih adalah domain nilai yang dikodekan. Nilai: ${domainValue} akan digunakan"
+    "domainFieldHintLabel": "Nilai yang dipilih adalah domain nilai yang dikodekan. Nilai: \"${domainValue}\" akan digunakan"
   },
   "valuePicker": {
     "popupTitle": "Pilih Nilai",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Kolom yang wajib diisi",
     "foundNullRecordCount": "${fieldName} (Ditemukan di ${count} rekaman)"
   },
-  "cantLocateUserLocation": "Lokasi Anda tidak dapat ditentukan"
+  "cantLocateUserLocation": "Lokasi Anda tidak dapat ditentukan",
+  "tryAgainButtonLabel": "Coba lagi",
+  "copyFeatureFailedPopupTitle": "Ups!"
 });

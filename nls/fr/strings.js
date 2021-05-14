@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Editeur intelligent",
   "_featureAction_SmartEditor": "Editeur intelligent",
   "noEditPrivileges": "Votre compte ne dispose pas des autorisations de création ou de modification des données.",
+  "loginPopupTitle": "Se connecter",
+  "loginPopupMessage": "${widgetName} requiert des autorisations et des crédits pour rechercher et stocker des informations d’adresse. Voulez-vous vous connecter pour utiliser cette fonctionnalité ?",
+  "noCreditsOrPrivilegeWarningMessage": "Votre compte ne dispose pas des autorisations et des crédits nécessaires pour rechercher et stocker des informations d’adresse à l’aide du widget ${widgetName}. Contactez l’administrateur de votre organisation pour lui demander les autorisations et les crédits.",
+  "unableToUseLocator": "Le localisateur n’est pas accessible. La ou les actions sur les attributs d’adresse ne seront pas effectuées.",
+  "locatorDisabledWaning": "Le localisateur n’est pas activé. Contactez l’administrateur de votre organisation pour lui demander cette fonctionnalité.",
+  "noFeatureInAIWarning": "Aucune entité sélectionnée. Sélectionnez une entité pour effectuer des mises à jour ou cliquez sur Annuler pour retourner à l’écran principal.",
+  "noEditableLayerWarning": "Votre compte ne dispose pas des autorisations requises pour la création ou la modification de données ou cette page Web ne contient aucune couche modifiable.",
+  "noVisibleCreateLayerWarning": "Cette ou ces couches ne sont pas visibles au niveau de zoom actuel. Effectuez un zoom avant ou arrière pour créer/modifier des entités.",
+  "noVisibleUpdateLayerWarning": "Cette ou ces couches ne sont pas visibles au niveau de zoom actuel. Effectuez un zoom avant ou arrière pour modifier des entités.",
+  "checkLayerVisibilityInWebMapWarning": "Assurez-vous que les couches sont visibles dans la carte pour créer ou modifier des entités.",
+  "showSelectionInAITitle": "Entités sélectionnées",
+  "showSelectionInAIMsg": "Voulez-vous charger la sélection actuelle dans ${widgetName} ?",
   "widgetActive": "Activé",
   "widgetNotActive": "Non activé",
   "pressStr": "Appuyez sur ",
@@ -62,20 +74,21 @@ define({
   "copyFeatures": {
     "title": "Copier des entités",
     "createFeatures": "Créer des entités",
-    "createSingleFeature": "Créer une entité à plusieurs géométries",
+    "createSingleFeature": "Créer une entité multi-parties",
+    "createOneSingleFeature": "Créer une entité",
     "noFeaturesSelectedMessage": "Aucune entité sélectionnée",
-    "selectFeatureToCopyMessage": "Sélectionnez les entités à copier.",
-    "multipleFeatureSaveWarning": "Remarque : créer plusieurs entités en les copiant enregistre toutes les entités immédiatement",
+    "selectFeatureToCopyMessage": "Sélectionnez les entités à copier",
+    "multipleFeatureSaveWarning": "Remarque : lorsque vous créez plusieurs entités à l’aide de la fonctionnalité de copie, toutes les entités sont immédiatement enregistrées",
     "copyFeatureUpdateGeometryError": "Impossible de mettre à jour la géométrie des entités sélectionnées",
     "canNotSaveMultipleFeatureWarning": "Remarque : impossible de copier plusieurs entités utilisant la même valeur pour les champs de valeur unique. Sélectionnez une seule entité.",
     "createOnlyOneMultipartFeatureWarning": "Remarque : une seule entité multi-parties peut être créée."
   },
   "addingFeatureError": "Une erreur s’est produite lors de l’ajout des entités sélectionnées dans la couche. Réessayez ultérieurement.",
-  "addingFeatureErrorCount": "Échec de la copie de '${copyFeatureErrorCount}' entités.",
+  "addingFeatureErrorCount": "Échec de la copie de '${copyFeatureErrorCount}' entité(s). Voulez-vous réessayer pour la ou les entités manquantes ?",
   "selectingFeatureError": "Une erreur s’est produite lors de la sélection d’entités dans la couche. Réessayez ultérieurement.",
   "customSelectOptionLabel": "Sélectionner les entités à copier",
-  "noFeatureSelectedMessage": "Aucune entité sélectionnée.",
-  "multipleFeatureSaveMessage": "Toutes les entités seront immédiatement enregistrées. Voulez-vous continuer ?",
+  "noFeatureSelectedMessage": "Aucune entité sélectionnée",
+  "multipleFeatureSaveMessage": "Toutes les entités seront immédiatement enregistrées. Voulez-vous continuer ?",
   "relativeDates": {
     "dateTypeLabel": "Type de date",
     "valueLabel": "Valeur",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Pour enregistrer la valeur prédéfinie par défaut, vous devez spécifier une valeur pour la date ou l’heure.",
     "customLabel": "Personnalisée",
     "layerLabel": "Couche",
-    "domainFieldHintLabel": "La valeur sélectionnée correspond à un domaine de valeurs précodées. La valeur : ${domainValue} sera utilisée"
+    "domainFieldHintLabel": "La valeur sélectionnée correspond à un domaine de valeurs précodées. La valeur \"${domainValue}\" sera utilisée."
   },
   "valuePicker": {
     "popupTitle": "Sélectionner une valeur",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Champs requis",
     "foundNullRecordCount": "${fieldName} (trouvé dans ${count} enregistrements)"
   },
-  "cantLocateUserLocation": "Impossible de déterminer votre localisation"
+  "cantLocateUserLocation": "Impossible de déterminer votre localisation",
+  "tryAgainButtonLabel": "Réessayer",
+  "copyFeatureFailedPopupTitle": "Désolés !"
 });

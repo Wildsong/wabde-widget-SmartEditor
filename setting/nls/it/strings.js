@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Tutti i layer",
-    "title": "Selezionare un modello per creare le feature",
+    "title": "Selezionare un modello per creare le feature o fare clic su una feature sulla mappa per modificarla",
     "generalSettings": "Impostazioni generali",
     "layerSettings": "Impostazioni layer",
     "webmapSettingsRadioBtnLabel": "Rispettare le impostazioni nella mappa Web",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Opzione per rimuovere la feature dalla selezione impostata quando il record viene salvato. Se è il solo record selezionato, il pannello viene riportato alla pagina del modello.",
     "useFilterEditor": "Utilizza filtro modello di feature",
     "useFilterEditorTip": "Opzione per utilizzare il selettore Filtra Template, che consente di visualizzare il template di un layer o di cercare template in base al nome.",
+    "groupFilteredTemplates": "Raggruppare i risultati della ricerca",
+    "groupFilteredTemplatesTip": "Possibilità di raggruppare i risultati della ricerca per layer.",
     "displayShapeSelector": "Mostra opzioni del disegno",
     "createNewFeaturesFromExisting": "Consenti all'utente di creare nuove feature da feature esistenti",
     "createNewFeaturesFromExistingTip": "Opzione per consentire all'utente di copiare la feature esistente per creare nuove feature",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Applica valori ai filtri dal widget Filtro gruppo ai campi preimpostati",
     "listenToGroupFilterTip": "Quando un filtro viene applicato nel widget Filtro gruppo, applicare il valore a un campo corrispondente nell'elenco dei valori preimpostati.",
     "keepTemplateActive": "Mantieni attivo il modello selezionato",
+    "editLayerAddedFromAddData": "Consentire la modifica dei layer aggiunti dal widget Aggiungi dati",
+    "editLayerAddedFromAddDataTip": "I layer modificabili aggiunti all'applicazione utilizzando il widget Aggiungi dati possono essere modificati",
     "keepTemplateActiveTip": "Quando viene visualizzato il selettore dei modelli, se un modello è stato selezionato in precedenza, selezionarlo nuovamente.",
     "geometryEditDefault": "Abilita la modifica della geometria per impostazione predefinita",
     "autoSaveEdits": "Salva automaticamente nuove feature",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Valore non valido nel passare all'input multilineare",
     "featuresSelectionTolerance": "Impostare la tolleranza per la selezione della feature (pixel)",
     "featuresSelectionToleranceTooltip": "Consente agli utenti di aprire facilmente il pannello di modifica attributo facendo clic sulla feature",
-    "featuresSelectionToleranceErrorMsg": "Valore di tolleranza selezione feature non valido"
+    "featuresSelectionToleranceErrorMsg": "Valore di tolleranza selezione feature non valido",
+    "autoSaveAttrUpdates": "Salvare gli aggiornamenti attributo automaticamente."
   },
   "editDescriptionPage": {
     "title": "Definire il testo panoramica attributo per <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Attributo",
     "geocoderHint": "Per modificare la configurazione del Geocoder, usare il pulsante “Impostazioni Geocoder” nelle impostazioni generali",
     "prevConfigruedFieldChangedMsg": "L'attributo previamente configurato non è stato trovato nelle impostazioni correnti del geocoder. L'attributo è stato ripristinato al valore predefinito.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Questo strumento consuma crediti quando viene utilizzato con il servizio di geocodifica mondiale ArcGIS Online."
   },
   "coordinatesPage": {
     "popupTitle": "Coordinate",
     "checkboxLabel": "Ottieni coordinate",
     "coordinatesSelectTitle": "Sistema di Riferimento",
     "coordinatesAttributeTitle": "Attributo",
-    "mapSpatialReference": "Riferimento spaziale della mappa",
-    "latlong": "Latitudine/Longitudine",
+    "mapSpatialReferenceOptionLabel": "Riferimento spaziale della mappa",
+    "latLongOptionLabel": "Latitudine/Longitudine",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Tutti i gruppi possibili sono già stati creati",
     "coordinatesSourceTitle": "Origine coordinate",
     "featureLocation": "Posizione feature",
-    "myLocation": "Posizione"
+    "myLocation": "Posizione",
+    "LatLong": {
+      "y": "Latitudine",
+      "x": "Longitudine",
+      "xy": "Longitudine Latitudine",
+      "yx": "Latitudine Longitudine"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Preimpostato",

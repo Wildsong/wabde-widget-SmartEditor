@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Alle Layer",
-    "title": "Vorlage zur Feature-Erstellung auswählen",
+    "title": "Wählen Sie eine Vorlage aus, um Features zu erstellen, oder klicken Sie auf ein Feature auf der Karte, um es zu bearbeiten.",
     "generalSettings": "Allgemeine Einstellungen",
     "layerSettings": "Layer-Einstellungen",
     "webmapSettingsRadioBtnLabel": "Einstellungen in der Webkarte berücksichtigen",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Option zum Entfernen des Features aus dem Auswahlsatz, wenn der Datensatz gespeichert wird.  Wenn dies der einzige ausgewählte Datensatz ist, wechselt der Bereich zurück zur Vorlagenseite.",
     "useFilterEditor": "Feature-Vorlagenfilter verwenden",
     "useFilterEditorTip": "Option zum Verwenden der Filtervorlagenauswahl, die es ermöglicht, die Vorlage eines Layers anzuzeigen oder Vorlagen nach Name zu suchen.",
+    "groupFilteredTemplates": "Suchergebnisse gruppieren",
+    "groupFilteredTemplatesTip": "Option zum Gruppieren von Suchergebnissen nach Layer.",
     "displayShapeSelector": "Darstellungsoptionen anzeigen",
     "createNewFeaturesFromExisting": "Erstellen von neuen Features aus vorhandenen Features zulassen",
     "createNewFeaturesFromExistingTip": "Option, mit der das Kopieren von vorhandenen Features zugelassen wird, um neue Features zu erstellen",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Filterwerte aus dem Widget \"Gruppenfilter\" auf voreingestellte Felder anwenden",
     "listenToGroupFilterTip": "Wenn ein Filter im Widget \"Gruppenfilter\" angewendet wird, wird der Wert auf ein übereinstimmendes Feld in der Liste der voreingestellten Werte angewendet.",
     "keepTemplateActive": "Ausgewählte Vorlage aktiviert lassen",
+    "editLayerAddedFromAddData": "Bearbeiten von über das Widget \"Daten hinzufügen\" hinzugefügten Layern zulassen",
+    "editLayerAddedFromAddDataTip": "Editierbare Layer, die der Anwendung mit dem Widget \"Daten hinzufügen\" hinzugefügt wurden, können bearbeitet werden.",
     "keepTemplateActiveTip": "Wenn die Vorlagenauswahl angezeigt wird, wird die zuvor ausgewählte Vorlage erneut ausgewählt.",
     "geometryEditDefault": "Geometriebearbeitung standardmäßig aktivieren",
     "autoSaveEdits": "Neue Features automatisch speichern",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Ungültiger Wert beim Wechsel zu mehrzeiliger Eingabe",
     "featuresSelectionTolerance": "Toleranz für die Feature-Auswahl festlegen (Pixel)",
     "featuresSelectionToleranceTooltip": "Durch einen Klick auf das Feature können Benutzer das Fenster zum Bearbeiten von Attributen problemlos öffnen.",
-    "featuresSelectionToleranceErrorMsg": "Ungültiger Toleranzwert für die Feature-Auswahl"
+    "featuresSelectionToleranceErrorMsg": "Ungültiger Toleranzwert für die Feature-Auswahl",
+    "autoSaveAttrUpdates": "Attributaktualisierungen automatisch speichern"
   },
   "editDescriptionPage": {
     "title": "Übersichtstext für <b>${layername}</b> definieren "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Attribut",
     "geocoderHint": "Wechseln Sie zum Ändern des Geocoders unter 'Allgemeine Einstellungen' zur Schaltfläche 'Geocoder-Einstellungen'.",
     "prevConfigruedFieldChangedMsg": "Zuvor konfiguriertes Attribut wurde in den aktuellen Geocoder-Einstellungen nicht gefunden. Attribut wurde auf den Standardwert zurückgesetzt.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Dieses Werkzeug verbraucht Credits, wenn es mit dem ArcGIS Online World Geocoding Service verwendet wird."
   },
   "coordinatesPage": {
     "popupTitle": "Koordinaten",
     "checkboxLabel": "Koordinaten abrufen",
     "coordinatesSelectTitle": "Bezugssystem",
     "coordinatesAttributeTitle": "Attribut",
-    "mapSpatialReference": "Raumbezug der Karte",
-    "latlong": "Breitengrad/Längengrad",
+    "mapSpatialReferenceOptionLabel": "Raumbezug der Karte",
+    "latLongOptionLabel": "Breitengrad/Längengrad",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Alle möglichen Gruppen werden bereits erstellt",
     "coordinatesSourceTitle": "Koordinatenquelle",
     "featureLocation": "Feature-Position",
-    "myLocation": "Eigene Position"
+    "myLocation": "Eigene Position",
+    "LatLong": {
+      "y": "Breitengrad",
+      "x": "Längengrad",
+      "xy": "Längengrad Breitengrad",
+      "yx": "Breitengrad Längengrad"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Voreinstellung",

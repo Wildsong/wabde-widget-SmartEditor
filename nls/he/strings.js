@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "עורך חכם",
   "_featureAction_SmartEditor": "עורך חכם",
   "noEditPrivileges": "לחשבונך אין הרשאות ליצור נתונים או לשנות אותם.",
+  "loginPopupTitle": "היכנס",
+  "loginPopupMessage": "${widgetName} מחייב הרשאות וקרדיטים לצורך חיפוש ואחסון של פרטי כתובת. האם ברצונך להיכנס ולהשתמש ביכולת זו?",
+  "noCreditsOrPrivilegeWarningMessage": "לחשבונך אין הרשאות וקרדיטים לחיפוש ואחסון של פרטי כתובת באמצעות ${widgetName}. פנה למנהל המערכת בארגון שלך ובקש הרשאות וקרדיטים.",
+  "unableToUseLocator": "מגדיר עיגון הכתובות לא נגיש. הפעולות על מאפייני הכתובת לא יתבצעו.",
+  "locatorDisabledWaning": "מגדיר עיגון הכתובות לא מופעל. פנה למנהל המערכת בארגון שלך ובקש יכולת זו.",
+  "noFeatureInAIWarning": "לא נבחרו ישויות. בחר ישות כדי לבצע פעולות עריכה או לחץ על ביטול כדי לחזור למסך הראשי.",
+  "noEditableLayerWarning": "לחשבונך אין הרשאה ליצור או לשנות נתונים, או שמפת ווב זו לא מכילה שכבות הניתנות לעריכה.",
+  "noVisibleCreateLayerWarning": "השכבות לא נראות ברמת זום זו. הגדל או הקטן את רמת הזום כדי ליצור/לשנות ישויות.",
+  "noVisibleUpdateLayerWarning": "השכבות לא נראות ברמת זום זו. הגדל או הקטן את רמת הזום כדי לשנות ישויות.",
+  "checkLayerVisibilityInWebMapWarning": "כדי ליצור או לשנות ישויות, ודא שהשכבות נראות במפה.",
+  "showSelectionInAITitle": "ישויות נבחרות",
+  "showSelectionInAIMsg": "האם ברצונך לטעון את הבחירה הנוכחית ב-${widgetName}?",
   "widgetActive": "פעיל",
   "widgetNotActive": "לא פעיל",
   "pressStr": "לחץ ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "העתק ישויות",
     "createFeatures": "צור ישויות",
-    "createSingleFeature": "צור ישות מרובת-גיאומטריות אחת",
+    "createSingleFeature": "צור ישות מרובת-חלקים אחת",
+    "createOneSingleFeature": "צור ישות",
     "noFeaturesSelectedMessage": "לא נבחרו ישויות",
-    "selectFeatureToCopyMessage": "בחר ישויות להעתקה.",
-    "multipleFeatureSaveWarning": "הערה: יצירת ישויות מרובות תוך שימוש בהעתקת ישות תשמור את כל הישויות מיד",
+    "selectFeatureToCopyMessage": "בחר ישויות להעתקה",
+    "multipleFeatureSaveWarning": "הערה: יצירת ישויות מרובות באמצעות פונקציונליות ההעתקה תביא לשמירה של כל הישויות החדשות באופן מיידי",
     "copyFeatureUpdateGeometryError": "לא ניתן לעדכן את הגיאומטריה של הישויות שנבחרו",
     "canNotSaveMultipleFeatureWarning": "הערה: אין אפשרות להעתיק ישויות מרובות באמצעות אותו ערך לשדות שדורשים ערכים ייחודיים, יש לבחור רק ישות אחת",
     "createOnlyOneMultipartFeatureWarning": "הערה: אפשר ליצור רק ישות אחת מרובת חלקים"
   },
   "addingFeatureError": "שגיאה בהוספת ישויות שנבחרו למפה. נסה שוב.",
-  "addingFeatureErrorCount": "העתקה של ישויות '${copyFeatureErrorCount}' נכשלה.",
+  "addingFeatureErrorCount": "העתקה של ישויות '${copyFeatureErrorCount}' נכשלה. האם ברצונך לנסות שוב עבור הישויות החסרות?",
   "selectingFeatureError": "שגיאה בעת בחירת ישויות במפה. נסה שוב.",
   "customSelectOptionLabel": "בחר ישויות להעתקה",
-  "noFeatureSelectedMessage": "לא נבחרו ישויות.",
+  "noFeatureSelectedMessage": "לא נבחרו ישויות",
   "multipleFeatureSaveMessage": "כל הישויות יישמרו מיד. האם ברצונך להמשיך?",
   "relativeDates": {
     "dateTypeLabel": "סוג תאריך",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "חובה לציין ערך עבור תאריך או שעה כדי שניתן יהיה לשמור את ערך ברירת המחדל הקבוע מראש.",
     "customLabel": "מותאם אישית",
     "layerLabel": "שכבה",
-    "domainFieldHintLabel": "הערך שנבחר הוא דומיין של ערכים מקודדים. ייעשה שימוש בערך: ${domainValue}"
+    "domainFieldHintLabel": "הערך שנבחר הוא דומיין של ערכים מקודדים. ייעשה שימוש בערך: '${domainValue}'"
   },
   "valuePicker": {
     "popupTitle": "בחר ערך",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "שדות נדרשים",
     "foundNullRecordCount": "${fieldName} (נמצא ב-${count} רשומות)"
   },
-  "cantLocateUserLocation": "לא ניתן לקבוע את מיקומך"
+  "cantLocateUserLocation": "לא ניתן לקבוע את מיקומך",
+  "tryAgainButtonLabel": "נסה שוב",
+  "copyFeatureFailedPopupTitle": "אופס!"
 });

@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "すべてのレイヤー",
-    "title": "作成するフィーチャのテンプレートを選択",
+    "title": "テンプレートを選択してフィーチャを作成するか、マップ上のフィーチャをクリックしてそれを編集します",
     "generalSettings": "一般設定",
     "layerSettings": "レイヤー設定",
     "webmapSettingsRadioBtnLabel": "Web マップでの設定の適用",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "レコードを保存するときにフィーチャを選択セットから削除するオプション。そのレコードが、選択されている唯一のレコードである場合、パネルはテンプレート ページに切り替わります。",
     "useFilterEditor": "フィーチャ テンプレート フィルターの使用",
     "useFilterEditorTip": "1 つのレイヤー テンプレートを表示したり、テンプレートを名前で検索するための機能を提供する [フィルター テンプレート] ピッカーを使用するオプション。",
+    "groupFilteredTemplates": "検索結果のグループ",
+    "groupFilteredTemplatesTip": "レイヤーごとに検索結果をグループ化するためのオプションです。",
     "displayShapeSelector": "描画オプションの表示",
     "createNewFeaturesFromExisting": "ユーザーが既存のフィーチャから新しいフィーチャを作成できるようにします",
     "createNewFeaturesFromExistingTip": "ユーザーが既存のフィーチャをコピーして新しいフィーチャを作成できるようにするオプション",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "グループ フィルター ウィジェットのフィルター値を設定済みのフィールドに適用",
     "listenToGroupFilterTip": "グループ フィルター ウィジェットでフィルターが適用される場合は、設定済みの値のリスト内で一致するフィールドにその値を適用します。",
     "keepTemplateActive": "選択したテンプレートをアクティブのままにする",
+    "editLayerAddedFromAddData": "[データの追加] ウィジェットから追加されたレイヤーの編集を許可する",
+    "editLayerAddedFromAddDataTip": "[データの追加] ウィジェットを使ってアプリケーションに追加された編集可能なレイヤーは編集できます",
     "keepTemplateActiveTip": "テンプレート ピッカーが表示されたときに、テンプレートが前回選択されている場合は、そのテンプレートを再選択します。",
     "geometryEditDefault": "デフォルトでジオメトリの編集を有効化",
     "autoSaveEdits": "自動的に新しいフィーチャを保存",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "複数行の入力への切り替えの値が無効です",
     "featuresSelectionTolerance": "フィーチャ選択の許容値の設定 (ピクセル単位)",
     "featuresSelectionToleranceTooltip": "フィーチャをクリックすると、属性編集パネルを簡単に開くことができます。",
-    "featuresSelectionToleranceErrorMsg": "無効なフィーチャ選択の許容値"
+    "featuresSelectionToleranceErrorMsg": "無効なフィーチャ選択の許容値",
+    "autoSaveAttrUpdates": "属性の更新を自動的に保存"
   },
   "editDescriptionPage": {
     "title": "<b>${layername}</b> の属性概要テキストの定義 "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "属性",
     "geocoderHint": "ジオコーダーを変更するには、一般設定の [ジオコーダーの設定] ボタンに移動します。",
     "prevConfigruedFieldChangedMsg": "以前に構成した属性が現在のジオコーダー設定に見つかりません。 属性がデフォルトにリセットされました。",
-    "questionMark": "？"
+    "questionMark": "？",
+    "consumesCredits": "このツールは、ArcGIS Online World Geocoding Service で使用するときにクレジットを消費します"
   },
   "coordinatesPage": {
     "popupTitle": "座標",
     "checkboxLabel": "座標の取得",
     "coordinatesSelectTitle": "参照系",
     "coordinatesAttributeTitle": "属性",
-    "mapSpatialReference": "マップの空間参照",
-    "latlong": "緯度/経度",
+    "mapSpatialReferenceOptionLabel": "マップの空間参照",
+    "latLongOptionLabel": "緯度/経度",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "可能なすべてのグループがすでに作成されています",
     "coordinatesSourceTitle": "座標ソース",
     "featureLocation": "フィーチャの場所",
-    "myLocation": "現在地"
+    "myLocation": "現在地",
+    "LatLong": {
+      "y": "緯度",
+      "x": "経度",
+      "xy": "経度と緯度",
+      "yx": "緯度と経度"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "プリセット",

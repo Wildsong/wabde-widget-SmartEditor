@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Išmanusis redaktorius",
   "_featureAction_SmartEditor": "Išmanusis redaktorius",
   "noEditPrivileges": "Jūsų paskyra neturi teisės kurti arba modifikuoti duomenų.",
+  "loginPopupTitle": "Prisijungti",
+  "loginPopupMessage": "Norint peržiūrėti ir saugoti adresų informaciją, ${widgetName} reikia teisių ir kreditų. Ar norite prisijungti ir šia galimybe pasinaudoti?",
+  "noCreditsOrPrivilegeWarningMessage": "Jūsų paskyra neturi teisių ir kreditų ieškoti adresų informacijos ir ją saugoti naudojant ${widgetName}. Norėdami paprašyti teisių ir kreditų, susisiekite su savo organizacijos administratoriumi.",
+  "unableToUseLocator": "Lokatorius nepasiekiamas. Adreso atributo veiksmas (-ai) nebus atliekamas (-i).",
+  "locatorDisabledWaning": "Lokatorius neaktyvuotas. Norėdami paprašyti šios funkcijos, susisiekite su savo organizacijos administratoriumi.",
+  "noFeatureInAIWarning": "Nepasirinkti joks (-ie) elementas (-ai). Pasirinkite elementą atlikti redagavimus arba spustelėkite Atšaukti, jei norite grįžti į pagrindinį ekraną.",
+  "noEditableLayerWarning": "Jūsų paskyra nesuteikia teisės kurti ar modifikuoti duomenis arba šiame internetiniame žemėlapyje nėra jokių redaguojamų sluoksnių.",
+  "noVisibleCreateLayerWarning": "Tokiu masteliu sluoksnis (-iai) nerodomi. Norėdami sukurti/modifikuoti elementus, padidinkite ar sumažinkite mastelį.",
+  "noVisibleUpdateLayerWarning": "Tokiu masteliu sluoksnis (-iai) nerodomi. Norėdami modifikuoti elementus, padidinkite ar sumažinkite mastelį.",
+  "checkLayerVisibilityInWebMapWarning": "Kuriant ar modifikuojant elementus, sluoksniai žemėlapyje turi būti rodomi.",
+  "showSelectionInAITitle": "Pažymėti elementai",
+  "showSelectionInAIMsg": "Ar norite dabartinį pasirinkimą įkelti į ${widgetName}?",
   "widgetActive": "Aktyvus",
   "widgetNotActive": "Neaktyvus",
   "pressStr": "Paspauskite ",
@@ -62,20 +74,21 @@ define({
   "copyFeatures": {
     "title": "Kopijuoti elementus",
     "createFeatures": "Kurti elementus",
-    "createSingleFeature": "Kurti 1 kelių geometrijų elementą",
+    "createSingleFeature": "Kurti 1 kelių dalių elementą",
+    "createOneSingleFeature": "Kurti elementą",
     "noFeaturesSelectedMessage": "Pasirinktų elementų nėra",
-    "selectFeatureToCopyMessage": "Pasirinkite norimus kopijuoti elementus.",
-    "multipleFeatureSaveWarning": "Pastaba: kuriant kelių dalių elementus kopijuojant elementą išsaugos visus elementus iš karto",
+    "selectFeatureToCopyMessage": "Pasirinkite norimus kopijuoti elementus",
+    "multipleFeatureSaveWarning": "Pastaba: kuriant kelis elementus naudojantis kopijavimo galimybe visi nauji elementai bus įrašyti iš karto",
     "copyFeatureUpdateGeometryError": "Pasirinktų elementų geometrijos atnaujinti nepavyko",
     "canNotSaveMultipleFeatureWarning": "Pastaba: negalima kopijuoti kelis elementus, naudojančius tą pačią reikšmę unikalių reikšmių laukams, pasirinkite tik vieną elementą",
     "createOnlyOneMultipartFeatureWarning": "Pastaba: galima sukurti tik vieną kelių dalių elementą"
   },
   "addingFeatureError": "Sluoksnyje pridedant pasirinktus elementus įvyko klaida. Pabandykite dar kartą.",
-  "addingFeatureErrorCount": "Nepavyko nukopijuoti elementų: '${copyFeatureErrorCount}'.",
+  "addingFeatureErrorCount": "Nepavyko nukopijuoti „${copyFeatureErrorCount}“ elemento (-ų). Ar su trūkstamu (-ais) elementu (-ais) norite bandyti dar kartą?",
   "selectingFeatureError": "Sluoksnyje pasirenkant elementus įvyko klaida. Pabandykite dar kartą.",
   "customSelectOptionLabel": "Pasirinkite norimus kopijuoti elementus",
-  "noFeatureSelectedMessage": "Pasirinktų elementų nėra.",
-  "multipleFeatureSaveMessage": "Visi elementai bus iš karto įrašyti. Norite tęsti?",
+  "noFeatureSelectedMessage": "Nepasirinkti jokie elementai",
+  "multipleFeatureSaveMessage": "Visi elementai bus iš karto įrašyti. Ar norite tęsti?",
   "relativeDates": {
     "dateTypeLabel": "Datos tipas",
     "valueLabel": "Reikšmė",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Kad galėtumėte įrašyti numatytąją iš anksto nustatytą reikšmę, turi būti nurodyti datos ir laiko reikšmę.",
     "customLabel": "Adaptuotas",
     "layerLabel": "Sluoksnis",
-    "domainFieldHintLabel": "Pasirinkta reikšmė yra koduotos reikšmės domenas. Reikšmė: bus naudojama ${domainValue}"
+    "domainFieldHintLabel": "Pasirinkta reikšmė yra koduotos reikšmės domenas. Reikšmė: bus naudojama „${domainValue}“"
   },
   "valuePicker": {
     "popupTitle": "Pasirinkti reikšmę",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Būtini laukai",
     "foundNullRecordCount": "${fieldName} (rasta ${count} įrašuose)"
   },
-  "cantLocateUserLocation": "Nepavyko nustatyti jūsų padėties"
+  "cantLocateUserLocation": "Nepavyko nustatyti jūsų padėties",
+  "tryAgainButtonLabel": "Bandykite iš naujo",
+  "copyFeatureFailedPopupTitle": "Oi!"
 });

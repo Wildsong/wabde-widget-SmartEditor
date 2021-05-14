@@ -20,10 +20,11 @@ define([
   "dojo/_base/array",
   "dojo/dom-construct",
   "dijit/_TemplatedMixin",
-  "dijit/_WidgetBase"
+  "dijit/_WidgetBase",
+  'jimu/utils'
 ],
   function (declare, lang, array, domConstruct,
-            _TemplatedMixin, _WidgetBase) {
+            _TemplatedMixin, _WidgetBase, utils) {
     return declare([_WidgetBase, _TemplatedMixin], {
       name: "SEFilterEditor",
       baseClass: "jimu-widget-sefilterEditor",
@@ -35,6 +36,7 @@ define([
       map: null,
       nls: null,
       _origGetItemsFromLayerFunc: null,
+      gpFilterTemplates:false,
 
       postCreate: function () {
         this._createFilterTool();
@@ -74,7 +76,7 @@ define([
       _loadTemplates: function () {
         var selectedValue = (this.selectDropDown.value === this.nls.filterEditor.all ||
           this.selectDropDown.value === "") ? null : this.selectDropDown.value;
-        var filterText = this.filterTextBox.value;
+        var filterText = utils.sanitizeHTML(this.filterTextBox.value);
         var selectedValueExist = false;
         this.removeOptions(this.selectDropDown);
         var optionAll = domConstruct.create("option", {
@@ -133,7 +135,7 @@ define([
         this._templatePicker._getItemsFromLayer = lang.hitch(this, function () {
           var items;
           items = this._origGetItemsFromLayerFunc.apply(this._templatePicker, arguments);
-          var filterText = this.filterTextBox.value;
+          var filterText = utils.sanitizeHTML(this.filterTextBox.value);
           if (filterText) {
             items = array.filter(items, function (item) {
               var match = false;
@@ -158,11 +160,14 @@ define([
                 }
               }
               return match;
-            });
+            }, filterText);
           }
-
           if (items.length === 0) {
             this._templatePicker.grid.noDataMessage =
+              this.nls.filterEditor.noAvailableTempaltes;
+            this._templatePicker.grid.params.noDataMessage =
+              this.nls.filterEditor.noAvailableTempaltes;
+            this._templatePicker.grid.messagesNode.innerText  =
               this.nls.filterEditor.noAvailableTempaltes;
           }
           return items;
@@ -176,16 +181,15 @@ define([
        **/
       _onLayerFilterChanged: function () {
         // Clear any selections from previous selection
+        var has_layers = true;
         this._templatePicker.clearSelection();
         var val = this.selectDropDown.options[this.selectDropDown.selectedIndex].text;
         if (val !== "") {
           if (val === this.nls.filterEditor.all) {
-            var visLayers = array.filter(this._layers, function (layer) {
-              return (layer.visible === true && layer.visibleAtMapScale === true);
-            });
-            this._templatePicker.attr("featureLayers",
-                                visLayers);
-            if (this.filterTextBox.value === "") {
+            var filt_layers = this._filter_layers(utils.sanitizeHTML(this.filterTextBox.value));
+            has_layers = filt_layers.length !== 0;
+            this._templatePicker.attr("featureLayers", filt_layers);
+            if (this.gpFilterTemplates === true) {
               this._templatePicker.attr("grouping", true);
             }
             else {
@@ -197,18 +201,96 @@ define([
             this._templatePicker.attr("grouping", false);
           }
           this._templatePicker.update();
+          if (!has_layers) {
+            this._templatePicker.grid.messagesNode.innerText = this.nls.filterEditor.noAvailableTempaltes;
+          }
         }
       },
-
+      _filter_layers:function(filterText){
+        var layer_w_templates = array.filter(this._layers, lang.hitch(this, function (layer) {
+          if (layer.visible === false || layer.visibleAtMapScale === false){
+            return false;
+          }
+          if (filterText === ""){
+            return true;
+          }
+          var template_items = array.filter(layer.templates, function (item) {
+            var match = false;
+            var regex = new RegExp(filterText, "ig");
+            // Search using item label
+            if (item.hasOwnProperty("name")) {
+              if (item.name.match(regex)) {
+                if (item.name.match(regex).length > 0) {
+                  match = true;
+                }
+              }
+            }
+            return match;
+          }, filterText);
+          type_items = array.filter(layer.types, function (item) {
+            var sub_items = array.filter(item.templates, function (templates_in_item) {
+              var match = false;
+              var regex = new RegExp(filterText, "ig");
+              // Search using item label
+              if (templates_in_item.hasOwnProperty("name")) {
+                if (templates_in_item.name.match(regex)) {
+                  if (templates_in_item.name.match(regex).length > 0) {
+                    match = true;
+                  }
+                }
+              }
+              return match;
+            }, filterText);
+            return sub_items.length > 0;
+          }, filterText);
+          return type_items.length > 0 || template_items.length > 0;
+        }));
+        return layer_w_templates;
+      },
       _onTemplateFilterChanged: function () {
         var val = this.selectDropDown.options[this.selectDropDown.selectedIndex].text;
-        var filterText = this.filterTextBox.value;
-        if (val === this.nls.filterEditor.all && filterText === "") {
-          this._templatePicker.attr("grouping", true);
-        } else {
+        var filterText = utils.sanitizeHTML(this.filterTextBox.value);
+        var has_layers = true;
+        if (this.gpFilterTemplates === true && val === this.nls.filterEditor.all) {
+          var filt_layers = this._filter_layers(filterText)
+          this._templatePicker.attr("featureLayers", filt_layers);
+          has_layers = filt_layers.length !== 0;
+        }
+        if (val === this.nls.filterEditor.all){
+          if (filterText === ""){
+            this._templatePicker.attr("grouping", true);
+          }
+          else if (this.gpFilterTemplates === true){
+            this._templatePicker.attr("grouping", true);
+          }
+          else{
+            this._templatePicker.attr("grouping", false);
+          }
+        }
+        else{
           this._templatePicker.attr("grouping", false);
         }
         this._templatePicker.update();
+        if (!has_layers) {
+          this._templatePicker.grid.messagesNode.innerText =
+            this.nls.filterEditor.noAvailableTempaltes;
+        }
+
+      },
+
+      addNewLayerInEditor: function (layerInfo) {
+        //Add the layer at the beginning of the array
+        this._layers.splice(0, 0, layerInfo);
+      },
+
+      removeLayerFromEditor: function (layerInfo) {
+        //Loop through the layers and removed the deleted layer
+        array.some(this._layers, lang.hitch(this, function (layer, index) {
+          if (layer.id === layerInfo.id) {
+            this._layers.splice(index, 1);
+            return true;
+          }
+        }));
       }
     });
   });

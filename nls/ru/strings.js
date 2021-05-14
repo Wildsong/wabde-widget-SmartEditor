@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Умный редактор",
   "_featureAction_SmartEditor": "Умный редактор",
   "noEditPrivileges": "У вашей учетной записи нет прав на создание или изменение данных.",
+  "loginPopupTitle": "Вход",
+  "loginPopupMessage": "Для ${widgetName} необходимы права доступа и кредиты для поиска и хранения адресной информации. Хотите войти в систему и использовать эту возможность?",
+  "noCreditsOrPrivilegeWarningMessage": "У вашей учетной записи нет прав и кредитов для поиска и хранения адресной информации с помощью ${widgetName}. Обратитесь к администратору организации , чтобы запросить права доступа и кредиты.",
+  "unableToUseLocator": "Локатор не доступен. Действия атрибута адреса не будут выполнены.",
+  "locatorDisabledWaning": "Локатор не включен. Обратитесь к администратору организации , чтобы запросить эту возможность.",
+  "noFeatureInAIWarning": "Объекты не выбраны. Выберите объект для выполнения редактирования или щелкните Отмена, чтобы вернуться на главный экран.",
+  "noEditableLayerWarning": "У вашей учетной записи нет прав на создание или изменение данных, или на этой веб-карте нет слоев, доступных для редактирования.",
+  "noVisibleCreateLayerWarning": "Слои не видны при текущем уровне масштабирования. Увеличьте или уменьшите масштаб для создания/изменения объектов.",
+  "noVisibleUpdateLayerWarning": "Слои не видны при текущем уровне масштабирования. Увеличьте или уменьшите масштаб для изменения объектов.",
+  "checkLayerVisibilityInWebMapWarning": "Убедитесь, что слои видимы на карте, чтобы создавать или изменять объекты.",
+  "showSelectionInAITitle": "Выбранные объекты",
+  "showSelectionInAIMsg": "Вы хотите загрузить текущую выборку в ${widgetName}?",
   "widgetActive": "Активный",
   "widgetNotActive": "Неактивно",
   "pressStr": "Нажмите ",
@@ -62,20 +74,21 @@ define({
   "copyFeatures": {
     "title": "Копировать объекты",
     "createFeatures": "Создать объекты",
-    "createSingleFeature": "Создать 1 объект множественной геометрии",
+    "createSingleFeature": "Создать 1 составной объект",
+    "createOneSingleFeature": "Создать объект",
     "noFeaturesSelectedMessage": "Объекты не выбраны",
-    "selectFeatureToCopyMessage": "Выберите объект для копирования.",
-    "multipleFeatureSaveWarning": "Примечание: создание нескольких объектов с помощью копирования приведет к немедленному сохранению всех объектов",
+    "selectFeatureToCopyMessage": "Выберите объекты для копирования",
+    "multipleFeatureSaveWarning": "Примечание: создание нескольких объектов с помощью копирования приведет к немедленному сохранению всех новых объектов",
     "copyFeatureUpdateGeometryError": "Не удалось обновить геометрию выбранных объектов",
     "canNotSaveMultipleFeatureWarning": "Примечание: Не удалось скопировать несколько объектов, используя то же значение для полей уникальных значений; выберите только один объект",
     "createOnlyOneMultipartFeatureWarning": "Примечание: Можно сделать только один составной объект"
   },
   "addingFeatureError": "Ошибка при добавлении выбранных объектов в слое. Повторите попытку еще раз.",
-  "addingFeatureErrorCount": "Не удалось скопировать объектов: '${copyFeatureErrorCount}'",
+  "addingFeatureErrorCount": "Не удалось скопировать объектов: '${copyFeatureErrorCount}' Хотите повторить попытку для пропущенных объектов?",
   "selectingFeatureError": "Ошибка при выборке объектов в слое. Повторите попытку еще раз.",
   "customSelectOptionLabel": "Выбрать объекты для копирования",
   "noFeatureSelectedMessage": "Объекты не выбраны.",
-  "multipleFeatureSaveMessage": "Все объекты будут сразу же сохранены. Хотите продолжить?",
+  "multipleFeatureSaveMessage": "Все объекты будут сразу же сохранены. Продолжить?",
   "relativeDates": {
     "dateTypeLabel": "Тип даты",
     "valueLabel": "Значение",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Для сохранения заданного значения по умолчанию необходимо указать значение даты или времени.",
     "customLabel": "Пользовательский",
     "layerLabel": "Слой",
-    "domainFieldHintLabel": "Выбранное значение принадлежит домену кодированных значений Будет использовано значение: ${domainValue}"
+    "domainFieldHintLabel": "Выбранное значение принадлежит домену кодированных значений Будет использовано значение \"${domainValue}\""
   },
   "valuePicker": {
     "popupTitle": "Выберите значение",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Обязательные поля",
     "foundNullRecordCount": "${fieldName} (Найдено в ${count} записях)"
   },
-  "cantLocateUserLocation": "Ваше местоположение невозможно определить"
+  "cantLocateUserLocation": "Ваше местоположение невозможно определить",
+  "tryAgainButtonLabel": "Попробуйте еще раз",
+  "copyFeatureFailedPopupTitle": "Ой!"
 });

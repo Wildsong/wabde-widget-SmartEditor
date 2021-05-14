@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "스마트 편집기",
   "_featureAction_SmartEditor": "스마트 편집기",
   "noEditPrivileges": "내 계정에 데이터를 만들거나 수정할 권한이 없습니다.",
+  "loginPopupTitle": "로그인",
+  "loginPopupMessage": "주소 정보를 검색하고 저장하려면 ${widgetName}에 권한 및 크레딧이 필요합니다. 로그인하고 이 기능을 사용하시겠습니까?",
+  "noCreditsOrPrivilegeWarningMessage": "이 계정은 ${widgetName}에서 주소 정보를 검색하고 저장하기 위한 권한 및 크레딧이 없습니다. 기관 관리자에게 문의하여 권한 및 크레딧을 요청하세요.",
+  "unableToUseLocator": "로케이터에 접근할 수 없습니다. 주소 속성 작업이 수행되지 않습니다.",
+  "locatorDisabledWaning": "로케이터가 활성화되어 있지 않습니다. 이 기능을 요청하려면 기관 관리자에게 문의하세요.",
+  "noFeatureInAIWarning": "선택한 피처가 없습니다. 편집을 수행할 피처를 선택하거나 취소를 클릭하여 메인 화면으로 돌아갑니다.",
+  "noEditableLayerWarning": "해당 계정에는 데이터를 만들거나 수정할 수 있는 권한이 없거나, 이 웹 맵에 편집 가능한 레이어가 없습니다.",
+  "noVisibleCreateLayerWarning": "현재 확대/축소 수준에서는 레이어를 볼 수 없습니다. 확대 또는 축소하여 피처를 생성/수정하세요.",
+  "noVisibleUpdateLayerWarning": "현재 확대/축소 수준에서는 레이어를 볼 수 없습니다. 확대 또는 축소하여 피처를 수정하세요.",
+  "checkLayerVisibilityInWebMapWarning": "피처를 생성 또는 수정하려면 맵에서 레이어를 볼 수 있는지 확인하세요.",
+  "showSelectionInAITitle": "선택한 피처",
+  "showSelectionInAIMsg": "${widgetName}에서 현재 선택 항목을 불러오시겠습니까?",
   "widgetActive": "활성",
   "widgetNotActive": "비활성",
   "pressStr": "Ctrl을 ",
@@ -62,20 +74,21 @@ define({
   "copyFeatures": {
     "title": "피처 복사",
     "createFeatures": "피처 생성",
-    "createSingleFeature": "다중지오메트리 피처 1개 생성",
+    "createSingleFeature": "멀티파트 피처 1개 생성",
+    "createOneSingleFeature": "피처 생성",
     "noFeaturesSelectedMessage": "선택된 피처 없음",
     "selectFeatureToCopyMessage": "복사할 피처를 선택하세요.",
-    "multipleFeatureSaveWarning": "참고: 복사본 피처를 사용하여 여러 피처를 생성하면 모든 피처가 즉시 저장됩니다.",
+    "multipleFeatureSaveWarning": "참고: 복사 기능을 사용하여 여러 피처를 생성하면 모든 새 피처가 즉시 저장됩니다.",
     "copyFeatureUpdateGeometryError": "선택한 피처의 지오메트리를 업데이트할 수 없음",
     "canNotSaveMultipleFeatureWarning": "참고: 고유 값 필드에는 동일한 값을 사용하여 여러 피처를 복사할 수 없습니다. 피처를 하나만 선택하세요.",
     "createOnlyOneMultipartFeatureWarning": "참고: 하나의 다중 파트 피처만 생성할 수 있습니다."
   },
   "addingFeatureError": "레이어의 선택된 피처를 추가하는 중 오류가 발생했습니다. 다시 시도하세요.",
-  "addingFeatureErrorCount": "'${copyFeatureErrorCount}'개 피처를 복사하지 못했습니다.",
+  "addingFeatureErrorCount": "'${copyFeatureErrorCount}'개 피처를 복사하지 못했습니다. 누락된 피처에 대해 다시 시도하시겠습니까?",
   "selectingFeatureError": "레이어의 피처를 선택하는 중 오류가 발생했습니다. 다시 시도하세요.",
   "customSelectOptionLabel": "복사할 피처 선택",
-  "noFeatureSelectedMessage": "선택된 피처가 없습니다.",
-  "multipleFeatureSaveMessage": "모든 피처가 즉시 저장됩니다. 진행하시겠습니까?",
+  "noFeatureSelectedMessage": "선택한 피처 없음",
+  "multipleFeatureSaveMessage": "모든 피처가 즉시 저장됩니다. 계속하시겠습니까?",
   "relativeDates": {
     "dateTypeLabel": "데이터 유형",
     "valueLabel": "값",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "날짜 또는 시간 값은 기본 프리셋 값을 저장할 수 있도록 지정해야 합니다.",
     "customLabel": "사용자 정의",
     "layerLabel": "레이어",
-    "domainFieldHintLabel": "선택한 값은 코드 값 도메인입니다. ${domainValue} 값이 사용됩니다."
+    "domainFieldHintLabel": "선택한 값은 코드 값 도메인입니다. 값 \"${domainValue}\"이(가) 사용됩니다."
   },
   "valuePicker": {
     "popupTitle": "값 선택",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "필수 필드",
     "foundNullRecordCount": "${fieldName}(${count}개의 레코드에서 발견됨)"
   },
-  "cantLocateUserLocation": "내 위치를 파악할 수 없습니다."
+  "cantLocateUserLocation": "내 위치를 파악할 수 없습니다.",
+  "tryAgainButtonLabel": "다시 시도",
+  "copyFeatureFailedPopupTitle": "죄송합니다."
 });

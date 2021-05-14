@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "ชั้นข้อมูลทั้งหมด",
-    "title": "เลือกเทมเพลตเพื่อสร้างฟีเจอร์",
+    "title": "เลือกเทมเพลตเพื่อสร้างฟีเจอร์หรือคลิกฟีเจอร์บนแผนที่เพื่อแก้ไข",
     "generalSettings": "ตั้งค่าทั่วไป",
     "layerSettings": "การตั้งค่าชั้นข้อมูล",
     "webmapSettingsRadioBtnLabel": "ยึดตามการตั้งค่าในแผนที่เว็บ",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "ตัวเลือกในการลบฟีเจอร์จากการตั้งค่าตัวเลือกจะถูกบันทึกไว้ ถ้ามันเป็นเพียงบันทึกการเลือกเรคคอร์ท พาเนลจะเปลี่ยนกลับไปที่หน้าเทมเพลต",
     "useFilterEditor": "ใช้ตัวกรองฟีเจอร์เทมเพลต",
     "useFilterEditorTip": "ตัวเลือกในการใช้ตัวเลือกแม่แบบตัวกรองซึ่งให้ความสามารถในการดูแม่แบบของหนึ่งชั้นข้อมูลหรือค้นหาแม่แบบตามชื่อ",
+    "groupFilteredTemplates": "ผลการค้นหากลุ่ม",
+    "groupFilteredTemplatesTip": "ตัวเลือกในการจัดกลุ่มผลการค้นหาตามชั้นข้อมูล",
     "displayShapeSelector": "แสดงตัวเลือกการวาดภาพ",
     "createNewFeaturesFromExisting": "อนุญาตให้ผู้ใช้สร้างฟีเจอร์ใหม่จากฟีเจอร์ที่มีอยู่",
     "createNewFeaturesFromExistingTip": "ตัวเลือกในการอนุญาตให้ผู้ใช้คัดลอกฟีเจอร์ที่มีอยู่เพื่อสร้างฟีเจอร์ใหม่",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "ปรับใช้ค่าการกรองจากกลุ่มวิดเจ็ตตัวกรองไปยังฟิลด์ที่ตั้งไว้ล่วงหน้า",
     "listenToGroupFilterTip": "เมื่อตัวกรองถูกใช้กับหลุ่มวิดเจ็ตตัวกรอง ใช้ค่าที่สอดต้องกับฟิลด์ในลิสต์ที่เตรียมไว้ล่วงหน้า",
     "keepTemplateActive": "ทำให้เท็มเพลตที่เลือกใช้งานได้",
+    "editLayerAddedFromAddData": "อนุญาตให้แก้ไขชั้นข้อมูลที่เพิ่มจากวิดเจ็ตเพิ่มข้อมูล",
+    "editLayerAddedFromAddDataTip": "สามารถแก้ไขชั้นข้อมูลที่แก้ไขได้ในแอปพลิเคชันโดยใช้วิดเจ็ตเพิ่มข้อมูล",
     "keepTemplateActiveTip": "เมื่อเท็มเพลตที่เลือกถูกแสดงขึ้น หากมีการเลือกเท็มเพลตไว้ ให้เลือกอีกครั้งหนึ่ง",
     "geometryEditDefault": "เปิดใช้งานการแก้ไขรูปทรงเรขาคณิตโดยค่าเริ่มต้น",
     "autoSaveEdits": "บันทึกฟีเจอร์ใหม่โดยอัตโนมัติ",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "ค่าไม่ถูกต้องในการสลับไปใช้อินพุทแบบหลายบรรทัด",
     "featuresSelectionTolerance": "ตั้งค่าความคลาดเคลื่อนสำหรับการเลือกฟีเจอร์ (พิกเซล)",
     "featuresSelectionToleranceTooltip": "ช่วยให้ผู้ใช้สามารถเปิดพาเนลแก้ไขแอตทริบิวต์ได้อย่างสะดวก โดยการคลิกที่ฟีเจอร์",
-    "featuresSelectionToleranceErrorMsg": "ค่าความคลาดเคลื่อนการเลือกฟีเจอร์ใช้ไม่ได้"
+    "featuresSelectionToleranceErrorMsg": "ค่าความคลาดเคลื่อนการเลือกฟีเจอร์ใช้ไม่ได้",
+    "autoSaveAttrUpdates": "บันทึกการอัปเดตคุณลักษณะโดยอัตโนมัติ"
   },
   "editDescriptionPage": {
     "title": "กำหนดข้อความบรรยายภาพรวมของแอตทริบิวต์ <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "เชิงบรรยาย",
     "geocoderHint": "หากต้องการเปลี่ยนแปลงตัวระบุพิกัดทางภูมิศาสตร์ ให้ไปที่ปุ่ม 'การตั้งค่าตัวระบุพิกัดทางภูมิศาสตร์' ในการตั้งค่าทั่วไป",
     "prevConfigruedFieldChangedMsg": "ไม่พบแอตทริบิวต์ที่กำหนดค่าไว้ก่อนหน้านี้ ในการตั้งค่าพิกัดทางภูมิศาสตร์ปัจจุบัน แอตทริบิวต์ถูกรีเซ็ตเป็นค่าเริ่มต้น",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "เครื่องมือนี้ใช้เครดิตเมื่อใช้กับ ArcGIS Online World Geocoding Service"
   },
   "coordinatesPage": {
     "popupTitle": "ค่าพิกัด",
     "checkboxLabel": "รับพิกัด",
     "coordinatesSelectTitle": "ระบบอ้างอิง",
     "coordinatesAttributeTitle": "เชิงบรรยาย",
-    "mapSpatialReference": "การอ้างอิงเชิงพื้นที่ของแผนที่",
-    "latlong": "ละติจูด/ลองจิจูด",
+    "mapSpatialReferenceOptionLabel": "การอ้างอิงเชิงพื้นที่ของแผนที่",
+    "latLongOptionLabel": "ละติจูด/ลองจิจูด",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "กลุ่มที่เป็นไปได้ทั้งหมดถูกสร้างขึ้นอยู่แล้ว",
     "coordinatesSourceTitle": "ต้นทางพิกัด",
     "featureLocation": "ตำแหน่งของฟีเจอร์",
-    "myLocation": "ตำแหน่งของชั้น"
+    "myLocation": "ตำแหน่งของชั้น",
+    "LatLong": {
+      "y": "ละติจูด",
+      "x": "ลองจิจูด",
+      "xy": "ลองจิจูด ละติจูด",
+      "yx": "ละติจูด ลองจิจูด"
+    },
+    "MapSpatialReference": {
+      "y": "วาย",
+      "x": "เอ๊ก",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "ตั้งล่วงหน้า",

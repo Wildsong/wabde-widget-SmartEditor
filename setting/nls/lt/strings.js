@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Visi sluoksniai",
-    "title": "Pasirinkite šabloną elementui kurti",
+    "title": "Norėdami sukurti elementus, pasirinkite šabloną, o norėdami elementą redaguoti, spustelėkite ant jo žemėlapyje",
     "generalSettings": "Bendrieji parametrai",
     "layerSettings": "Sluoksnio parametrai",
     "webmapSettingsRadioBtnLabel": "Paisyti internetinio žemėlapio parametrų",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Parinktis pašalinti elementą iš žymėjimo, kai įrašas išsaugojamas.  Jei tai yra vienintelis pažymėtas įrašas, skydelis perjungiamas į šablono puslapį.",
     "useFilterEditor": "Naudoti elementų šablonų filtrą",
     "useFilterEditorTip": "Parinktis naudoti filtrų šablonų parinkiklį, kuris leidžia peržiūrėti vieno sluoksnio šabloną ir ieškoti šablonų pagal pavadinimą.",
+    "groupFilteredTemplates": "Grupuoti paieškos rezultatus",
+    "groupFilteredTemplatesTip": "Galimybė grupuoti paieškos rezultatus pagal sluoksnį",
     "displayShapeSelector": "Rodyti braižymo parinktis",
     "createNewFeaturesFromExisting": "Leisti naudotojams kurti naujus elementus iš esamų",
     "createNewFeaturesFromExistingTip": "Parinktis, leidžianti naudotojams kopijuoti esamą elementą norint sukurti naujus elementus",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Filtro reikšmių taikymas iš grupių filtro valdiklio norint iš anksto nustatyti laukus",
     "listenToGroupFilterTip": "Kai grupių filtro valdiklyje pritaikomas filtras, taikykite reikšmę atitinkamam iš anksto nustatytų reikšmių sąrašo laukui.",
     "keepTemplateActive": "Palikti pasirinktą šabloną aktyvų",
+    "editLayerAddedFromAddData": "Leisti redaguoti sluoksnius, pridėtus iš duomenų pridėjimo valdiklio.",
+    "editLayerAddedFromAddDataTip": "Redaguojami sluoksniai, pridėti prie programos per duomenų pridėjimo valdiklį, gali būti redaguojami",
     "keepTemplateActiveTip": "Jei šablonas buvo pasirinktas anksčiau, iš naujo jį pasirinkite, kai bus rodomas šablonų parinkiklis.",
     "geometryEditDefault": "Įgalinti geometrijos redagavimą pagal numatytuosius nustatymus",
     "autoSaveEdits": "Automatiškai įrašyti naujus elementus",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Netinkama reikšmė perkeliant į kelių eilučių įvestį",
     "featuresSelectionTolerance": "Nustatyti elemento pasirinkimo toleranciją pikseliais",
     "featuresSelectionToleranceTooltip": "Leidžia naudotojams lengvai atverti atributo redagavimo sritį spustelėjus ant elemento",
-    "featuresSelectionToleranceErrorMsg": "Netinkama elemento pasirinkimo tolerancijos reikšmė"
+    "featuresSelectionToleranceErrorMsg": "Netinkama elemento pasirinkimo tolerancijos reikšmė",
+    "autoSaveAttrUpdates": "Automatiškai įrašyti atributų naujinimus"
   },
   "editDescriptionPage": {
     "title": "Nurodyti <b>${layername}</b> atributų apžvalgos tekstą "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Aprašas",
     "geocoderHint": "Norėdami pakeisti geokodavimo paslaugą, paspauskite geokodavimo nustatymų mygtuką bendruosiuose nustatymuose",
     "prevConfigruedFieldChangedMsg": "Anksčiau sukonfigūruotas atributas esamuose geokodavimo paslaugos nustatymuose nerastas. Atributo reikšmė nustatyta iš naujo kaip numatytoji.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Šis įrankis naudoja kreditus, kai pasitelkiama ArcGIS Online pasaulinio geokodavimo paslauga"
   },
   "coordinatesPage": {
     "popupTitle": "Koordinatės",
     "checkboxLabel": "Gauti koordinates",
     "coordinatesSelectTitle": "Nuorodinė sistema",
     "coordinatesAttributeTitle": "Aprašas",
-    "mapSpatialReference": "Žemėlapio koordinačių sistema",
-    "latlong": "Platuma/Ilguma",
+    "mapSpatialReferenceOptionLabel": "Žemėlapio koordinačių sistema",
+    "latLongOptionLabel": "Platuma/Ilguma",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Visos galimos grupės jau sukurtos",
     "coordinatesSourceTitle": "Koordinačių šaltinis",
     "featureLocation": "Elemento vieta",
-    "myLocation": "Mano vieta"
+    "myLocation": "Mano vieta",
+    "LatLong": {
+      "y": "Platuma",
+      "x": "Ilguma",
+      "xy": "Ilguma, platuma",
+      "yx": "Platuma, ilguma"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Nustatyta iš anksto",

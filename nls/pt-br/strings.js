@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Editor Inteligente",
   "_featureAction_SmartEditor": "Editor Inteligente",
   "noEditPrivileges": "Sua conta não tem permissão para criar ou modificar dados.",
+  "loginPopupTitle": "Entrar",
+  "loginPopupMessage": "${widgetName} exige permissões e créditos para pesquisar e armazenar informações de endereço. Você gostaria de entrar e usar este recurso?",
+  "noCreditsOrPrivilegeWarningMessage": "Sua conta não tem as permissões e créditos para pesquisar e armazenar informações de endereço com${widgetName}. Entre em contato com o administrador da sua organização para solicitar permissões e créditos.",
+  "unableToUseLocator": "O localizador não está acessível. As ações do atributo de endereço não serão executadas.",
+  "locatorDisabledWaning": "O localizador não está habilitado. Entre em contato com o administrador da sua organização para solicitar esse recurso.",
+  "noFeatureInAIWarning": "Nenhuma feição selecionada. Selecione uma feição para realizar as edições ou clique em cancelar para retornar à tela principal.",
+  "noEditableLayerWarning": "Sua conta não tem permissão para criar ou modificar dados, ou este mapa da web não contém camadas editáveis.",
+  "noVisibleCreateLayerWarning": "Camadas não visíveis no nível de zoom atual. Amplie ou reduza para criar/modificar feições.",
+  "noVisibleUpdateLayerWarning": "Camadas não visíveis no nível de zoom atual. Amplie ou reduza para modificar feições.",
+  "checkLayerVisibilityInWebMapWarning": "Certifique-se que as camadas estejam visíveis no mapa para criar ou modificar feições.",
+  "showSelectionInAITitle": "Feições Selecionadas",
+  "showSelectionInAIMsg": "Você deseja carregar a seleção atual no ${widgetName}?",
   "widgetActive": "Ativo",
   "widgetNotActive": "Inativo",
   "pressStr": "Pressione ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Copiar Feições",
     "createFeatures": "Criar Feições",
-    "createSingleFeature": "Criar 1 Feição de Geometria Múltipla",
+    "createSingleFeature": "Criar 1 Feição de Múltiplas Partes",
+    "createOneSingleFeature": "Criar Feição",
     "noFeaturesSelectedMessage": "Nenhuma Feição Selecionada",
-    "selectFeatureToCopyMessage": "Selecione feições para copiar.",
-    "multipleFeatureSaveWarning": "Nota: A criação de várias feições utilizando o recurso de copiar salvará todas as feições imediatamente",
+    "selectFeatureToCopyMessage": "Selecione feições para copiar",
+    "multipleFeatureSaveWarning": "Nota: A criação de várias feições utilizando a funcionalidade de copiar salvará todas as novas feições imediatamente",
     "copyFeatureUpdateGeometryError": "Não é possível atualizar a geometria das feições selecionadas",
     "canNotSaveMultipleFeatureWarning": "Nota: Não é possível copiar várias feições usando o mesmo valor para campos de valor exclusivo, selecione apenas uma feição",
     "createOnlyOneMultipartFeatureWarning": "Nota: Apenas uma feição de várias partes pode ser criada"
   },
   "addingFeatureError": "Erro ao adicionar feições selecionadas na camada. Tente novamente.",
-  "addingFeatureErrorCount": "Falha ao copiar as feições '${copyFeatureErrorCount}'.",
+  "addingFeatureErrorCount": "Falha ao copiar as feições '${copyFeatureErrorCount}'. Deseja tentar novamente para as feições ausentes?",
   "selectingFeatureError": "Erro ao selecionar feições na camada. Tente novamente.",
   "customSelectOptionLabel": "Selecionar feições para copiar",
-  "noFeatureSelectedMessage": "Nenhuma feição selecionada.",
+  "noFeatureSelectedMessage": "Nenhuma feição selecionada",
   "multipleFeatureSaveMessage": "Todas as feições serão salvas imediatamente. Você deseja prosseguir?",
   "relativeDates": {
     "dateTypeLabel": "Tipo de Data",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Um valor para data ou hora deve ser especificado para poder salvar o valor pré-definido padrão.",
     "customLabel": "Personalizada",
     "layerLabel": "Camada",
-    "domainFieldHintLabel": "O valor selecionado é um domínio de valor codificado. O valor: ${domainValue} será utilizado"
+    "domainFieldHintLabel": "O valor selecionado é um domínio de valor codificado. O valor: \"${domainValue}\" será usado"
   },
   "valuePicker": {
     "popupTitle": "Selecionar Valor",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Campos obrigatórios",
     "foundNullRecordCount": "${fieldName} (Localizado em ${count} registros)"
   },
-  "cantLocateUserLocation": "Não foi possível determinar seu local"
+  "cantLocateUserLocation": "Não foi possível determinar seu local",
+  "tryAgainButtonLabel": "Tentar novamente",
+  "copyFeatureFailedPopupTitle": "Oops!"
 });

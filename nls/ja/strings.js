@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "スマート エディター",
   "_featureAction_SmartEditor": "スマート エディター",
   "noEditPrivileges": "ご使用のアカウントには、データを作成/変更する権限がありません。",
+  "loginPopupTitle": "サイン イン",
+  "loginPopupMessage": "${widgetName} で住所情報を検索および保存するには権限とクレジットが必要です。 サイン インしてこの機能を使用しますか？",
+  "noCreditsOrPrivilegeWarningMessage": "${widgetName} で住所情報を検索および保存するための権限とクレジットがアカウントにありません。 組織サイトの管理者に問い合わせて権限とクレジットをリクエストしてください。",
+  "unableToUseLocator": "ロケーターにアクセスできません。 住所属性アクションは実行されません。",
+  "locatorDisabledWaning": "ロケーターが有効になっていません。 組織サイトの管理者に問い合わせてこの機能をリクエストしてください。",
+  "noFeatureInAIWarning": "フィーチャが選択されていません。 フィーチャを選択して編集するか、[キャンセル] をクリックしてメイン画面に戻ってください。",
+  "noEditableLayerWarning": "ご使用のアカウントには、データを作成/変更する権限がありません。または、この Web マップに編集可能なレイヤーが含まれていません。",
+  "noVisibleCreateLayerWarning": "レイヤーは現在のズーム レベルでは表示されません。 ズーム インまたはズーム アウトしてフィーチャを作成/変更してください。",
+  "noVisibleUpdateLayerWarning": "レイヤーは現在のズーム レベルでは表示されません。 ズーム インまたはズーム アウトしてフィーチャを変更してください。",
+  "checkLayerVisibilityInWebMapWarning": "フィーチャを作成または変更するには、レイヤーがマップに表示されていることを確認してください。",
+  "showSelectionInAITitle": "選択フィーチャ",
+  "showSelectionInAIMsg": "${widgetName} の現在の選択を読み込みますか？",
   "widgetActive": "アクティブ",
   "widgetNotActive": "アクティブではない",
   "pressStr": "押す ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "フィーチャのコピー",
     "createFeatures": "フィーチャ作成",
-    "createSingleFeature": "マルチジオメトリ フィーチャを 1 つ作成",
+    "createSingleFeature": "複数パートのフィーチャを 1 つ作成",
+    "createOneSingleFeature": "フィーチャ作成",
     "noFeaturesSelectedMessage": "フィーチャが選択されていません",
-    "selectFeatureToCopyMessage": "コピーするフィーチャを選択してください。",
-    "multipleFeatureSaveWarning": "注意: フィーチャのコピーを使用して複数のフィーチャを作成すると、すべてのフィーチャが直ちに保存されます",
+    "selectFeatureToCopyMessage": "コピーするフィーチャを選択してください",
+    "multipleFeatureSaveWarning": "注意: コピー機能を使用して複数のフィーチャを作成すると、すべての新規フィーチャが直ちに保存されます",
     "copyFeatureUpdateGeometryError": "選択したフィーチャのジオメトリを更新できません",
     "canNotSaveMultipleFeatureWarning": "注意: 個別値フィールドに同じ値を使用して複数のフィーチャをコピーすることはできません。1 つのフィーチャのみを選択してください",
     "createOnlyOneMultipartFeatureWarning": "注意: 作成できるマルチパート フィーチャは 1 つのみです。"
   },
   "addingFeatureError": "レイヤー内で選択したフィーチャを追加中にエラーが発生しました。 もう一度お試しください。",
-  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' フィーチャをコピーできませんでした。",
+  "addingFeatureErrorCount": "${copyFeatureErrorCount} 個のフィーチャをコピーできませんでした。 コピーできなかったフィーチャを再試行しますか？",
   "selectingFeatureError": "レイヤー内のフィーチャを選択中にエラーが発生しました。 もう一度お試しください。",
   "customSelectOptionLabel": "コピーするフィーチャを選択",
-  "noFeatureSelectedMessage": "フィーチャが選択されていません。",
+  "noFeatureSelectedMessage": "フィーチャが選択されていません",
   "multipleFeatureSaveMessage": "すべてのフィーチャが直ちに保存されます。 続行しますか？",
   "relativeDates": {
     "dateTypeLabel": "日付タイプ",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "デフォルトのプリセット値を保存できるようにするには、日付または時刻の値を指定する必要があります。",
     "customLabel": "カスタム",
     "layerLabel": "レイヤー",
-    "domainFieldHintLabel": "選択した値はコード値ドメインです。 値: ${domainValue} が使用されます"
+    "domainFieldHintLabel": "選択した値はコード値ドメインです。 値「${domainValue}」が使用されます"
   },
   "valuePicker": {
     "popupTitle": "値の選択",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "必須フィールド",
     "foundNullRecordCount": "${fieldName} (${count} 秒で検索)"
   },
-  "cantLocateUserLocation": "現在の位置を特定できませんでした"
+  "cantLocateUserLocation": "現在の位置を特定できませんでした",
+  "tryAgainButtonLabel": "再試行",
+  "copyFeatureFailedPopupTitle": "エラー。"
 });

@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Smart Editor",
   "_featureAction_SmartEditor": "Smart Editor",
   "noEditPrivileges": "Uw account heeft geen machtigingen om gegevens te maken of te wijzigen.",
+  "loginPopupTitle": "Aanmelden",
+  "loginPopupMessage": "${widgetName} vereist toestemmingen en credits om adresinformatie op te zoeken en op te slaan. Wilt u zich aanmelden en deze mogelijkheid gebruiken?",
+  "noCreditsOrPrivilegeWarningMessage": "Uw account heeft niet de rechten en credits om adresinformatie op te zoeken en op te slaan met ${widgetName}.   Neem contact op met uw organisatiebeheerder om toestemmingen en credits aan te vragen.",
+  "unableToUseLocator": "Locator is niet toegankelijk.   De adresattribuutactie(s) worden niet uitgevoerd.",
+  "locatorDisabledWaning": "Locator is niet ingeschakeld.   Neem contact op met uw organisatiebeheerder om deze mogelijkheid aan te vragen.",
+  "noFeatureInAIWarning": "Geen object(en) geselecteerd.   Selecteer een object om bewerkingen uit te voeren of klik op Annuleren om terug te keren naar het hoofdscherm.",
+  "noEditableLayerWarning": "Uw account heeft geen toestemming om gegevens te maken of te wijzigen, of deze webmap bevat geen bewerkbare lagen.",
+  "noVisibleCreateLayerWarning": "La(a)g(en) niet zichtbaar op het huidige zoomniveau. Zoom in of uit om objecten te maken / wijzigen.",
+  "noVisibleUpdateLayerWarning": "La(a)g(en) niet zichtbaar op het huidige zoomniveau. Zoom in of uit om objecten te wijzigen.",
+  "checkLayerVisibilityInWebMapWarning": "Zorg ervoor dat lagen zichtbaar zijn op de kaart om objecten te maken of te wijzigen.",
+  "showSelectionInAITitle": "Geselecteerde objecten",
+  "showSelectionInAIMsg": "Wilt u de huidige selectie laden in ${widgetName}?",
   "widgetActive": "Actief",
   "widgetNotActive": "Niet actief",
   "pressStr": "Druk op ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Objecten kopiëren",
     "createFeatures": "Objecten maken",
-    "createSingleFeature": "1 multigeometrie-object aanmaken",
+    "createSingleFeature": "1 multideel-object aanmaken",
+    "createOneSingleFeature": "Object maken",
     "noFeaturesSelectedMessage": "Geen objecten geselecteerd",
-    "selectFeatureToCopyMessage": "Selecteer de objecten die gekopieerd moeten worden.",
-    "multipleFeatureSaveWarning": "Opmerking: het maken van meerdere objecten met behulp van de kopieerfunctie slaat alle objecten onmiddellijk op",
+    "selectFeatureToCopyMessage": "Selecteer de objecten die gekopieerd moeten worden",
+    "multipleFeatureSaveWarning": "Opmerking: het maken van meerdere objecten met behulp van de kopieerfunctie slaat alle nieuwe objecten onmiddellijk op",
     "copyFeatureUpdateGeometryError": "Kan geometrie van geselecteerde objecten niet bijwerken.",
     "canNotSaveMultipleFeatureWarning": "Let op: er kunnen niet meerdere functies worden gekopieerd met dezelfde waarde voor unieke waardevelden, selecteer slechts één functie",
     "createOnlyOneMultipartFeatureWarning": "Let op: er kan slechts één functie met meerdere onderdelen worden aangemaakt"
   },
   "addingFeatureError": "Fout bij het toevoegen van de geselecteerde objecten in de laag. Probeer het opnieuw.",
-  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' objecten niet gekopieerd.",
+  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' object(en) niet gekopieerd.  Wilt u het opnieuw proberen voor de ontbrekende object(en)?",
   "selectingFeatureError": "Fout bij het selecteren van objecten in de laag. Probeer het opnieuw.",
   "customSelectOptionLabel": "Selecteer objecten om te kopiëren",
-  "noFeatureSelectedMessage": "Geen objecten geselecteerd.",
+  "noFeatureSelectedMessage": "Geen objecten geselecteerd",
   "multipleFeatureSaveMessage": "Alle objecten zullen onmiddellijk worden opgeslagen. Wilt u doorgaan?",
   "relativeDates": {
     "dateTypeLabel": "Datumtype",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Er moet een waarde voor datum of tijd worden opgegeven om de standaard ingestelde waarde te kunnen opslaan.",
     "customLabel": "Aangepast",
     "layerLabel": "Kaartlaag",
-    "domainFieldHintLabel": "De geselecteerde waarde is een gecodeerd waardedomein. De waarde: ${domainValue} wordt gebruikt"
+    "domainFieldHintLabel": "De geselecteerde waarde is een gecodeerd waardedomein. De waarde: \"${domainValue}\" wordt gebruikt"
   },
   "valuePicker": {
     "popupTitle": "Waarde selecteren",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Vereiste velden",
     "foundNullRecordCount": "${fieldName} (Gevonden in ${count} records)"
   },
-  "cantLocateUserLocation": "Uw locatie kon niet worden bepaald"
+  "cantLocateUserLocation": "Uw locatie kon niet worden bepaald",
+  "tryAgainButtonLabel": "Opnieuw proberen",
+  "copyFeatureFailedPopupTitle": "Oeps!"
 });

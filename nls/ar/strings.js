@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "المحرر الذكي",
   "_featureAction_SmartEditor": "المحرر الذكي",
   "noEditPrivileges": "لا يحتوي حسابك على أذونات لإنشاء أو تعديل البيانات.",
+  "loginPopupTitle": "تسجيل الدخول",
+  "loginPopupMessage": "يتطلب ${widgetName} أذونات واعتمادات للبحث عن معلومات العنوان وتخزينها. هل ترغب في تسجيل الدخول واستخدام هذه الإمكانية؟",
+  "noCreditsOrPrivilegeWarningMessage": "لا يتضمن حسابك الأذونات والاعتمادات للبحث عن معلومات العنوان وتخزينها باستخدام ${widgetName}. يرجى الاتصال بمسؤول المؤسسة التابع لك لطلب الأذونات والاعتمادات.",
+  "unableToUseLocator": "محدد المواقع لا يمكن الوصول إليه. لن يتم تنفيذ إجراءات سمات العنوان.",
+  "locatorDisabledWaning": "محدد المواقع غير ممكّن. يرجى الاتصال بمسؤول المؤسسة التابع لك لطلب هذه الإمكانية.",
+  "noFeatureInAIWarning": "لم يتم تحديد أي معالم. يرجى تحديد معلم لإجراء تعديلات أو انقر فوق إلغاء للعودة إلى الشاشة الرئيسية.",
+  "noEditableLayerWarning": "لا يتضمن حسابك الإذن لإنشاء البيانات أو تعديلها أو أن خريطة الويب الحالية لا تتصمن أي طبقات قابلة للتحرير.",
+  "noVisibleCreateLayerWarning": "الطبقات غير مرئية في مستوى التكبير/التصغير الحالي. تكبير أو تصغير لإنشاء/تعديل المعالم.",
+  "noVisibleUpdateLayerWarning": "الطبقات غير مرئية في مستوى التكبير/التصغير الحالي. تكبير أو تصغير لتعديل المعالم.",
+  "checkLayerVisibilityInWebMapWarning": "تأكد من أن الطبقات مرئية في الخريطة لإنشاء المعالم أو تعديلها.",
+  "showSelectionInAITitle": "المعالم المحددة",
+  "showSelectionInAIMsg": "هل تريد تحميل التحديد الحالي في ${widgetName}؟",
   "widgetActive": "نشط",
   "widgetNotActive": "غير نشط",
   "pressStr": "اضغط ",
@@ -62,20 +74,21 @@ define({
   "copyFeatures": {
     "title": "نسخ المعالم",
     "createFeatures": "إنشاء معالم",
-    "createSingleFeature": "إنشاء معلم واحد متعدد الأشكال الهندسية",
+    "createSingleFeature": "إنشاء معلم واحد متعدد الأجزاء",
+    "createOneSingleFeature": "إنشاء معلم",
     "noFeaturesSelectedMessage": "لا توجد معالم مُحددة",
-    "selectFeatureToCopyMessage": "يرجى تحديد المعالم المطلوب نسخها.",
-    "multipleFeatureSaveWarning": "ملاحظة: سيحفظ إنشاء المعالم المتعددة باستخدام معلم نسخ كل المعالم على الفور",
+    "selectFeatureToCopyMessage": "يرجى تحديد المعالم المطلوب نسخها",
+    "multipleFeatureSaveWarning": "ملاحظة: سيحفظ إنشاء المعالم المتعددة باستخدام وظيفة النسخ كل المعالم الجديدة على الفور",
     "copyFeatureUpdateGeometryError": "يتعذر تحديث الشكل الهندسي للمعالم المحددة",
     "canNotSaveMultipleFeatureWarning": "ملاحظة: يتعذر نسخ معالم متعددة باستخدام قيمة حقول القيمة الفريدة نفسها، يرجى تحديد معلم واحد فقط",
     "createOnlyOneMultipartFeatureWarning": "ملاحظة: يمكن إنشاء معلم واحد متعدد الأجزاء فقط"
   },
   "addingFeatureError": "حدث خطأ أثناء إضافة المعالم المحددة في الطبقة. الرجاء إعادة المحاولة مرة أخرى.",
-  "addingFeatureErrorCount": "فشل معالم '${copyFeatureErrorCount}' التي سيتم نسخها.",
+  "addingFeatureErrorCount": "فشل نسخ ${copyFeatureErrorCount} من المعالم. هل ترغب في المحاولة مرة أخرى من أجل المعالم المفقودة؟",
   "selectingFeatureError": "حدث خطأ أثناء تحديد المعالم في الطبقة. الرجاء إعادة المحاولة مرة أخرى.",
   "customSelectOptionLabel": "تحديد المعالم المطلوب نسخها",
-  "noFeatureSelectedMessage": "لا توجد معالم مُحددة.",
-  "multipleFeatureSaveMessage": "سيتم حفظ جميع المعالم على الفور. هل تود المتابعة؟",
+  "noFeatureSelectedMessage": "لا توجد معالم محددة",
+  "multipleFeatureSaveMessage": "سيتم حفظ جميع المعالم على الفور. هل تريد المتابعة؟",
   "relativeDates": {
     "dateTypeLabel": "نوع التاريخ",
     "valueLabel": "قيمة",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "يجب تحديد قيمة للتاريخ أو الوقت لتتمكن من حفظ القيمة الافتراضية المحددة مسبقًا.",
     "customLabel": "تخصيص",
     "layerLabel": "الطبقة",
-    "domainFieldHintLabel": "القيمة المحددة هي مجال قيمة مرمزة. القيمة: سيتم استخدام ${domainValue}"
+    "domainFieldHintLabel": "القيمة المحددة هي مجال قيمة مرمزة. القيمة: سيتم استخدام \"${domainValue}\""
   },
   "valuePicker": {
     "popupTitle": "تحديد قيمة",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "الحقول المطلوبة",
     "foundNullRecordCount": "${fieldName} (تم العثور عليها في ${count} سجلاً)"
   },
-  "cantLocateUserLocation": "لا يمكن تحديد موقعك"
+  "cantLocateUserLocation": "لا يمكن تحديد موقعك",
+  "tryAgainButtonLabel": "إعادة المحاولة",
+  "copyFeatureFailedPopupTitle": "للأسف!"
 });

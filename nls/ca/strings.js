@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Editor intel·ligent",
   "_featureAction_SmartEditor": "Editor intel·ligent",
   "noEditPrivileges": "El vostre compte no té permís per crear o modificar dades.",
+  "loginPopupTitle": "Inicia la sessió",
+  "loginPopupMessage": "${widgetName} necessita permisos i crèdits per cercar i emmagatzemar informació de les adreces Voleu iniciar sessió i utilitzar aquesta capacitat?",
+  "noCreditsOrPrivilegeWarningMessage": "El vostre compte no té permisos i crèdits per cercar i emmagatzemar informació de les adreces amb ${widgetName}. Poseu-vos en contacte amb l'administrador de l'organització per sol·licitar permisos i crèdits.",
+  "unableToUseLocator": "No es pot accedir al localitzador. No es duran a terme les accions dels atributs d'adreça.",
+  "locatorDisabledWaning": "El localitzador no està habilitat. Poseu-vos en contacte amb l'administrador de l'organització per sol·licitar aquesta capacitat.",
+  "noFeatureInAIWarning": "No hi ha cap entitat seleccionada. Seleccioneu una entitat per fer canvis o feu clic a Cancel·la per tornar a la pantalla principal.",
+  "noEditableLayerWarning": "El vostre compte no té cap permís per crear ni modificar dades, o aquest mapa web no conté cap capa editable.",
+  "noVisibleCreateLayerWarning": "Les capes no estan visibles al nivell de zoom actual. Amplieu o allunyeu per crear o modificar entitats.",
+  "noVisibleUpdateLayerWarning": "Les capes no estan visibles al nivell de zoom actual. Amplieu o allunyeu per modificar entitats.",
+  "checkLayerVisibilityInWebMapWarning": "Assegureu-vos que les capes estiguin visibles al mapa per crear o modificar entitats.",
+  "showSelectionInAITitle": "Entidades seleccionadas",
+  "showSelectionInAIMsg": "Voleu carregar la selecció actual a ${widgetName}?",
   "widgetActive": "Activa",
   "widgetNotActive": "Inactiva",
   "pressStr": "Premeu ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Copia les entitats",
     "createFeatures": "Crea les entitats",
-    "createSingleFeature": "Crea 1 entitat de geometria múltiple",
+    "createSingleFeature": "Crea 1 entitat de diverses parts",
+    "createOneSingleFeature": "Crear entidad",
     "noFeaturesSelectedMessage": "No s'ha seleccionat cap entitat",
-    "selectFeatureToCopyMessage": "Seleccioneu les entitats que voleu copiar.",
-    "multipleFeatureSaveWarning": "Nota: si es creen diverses entitats amb la funció de còpia, totes les entitats es desaran immediatament",
+    "selectFeatureToCopyMessage": "Seleccioneu les entitats que voleu copiar",
+    "multipleFeatureSaveWarning": "Nota: si es creen diverses entitats amb la funció de còpia, totes les entitats noves es desaran immediatament",
     "copyFeatureUpdateGeometryError": "No es pot actualitzar la geometria de les entitats seleccionades",
     "canNotSaveMultipleFeatureWarning": "Nota: no es poden copiar múltiples característiques utilitzant el mateix valor per a camps de valor únic; seleccioneu només una característica",
     "createOnlyOneMultipartFeatureWarning": "Nota: només es pot crear una característica multipart"
   },
   "addingFeatureError": "Error en afegir les entitats seleccionades a la capa. Torneu-ho a provar.",
-  "addingFeatureErrorCount": "\"${copyFeatureErrorCount}\" entitats no s'han pogut copiar.",
+  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' entitats no s'han pogut copiar. Voleu tornar a provar-ho per a les entitats que falten?",
   "selectingFeatureError": "Error en seleccionar entitats a la capa. Torneu-ho a provar.",
   "customSelectOptionLabel": "Seleccioneu les entitats que voleu copiar",
-  "noFeatureSelectedMessage": "No s'ha seleccionat cap entitat.",
+  "noFeatureSelectedMessage": "No s'ha seleccionat cap entitat",
   "multipleFeatureSaveMessage": "Totes les entitats es desaran immediatament. Voleu continuar?",
   "relativeDates": {
     "dateTypeLabel": "Tipus de data",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "S'ha d'especificar un valor de data o hora per poder desar el valor predefinit per defecte.",
     "customLabel": "Personalitzat",
     "layerLabel": "Capa",
-    "domainFieldHintLabel": "El valor seleccionat és un domini de valor codificat. Es farà servir el valor ${domainValue}"
+    "domainFieldHintLabel": "El valor seleccionat és un domini de valor codificat. Es farà servir el valor \"${domainValue}\""
   },
   "valuePicker": {
     "popupTitle": "Seleccioneu un valor",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Camps necessaris",
     "foundNullRecordCount": "${fieldName} (s'ha trobat en ${count} registres)"
   },
-  "cantLocateUserLocation": "No s’ha pogut determinar la vostra localització"
+  "cantLocateUserLocation": "No s’ha pogut determinar la vostra localització",
+  "tryAgainButtonLabel": "Torna-ho a provar",
+  "copyFeatureFailedPopupTitle": "S'ha"
 });

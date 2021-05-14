@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "所有图层",
-    "title": "选择模板以创建要素",
+    "title": "选择一个模板以创建要素，或在地图上单击一个要素以对其进行编辑",
     "generalSettings": "常规设置",
     "layerSettings": "图层设置",
     "webmapSettingsRadioBtnLabel": "支持 web 地图中的设置",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "保存记录时，可选择从选择集中移除要素。如果是唯一选定记录，面板将切换回模板页面。",
     "useFilterEditor": "使用要素模板过滤器",
     "useFilterEditorTip": "过滤模板选取器可用于查看一个图层模板或按名称搜索模板，可选择使用过滤模板选取器。",
+    "groupFilteredTemplates": "分组搜索结果",
+    "groupFilteredTemplatesTip": "按图层分组搜索结果选项",
     "displayShapeSelector": "显示绘制选项",
     "createNewFeaturesFromExisting": "允许用户从现有要素创建新要素",
     "createNewFeaturesFromExistingTip": "允许用户复制现有要素以创建新要素的选项",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "将群组过滤器中的过滤值应用到预设字段",
     "listenToGroupFilterTip": "在群组过滤器微件中应用过滤器后，在预设值列表中向匹配的字段应用值。",
     "keepTemplateActive": "保持所选模板处于活动状态",
+    "editLayerAddedFromAddData": "允许编辑从“添加数据”微件添加的图层",
+    "editLayerAddedFromAddDataTip": "可以编辑通过“添加数据”微件添加到应用程序中的可编辑图层",
     "keepTemplateActiveTip": "显示模板选取器后，如果之前选择了某一模板，则重新选择该模板。",
     "geometryEditDefault": "默认启用几何编辑",
     "autoSaveEdits": "自动保存新要素",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "切换到多行输入时的值无效",
     "featuresSelectionTolerance": "设置要素选择的容差（以像素为单位）",
     "featuresSelectionToleranceTooltip": "用户只需单击要素即可轻松打开属性编辑面板",
-    "featuresSelectionToleranceErrorMsg": "要素选择容差值无效"
+    "featuresSelectionToleranceErrorMsg": "要素选择容差值无效",
+    "autoSaveAttrUpdates": "自动保存属性更新"
   },
   "editDescriptionPage": {
     "title": "为 <b>${layername}</b> 定义属性概览文本 "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "属性",
     "geocoderHint": "要更改地理编码器，请转至常规设置中的“地理编码器设置”按钮",
     "prevConfigruedFieldChangedMsg": "在当前地理编码器设置中找不到之前配置的属性。 属性已重置为默认值。",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "此工具在与 ArcGIS Online 世界地理编码服务一起使用时会消耗配额。"
   },
   "coordinatesPage": {
     "popupTitle": "坐标",
     "checkboxLabel": "获取坐标",
     "coordinatesSelectTitle": "参考系统",
     "coordinatesAttributeTitle": "属性",
-    "mapSpatialReference": "地图空间参考",
-    "latlong": "纬度/经度",
+    "mapSpatialReferenceOptionLabel": "地图空间参考",
+    "latLongOptionLabel": "纬度/经度",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "已创建所有可能的组",
     "coordinatesSourceTitle": "坐标源",
     "featureLocation": "要素位置",
-    "myLocation": "我的位置"
+    "myLocation": "我的位置",
+    "LatLong": {
+      "y": "纬度",
+      "x": "经度",
+      "xy": "经度 纬度",
+      "yx": "纬度 经度"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "预设",

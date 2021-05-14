@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Smart redigerare",
   "_featureAction_SmartEditor": "Smart redigerare",
   "noEditPrivileges": "Ditt konto har inte behörighet att skapa eller ändra data.",
+  "loginPopupTitle": "Logga in",
+  "loginPopupMessage": "${widgetName} kräver behörigheter och krediter för att slå upp och lagra adressinformation. Vill du logga in och använda den här funktionen?",
+  "noCreditsOrPrivilegeWarningMessage": "Ditt konto saknar behörigheter och krediter för att slå upp och lagra adressinformation med ${widgetName}. Kontakta organisationens administratör för att begära behörigheter och krediter.",
+  "unableToUseLocator": "Lokaliseringsfilen är inte tillgänglig. Adressattributåtgärderna utförs inte.",
+  "locatorDisabledWaning": "Lokaliseringsfilen är inte aktiverad. Kontakta organisationens administratör för att begära denna funktion.",
+  "noFeatureInAIWarning": "Inget geoobjekt har valts. Välj ett geoobjekt för att utföra redigeringar eller klicka för att avbryta och gå tillbaka till huvudskärmen.",
+  "noEditableLayerWarning": "Ditt konto har inte behörighet att skapa eller ändra data, eller så innehåller webbkartan inga redigerbara lager.",
+  "noVisibleCreateLayerWarning": "Lager är ej synliga på aktuell zoomnivå. Zooma in eller ut för att skapa/ändra geoobjekt.",
+  "noVisibleUpdateLayerWarning": "Lager är ej synliga på aktuell zoomnivå. Zooma in eller ut för att ändra geoobjekt.",
+  "checkLayerVisibilityInWebMapWarning": "Kontrollera att lagren är synliga i kartan för att skapa eller ändra geoobjekt.",
+  "showSelectionInAITitle": "Valda geoobjekt",
+  "showSelectionInAIMsg": "Vill du ladda aktuellt urval i ${widgetName}?",
   "widgetActive": "Aktiv",
   "widgetNotActive": "Inte aktiv",
   "pressStr": "Tryck på ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Kopiera geoobjekt",
     "createFeatures": "Skapa geoobjekt",
-    "createSingleFeature": "Skapa 1 multigeometrigeoobjekt",
+    "createSingleFeature": "Skapa ett flerdelat geoobjekt",
+    "createOneSingleFeature": "Skapa geoobjekt",
     "noFeaturesSelectedMessage": "Inga geoobjekt valda",
-    "selectFeatureToCopyMessage": "Välj geoobjekt som ska kopieras.",
-    "multipleFeatureSaveWarning": "Obs! Om du skapar flera geoobjekt med kopieringsfunktionen sparas alla geoobjekt omedelbart",
+    "selectFeatureToCopyMessage": "Välj geoobjekt som ska kopieras",
+    "multipleFeatureSaveWarning": "Obs! Om du skapar flera geoobjekt med kopieringsfunktionen sparas alla nya geoobjekt omedelbart",
     "copyFeatureUpdateGeometryError": "Det gick inte att uppdatera geometrin i valda geoobjekt",
     "canNotSaveMultipleFeatureWarning": "Obs! Det går inte att kopiera flera geoobjekt med samma värde för unika värdefält, välj bara ett geoobjekt",
     "createOnlyOneMultipartFeatureWarning": "Obs! Det går bara att skapa ett flerdelat geoobjekt"
   },
   "addingFeatureError": "Det uppstod ett fel medan valda geoobjekt lades till i lagret. Försök igen.",
-  "addingFeatureErrorCount": "${copyFeatureErrorCount} geoobjekt gick inte att kopiera.",
+  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' geoobjekt gick inte att kopiera. Vill du försöka igen för saknade geoobjekt?",
   "selectingFeatureError": "Det uppstod ett fel medan geoobjekt valdes i lagret. Försök igen.",
   "customSelectOptionLabel": "Välj geoobjekten som ska kopieras",
-  "noFeatureSelectedMessage": "Inga geoobjekt valda.",
+  "noFeatureSelectedMessage": "Inga geoobjekt har valts",
   "multipleFeatureSaveMessage": "Alla geoobjekt sparas omedelbart. Vill du fortsätta?",
   "relativeDates": {
     "dateTypeLabel": "Datatyp",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Ett värde för datum eller tid måste anges för att det ska gå att spara det förinställda värdet.",
     "customLabel": "Anpassat",
     "layerLabel": "Lager",
-    "domainFieldHintLabel": "Det valda värdet är en kodad värdedomän. Värde: ${domainValue} kommer att användas"
+    "domainFieldHintLabel": "Det valda värdet är en kodad värdedomän. Värdet: \"${domainValue}\" kommer att användas"
   },
   "valuePicker": {
     "popupTitle": "Välj värde",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Obligatoriska fält",
     "foundNullRecordCount": "${fieldName} (Hittades i ${count} poster)"
   },
-  "cantLocateUserLocation": "Det gick inte att avgöra var du befinner dig"
+  "cantLocateUserLocation": "Det gick inte att avgöra var du befinner dig",
+  "tryAgainButtonLabel": "Försök igen",
+  "copyFeatureFailedPopupTitle": "Oj!"
 });

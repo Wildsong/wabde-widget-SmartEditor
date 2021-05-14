@@ -175,7 +175,7 @@ define(
               lang.mixin(this._fieldValues.Coordinates, data);
               if (this.isGroup) {
                 groupInfo.name = this.groupNameTextBox.get("value");
-                groupInfo.dataType = this.fieldSelector._getSelectedOptionsAttr().label;
+                groupInfo.dataType = this.fieldSelector._getSelectedOptionsAttr().type;
                 groupInfo.attributeInfo = data;
                 groupInfo.appliedOn = this._layerAndFieldsApplyOnObj.getCheckedFields(groupInfo);
                 this.emit("groupInfoUpdated", groupInfo);
@@ -239,14 +239,14 @@ define(
           if (this.coordinatesSavedDataTypes[coordinatesSource].MapSpatialReference.length > 0) {
             options.push(
               {
-                "label": this.nls.coordinatesPage.mapSpatialReference,
+                "label": this.nls.coordinatesPage.mapSpatialReferenceOptionLabel,
                 "value": "MapSpatialReference"
               });
           }
           if (this.coordinatesSavedDataTypes[coordinatesSource].LatLong.length > 0) {
             options.push(
               {
-                "label": this.nls.coordinatesPage.latlong,
+                "label": this.nls.coordinatesPage.latLongOptionLabel,
                 "value": "LatLong"
               });
           }
@@ -261,15 +261,15 @@ define(
         else {
           options.push(
             {
-              "label": this.nls.coordinatesPage.mapSpatialReference,
+              "label": this.nls.coordinatesPage.mapSpatialReferenceOptionLabel,
               "value": "MapSpatialReference"
             }, {
-              "label": this.nls.coordinatesPage.latlong,
-              "value": "LatLong"
-            },{
-              "label": this.nls.coordinatesPage.MGRS,
-              "value": "MGRS"
-            });
+            "label": this.nls.coordinatesPage.latLongOptionLabel,
+            "value": "LatLong"
+          }, {
+            "label": this.nls.coordinatesPage.MGRS,
+            "value": "MGRS"
+          });
         }
         return options;
       },
@@ -285,26 +285,31 @@ define(
         fieldArray = this._getCoordinateSystemOptions(coordinatesSystem);
         coordinatesSource = this.coordinatesSource.get('value');
         array.forEach(fieldArray, lang.hitch(this, function (field) {
+          var label = coordinatesSystem === "MGRS" ? this.nls.coordinatesPage.MGRS :
+            this.nls.coordinatesPage[coordinatesSystem][field.name];
           //In case of group add filed option only when it is not used
           if (this.isGroup) {
             if (this.coordinatesSavedDataTypes[coordinatesSource][coordinatesSystem].indexOf(field.alias) !== -1 ||
               this.coordinatesSavedDataTypes[coordinatesSource].LatLong.indexOf(field.alias) !== -1) {
               fieldOptions.push(
                 {
-                  "label": field.alias || field.name,
-                  "value": field.name
+                  "label": label || field.name,
+                  "value": field.name,
+                  "type": field.alias
                 });
             }
           } else {
             //In case of showing coordinates at layer field,
             //add xy only in case of string type of field
             if (field.name !== "xy" ||
-              (field.name === "xy" && this._fieldType === "esriFieldTypeString")) {
-            fieldOptions.push(
-              {
-                "label": field.alias || field.name,
-                "value": field.name
-              });
+              (field.name === "xy" && this._fieldType === "esriFieldTypeString") || field.name !== "yx" ||
+              (field.name === "yx" && this._fieldType === "esriFieldTypeString")) {
+              fieldOptions.push(
+                {
+                  "label": label || field.name,
+                  "value": field.name,
+                  "type": field.alias
+                });
             }
           }
         }));
@@ -322,11 +327,11 @@ define(
         switch (coordinatesSystem) {
           case "LatLong":
             fieldArray = [{ "name": "y", "alias": "Latitude" }, { "name": "x", "alias": "Longitude" },
-            { "name": "xy", "alias": "Latitude Longitude" }];
+            { "name": "xy", "alias": "Longitude Latitude" }, { "name": "yx", "alias": "Latitude Longitude" }];
             break;
           case "MapSpatialReference":
             fieldArray = [{ "name": "x", "alias": "X" }, { "name": "y", "alias": "Y" },
-            { "name": "xy", "alias": "X Y" }];
+            { "name": "xy", "alias": "X Y" }, { "name": "yx", "alias": "Y X" }];
             break;
           case "MGRS":
             fieldArray = [{ "name": "MGRS", "alias": "MGRS" }];
@@ -341,7 +346,8 @@ define(
       */
       _createLayerFieldsFilter: function () {
         var layerDetails = {};
-        if (this.fieldSelector && (this.fieldSelector.value === "xy" || this.fieldSelector.value === "MGRS")) {
+        if (this.fieldSelector && (this.fieldSelector.value === "xy" || this.fieldSelector.value === "MGRS" ||
+          this.fieldSelector.value === "yx")) {
           array.forEach(this._totalLayers, lang.hitch(this, function (layer) {
             if (!layer.isTable) {
               layerDetails[layer.id] = {};

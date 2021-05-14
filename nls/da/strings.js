@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Smart-redigering",
   "_featureAction_SmartEditor": "Smart-redigering",
   "noEditPrivileges": "Din konto har ikke rettigheder til at oprette eller redigere data.",
+  "loginPopupTitle": "Log ind",
+  "loginPopupMessage": "${widgetName} kræver tilladelser og credits at slå adresseoplysninger op og gemme dem. Ønsker du at logge ind og bruge denne funktion?",
+  "noCreditsOrPrivilegeWarningMessage": "Din konto har ikke tilladelser og credits til at slå adresseoplysninger op og gemme dem${widgetName}. Kontakt din organisations administrator for at anmode om tilladelser og credits.",
+  "unableToUseLocator": "Lokator er ikke tilgængelig. Attributhandling(er) for adresser udføres ikke.",
+  "locatorDisabledWaning": "Lokator er ikke aktiveret. Kontakt din organisations administrator for at anmode om denne funktion.",
+  "noFeatureInAIWarning": "Ingen objekt(er) valgt. Vælg det objekt, der skal redigeres, eller klik på annullér for at vende tilbage til hovedskærmen.",
+  "noEditableLayerWarning": "Din konto har ikke rettigheder til at oprette eller redigere data, eller også indeholder webkortet ikke nogen redigérbare lag.",
+  "noVisibleCreateLayerWarning": "Lag er ikke synlige ved det aktuelle zoomniveau. Zoom ind eller ud for at oprette/redigere objekter.",
+  "noVisibleUpdateLayerWarning": "Lag er ikke synlige ved det aktuelle zoomniveau. Zoom ind eller ud for at redigere objekter.",
+  "checkLayerVisibilityInWebMapWarning": "Sørg for at lag er synlige på kortet, så du kan oprette eller ændre objekter.",
+  "showSelectionInAITitle": "Valgte objekter",
+  "showSelectionInAIMsg": "Vil du hente den aktuelle udvælgelse i ${widgetName}?",
   "widgetActive": "Aktiv",
   "widgetNotActive": "Ikke aktiv",
   "pressStr": "Tryk ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Kopiér objekter",
     "createFeatures": "Opret objekter",
-    "createSingleFeature": "Opret 1 Multigeometri-objekt",
+    "createSingleFeature": "Opret 1 Multi-del-objekt",
+    "createOneSingleFeature": "Opret objekt",
     "noFeaturesSelectedMessage": "Ingen funktioner valgt",
     "selectFeatureToCopyMessage": "Vælg de objekter, der skal kopieres.",
-    "multipleFeatureSaveWarning": "Bemærk: Hvis du opretter flere objekter ved at kopiere dem, gemmes alle objekterne med det samme.",
+    "multipleFeatureSaveWarning": "Bemærk: Hvis du opretter flere objekter via funktionen kopiér, gemmes alle de nye objekter med det samme.",
     "copyFeatureUpdateGeometryError": "Kan ikke opdatere geometri for valgte objekter.",
     "canNotSaveMultipleFeatureWarning": "Bemærk: Kan ikke kopiere flere objekter ved hjælp af den samme værdi for unikke værdifelter, vælg kun ét objekt",
     "createOnlyOneMultipartFeatureWarning": "Bemærk: Der kan kun oprettes et multipart-objekt"
   },
   "addingFeatureError": "Fejl under tilføjelse af valgte objekter i laget. Prøv igen.",
-  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' objekter kunne ikke kopieres.",
+  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' objekt(er) kunne ikke kopieres. Vil du prøve at kopiere de manglende objekt(er) igen?",
   "selectingFeatureError": "Fejl under valg af objekter i laget. Prøv igen.",
   "customSelectOptionLabel": "Vælg objekter, der skal kopieres",
-  "noFeatureSelectedMessage": "Ingen funktioner valgt.",
+  "noFeatureSelectedMessage": "Ingen objekter valgt",
   "multipleFeatureSaveMessage": "Alle objekterne vil blive gemt med det samme. Vil du fortsætte?",
   "relativeDates": {
     "dateTypeLabel": "Datotype",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Der skal angives en værdi for dato eller klokkeslæt for at gemme den forudindstillede standardværdi.",
     "customLabel": "Brugerdefineret",
     "layerLabel": "Lag",
-    "domainFieldHintLabel": "Den valgte værdi er et coded value-domæne. Værdien: ${domainValue} vil blive anvendt"
+    "domainFieldHintLabel": "Den valgte værdi er et coded value-domæne. Værdien: \"${domainValue}\" vil blive anvendt"
   },
   "valuePicker": {
     "popupTitle": "Vælg værdi",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Krævede felter",
     "foundNullRecordCount": "${fieldName} (fundet i ${count} poster)"
   },
-  "cantLocateUserLocation": "Din position kunne ikke fastslås"
+  "cantLocateUserLocation": "Din position kunne ikke fastslås",
+  "tryAgainButtonLabel": "Prøv igen",
+  "copyFeatureFailedPopupTitle": "Ups!"
 });

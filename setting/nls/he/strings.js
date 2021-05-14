@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "כל השכבות",
-    "title": "בחר תבנית בכדי ליצור ישויות",
+    "title": "בחר תבנית כדי ליצור ישויות או לחץ על ישות במפה כדי לערוך אותה",
     "generalSettings": "הגדרות כלליות",
     "layerSettings": "הגדרות שכבה",
     "webmapSettingsRadioBtnLabel": "פעל בהתאם להגדרות במפת האינטרנט",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "אפשרות להסרת הישות מהבחירה שנקבעה בעת שמירת הרשומה. אם זו הרשומה היחידה שנבחרה, החלונית חוזרת לדף התבניות.",
     "useFilterEditor": "השתמש בפילטר של תבניות ישות",
     "useFilterEditorTip": "אפשרות להשתמש בבורר תבניות הסינון שמאפשר להציג תבנית של שכבה יחידה או לחפש תבניות לפי שם.",
+    "groupFilteredTemplates": "קיבוץ תוצאות חיפוש",
+    "groupFilteredTemplatesTip": "אפשרות לקבץ את תוצאות החיפוש לפי שכבה.",
     "displayShapeSelector": "הצג אפשרויות שרטוט",
     "createNewFeaturesFromExisting": "אפשר למשתמש ליצור ישויות חדשות מישויות קיימות",
     "createNewFeaturesFromExistingTip": "אפשרות שהמשתמש יוכל להעתיק ישות קיימת וליצור ישויות חדשות",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "החל ערכי מסננים מהווידג'ט 'מסנן קבוצתי' על השדות המוגדרים מראש",
     "listenToGroupFilterTip": "כאשר מסנן מיושם בווידג'ט 'מסנן קבוצתי', החל את הערך על שדה תואם ברשימת הערכים המוגדרים מראש.",
     "keepTemplateActive": "השאר את התבנית שנבחרה במצב פעיל",
+    "editLayerAddedFromAddData": "אפשר עריכה של שכבות שנוספו מווידג'ט הוספת הנתונים",
+    "editLayerAddedFromAddDataTip": "ניתן לערוך את השכבות המאפשרות עריכה שנוספו לאפליקציה באמצעות ווידג'ט הוספת הנתונים",
     "keepTemplateActiveTip": "כאשר בורר התבניות מוצג, אם תבנית מסוימת נבחרה קודם לכן, בחר אותה מחדש.",
     "geometryEditDefault": "הפעל עריכת גיאומטריה כברירת מחדל",
     "autoSaveEdits": "שמור ישויות חדשות באופן אוטומטי",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "ערך לא חוקי במעבר לקלט מרובה קווים",
     "featuresSelectionTolerance": "הגדר את הטולרנס לצורך בחירת ישויות (פיקסלים)",
     "featuresSelectionToleranceTooltip": "מאפשר למשתמשים לפתוח בקלות את חלונית עריכת התכונות על ידי לחיצה על הישות",
-    "featuresSelectionToleranceErrorMsg": "ערך לא חוקי של טולרנס לבחירת ישויות"
+    "featuresSelectionToleranceErrorMsg": "ערך לא חוקי של טולרנס לבחירת ישויות",
+    "autoSaveAttrUpdates": "שמור עדכוני תכונות באופן אוטומטי"
   },
   "editDescriptionPage": {
     "title": "הגדר טקסט סקירה כללית לישויות עבור <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "מאפיין",
     "geocoderHint": "כדי לבצע שינויים בכלי לעיגון כתובות, לחץ על הלחצן 'הגדרות הכלי לעיגון כתובות' בהגדרות הכלליות",
     "prevConfigruedFieldChangedMsg": "מאפיין שהוגדר קודם לא נמצא בהגדרות הנוכחיות של הכלי לעיגון כתובות. בוצע איפוס של המאפיין לברירת המחדל.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "כלי זה צורך קרדיטים בעת השימוש עם שירות עיגון הכתובות העולמי של ArcGIS Online."
   },
   "coordinatesPage": {
     "popupTitle": "קואורדינטות",
     "checkboxLabel": "קבל קואורדינטות",
     "coordinatesSelectTitle": "מערכת ייחוס",
     "coordinatesAttributeTitle": "מאפיין",
-    "mapSpatialReference": "ייחוס מרחבי של מפה",
-    "latlong": "קו רוחב/אורך",
+    "mapSpatialReferenceOptionLabel": "ייחוס מרחבי של מפה",
+    "latLongOptionLabel": "קו רוחב/אורך",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "כל הקבוצות האפשריות כבר נוצרו",
     "coordinatesSourceTitle": "מקור הקואורדינטות",
     "featureLocation": "מיקום ישויות",
-    "myLocation": "המיקום שלי"
+    "myLocation": "המיקום שלי",
+    "LatLong": {
+      "y": "קו רוחב",
+      "x": "קו אורך",
+      "xy": "קו אורך קו רוחב",
+      "yx": "קו רוחב קו אורך"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "קבוע מראש",

@@ -177,7 +177,11 @@
                             <label class="checkLabel" for="useFilterEditor" title="${nls.layersPage.useFilterEditorTip}">${nls.layersPage.useFilterEditor}</label>
 
                         </div>
-
+                        <div class="checkOption" style="text-indent: 25px;">
+                            <input class="check" data-dojo-attach-point="groupFilteredTemplates" id="groupFilteredTemplates"
+                                data-dojo-type="dijit/form/CheckBox" title="${nls.layersPage.groupFilteredTemplatesTip}" />
+                            <label class="checkLabel" for="groupFilteredTemplates" title="${nls.layersPage.groupFilteredTemplatesTip}">${nls.layersPage.groupFilteredTemplates}</label>
+                        </div>
                         <div class="checkOption">
 
                             <input class="check" data-dojo-attach-point="keepTemplateSelected" id="keepTemplateSelected"
@@ -191,6 +195,11 @@
                                 title="${nls.layersPage.listenToGroupFilterTip}" />
                             <label class="checkLabel" for="listenToGF" title="${nls.layersPage.listenToGroupFilterTip}">${nls.layersPage.listenToGroupFilter}</label>
 
+                        </div>
+                        <div class="checkOption">
+                            <input class="check" data-dojo-attach-point="editAddDataLayers" id="editAddDataLayers" data-dojo-type="dijit/form/CheckBox"
+                                title="${nls.layersPage.editLayerAddedFromAddDataTip}" />
+                            <label class="checkLabel" for="editAddDataLayers" title="${nls.layersPage.editLayerAddedFromAddDataTip}">${nls.layersPage.editLayerAddedFromAddData}</label>
                         </div>
 
 
@@ -239,6 +248,13 @@
                             <input class="check" data-dojo-attach-point="autoSaveEdits" id="autoSaveEdits"
                                 data-dojo-type="dijit/form/CheckBox" title="${nls.layersPage.autoSaveEdits}" />
                             <label class="checkLabel" for="autoSaveEdits" title="${nls.layersPage.autoSaveEdits}">${nls.layersPage.autoSaveEdits}</label>
+
+                        </div>
+                        <div class="checkOption">
+
+                            <input class="check" data-dojo-attach-point="autoSaveAttrUpdates" id="autoSaveAttrUpdates"
+                                data-dojo-type="dijit/form/CheckBox" title="${nls.layersPage.autoSaveAttrUpdates}" />
+                            <label class="checkLabel" for="autoSaveAttrUpdates" title="${nls.layersPage.autoSaveAttrUpdates}">${nls.layersPage.autoSaveAttrUpdates}</label>
 
                         </div>
 

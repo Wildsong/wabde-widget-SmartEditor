@@ -42,7 +42,8 @@
     width: calc(100% - 4px);
 }
 
-.jimu-widget-smartEditor-setting .dijitEditorIFrameContainer {
+.jimu-widget-smartEditor-setting .dijitEditorIFrameContainer,
+.jimu-widget-smartEditor-edit-description .dijitEditorIFrameContainer {
     background-color: #ffffff;
     border: none !important;
     width: 100% !important;
@@ -349,6 +350,12 @@ jimu-widget-smartEditor-setting a.attDescrip:hover {
     height: calc(100% - 65px);
 }
 
+/* Increase the height to prevent text from cutting below */
+
+.jimu-widget-smartEditor-filter-page .jimu-single-filter .dijit-form-Select>tbody>tr>td>.dijitButtonText {
+    height: 22px !important;
+}
+
 
 /* New Classes*/
 
@@ -507,6 +514,9 @@ jimu-widget-smartEditor-setting a.attDescrip:hover {
 
 .jimu-rtl .jimu-widget-smartEditor-setting-address .esriCTGroupInfoContainer {
     float: left
+}
+.jimu-widget-smartEditor-setting-address .esriCTCreditWarningContainer {
+    font-size: 13px;
 }
 
 .jimu-widget-smartEditor-setting-intersection .esriCTDataTypeDropdown .dijitSelectLabel {
@@ -1645,4 +1655,45 @@ jimu-widget-smartEditor-setting a.attDescrip:hover {
     overflow-y: auto;
     clear: both;
     height: 142px;
+}
+
+.claro .dijitSelectLabel {
+    text-overflow: ellipsis;
+    text-align: justify;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+/* data type select in intersection popup, data type select in preset popup,
+Default intersection tolerance for all features select in general settings */
+.jimu-widget-smartEditor-setting-intersection .esriCTGroupInfoContainer .dijitSelectLabel,
+.jimu-widget-smartEditor-setting-presetPopup .esriCTPresetPopupdijitWrapper .dijitSelectLabel,
+.jimu-widget-smartEditor-setting  .esriCTGlobalToleranceDropbox .dijitSelectLabel {
+    width: 175px;
+}
+
+/* data type select in address popup at group level, data type select in coordinates popup at group level */
+.jimu-widget-smartEditor-setting-address .esriCTAddressWidth .esriCTGroupInfoContainer .dijitSelectLabel,
+.jimu-widget-smartEditor-setting-coordinates .esriCTCoordinateWidth .esriCTWrapper .dijitSelectLabel {
+    width: 200px;
+}
+
+/* Field select in select value popup */
+.jimu-widget-smartEditor-setting-chooseFromLayer .esriCTPopupSelect .dijitSelectLabel {
+    width: 255px;
+}
+
+/* Tolerance Unit select in Tolerance settings */
+.jimu-widget-smartEditor-setting-intersection .esriCTpopupFieldContent .dijitSelectLabel {
+    width: 160px;
+}
+
+/* data type select in coordinates popup at field level */
+.jimu-widget-smartEditor-setting-coordinates .esriCTFullWidth .esriCTWrapper .dijitSelectLabel {
+    width: 165px;
+}
+
+/* data type select in address popup at field level */
+.jimu-widget-smartEditor-setting-address .esriCTFullWidth .esriCTGroupInfoContainer .dijitSelectLabel {
+    width: 275px;
 }

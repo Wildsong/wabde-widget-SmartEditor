@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "智能编辑器",
   "_featureAction_SmartEditor": "智能编辑器",
   "noEditPrivileges": "您的帐户不具备创建或修改数据的权限。",
+  "loginPopupTitle": "登录",
+  "loginPopupMessage": "${widgetName} 需要权限和配额以查找和存储地址信息。 是否登录以使用此功能?",
+  "noCreditsOrPrivilegeWarningMessage": "您的账户不具有使用 ${widgetName} 查找和存储地址信息所需的权限和配额。 请联系您的组织管理员，以请求权限和积分。",
+  "unableToUseLocator": "定位器无法访问。 将不会执行地址属性操作。",
+  "locatorDisabledWaning": "未启用定位器。 请联系您的组织管理员，以请求此功能。",
+  "noFeatureInAIWarning": "未选中要素。 请选择要执行编辑的要素，或单击“取消”返回至主屏幕。",
+  "noEditableLayerWarning": "您的帐户无权创建或修改数据，或者此 web 地图不包含任何可编辑图层。",
+  "noVisibleCreateLayerWarning": "该图层在当前缩放级别不可见。 缩放以创建/修改要素。",
+  "noVisibleUpdateLayerWarning": "该图层在当前缩放级别不可见。 缩放以修改要素。",
+  "checkLayerVisibilityInWebMapWarning": "确保图层在地图上可见以创建或修改要素。",
+  "showSelectionInAITitle": "所选要素",
+  "showSelectionInAIMsg": "是否要在 ${widgetName} 中加载当前选择?",
   "widgetActive": "激活",
   "widgetNotActive": "不激活",
   "pressStr": "按 ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "复制要素",
     "createFeatures": "创建要素",
-    "createSingleFeature": "创建 1 个多几何要素",
+    "createSingleFeature": "创建 1 个多部分要素",
+    "createOneSingleFeature": "创建要素",
     "noFeaturesSelectedMessage": "未选择任何要素",
-    "selectFeatureToCopyMessage": "请选择要复制的要素。",
-    "multipleFeatureSaveWarning": "注意：使用复制功能创建多个要素将立即保存所有要素",
+    "selectFeatureToCopyMessage": "请选择要复制的要素",
+    "multipleFeatureSaveWarning": "注意：使用复制功能创建多个要素将立即保存所有新要素",
     "copyFeatureUpdateGeometryError": "无法更新所选要素的几何。",
     "canNotSaveMultipleFeatureWarning": "注：针对唯一值字段，无法使用相同的值复制多个要素，请仅选择一个要素",
     "createOnlyOneMultipartFeatureWarning": "注：只能创建一个多部分要素"
   },
   "addingFeatureError": "在图层中添加选定要素时出错。 请重试。",
-  "addingFeatureErrorCount": "无法复制 '${copyFeatureErrorCount}' 要素。",
+  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' 个要素复制失败。 是否重新尝试缺少的要素?",
   "selectingFeatureError": "选择图层中的要素时出错。 请重试。",
   "customSelectOptionLabel": "选择要复制的要素",
-  "noFeatureSelectedMessage": "未选择任何要素。",
+  "noFeatureSelectedMessage": "未选择要素",
   "multipleFeatureSaveMessage": "所有要素都将立即保存。 是否要继续?",
   "relativeDates": {
     "dateTypeLabel": "日期类型",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "必须指定日期或时间值才能保存默认预设值。",
     "customLabel": "自定义安装",
     "layerLabel": "图层",
-    "domainFieldHintLabel": "所选值为编码值属性域。 值 - 将使用 ${domainValue}。"
+    "domainFieldHintLabel": "所选值为编码值属性域。 将使用值：\"${domainValue}\""
   },
   "valuePicker": {
     "popupTitle": "选择值",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "所需字段",
     "foundNullRecordCount": "${fieldName} (位于 ${count} 个记录中)"
   },
-  "cantLocateUserLocation": "无法确定您的位置"
+  "cantLocateUserLocation": "无法确定您的位置",
+  "tryAgainButtonLabel": "请重试",
+  "copyFeatureFailedPopupTitle": "糟糕!"
 });

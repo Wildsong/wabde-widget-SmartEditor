@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Viedā rediģēšana",
   "_featureAction_SmartEditor": "Viedā rediģēšana",
   "noEditPrivileges": "Jūsu kontam nav piešķirta atļauja izveidot vai modificēt datus.",
+  "loginPopupTitle": "Pierakstīties",
+  "loginPopupMessage": "Lai meklētu un saglabātu adreses informāciju, ${widgetName} nepieciešamas atļaujas un servisa kredīti. Vai vēlaties pierakstīties un izmantot šo iespēju?",
+  "noCreditsOrPrivilegeWarningMessage": "Jūsu kontam nav atļauju un servisa kredītu, lai meklētu un saglabātu adreses informāciju, izmantojot ${widgetName}. Lai pieprasītu atļaujas un servisa kredītus, sazinieties ar savas organizācijas administratoru.",
+  "unableToUseLocator": "Meklētājs nav pieejams. Adreses atribūtu darbības netiks veiktas.",
+  "locatorDisabledWaning": "Meklētājs nav iespējots. Lai izmantotu šo iespēju, sazinieties ar savas organizācijas administratoru.",
+  "noFeatureInAIWarning": "Nav atlasīts neviens elements. Lūdzu, atlasiet elementu, lai veiktu rediģēšanu, vai noklikšķiniet uz Atcelt, lai atgrieztos galvenajā ekrānā.",
+  "noEditableLayerWarning": "Jūsu kontam nav atļaujas izveidot vai mainīt datus, vai arī šajā tīmekļa kartē nav neviena rediģējama slāņa.",
+  "noVisibleCreateLayerWarning": "Slāņi pašreizējā tālummaiņas līmenī nav redzami. Tuviniet vai tāliniet, lai izveidotu/mainītu elementus.",
+  "noVisibleUpdateLayerWarning": "Slāņi pašreizējā tālummaiņas līmenī nav redzami. Tuviniet vai tāliniet, lai mainītu elementus.",
+  "checkLayerVisibilityInWebMapWarning": "Pārliecinieties, vai kartē ir redzami slāņi, lai izveidotu vai mainītu elementus.",
+  "showSelectionInAITitle": "Atlasītie elementi",
+  "showSelectionInAIMsg": "Vai vēlaties ielādēt pašreizējo atlasi ${widgetName}?",
   "widgetActive": "Aktīvs",
   "widgetNotActive": "Neaktīvs",
   "pressStr": "Nospiediet ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Kopēt elementus",
     "createFeatures": "Izveidot elementus",
-    "createSingleFeature": "Izveidot vienu vairākdaļu ģeometrijas elementu",
+    "createSingleFeature": "Izveidot 1 vairākdaļu elementu",
+    "createOneSingleFeature": "Izveidot elementu",
     "noFeaturesSelectedMessage": "Nav atlasītu elementu",
-    "selectFeatureToCopyMessage": "Lūdzu, atlasiet kopējamos elementus.",
-    "multipleFeatureSaveWarning": "Piezīme. Ja veidosit vairākdaļu elementus, izmantojot elementu kopēšanu, visi elementi tiks saglabāti uzreiz",
+    "selectFeatureToCopyMessage": "Lūdzu, atlasiet elementus kopēšanai",
+    "multipleFeatureSaveWarning": "Piezīme. Ja veidosiet vairākdaļu elementus, izmantojot kopēšanas funkciju, visi elementi tiks uzreiz saglabāti",
     "copyFeatureUpdateGeometryError": "Nevar atjaunināt atlasīto elementu ģeometriju",
     "canNotSaveMultipleFeatureWarning": "Piezīme. Nevar kopēt vairākus elementus, izmantojot vienu un to pašu vērtību unikāliem vērtību laukiem. Lūdzu, atlasiet tikai vienu elementu.",
     "createOnlyOneMultipartFeatureWarning": "Piezīme. Var izveidot tikai vienu vairākdaļu elementu"
   },
   "addingFeatureError": "Pievienojot izvēlētos elementus slānim, radās kļūda. Lūdzu, mēģiniet vēlreiz.",
-  "addingFeatureErrorCount": "Neizdevās nokopēt “${copyFeatureErrorCount}” elementus.",
+  "addingFeatureErrorCount": "Neizdevās nokopēt “${copyFeatureErrorCount}” elementu(s). Vai vēlaties mēģināt vēlreiz trūkstošajiem elementiem?",
   "selectingFeatureError": "Izvēloties elementus slānī, radās kļūda. Lūdzu, mēģiniet vēlreiz.",
   "customSelectOptionLabel": "Izvēlēties elementus, kas jākopē",
-  "noFeatureSelectedMessage": "Nav izvēlēts neviens elements.",
+  "noFeatureSelectedMessage": "Nav atlasīts neviens elements",
   "multipleFeatureSaveMessage": "Visi elementi tiks nekavējoties saglabāti. Vai vēlaties turpināt?",
   "relativeDates": {
     "dateTypeLabel": "Datuma veids",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Lai saglabātu iepriekš iestatīto noklusējuma vērtību, jānorāda datuma un laika vērtība.",
     "customLabel": "Pielāgots",
     "layerLabel": "Slānis",
-    "domainFieldHintLabel": "Atlasītā vērtība ir kodētas vērtības domēns. Vērtība: tiks izmantots “${domainValue}”"
+    "domainFieldHintLabel": "Atlasītā vērtība ir kodētas vērtības domēns. Tiks izmantota vērtība: “${domainValue}”"
   },
   "valuePicker": {
     "popupTitle": "Izvēlēties vērtību",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Obligāti aizpildāmie lauki",
     "foundNullRecordCount": "${fieldName} (atrasts ${count} ierakstos)"
   },
-  "cantLocateUserLocation": "Jūsu atrašanās vietu nevarēja noteikt"
+  "cantLocateUserLocation": "Jūsu atrašanās vietu nevarēja noteikt",
+  "tryAgainButtonLabel": "Mēģiniet vēlreiz",
+  "copyFeatureFailedPopupTitle": "Ak vai!"
 });

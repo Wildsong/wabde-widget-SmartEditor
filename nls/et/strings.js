@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Nutikas redaktor",
   "_featureAction_SmartEditor": "Nutikas redaktor",
   "noEditPrivileges": "Teie kontol puudub andmete loomise või muutmise õigus.",
+  "loginPopupTitle": "Logi sisse",
+  "loginPopupMessage": "${widgetName} nõuab aadressiteabe otsimiseks ja salvestamiseks õigusi ja krediite. Kas soovite sisse logida ja seda võimalust kasutada?",
+  "noCreditsOrPrivilegeWarningMessage": "Teie kontol pole lubasid ja krediite, et otsida ja salvestada aadressiteavet vidinaga ${widgetName}. Õiguste ja krediitide taotlemiseks võtke ühendust oma organisatsiooni administraatoriga.",
+  "unableToUseLocator": "Lokaator pole juurdepääsetav. Aadressi atribuudi toimingut (toiminguid) ei teostata.",
+  "locatorDisabledWaning": "Lokaator pole aktiveeritud. Selle funktsiooni taotlemiseks pöörduge oma organisatsiooni administraatori poole.",
+  "noFeatureInAIWarning": "Objekti (objekte) pole valitud. Muudatuste tegemiseks valige objekt või peakuvale naasmiseks klõpsake Tühista.",
+  "noEditableLayerWarning": "Teie kontol pole õigust andmeid luua või muuta või see veebikaart ei sisalda muudetavaid kihte.",
+  "noVisibleCreateLayerWarning": "Kiht (kihid) pole praegusel suumitasemel nähtav(ad). Objektide loomiseks/muutmiseks suurendage või vähendage kuva.",
+  "noVisibleUpdateLayerWarning": "Kiht (kihid) pole praegusel suumitasemel nähtav(ad). Objektide muutmiseks suurendage või vähendage kuva.",
+  "checkLayerVisibilityInWebMapWarning": "Objektide loomiseks või muutmiseks veenduge, et kihid on kaardil nähtavad.",
+  "showSelectionInAITitle": "Valitud objektid",
+  "showSelectionInAIMsg": "Kas soovite praeguse valiku vidinas ${widgetName}laadida?",
   "widgetActive": "Aktiivne",
   "widgetNotActive": "Pole aktiivne",
   "pressStr": "Snäppimise võimaldamiseks ",
@@ -63,18 +75,19 @@ define({
     "title": "Kopeeri objektid",
     "createFeatures": "Loo objektid",
     "createSingleFeature": "Loo üks mitmeosalise geomeetriaga objekt",
+    "createOneSingleFeature": "Loo objekt",
     "noFeaturesSelectedMessage": "Objekte pole valitud",
-    "selectFeatureToCopyMessage": "Kopeerimiseks valige objektid.",
-    "multipleFeatureSaveWarning": "Märkus: mitme objekti loomisel kopeerimisfunktsiooniga salvestatakse kõik objektid kohe",
+    "selectFeatureToCopyMessage": "Valige kopeeritavad objektid",
+    "multipleFeatureSaveWarning": "Märkus: Mitme objekti loomisel kopeerimisfunktsiooni abil salvestatakse uued objektid kohe",
     "copyFeatureUpdateGeometryError": "Valitud objektide geomeetriat ei saa uuendada",
     "canNotSaveMultipleFeatureWarning": "Märkus. Kordumatutele väärtuseväljadele ei saa sama väärtuse abil kopeerida mitut objekti. Valige ainult üks objekt",
     "createOnlyOneMultipartFeatureWarning": "Märkus. Luua saab ainult ühe mitmeosalise objekti"
   },
   "addingFeatureError": "Viga valitud objektide kihile lisamisel. Palun proovige uuesti",
-  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' objekti ei õnnestunud kopeerida.",
+  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' objekti kopeerimine nurjus. Kas soovite puuduva(te) objekti(de) puhul proovida uuesti?",
   "selectingFeatureError": "Viga objektide valimisel kihis. Palun proovige uuesti",
   "customSelectOptionLabel": "Valige kopeeritavad objektid",
-  "noFeatureSelectedMessage": "Objekte ei ole valitud.",
+  "noFeatureSelectedMessage": "Objekte pole valitud",
   "multipleFeatureSaveMessage": "Kõik objektid salvestatakse kohe. Kas soovite jätkata?",
   "relativeDates": {
     "dateTypeLabel": "Kuupäeva tüüp",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Eelseadistatud vaikeväärtuse salvestamiseks tuleb määrata kuupäeva või kellaaja väärtus.",
     "customLabel": "Kohandatud",
     "layerLabel": "Kiht",
-    "domainFieldHintLabel": "Valitud väärtus on kodeeritud väärtuse domeen. Kasutatakse väärtust ${domainValue}"
+    "domainFieldHintLabel": "Valitud väärtus on kodeeritud väärtuse domeen. Kasutatakse väärtust: \"${domainValue}\""
   },
   "valuePicker": {
     "popupTitle": "Vali väärtus",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Nõutavad väljad",
     "foundNullRecordCount": "${fieldName} (Leitud ${count} kirjel)"
   },
-  "cantLocateUserLocation": "Teie asukohta ei saanud määrata"
+  "cantLocateUserLocation": "Teie asukohta ei saanud määrata",
+  "tryAgainButtonLabel": "Proovi uuesti",
+  "copyFeatureFailedPopupTitle": "Oih!"
 });

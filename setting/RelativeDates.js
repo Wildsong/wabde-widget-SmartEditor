@@ -20,6 +20,8 @@ define(
         'dojo/dom-style',
         'dojo/string',
         'dojo/dom-attr',
+        "../utils",
+        "dojo/_base/kernel",
         "dijit/form/DateTextBox",
         "dijit/form/TimeTextBox",
         "dijit/form/NumberTextBox",
@@ -46,8 +48,9 @@ define(
         array,
         domStyle,
         string,
-        domAttr
-
+        domAttr,
+        editUtils,
+        kernel
     ) {
         return declare([BaseWidgetSetting, Evented, _WidgetsInTemplateMixin], {
             baseClass: "jimu-widget-smartEditor-setting-relativeDates",
@@ -645,12 +648,24 @@ define(
                         selectedValue = this.valueProvider.getPartObject().valueObj.value;
                     } else if (this.valueProvider.checkedNameDiv.innerHTML !== "- empty -" && this.initialValue) {
                         //we just open the popup and click ok without changing anything
-                        //then current displying value will be the seletected value 
+                        //then current displayed value will be the selected value 
                         selectedValue = this.initialValue;
                     } else {
-                        selectedValue = ""
+                        selectedValue = "";
                     }
-
+                    if (kernel.locale === "ar" && this.layerSelector) {
+                        var fieldInfo, date, field, item;
+                        item = this.layerSelector.getSelectedItem();
+                        if (item) {
+                            fieldInfo = editUtils.getFieldInfosFromWebmap(item.layerInfo);
+                            field = presetUtils.getFieldInfoByFieldName(fieldInfo, this.fieldsDropdown.getValue());
+                            //If date field is selected then only proceed
+                            if (field.type === "esriFieldTypeDate") {
+                                date = jimuUtils.getDateByDateTimeStr(selectedValue);
+                                selectedValue = jimuUtils.localizeDateTimeByFieldInfo(date, field);
+                            }
+                        }
+                    }
                     //emit the selected value
                     return {
                         layerId: this.layerSelector.getSelectedItem().layerInfo.layerObject.id,

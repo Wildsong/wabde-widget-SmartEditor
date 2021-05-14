@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Smart redigering",
   "_featureAction_SmartEditor": "Smart redigering",
   "noEditPrivileges": "Kontoen har ikke rettigheter til å opprette eller endre data.",
+  "loginPopupTitle": "Logg på",
+  "loginPopupMessage": "${widgetName} krever tillatelser og credits for å slå opp og lagre adresseinformasjon. Vil du logge på og bruke denne funksjonen?",
+  "noCreditsOrPrivilegeWarningMessage": "Kontoen din har ikke tillatelser og credits som kreves for å slå opp og lagre adresseinformasjon med ${widgetName}. Kontakt organisasjonens administrator for å be om tillatelser og credits.",
+  "unableToUseLocator": "Lokator er ikke tilgjengelig. Adresseattributthandlingen(e) kan ikke utføres.",
+  "locatorDisabledWaning": "Lokator er ikke aktivert. Kontakt organisasjonens administrator for å be om denne funksjonen.",
+  "noFeatureInAIWarning": "Ingen geoobjekt(er) er valgt. Velg et geoobjekt for å redigere, eller klikk på Avbryt for å gå tilbake til hovedskjermen.",
+  "noEditableLayerWarning": "Kontoen din har ikke tillatelse til å opprette eller endre data, eller det kan hende dette webkartet ikke inneholder lag som kan redigeres.",
+  "noVisibleCreateLayerWarning": "Laget/lagene er ikke synlige med nåværende zoomnivå. Zoom inn eller ut for å opprette/endre geoobjekter.",
+  "noVisibleUpdateLayerWarning": "Laget/lagene er ikke synlige med nåværende zoomnivå. Zoom inn eller ut for å endre geoobjekter.",
+  "checkLayerVisibilityInWebMapWarning": "Sørg for at lagene er synlige i kartet når du skal opprette eller endre geoobjekter.",
+  "showSelectionInAITitle": "Valgte geoobjekter",
+  "showSelectionInAIMsg": "Vil du laste inn gjeldende utvalg i ${widgetName}?",
   "widgetActive": "Aktiv",
   "widgetNotActive": "Ikke aktiv",
   "pressStr": "Trykk på ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Kopier geoobjekter",
     "createFeatures": "Opprett geoobjekter",
-    "createSingleFeature": "Opprett ett geoobjekt med flerdelt geometri",
+    "createSingleFeature": "Opprett ett geoobjekt med flere deler",
+    "createOneSingleFeature": "Opprett geoobjekt",
     "noFeaturesSelectedMessage": "Ingen geoobjekter valgt",
-    "selectFeatureToCopyMessage": "Velg geoobjekter som skal kopieres.",
-    "multipleFeatureSaveWarning": "Merk: Hvis du oppretter flere geoobjekter med kopifunksjonen, lagres alle geoobjektene umiddelbart",
+    "selectFeatureToCopyMessage": "Velg geoobjekter som skal kopieres",
+    "multipleFeatureSaveWarning": "Merk: Hvis du oppretter flere geoobjekter med kopifunksjonen, lagres alle de nye geoobjektene umiddelbart.",
     "copyFeatureUpdateGeometryError": "Kan ikke oppdatere geometrien i de valgte geoobjektene",
     "canNotSaveMultipleFeatureWarning": "Merk: Kan ikke kopiere flere geoobjekter med samme verdi i unike verdifelt. Velg bare ett geoobjekt.",
     "createOnlyOneMultipartFeatureWarning": "Merk: Bare ett geoobjekt med flere deler kan opprettes"
   },
   "addingFeatureError": "Feil under tillegging av valgte geoobjekter i laget. Prøv på nytt.",
-  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' geoobjekter ble ikke kopiert.",
+  "addingFeatureErrorCount": "${copyFeatureErrorCount} geoobjekt(er) ble ikke kopiert. Vil du prøve på nytt for geoobjektet/geoobjektene som mangler?",
   "selectingFeatureError": "Feil under valg av geoobjekter i laget. Prøv på nytt.",
   "customSelectOptionLabel": "Velg geoobjekter som skal kopieres",
-  "noFeatureSelectedMessage": "Ingen geoobjekter er valgt.",
+  "noFeatureSelectedMessage": "Ingen geoobjekter er valgt",
   "multipleFeatureSaveMessage": "Alle geoobjektene blir lagret umiddelbart. Vil du fortsette?",
   "relativeDates": {
     "dateTypeLabel": "Datotype",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Det må angis en verdi for dato og klokkeslett for å kunne lagre standardverdien for forhåndsinnstilling.",
     "customLabel": "Tilpasset",
     "layerLabel": "Lag",
-    "domainFieldHintLabel": "Den valgte verdien er et kodet verdiområde. Verdien: ${domainValue} blir brukt"
+    "domainFieldHintLabel": "Den valgte verdien er et kodet verdiområde. Verdien: ${domainValue} brukes"
   },
   "valuePicker": {
     "popupTitle": "Velg verdi",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Obligatoriske felter",
     "foundNullRecordCount": "${fieldName} (Funnet i ${count} poster)"
   },
-  "cantLocateUserLocation": "Kan ikke fastsette lokasjonen din"
+  "cantLocateUserLocation": "Kan ikke fastsette lokasjonen din",
+  "tryAgainButtonLabel": "Prøv på nytt",
+  "copyFeatureFailedPopupTitle": "Ops!"
 });

@@ -18,46 +18,66 @@ define([
   "dojo/_base/declare",
   "dojo/_base/lang",
   'dojo/Deferred',
-  "esri/tasks/locator",
+  "esri/request",
+  'jimu/portalUtils',
+  'jimu/dijit/Message',
   "dijit/_WidgetBase"
 ],
   function (
     declare,
     lang,
     Deferred,
-    Locator,
+    esriRequest,
+    portalUtils,
+    Message,
     _WidgetBase
   ) {
     return declare([_WidgetBase], {
-      _locatorInstance: null,
+      _initialLoad: true,
 
       postCreate: function () {
-        this._initReverseGeocoder();
-      },
-
-      _initReverseGeocoder: function () {
-        if (this.config.geocoderSettings && this.config.geocoderSettings.url) {
-          //create the locator instance to reverse geocode the address
-          this._locatorInstance = new Locator(this.config.geocoderSettings.url);
-        }
       },
 
       locateAddress: function (geometry) {
         var returnDef = new Deferred();
-        if (this._locatorInstance) {
-          this._locatorInstance.locationToAddress(geometry, 100,
-            lang.hitch(this, function (result) {
-              //check if address available
-              if (result && result.address) {
-                result = result.address;
-              }
-              if (returnDef) {
-                returnDef.resolve(result);
-              }
-            }),
-            lang.hitch(this, function () {
-              returnDef.resolve({});
-            }));
+        if (this.canGeocode) {
+          var requestContent = {};
+          requestContent = {
+            f: "json",
+            location: JSON.stringify(geometry),
+            distance: 100,
+            outSR: JSON.stringify(geometry.spatialReference),
+            forStorage: true
+          };
+          //If user token exist, then the esri world geocoder is configured
+          //then pass the token
+          if (this.userToken) {
+            requestContent.token = this.userToken;
+          }
+          esriRequest({
+            url: this.config.geocoderSettings.url + '/reverseGeocode',
+            content: requestContent,
+            callbackParamName: "callback"
+          }).then(lang.hitch(this, function (result) {
+            this._initialLoad = false;
+            //check if address available
+            if (result && result.address) {
+              result = result.address;
+            }
+            if (returnDef) {
+              returnDef.resolve(result);
+            }
+          }), lang.hitch(this, function () {
+            //Show the message only for the first time
+            //when reverse geocoding fails due to any reason
+            if (this._initialLoad) {
+              this._initialLoad = false;
+              new Message({
+                message: this.nls.unableToUseLocator
+              });
+            }
+            returnDef.resolve({});
+          }));
         } else {
           returnDef.resolve({});
         }

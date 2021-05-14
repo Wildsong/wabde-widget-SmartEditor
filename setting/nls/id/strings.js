@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Semua Layer",
-    "title": "Pilih template untuk membuat fitur",
+    "title": "Memilih tempat untuk membuat fitur atau mengeklik fitur pada peta untuk mengeditnya",
     "generalSettings": "Pengaturan Umum",
     "layerSettings": "Pengaturan Layer",
     "webmapSettingsRadioBtnLabel": "Ikuti pengaturan di web map",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Opsi untuk menghapus fitur dari rangkaian pilihan saat catatan disimpan. Jika hanya ini catatan yang dipilih, panel akan kembali ke halaman template.",
     "useFilterEditor": "Gunakan filter template fitur",
     "useFilterEditorTip": "Opsi untuk menggunakan pengambil Template Filter yang menyediakan kemampuan untuk melihat satu template layer atau mencari template menurut nama.",
+    "groupFilteredTemplates": "Hasil pencarian grup",
+    "groupFilteredTemplatesTip": "Opsi hasil pencarian grup berdasarkan layer.",
     "displayShapeSelector": "Tampilkan opsi menggambar",
     "createNewFeaturesFromExisting": "Izinkan pengguna untuk membuat fitur baru dari fitur yang ada",
     "createNewFeaturesFromExistingTip": "Opsi untuk mengizinkan pengguna menyalin fitur yang ada untuk membuat fitur-fitur baru",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Terapkan nilai filter dari widget Filter Grup ke kolom Prasetel",
     "listenToGroupFilterTip": "Ketika suatu filter diterapkan di widget Filter Grup, terapkan nilai ke kolom yang cocok di daftar nilai Prasetel.",
     "keepTemplateActive": "Biarkan template yang dipilih tetap aktif",
+    "editLayerAddedFromAddData": "Mengizinkan layer yang diedit untuk ditambahkan dari widget Tambah Data",
+    "editLayerAddedFromAddDataTip": "Layer yang dapat diedit yang ditambahkan ke aplikasi menggunakan widget Tambah Data dapat diedit",
     "keepTemplateActiveTip": "Ketika pemilih template ditampilkan, jika suatu template telah dipilih sebelumnya, pilih ulang template tersebut.",
     "geometryEditDefault": "Aktifkan edit geometri secara default",
     "autoSaveEdits": "Simpan fitur baru secara otomatis",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Nilai tidak valid untuk beralih ke input beberapa baris",
     "featuresSelectionTolerance": "Atur toleransi untuk pilihan fitur (piksel)",
     "featuresSelectionToleranceTooltip": "Memungkinkan pengguna untuk membuka panel pengeditan atribut dengan mengklik fiturnya",
-    "featuresSelectionToleranceErrorMsg": "Nilai toleransi pilihan fitur tidak valid"
+    "featuresSelectionToleranceErrorMsg": "Nilai toleransi pilihan fitur tidak valid",
+    "autoSaveAttrUpdates": "Menyimpan pembaruan atribut secara otomatis"
   },
   "editDescriptionPage": {
     "title": "Tentukan overview atribut untuk <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atribut",
     "geocoderHint": "Untuk mengubah geocoder cari tombol 'Pengaturan Geocoder' di pengaturan umum",
     "prevConfigruedFieldChangedMsg": "Atribut yang dikonfigurasikan sebelumnya tidak ditemukan dalam pengaturan geocoder saat ini. Atribut telah diatur ulang ke default.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Alat ini mengurangi kredit saat digunakan dengan ArcGIS Online World Geocoding Service"
   },
   "coordinatesPage": {
     "popupTitle": "Koordinat",
     "checkboxLabel": "Dapatkan koordinat",
     "coordinatesSelectTitle": "Sistem Referensi",
     "coordinatesAttributeTitle": "Atribut",
-    "mapSpatialReference": "Referensi Spasial Peta",
-    "latlong": "Garis Lintang/Garis Bujur",
+    "mapSpatialReferenceOptionLabel": "Referensi Spasial Peta",
+    "latLongOptionLabel": "Garis Lintang/Garis Bujur",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Semua grup yang memungkinkan telah dibuat",
     "coordinatesSourceTitle": "Sumber Koordinat",
     "featureLocation": "Lokasi Fitur",
-    "myLocation": "Lokasi Saya"
+    "myLocation": "Lokasi Saya",
+    "LatLong": {
+      "y": "Garis Lintang",
+      "x": "Garis Bujur",
+      "xy": "Garis Bujur Garis Lintang",
+      "yx": "Garis Lintang Garis Bujur"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Pengaturan awal",

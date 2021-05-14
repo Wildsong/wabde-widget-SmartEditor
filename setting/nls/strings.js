@@ -2,7 +2,7 @@ define({
   root: ({
     layersPage: {
       allLayers: "All Layers",
-      title: "Select a template to create features",
+      title: "Select a template to create features or click a feature on the map to edit it",
       generalSettings: "General Settings",
       layerSettings: "Layer Settings",
       webmapSettingsRadioBtnLabel: "Honor settings in the web map",
@@ -20,6 +20,8 @@ define({
       removeOnSaveTip: "Option to remove the feature from the selection set when the record is saved.  If it is the only selected record, the panel is switched back to the template page.",
       useFilterEditor: "Use feature template filter",
       useFilterEditorTip: "Option to use the Filter Template picker which provides the ability to view one layer's template or search for templates by name.",
+      groupFilteredTemplates: "Group search results",
+      groupFilteredTemplatesTip: "Option to group search results by layer.",
       displayShapeSelector: "Show drawing options",
       createNewFeaturesFromExisting: "Allow user to create new feature(s) from existing feature(s)",
       createNewFeaturesFromExistingTip: "Option to allow user to copy existing feature to create new features",
@@ -31,6 +33,8 @@ define({
       listenToGroupFilter: "Apply filter values from Group Filter widget to Preset fields",
       listenToGroupFilterTip: "When a filter is applied in the Group Filter widget, apply the value to a matching field in the Preset value list.",
       keepTemplateActive: "Keep selected template active",
+      editLayerAddedFromAddData: "Allow editing layers added from the Add Data widget",
+      editLayerAddedFromAddDataTip: "Editable layers added to the application using the Add Data widget can be edited",
       keepTemplateActiveTip: "When the template picker is shown, if a template was previously selected, reselect it.",
       geometryEditDefault: "Enable geometry edit by default",
       autoSaveEdits: "Save new features automatically",
@@ -75,7 +79,8 @@ define({
       invalidMaxCharacterErrorMsg: "Invalid value in switch to multiline input",
       featuresSelectionTolerance: "Set the tolerance for feature selection (pixels)",
       featuresSelectionToleranceTooltip: "Enables users to easily open the attribute editing panel by clicking the feature",
-      featuresSelectionToleranceErrorMsg: "Invalid feature selection tolerance value"
+      featuresSelectionToleranceErrorMsg: "Invalid feature selection tolerance value",
+      autoSaveAttrUpdates: "Save attribute updates automatically"
     },
     editDescriptionPage: {
       title: "Define attribute overview text for <b>${layername}</b> "
@@ -167,20 +172,33 @@ define({
       selectFieldTitle: "Attribute",
       geocoderHint: "To change geocoder go to 'Geocoder Settings' button in general settings",
       prevConfigruedFieldChangedMsg: "Previously configured attribute is not found in the current geocoder settings. Attribute has been reset to default.",
-      questionMark: "?"
+      questionMark: "?",
+      consumesCredits: "This tool consumes credits when used with the ArcGIS Online World Geocoding Service",
     },
     coordinatesPage: {
       popupTitle: "Coordinates",
       checkboxLabel: "Get coordinates",
       coordinatesSelectTitle: "Reference System",
       coordinatesAttributeTitle: "Attribute",
-      mapSpatialReference: "Map Spatial Reference",
-      latlong: "Latitude/Longitude",
+      mapSpatialReferenceOptionLabel: "Map Spatial Reference",
+      latLongOptionLabel: "Latitude/Longitude",
       MGRS: "MGRS",
       allGroupsCreatedMsg: "All possible groups are already created",
       coordinatesSourceTitle: "Coordinates Source",
       featureLocation: "Feature Location",
-      myLocation: "My Location"
+      myLocation: "My Location",
+      LatLong: {
+        y: "Latitude",
+        x: "Longitude",
+        xy: "Longitude Latitude",
+        yx: "Latitude Longitude"
+      },
+      MapSpatialReference: {
+        y: "Y",
+        x: "X",
+        xy: "XY",
+        yx: "YX"
+      }
     },
     presetPage: {
       popupTitle: "Preset",

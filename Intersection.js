@@ -297,11 +297,19 @@ define(
       },
 
       _getIntersectingFeatures: function (layerId, toleranceSettings) {
-        var i, intersectingFeatures, bufferedGeometry, toleranceValueInMeters, allFeatures;
-        intersectingFeatures = [];
-        toleranceValueInMeters = 0;
-        //get the result layer object to get its name
-        var layerObject = this._jimuLayerInfos.getLayerOrTableInfoById(layerId).layerObject;
+        var i, intersectingFeatures, bufferedGeometry, toleranceValueInMeters, allFeatures,
+          layerInstance, layerObject;
+        intersectingFeatures = [], toleranceValueInMeters = 0;
+        //get the result layer object to get its 
+        layerInstance = this._jimuLayerInfos.getLayerOrTableInfoById(layerId);
+        //Check if layer exist and then proceed
+        //If layer does not exist, it may be because of layer being
+        //removed from web map, in this case return the empty array and stop the further execution
+        if (layerInstance) {
+          layerObject = layerInstance.layerObject;
+        } else {
+          return intersectingFeatures;
+        }
         if (this.completeFeatures.hasOwnProperty(layerId)) {
           allFeatures = this.completeFeatures[layerId];
           if (toleranceSettings && toleranceSettings.unit !== "px") {
@@ -608,10 +616,11 @@ define(
       },
 
       _getIntersectedFeatures: function (layerId, featureGeometry) {
-        var layerDef, query, queryTask, attributes, layerObject, objectIdField, layerExpression;
+        var layerDef, query, queryTask, attributes, tableOrLayerInfo, layerObject, objectIdField, layerExpression;
         layerDef = new Deferred();
         //get layers instance from map, if its not available consider it returns 0 features
         if (this._jimuLayerInfos.getLayerOrTableInfoById(layerId)) {
+          tableOrLayerInfo = this._jimuLayerInfos.getLayerOrTableInfoById(layerId);
           layerObject = this._jimuLayerInfos.getLayerOrTableInfoById(layerId).layerObject;
         }
         else {
@@ -622,13 +631,22 @@ define(
           });
           return layerDef.promise;
         }
-        objectIdField = layerObject.objectIdField;
+        objectIdField = layerObject.objectIdField || null;
         query = new Query();
         queryTask = new QueryTask(layerObject.url);
         query.geometry = this._getAppropriateGeometryForQuery(layerId, featureGeometry);
         query.outFields = ["*"];
         //fetch the filters applied on the layer and use it
-        layerExpression = layerObject.getDefinitionExpression();
+        if (tableOrLayerInfo && (tableOrLayerInfo.subId || tableOrLayerInfo.subId === 0) &&
+          tableOrLayerInfo.parentLayerInfo &&
+          tableOrLayerInfo.parentLayerInfo.layerObject) {
+          layerExpression = this._getSubLayerDefinitionExpression(tableOrLayerInfo.subId,
+            tableOrLayerInfo.parentLayerInfo);
+        } else if (layerObject && layerObject.getDefinitionExpression) {
+          layerExpression = layerObject.getDefinitionExpression();
+        } else {
+          layerExpression = "";
+        }
         if (layerExpression) {
           query.where = layerExpression;
         }
@@ -646,16 +664,19 @@ define(
         }
         queryTask.execute(query, lang.hitch(this, function (result) {
           if (result && result.features && result.features.length > 0) {
-            //sort the feature and take the feature with latest OID
-            result.features.sort(function (firstFeature, secondFeature) {
-              var firstFeatureOID, secondFeatureOID;
-              firstFeatureOID = parseInt(firstFeature.attributes[objectIdField], 10);
-              secondFeatureOID = parseInt(secondFeature.attributes[objectIdField], 10);
-              if (firstFeatureOID > secondFeatureOID) {
-                return -1;
-              }
-              return 1;
-            });
+          //Sort the features only if object id field is present
+            if (objectIdField) {
+              //sort the feature and take the feature with latest OID
+              result.features.sort(function (firstFeature, secondFeature) {
+                var firstFeatureOID, secondFeatureOID;
+                firstFeatureOID = parseInt(firstFeature.attributes[objectIdField], 10);
+                secondFeatureOID = parseInt(secondFeature.attributes[objectIdField], 10);
+                if (firstFeatureOID > secondFeatureOID) {
+                  return -1;
+                }
+                return 1;
+              });
+            }
             attributes = result.features[0].attributes;
           } else {
             result = {
@@ -678,6 +699,22 @@ define(
           });
         }));
         return layerDef.promise;
+      },
+
+      _getSubLayerDefinitionExpression: function (subId, parentLayer) {
+        //The layer definitions are always stored at the root level
+        //so, for the nested map services, traverse till the layer definitions are not found
+        //or till there is no parent layer
+        if (parentLayer && parentLayer.layerObject &&
+          parentLayer.layerObject.layerDefinitions) {
+          return parentLayer.layerObject.layerDefinitions[subId];
+        } else {
+          if (parentLayer.parentLayerInfo) {
+            return this._getSubLayerDefinitionExpression(subId, parentLayer.parentLayerInfo);
+          } else {
+            return "";
+          }
+        }
       }
     });
   });

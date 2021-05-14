@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Všetky vrstvy",
-    "title": "Vybrať šablónu na vytvorenie prvkov",
+    "title": "Vyberte šablónu na tvorbu prvkov alebo kliknite na prvok v mape a editujte ho",
     "generalSettings": "Všeobecné nastavenia",
     "layerSettings": "Nastavenia vrstvy",
     "webmapSettingsRadioBtnLabel": "Dodržiavať nastavenia vo webovej mape",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Možnosť odstrániť prvok zo sady výberu pri uložení záznamu. Ak je to jediný uložený záznam, panel sa prepne späť na stránku so šablónou.",
     "useFilterEditor": "Použiť filter šablóny prvku",
     "useFilterEditorTip": "Možnosť použiť voľbu šablóny filtra, ktorá poskytuje možnosť zobraziť jednu vrstvu šablóny alebo hľadať šablóny podľa mena.",
+    "groupFilteredTemplates": "Zoskupiť výsledky vyhľadávania",
+    "groupFilteredTemplatesTip": "Umožňuje zoskupiť výsledky vyhľadávania podľa vrstvy.",
     "displayShapeSelector": "Zobraziť možnosti kreslenia",
     "createNewFeaturesFromExisting": "Povoliť užívateľovi vytvoriť nový prvok(y) z existujúceho prvku(ov)",
     "createNewFeaturesFromExistingTip": "Možnosť povoliť užívateľovi skopírovať existujúci prvok na vytvorenie nových prvkov",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Použiť hodnoty filtra z widgetu skupinového filtra na prednastavené stĺpce",
     "listenToGroupFilterTip": "Keď je filter použitý vo widgete skupinového filtra, vložte hodnotu do príslušného poľa v zozname prednastavených hodnôt.",
     "keepTemplateActive": "Ponechať zvolenú šablónu aktívnu",
+    "editLayerAddedFromAddData": "Povoliť editáciu vrstiev pridaných widgetom Pridať dáta",
+    "editLayerAddedFromAddDataTip": "Editovateľné vrstvy, ktoré sa do aplikácie pridajú pomocou widgetu Pridať dáta je možné editovať",
     "keepTemplateActiveTip": "Keď je zobrazená voľba šablóny, ak bola predtým zvolená šablóna, bude zvolená znova.",
     "geometryEditDefault": "Východiskovo povoliť úpravy geometrie",
     "autoSaveEdits": "Automaticky uložiť nové prvky",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Neplatná hodnota v prepínači do viacerých vstupov",
     "featuresSelectionTolerance": "Nastaviť toleranciu pre výber prvku (v pixeloch)",
     "featuresSelectionToleranceTooltip": "Umožniť používateľom otvoriť panel editovania atribútov kliknutím na prvok",
-    "featuresSelectionToleranceErrorMsg": "Neplatná hodnota tolerancie pre výber prvku"
+    "featuresSelectionToleranceErrorMsg": "Neplatná hodnota tolerancie pre výber prvku",
+    "autoSaveAttrUpdates": "Automaticky uložiť aktualizácie atribútov"
   },
   "editDescriptionPage": {
     "title": "Definovať text prehľadu atribútov pre <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atribút",
     "geocoderHint": "Pre zmenu geokodéra, navštívte tlačidlo 'Nastavenia geokodéra' vo všeobecných nastaveniach",
     "prevConfigruedFieldChangedMsg": "V minulosti konfigurovaný atribút nebol nájdený v súčasných nastaveniach geokodéra. Atribút bol obnovený na predvolené nastavenie.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Tento nástroj využíva kredity ak je používaný s geokódovacou službou ArcGIS Online World."
   },
   "coordinatesPage": {
     "popupTitle": "súradnice",
     "checkboxLabel": "Získať súradnice",
     "coordinatesSelectTitle": "Referenčný systém",
     "coordinatesAttributeTitle": "Atribút",
-    "mapSpatialReference": "Súradnicový systém mapy",
-    "latlong": "Zemepisná šírka/Zemepisná dĺžka",
+    "mapSpatialReferenceOptionLabel": "Súradnicový systém mapy",
+    "latLongOptionLabel": "Zemepisná šírka/Zemepisná dĺžka",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Všetky možné skupiny sú už vytvorené",
     "coordinatesSourceTitle": "Zdroj súradníc",
     "featureLocation": "Poloha prvku",
-    "myLocation": "Moja poloha"
+    "myLocation": "Moja poloha",
+    "LatLong": {
+      "y": "Zemepisná šírka",
+      "x": "Zemepisná dĺžka",
+      "xy": "Zemepisná dĺžka Zemepisná šírka",
+      "yx": "Zemepisná šírka Zemepisná dĺžka"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Prednastaviť",

@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Pametni uređivač",
   "_featureAction_SmartEditor": "Pametni uređivač",
   "noEditPrivileges": "Vaš nalog nema dozvolu za kreiranje ili izmenu podataka.",
+  "loginPopupTitle": "Prijavi se",
+  "loginPopupMessage": "${widgetName} zahteva dozvolu i kreditive da potraži i sačuva informacija o adresi. Da li biste želeli da se prijavite i koristite ovu mogućnost?",
+  "noCreditsOrPrivilegeWarningMessage": "Vaš nalog nema dozvole i kreditive da potraži i sačuva informacije o adresi sa ${widgetName}. Obratite se administratoru svoje organizacije da zatražite dozvole i kreditive.",
+  "unableToUseLocator": "Lokator nije pristupačan. Akcija/e atributa adrese neće biti obavljena/e.",
+  "locatorDisabledWaning": "Lokator nije omogućen. Obratite se administratoru svoje organizacije da zatražite ovu mogućnost.",
+  "noFeatureInAIWarning": "Nijedan geoobjekat nije izabran. Izaberite geoobjekat da biste uređivali ili kliknite na otkaži kako bi se vratili na glavni ekran.",
+  "noEditableLayerWarning": "Vaš nalog nema dozvolu za kreiranje ili izmenu podataka ili ova veb mapa ne sadrži slojeve koji mogu da se uređuju.",
+  "noVisibleCreateLayerWarning": "Sloj(evi) nije vidljiv na trenutnom nivou zumiranja. Uvećaj / umanji da kreiraš / izmeniš geoobjekte.",
+  "noVisibleUpdateLayerWarning": "Sloj(evi) nije vidljiv na trenutnom nivou zumiranja. Uvećaj / umanji da izmeniš geoobjekte.",
+  "checkLayerVisibilityInWebMapWarning": "Obratite pažnju na to da su svi slojevi na mapi vidljivi kako bi kreirali ili izmenili geoobjekte.",
+  "showSelectionInAITitle": "Izabrani geoobjekti",
+  "showSelectionInAIMsg": "Da li želite da učitate trenutnu selekciju u ${widgetName}?",
   "widgetActive": "Aktivno",
   "widgetNotActive": "Nije aktivno",
   "pressStr": "Pritisnite ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Kopiraj geoobjekte",
     "createFeatures": "Kreiraj geoobjekte",
-    "createSingleFeature": "Kreiraj 1 geoobjekat višedelne geometrije",
+    "createSingleFeature": "Kreiraj 1 višedelni deoobjekat",
+    "createOneSingleFeature": "Kreiraj geoobjekat",
     "noFeaturesSelectedMessage": "Nijedan geoobjekat nije izabran",
-    "selectFeatureToCopyMessage": "Izaberite geoobjekte za kopiranje.",
-    "multipleFeatureSaveWarning": "Napomena: kreiranje više geoobjekata korišćenjem funkcije kopiranja će odmah sačuvati sve geoobjekte",
+    "selectFeatureToCopyMessage": "Izaberite geoobjekte za kopiranje",
+    "multipleFeatureSaveWarning": "Napomena: kreiranje više geoobjekata korišćenjem funkcionalnosti kopiranja će odmah sačuvati sve geoobjekte",
     "copyFeatureUpdateGeometryError": "Ažuriranje geometrije selektovanih geoobjekata nije moguće",
     "canNotSaveMultipleFeatureWarning": "Napomena: Ne možete kopirati više geoobjekata koristeći istu vrednost za polja za jedinstvenu vrednosti, izaberite samo jedan geoobjekat",
     "createOnlyOneMultipartFeatureWarning": "Napomena: Može se stvoriti samo jedan višedelni geoobjekat"
   },
   "addingFeatureError": "Greška prilikom dodavanja selektovanih geoobjekata u sloj. Pokušajte ponovo.",
-  "addingFeatureErrorCount": "Kopiranje '${copyFeatureErrorCount}' geoobjekata nije uspelo.",
+  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' kopiranje geoobjekta / geoobjekata nije uspelo. Želite li da ponovo pokušate za nedostajući deoobjekat?",
   "selectingFeatureError": "Greška prilikom selektovanja geoobjekata u sloju. Pokušajte ponovo.",
   "customSelectOptionLabel": "Izaberite geoobjekte za kopiranje",
-  "noFeatureSelectedMessage": "Nijedan geoobjekat nije izabran.",
+  "noFeatureSelectedMessage": "Nijedan geoobjekat nije izabran",
   "multipleFeatureSaveMessage": "Svi geoobjekti će odmah biti sačuvani. Želite li da nastavite?",
   "relativeDates": {
     "dateTypeLabel": "Tip datuma",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Vrednost za datum ili vreme mora da se navede da bi mogla da se sačuva podrazumevana ranije podešena vrednost.",
     "customLabel": "Prilagođeno",
     "layerLabel": "Sloj",
-    "domainFieldHintLabel": "Izabrana vrednost je domen sa kodiranom vrednošću. Vrednost: ${domainValue} biće korišćeno"
+    "domainFieldHintLabel": "Izabrana vrednost je domen sa kodiranom vrednošću. Vrednost: \"${domainValue}\" biće korišćeno"
   },
   "valuePicker": {
     "popupTitle": "Selektovana vrednost",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Obavezna polja",
     "foundNullRecordCount": "${fieldName} (Pronađeno u ${count} zapisa)"
   },
-  "cantLocateUserLocation": "Nije moguće utvrditi vašu lokaciju"
+  "cantLocateUserLocation": "Nije moguće utvrditi vašu lokaciju",
+  "tryAgainButtonLabel": "Pokušaj ponovo",
+  "copyFeatureFailedPopupTitle": "Ups!"
 });

@@ -1,8 +1,8 @@
 {
     "name": "SmartEditor",
     "platform": "HTML",
-    "version": "2.19",
-    "wabVersion": "2.19",
+    "version": "2.20",
+    "wabVersion": "2.20",
     "author": "Esri, Inc.",
     "description": "Widget designed to improve editing by providing data validation and ability to set values and apply them to each edit.",
     "copyright": "Esri, Inc.",

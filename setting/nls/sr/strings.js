@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Svi slojevi",
-    "title": "Izaberite šablon da biste kreirali geoobjekte",
+    "title": "Izaberite šablon da biste kreirali geoobjekte ili kliknite na geoobjekat na mapi da biste da uredili",
     "generalSettings": "Opšte postavke",
     "layerSettings": "Postavke sloja",
     "webmapSettingsRadioBtnLabel": "Poštuj slojeve u veb mapi",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Opcija za uklanjanje geoobjekta iz skupa izbora kada je zapis sačuvan. Ako je to jedini izabran zapis, panel se prebacuje nazad na stranicu šablona.",
     "useFilterEditor": "Koristi filter šablona geoobjekta",
     "useFilterEditorTip": "Opcija za korišćenje birača za šablon filtera koji omogućava prikazivanje šablona za jedan sloj ili pretragu po nazivu.",
+    "groupFilteredTemplates": "Rezultati grupne pretrage",
+    "groupFilteredTemplatesTip": "Opcija za rezultate grupne pretrage po slojevima",
     "displayShapeSelector": "Prikaži opcije za crtanje",
     "createNewFeaturesFromExisting": "Omogući korisniku da kreira nove geoobjekte iz postojećih geoobjekata",
     "createNewFeaturesFromExistingTip": "Opcija za omogućavanje korisniku da kopira postojeći geoobjekat radi kreiranja novih geoobjekata",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Primeni vrednosti filtera iz vidžeta Grupni filter na unapred podešena polja",
     "listenToGroupFilterTip": "Kada primenite filter u vidžetu Grupni filter, primenite vrednost na odgovarajuće polje u listi sa Unapred podešenom vrednosti.",
     "keepTemplateActive": "Održi izabrani šablon aktivnim",
+    "editLayerAddedFromAddData": "Dozvolite uređivanje slojeva dodatih iz vidžeta App Data",
+    "editLayerAddedFromAddDataTip": "Slojevi koji se mogu uređivati dodati su aplikaciji koristeći vidžet Add Data koji se može urediti",
     "keepTemplateActiveTip": "Kada je prikazan birač šablona, ponovo izaberite šablon ako je bio prethodno izabran.",
     "geometryEditDefault": "Podrazumevano omogući uređivanje geometrije",
     "autoSaveEdits": "Sačuvaj novu komponentu automatski",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Nevažeća vrednost u promeni na višelinijski unos",
     "featuresSelectionTolerance": "Podesite toleranciju za selekciju geoobjekata (pikseli)",
     "featuresSelectionToleranceTooltip": "Omogućava korisnicima da lako otvore panel za uređivanje atributa klikom na geoobjekat",
-    "featuresSelectionToleranceErrorMsg": "Nevažeća vrednost tolerancije za selekciju geoobjekata"
+    "featuresSelectionToleranceErrorMsg": "Nevažeća vrednost tolerancije za selekciju geoobjekata",
+    "autoSaveAttrUpdates": "Automatski čuva ažurirane atribute"
   },
   "editDescriptionPage": {
     "title": "Definišite tekst za pregled atributa za <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atribut",
     "geocoderHint": "Za promenu geokodera idite na dugme 'Postavke geokodera' u opštim postavkama",
     "prevConfigruedFieldChangedMsg": "Prethodno konfigurisani atribut nije pronađen u trenutnim postavkama geokodera. Atribut je resetovan na podrazumevanu vrednost.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Ova alatka troši kredite kada se koristi sa ArcGIS Online World Geocoding servisom"
   },
   "coordinatesPage": {
     "popupTitle": "Koordinate",
     "checkboxLabel": "Pribavi koordinate",
     "coordinatesSelectTitle": "Referentni sistem",
     "coordinatesAttributeTitle": "Atribut",
-    "mapSpatialReference": "Prostorna referenca mape",
-    "latlong": "Geografska širina/dužina",
+    "mapSpatialReferenceOptionLabel": "Prostorna referenca mape",
+    "latLongOptionLabel": "Geografska širina/dužina",
     "MGRS": "Referentni sistem vojne pravougle koordinatne mreže (MGRS)",
     "allGroupsCreatedMsg": "Sve moguće grupe su već kreirane",
     "coordinatesSourceTitle": "Koordinate za izvor",
     "featureLocation": "Lokacija geoobjekta",
-    "myLocation": "Moja lokacija"
+    "myLocation": "Moja lokacija",
+    "LatLong": {
+      "y": "Geografska širina",
+      "x": "Geografska dužina",
+      "xy": "Geografska dužina Geografska širina",
+      "yx": "Geografska širina Geografska dužina"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Predefinisano podešavanje",

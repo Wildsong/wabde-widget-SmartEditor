@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Smart Editor",
   "_featureAction_SmartEditor": "Smart Editor",
   "noEditPrivileges": "L'account non dispone dell'autorizzazione per creare o modificare dati.",
+  "loginPopupTitle": "Accedi",
+  "loginPopupMessage": "${widgetName} richiede permessi e crediti per cercare e archiviare informazioni di indirizzo. Accedere e utilizzare questa funzionalità?",
+  "noCreditsOrPrivilegeWarningMessage": "L'account non dispone dei permessi e dei crediti per cercare e archiviare le informazioni di indirizzo con ${widgetName}. Contattare l'amministratore dell'organizzazione per richiedere permessi e crediti.",
+  "unableToUseLocator": "Il locator non è accessibile. Le azioni dell'attributo indirizzo non saranno eseguite.",
+  "locatorDisabledWaning": "Il locator non è abilitato. Contattare l'amministratore dell'organizzazione per richiedere tale funzionalità.",
+  "noFeatureInAIWarning": "Nessuna feature selezionata. Selezionare una feature per eseguire modifiche o fare clic su Annulla per tornare alla schermata principale.",
+  "noEditableLayerWarning": "L'account non dispone dell'autorizzazione per creare o modificare dati oppure la mappa Web non contiene layer modificabili.",
+  "noVisibleCreateLayerWarning": "I layer non sono visibili a questo livello di zoom. Zoom avanti o indietro per creare/modificare le feature.",
+  "noVisibleUpdateLayerWarning": "I layer non sono visibili a questo livello di zoom. Zoom avanti o indietro per modificare le feature.",
+  "checkLayerVisibilityInWebMapWarning": "Assicurarsi che i layer siano visibili nella mappa per creare o modificare le feature.",
+  "showSelectionInAITitle": "Feature selezionate",
+  "showSelectionInAIMsg": "Caricare la selezione corrente in ${widgetName}?",
   "widgetActive": "Attivo",
   "widgetNotActive": "Non attiva",
   "pressStr": "Premere ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Copia Feature",
     "createFeatures": "Crea feature",
-    "createSingleFeature": "Crea 1 feature multi-geometria",
+    "createSingleFeature": "Crea 1 feature multi-parte",
+    "createOneSingleFeature": "Crea feature",
     "noFeaturesSelectedMessage": "Nessuna feature selezionata",
-    "selectFeatureToCopyMessage": "Selezionare le feature da copiare.",
-    "multipleFeatureSaveWarning": "Nota: la creazione di feature multiple utilizzando il copia feature salverà immediatamente tutte le feature",
+    "selectFeatureToCopyMessage": "Selezionare le feature da copiare",
+    "multipleFeatureSaveWarning": "Nota: la creazione di feature multiple utilizzando la funzionalità Copia salverà immediatamente tutte le nuove feature",
     "copyFeatureUpdateGeometryError": "Impossibile aggiornare la geometria delle feature selezionate",
     "canNotSaveMultipleFeatureWarning": "Nota: non è possibile copiare più feature utilizzando lo stesso valore per campi valore univoci. Selezionare solo una feature",
     "createOnlyOneMultipartFeatureWarning": "Nota: è possibile creare solo una feature multiparte"
   },
   "addingFeatureError": "Errore durante l'aggiunta di feature selezionate nel layer. Riprovare.",
-  "addingFeatureErrorCount": "Feature '${copyFeatureErrorCount}' non copiate.",
+  "addingFeatureErrorCount": "Impossibile copiare le feature '${copyFeatureErrorCount}' Riprovare per le feature mancanti?",
   "selectingFeatureError": "Errore durante la selezione di feature nel layer. Riprovare.",
   "customSelectOptionLabel": "Seleziona feature da copiare",
-  "noFeatureSelectedMessage": "Nessuna feature selezionata.",
+  "noFeatureSelectedMessage": "Nessuna feature selezionata",
   "multipleFeatureSaveMessage": "Verranno salvate immediatamente tutte le feature. Continuare?",
   "relativeDates": {
     "dateTypeLabel": "Tipo di data",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "È necessario specificare un valore per la data o per l'ora per poter salvare il valore preimpostato predefinito.",
     "customLabel": "Personalizzata",
     "layerLabel": "Layer",
-    "domainFieldHintLabel": "Il valore selezionato è un dominio valore codificato. Il valore: ${domainValue} sarà usato"
+    "domainFieldHintLabel": "Il valore selezionato è un dominio valore codificato. Il valore: '${domainValue}' sarà usato"
   },
   "valuePicker": {
     "popupTitle": "Seleziona valore",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Campi obbligatori",
     "foundNullRecordCount": "${fieldName} (trovato in ${count} record)"
   },
-  "cantLocateUserLocation": "Impossibile determinare la propria posizione"
+  "cantLocateUserLocation": "Impossibile determinare la propria posizione",
+  "tryAgainButtonLabel": "Riprova",
+  "copyFeatureFailedPopupTitle": "Errore"
 });

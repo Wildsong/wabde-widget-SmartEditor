@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Toate straturile tematice",
-    "title": "Selectaţi un şablon pentru a crea obiecte spaţiale",
+    "title": "Selectaţi un şablon pentru a crea obiecte spaţiale sau dați clic pe un obiect spațial de pe hartă pentru a îl edita",
     "generalSettings": "Setări generale",
     "layerSettings": "Setări strat tematic",
     "webmapSettingsRadioBtnLabel": "Respectați setările din harta web",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Opţiune de eliminare a obiectului din setul selectat la salvarea înregistrării. Dacă acesta este singura înregistrare selectată, panoul este comutat înapoi la pagina şablonului.",
     "useFilterEditor": "Utilizaţi filtrul de şabloane de obiecte spaţiale",
     "useFilterEditorTip": "Opțiune de utilizare a selectorului de șabloane de filtrare, care permite vizualizarea unui șablon de obiecte spațiale sau căutarea șabloanelor după nume.",
+    "groupFilteredTemplates": "Grupați rezultatele căutării",
+    "groupFilteredTemplatesTip": "Opțiune de a grupa rezultatele căutării după stratul tematic.",
     "displayShapeSelector": "Afișare opțiuni desenare",
     "createNewFeaturesFromExisting": "Permite utilizatorului să creeze obiecte spaţiale noi din obiecte spaţiale existente",
     "createNewFeaturesFromExistingTip": "Opțiune pentru a permite utilizatorului să copieze obiecte spațiale existente pentru a crea obiecte spațiale noi",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Aplicaţi valorile filtrului din widgetul Filtru grupuri la câmpurile Presetate",
     "listenToGroupFilterTip": "Dacă este aplicat un filtru în widgetul Filtru grupuri, aplicaţi valoarea la un câmp corespunzător din lista de valori presetate.",
     "keepTemplateActive": "Menţineţi activ şablonul selectat",
+    "editLayerAddedFromAddData": "Permiteți editarea straturilor tematice din widget-ul Adăugați Date",
+    "editLayerAddedFromAddDataTip": "Straturile tematice editabile adăugate aplicației cu ajutorul widget-ului Adăugați Date pot fi editate",
     "keepTemplateActiveTip": "Atunci când este afişat selectorul de şabloane, dacă un şablon a fost selectat în prealabil, îl selectaţi din nou.",
     "geometryEditDefault": "Activare editare geometrie implicită",
     "autoSaveEdits": "Salvați noile obiecte spațiale în mod automat",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Valoare nevalidă la comutarea la intrarea pe mai multe rânduri",
     "featuresSelectionTolerance": "Setaţi toleranţa pentru selecția de obiecte spațiale (pixeli)",
     "featuresSelectionToleranceTooltip": "Permite utilizatorilor să deschidă cu uşurinţă panoul de editare a atributelor prin apăsarea pe obiectul spaţial",
-    "featuresSelectionToleranceErrorMsg": "Valoare de toleranță a selecției obiectului spațial nevalabilă"
+    "featuresSelectionToleranceErrorMsg": "Valoare de toleranță a selecției obiectului spațial nevalabilă",
+    "autoSaveAttrUpdates": "Salvați actualizările atributelor în mod automat"
   },
   "editDescriptionPage": {
     "title": "Definiţi textul prezentării generale a atributelor pentru <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atribut",
     "geocoderHint": "Pentru a schimba geocodificatorul, mergeți la butonul 'Setările geocodificatorului' în setările generale",
     "prevConfigruedFieldChangedMsg": "Atributul configurat anterior nu este găsit în setările actuale ale geocodificatorului. Atributul a fost resetat la implicit.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Acest instrument consumă credite atunci când este utilizat cu ArcGIS Online World Geocoding Service"
   },
   "coordinatesPage": {
     "popupTitle": "Coordonate",
     "checkboxLabel": "Obțineți coordonate",
     "coordinatesSelectTitle": "Sistem de referinţă",
     "coordinatesAttributeTitle": "Atribut",
-    "mapSpatialReference": "Referinţă spaţială de hartă",
-    "latlong": "Latitudine/Longitudine",
+    "mapSpatialReferenceOptionLabel": "Referinţă spaţială de hartă",
+    "latLongOptionLabel": "Latitudine/Longitudine",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Toate grupurile posibile au fost deja create",
     "coordinatesSourceTitle": "Coordonează sursa",
     "featureLocation": "Localizarea obiectului spațial",
-    "myLocation": "Locaţia mea"
+    "myLocation": "Locaţia mea",
+    "LatLong": {
+      "y": "Latitudine",
+      "x": "Longitudine",
+      "xy": "Longitudine Latitudine",
+      "yx": "Latitudine Longitudine"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Presetat",

@@ -3,6 +3,18 @@ define({
     _widgetLabel: "Smart Editor",
     _featureAction_SmartEditor: "Smart Editor",
     noEditPrivileges: "Your account does not have permission to create or modify data.",
+    loginPopupTitle: "Sign In",
+    loginPopupMessage: "${widgetName} requires permissions and credits to look up and store address information. Would you like to sign in and use this capability?",
+    noCreditsOrPrivilegeWarningMessage: "Your account does not have the permissions and credits to look up and store address information with ${widgetName}. Please contact your organization administrator to request permissions and credits.",
+    unableToUseLocator: "Locator is not accessible. The address attribute action(s) will not be performed.",
+    locatorDisabledWaning: "Locator is not enabled. Please contact your organization administrator to request this capability.",
+    noFeatureInAIWarning: "No feature(s) selected. Please select a feature to perform edits or click cancel to return to the main screen.",
+    noEditableLayerWarning: "Your account does not have permission to create or modify data, or this web map does not contain any editable layers.",
+    noVisibleCreateLayerWarning: "Layer(s) not visible at the current zoom level. Zoom in or out to create/modify features.",
+    noVisibleUpdateLayerWarning:"Layer(s) not visible at the current zoom level. Zoom in or out to modify features.",
+    checkLayerVisibilityInWebMapWarning: "Make sure layers are visible in the map to create or modify features.",
+    showSelectionInAITitle: "Selected Features",
+    showSelectionInAIMsg: "Do you want to load the current selection in ${widgetName}?",
     widgetActive: "Active",
     widgetNotActive: "Not Active",
     pressStr: "Press ",
@@ -63,20 +75,21 @@ define({
     copyFeatures: {
       title: "Copy Features",
       createFeatures: "Create Features",
-      createSingleFeature: "Create 1 Multi-Geometry Feature",
+      createSingleFeature: "Create 1 Multi-Part Feature",
+      createOneSingleFeature: "Create Feature",
       noFeaturesSelectedMessage: "No Features Selected",
-      selectFeatureToCopyMessage: "Please select features to copy.",
-      multipleFeatureSaveWarning: "Note: Creating multiple features using copy feature will save all the features immediately",
+      selectFeatureToCopyMessage: "Please select features to copy",
+      multipleFeatureSaveWarning: "Note: Creating multiple features using the copy functionality will save all the new features immediately",
       copyFeatureUpdateGeometryError: "Unable to update geometry of selected features",
       canNotSaveMultipleFeatureWarning: "Note: Cannot copy multiple features using the same value for unique value fields, please select only one feature",
       createOnlyOneMultipartFeatureWarning: "Note: Only one multi-part feature can be created"
     },
     addingFeatureError: "Error while adding selected features in the layer. Please try again.", // error message while adding features
-    addingFeatureErrorCount: "\'${copyFeatureErrorCount}\' features failed to be copied.", // displayed when few/all the features gets failed to be copied
+    addingFeatureErrorCount: "\'${copyFeatureErrorCount}\' feature(s) failed to be copied. Would you like to try again for the missing feature(s)?",
     selectingFeatureError: "Error while selecting features in the layer. Please try again.", // error message while selecting features
     customSelectOptionLabel: "Select features to copy", // displayed as a label for custom select tool
-    noFeatureSelectedMessage: "No features selected.", // Displayed when no features are selected while using custom select tool
-    multipleFeatureSaveMessage: "All the features will be saved immediately. Do you want to proceed?",
+    noFeatureSelectedMessage: "No features selected", // Displayed when no features are selected while using custom select tool
+    multipleFeatureSaveMessage: "All the features will be saved immediately. Would you like to proceed?",
     relativeDates: {
       dateTypeLabel: "Date Type",
       valueLabel: "Value",
@@ -93,7 +106,7 @@ define({
       relativeDateWarning: "A value for date or time must be specified to be able to save the default preset value.",
       customLabel: "Custom",
       layerLabel: "Layer",
-      domainFieldHintLabel: "The selected value is a coded value domain. The value: ${domainValue} will be used"
+      domainFieldHintLabel: "The selected value is a coded value domain. The value: \"${domainValue}\" will be used"
     },
     valuePicker: {
       popupTitle: "Select Value",
@@ -106,7 +119,9 @@ define({
       popupTittle: "Required fields",
       foundNullRecordCount: "${fieldName} (Found in ${count} records)"
     },
-    cantLocateUserLocation : "Your location could not be determined"
+    cantLocateUserLocation : "Your location could not be determined",
+    tryAgainButtonLabel : "Try again",
+    copyFeatureFailedPopupTitle: "Oops!"
   }),
   "ar": 1,
   "bs": 1,

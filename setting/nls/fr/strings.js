@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Toutes les couches",
-    "title": "Sélectionnez un modèle pour créer des entités",
+    "title": "Sélectionner un modèle pour créer des entités ou cliquer sur une entité de la carte pour la mettre à jour",
     "generalSettings": "Paramètres généraux",
     "layerSettings": "Paramètres de la couche",
     "webmapSettingsRadioBtnLabel": "Respecter les paramètres de la carte web",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Option permettant de supprimer l'entité du jeu de sélection lors de la sauvegarde de l'enregistrement. S'il s'agit du seul enregistrement sélectionné, la fenêtre revient sur la page du modèle.",
     "useFilterEditor": "Utiliser le filtre des modèles d'entités",
     "useFilterEditorTip": "Option permettant d’utiliser le sélecteur Filtrer les modèles visant à afficher un modèle de couche ou à rechercher des modèles en fonction de leur nom.",
+    "groupFilteredTemplates": "Regrouper les résultats de recherche",
+    "groupFilteredTemplatesTip": "Option permettant de regrouper les résultats de recherche par couche.",
     "displayShapeSelector": "Afficher les options de dessin",
     "createNewFeaturesFromExisting": "Autoriser les utilisateurs à créer de nouvelles entités à partir d’entités existantes",
     "createNewFeaturesFromExistingTip": "Option permettant à l’utilisateur de copier une entité existante pour créer de nouvelles entités",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Appliquer des valeurs de filtre du widget Filtrer les groupes aux champs prédéfinis",
     "listenToGroupFilterTip": "Lorsqu'un filtre est appliqué dans le widget Filtrer les groupes, appliquez la valeur à un champ d'appariement dans la liste des valeurs prédéfinies.",
     "keepTemplateActive": "Conserver le modèle sélectionné actif",
+    "editLayerAddedFromAddData": "Autoriser la mise à jour des couches ajoutées à partir du widget Ajouter des données",
+    "editLayerAddedFromAddDataTip": "Les couches modifiables ajoutées à l’application à l’aide du widget Ajouter des données peuvent être mises à jour",
     "keepTemplateActiveTip": "Lorsque le sélecteur de modèles est affiché, si un modèle a été précédemment sélectionné, resélectionnez-le.",
     "geometryEditDefault": "Autoriser la modification de géométrie par défaut",
     "autoSaveEdits": "Enregistrer automatiquement les nouvelles entités",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Valeur invalide pour l’option Passer en mode multiligne",
     "featuresSelectionTolerance": "Définir la tolérance pour la sélection d’entités (en pixels)",
     "featuresSelectionToleranceTooltip": "Permet aux utilisateurs d’ouvrir facilement la fenêtre de mise à jour des attributs en cliquant sur l’entité.",
-    "featuresSelectionToleranceErrorMsg": "Valeur de tolérance de sélection d’entités non valide"
+    "featuresSelectionToleranceErrorMsg": "Valeur de tolérance de sélection d’entités non valide",
+    "autoSaveAttrUpdates": "Enregistrer automatiquement les mises à jour des attributs"
   },
   "editDescriptionPage": {
     "title": "Définir le texte de vue d'ensemble des attributs de <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Attribut",
     "geocoderHint": "Pour modifier le géocodeur, utiliser le bouton 'Paramètres du géocodeur' dans les paramètres généraux",
     "prevConfigruedFieldChangedMsg": "L’attribut déjà configuré est introuvable dans les paramètres du géocodeur actuel. Les paramètres par défaut de l’attribut ont été rétablis.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Cet outil consomme des crédits lorsqu’il est utilisé avec ArcGIS Online World Geocoding Service"
   },
   "coordinatesPage": {
     "popupTitle": "Coordonnées",
     "checkboxLabel": "Obtenir les coordonnées",
     "coordinatesSelectTitle": "Système de référence",
     "coordinatesAttributeTitle": "Attribut",
-    "mapSpatialReference": "Référence spatiale de la carte",
-    "latlong": "Latitude/Longitude",
+    "mapSpatialReferenceOptionLabel": "Référence spatiale de la carte",
+    "latLongOptionLabel": "Latitude/Longitude",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Tous les groupes possibles sont déjà créés",
     "coordinatesSourceTitle": "Source des coordonnées",
     "featureLocation": "Localisation de l’entité",
-    "myLocation": "Ma localisation"
+    "myLocation": "Ma localisation",
+    "LatLong": {
+      "y": "Latitude",
+      "x": "Longitude",
+      "xy": "Longitude Latitude",
+      "yx": "Latitude Longitude"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Prédéfini",

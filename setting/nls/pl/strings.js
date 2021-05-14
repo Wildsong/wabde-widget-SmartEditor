@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Wszystkie warstwy",
-    "title": "Wybierz szablon, aby utworzyć obiekty",
+    "title": "Wybierz szablon, aby utworzyć obiekty lub kliknij obiekt na mapie, aby go edytować",
     "generalSettings": "Ustawienia ogólne",
     "layerSettings": "Ustawienia warstwy",
     "webmapSettingsRadioBtnLabel": "Uwzględniaj ustawienia na mapie internetowej",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Opcja usunięcia obiektu z wybranego zestawu podczas zapisywania rekordu. Jeśli jest to jedyny wybrany rekord, panel jest przełączany z powrotem do strony szablonu.",
     "useFilterEditor": "Użyj szablonu filtrów obiektu",
     "useFilterEditorTip": "Opcja użycia okna wyboru szablonu filtrów, która umożliwia wyświetlenie szablonu jednej warstwy lub wyszukiwanie szablonów według nazwy.",
+    "groupFilteredTemplates": "Grupuj wyniki wyszukiwania",
+    "groupFilteredTemplatesTip": "Opcja służąca do grupowania wyników wyszukiwania według warstwy.",
     "displayShapeSelector": "Pokaż opcje wyświetlania",
     "createNewFeaturesFromExisting": "Pozwala użytkownikowi na tworzenie nowych obiektów na podstawie obiektów istniejących",
     "createNewFeaturesFromExistingTip": "Opcja pozwalająca użytkownikowi na kopiowanie istniejącego obiektu w celu utworzenia nowych obiektów",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Stosowanie wartości filtru z widżetu Filtr grupy do pól Ustawienie wstępne",
     "listenToGroupFilterTip": "Podczas stosowania filtru w widżecie Filtr grupy zastosuj wartość do zgodnego pola na liście wartości Ustawienie wstępne.",
     "keepTemplateActive": "Utrzymywanie aktywności wybranego szablonu",
+    "editLayerAddedFromAddData": "Zezwól na edycję warstw dodanych z poziomu widżetu Dodaj dane",
+    "editLayerAddedFromAddDataTip": "Edytowalne warstwy dodane do aplikacji za pomocą widżetu Dodaj dane można edytować",
     "keepTemplateActiveTip": "Po wyświetleniu okna wyboru szablonu, jeśli szablon był wcześniej wybrany, wybierz go ponownie.",
     "geometryEditDefault": "Włącz domyślnie edycję geometrii",
     "autoSaveEdits": "Automatycznie zapisuj nowe obiekty",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Niepoprawna wartość przełączenia na wielowierszowe pole wejściowe",
     "featuresSelectionTolerance": "Skonfiguruj tolerancję na potrzeby wyboru obiektów (w pikselach)",
     "featuresSelectionToleranceTooltip": "Umożliwia użytkownikom łatwe otwieranie panelu edycji atrybutów przez kliknięcie obiektu",
-    "featuresSelectionToleranceErrorMsg": "Nieprawidłowa wartość tolerancji selekcji obiektów"
+    "featuresSelectionToleranceErrorMsg": "Nieprawidłowa wartość tolerancji selekcji obiektów",
+    "autoSaveAttrUpdates": "Automatycznie zapisuj aktualizacje atrybutów"
   },
   "editDescriptionPage": {
     "title": "Zdefiniuj tekst opisu atrybutów dla warstwy <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atrybut",
     "geocoderHint": "Aby zmienić geokoder, użyj przycisku 'Ustawienia geokodera' w ustawieniach ogólnych",
     "prevConfigruedFieldChangedMsg": "Nie znaleziono poprzednio skonfigurowanego atrybutu w bieżących ustawieniach geokodera. Atrybut został zresetowany do wartości domyślnej.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "To narzędzie zużywa kredyty, jeśli jest używane z usługą ArcGIS Online World Geocoding Service"
   },
   "coordinatesPage": {
     "popupTitle": "Współrzędne",
     "checkboxLabel": "Pobierz współrzędne",
     "coordinatesSelectTitle": "System referencyjny",
     "coordinatesAttributeTitle": "Atrybut",
-    "mapSpatialReference": "Odniesienie przestrzenne mapy",
-    "latlong": "Szer. geogr./dł. geogr.",
+    "mapSpatialReferenceOptionLabel": "Odniesienie przestrzenne mapy",
+    "latLongOptionLabel": "Szer. geogr./dł. geogr.",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Wszystkie możliwe grupy zostały już utworzone",
     "coordinatesSourceTitle": "Źródło współrzędnych",
     "featureLocation": "Lokalizacja obiektu",
-    "myLocation": "Moja lokalizacja"
+    "myLocation": "Moja lokalizacja",
+    "LatLong": {
+      "y": "Szerokość geograficzna",
+      "x": "Długość geograficzna",
+      "xy": "Długość geograficzna szerokość geograficzna",
+      "yx": "Szerokość geograficzna długość geograficzna"
+    },
+    "MapSpatialReference": {
+      "y": "T",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Ustawienie wstępne",

@@ -501,27 +501,51 @@ define(
         return layerChooserFromMapArgs;
       },
 
-      _createIntersectionLayerfilter: function (validFieldSet) {
+      _createIntersectionLayerFilter: function (validFieldSet) {
         return function (layerInfo) {
-          var defLayerObject = layerInfo.getLayerObject();
-          var hasValidField = false;
-          defLayerObject.then(function (layerObject) {
-            if (layerObject && layerObject.fields) {
-              array.some(layerObject.fields, function (field) {
-                if (validFieldSet.indexOf(field.type) > -1) {
-                  hasValidField = true;
-                  return true;
+          var def = new Deferred();
+          //Do not consider the table
+          if (layerInfo.isTable) {
+            def.resolve(false);
+          } else {
+            var rootLayerInfo = layerInfo.getRootLayerInfo();
+            rootLayerInfo.getLayerObject().then(lang.hitch(this, function (layer) {
+              var subLayerObjectDefs = [];
+              layerInfo.traversal(lang.hitch(this, function (subLayerInfo) {
+                //Check if the leaf sub layer is found and the group is not empty
+                //This makes sure the empty group is filtered and not shown
+                if (subLayerInfo.isLeaf() && subLayerInfo.layerObject &&
+                  !subLayerInfo.layerObject.hasOwnProperty("empty")) {
+                  subLayerObjectDefs.push(subLayerInfo.getLayerObject());
                 }
-              });
-            }
-          });
-          return hasValidField;
+              }));
+
+              //Once all the sub layers are processed, check if the layers have valid field
+              //as per the data type selected in the drop down
+              all(subLayerObjectDefs).then(lang.hitch(this, function (subLayerObjects) {
+                var hasValidField = subLayerObjects.some(lang.hitch(this, function (subLayerObject) {
+                  if (subLayerObject && subLayerObject.fields) {
+                    return subLayerObject.fields.some(function (field) {
+                      return validFieldSet.indexOf(field.type) > -1
+                    });
+                  } else {
+                    def.resolve(false);
+                  }
+                }));
+                def.resolve(hasValidField);
+              }));
+            }), lang.hitch(this, function (err) {
+              console.error(err);
+              def.resolve(false);
+            }));
+          }
+          return def;
         };
       },
 
       _createFiltersForLayerSelector: function () {
         var types, featureLayerFilter, imageServiceLayerFilter, filters, combinedFilter,
-          intersectionLayerfilter, validFieldSet;
+          intersectionLayerFilter, validFieldSet;
 
         types = ['point', 'polyline', 'polygon'];
         featureLayerFilter = LayerChooserFromMap.createFeaturelayerFilter(types, false, false);
@@ -531,10 +555,10 @@ define(
 
         //Filter layers based on fieldType of the source field
         validFieldSet = this.ValidFieldsByType[this._fieldType];
-        intersectionLayerfilter = this._createIntersectionLayerfilter(validFieldSet);
+        intersectionLayerFilter = this._createIntersectionLayerFilter(validFieldSet);
 
         //combine both the filters
-        return LayerChooserFromMap.andCombineFilters([combinedFilter, intersectionLayerfilter]);
+        return LayerChooserFromMap.andCombineFilters([combinedFilter, intersectionLayerFilter]);
       },
 
       _initLayerSelector: function () {

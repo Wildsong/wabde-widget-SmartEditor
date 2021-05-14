@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Todas as Camadas",
-    "title": "Escolha um template para criar elementos",
+    "title": "Escolha um modelo para criar elementos ou clique num elemento no mapa para editá-lo",
     "generalSettings": "Configurações Gerais",
     "layerSettings": "Configurações de Camada",
     "webmapSettingsRadioBtnLabel": "Respeitar definições no mapa web",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Opção para remover o elemento do conjunto de seleção quando o registo é guardado.  Casos e trate do único registo selecionado, o painel regressa à página do modelo.",
     "useFilterEditor": "Utilizar filtro de modelo de elemento",
     "useFilterEditorTip": "Opção para utilizar o seletor Modelo de Filtro, que oferece a possibilidade de visualizar o modelo de uma camada ou pesquisar modelos por nome.",
+    "groupFilteredTemplates": "Agrupar resultados da pesquisa",
+    "groupFilteredTemplatesTip": "Opção para agrupar os resultados da pesquisa por camada.",
     "displayShapeSelector": "Exibir opções de desenho",
     "createNewFeaturesFromExisting": "Permitir ao utilizador criar novo(s) elemento(s) a partir de elemento(s) existente(s)",
     "createNewFeaturesFromExistingTip": "Opção para permitir ao utilizador copiar um elemento existente para criar novos elementos",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Aplicar valores de filtros do widget Agrupar Filtros para Predefinir campos",
     "listenToGroupFilterTip": "Quando um filtro é aplicado no widget Agrupar Filtros, aplique o valor a um campo correspondente na lista de valor Predefinido.",
     "keepTemplateActive": "Manter modelo selecionado ativo",
+    "editLayerAddedFromAddData": "Permitir a edição de camadas adicionadas a partir do widget Adicionar Dados",
+    "editLayerAddedFromAddDataTip": "As camadas editáveis adicionadas à aplicação com o widget Adicionar Dados podem ser editadas",
     "keepTemplateActiveTip": "Quando o seletor de modelos é exibido, caso um modelo tenha sido selecionado anteriormente, volte a selecioná-lo.",
     "geometryEditDefault": "Ativar edição de geometria por defeito",
     "autoSaveEdits": "Guardar novos elementos automaticamente",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Valor inválido ao mudar para entrada multilinha",
     "featuresSelectionTolerance": "Definir a tolerância para a seleção do elemento (píxeis)",
     "featuresSelectionToleranceTooltip": "Permite aos utilizadores abrir facilmente a janela pop-up de edição de atributos ao clicar no elemento",
-    "featuresSelectionToleranceErrorMsg": "Valor de tolerância de seleção do elemento inválido"
+    "featuresSelectionToleranceErrorMsg": "Valor de tolerância de seleção do elemento inválido",
+    "autoSaveAttrUpdates": "Guardar atualizações de atributos automaticamente"
   },
   "editDescriptionPage": {
     "title": "Defina o texto de vista geral de atributos para <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atributo",
     "geocoderHint": "Para mudar de geocodificador, utilize o botão 'Definições de Geocodificador' nas definições gerais",
     "prevConfigruedFieldChangedMsg": "O atributo configurado anteriormente não é encontrado nas definições de geocodificador atuais. As predefinições do atributo foram repostas.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Esta ferramenta consome créditos quando utilizada com o ArcGIS Online World Geocoding Service"
   },
   "coordinatesPage": {
     "popupTitle": "Coordenadas",
     "checkboxLabel": "Obter coordenadas",
     "coordinatesSelectTitle": "Sistema de Referência",
     "coordinatesAttributeTitle": "Atributo",
-    "mapSpatialReference": "Referência Espacial do Mapa",
-    "latlong": "Latitude/Longitude",
+    "mapSpatialReferenceOptionLabel": "Referência Espacial do Mapa",
+    "latLongOptionLabel": "Latitude/Longitude",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Já foram criados todos os grupos possíveis",
     "coordinatesSourceTitle": "Fonte de Coordenadas",
     "featureLocation": "Localização do Elemento",
-    "myLocation": "O Meu Local"
+    "myLocation": "O Meu Local",
+    "LatLong": {
+      "y": "Latitude",
+      "x": "Longitude",
+      "xy": "Longitude Latitude",
+      "yx": "Latitude Longitude"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Pré-definido",

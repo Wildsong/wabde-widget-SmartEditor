@@ -359,7 +359,7 @@ define(
               //then current displying value will be the seletected value 
               selectedValue = this.initialValue;
           } else {
-              selectedValue = ""
+              selectedValue = "";
           }
           //emit the selected value
           this.emit("updatePresetValue", {

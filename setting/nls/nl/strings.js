@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Alle lagen",
-    "title": "Selecteer template voor het maken van objecten",
+    "title": "Selecteer template voor het maken van objecten of klik op een object op de kaart om deze te bewerken",
     "generalSettings": "Algemene instellingen",
     "layerSettings": "Laaginstellingen",
     "webmapSettingsRadioBtnLabel": "Rekening houden met instellingen in de webmap",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Optie om het object te verwijderen uit de selectie ingesteld als de record wordt opgeslagen. Als dit het enige geselecteerde record is, schakelt het paneel terug naar de template-pagina.",
     "useFilterEditor": "Gebruik objecttemplatefilter",
     "useFilterEditorTip": "Optie om de Filter Template kiezer te gebruiken die de mogelijkheid biedt om de template van één laag te bekijken of op naam te zoeken naar templates.",
+    "groupFilteredTemplates": "Zoekresultaten groeperen",
+    "groupFilteredTemplatesTip": "Optie om zoekresultaten per laag te groeperen.",
     "displayShapeSelector": "Tekenopties weergeven",
     "createNewFeaturesFromExisting": "Het gebruikers toestaan (een) nieuw(e) object(en) te creëren op basis van (een) bestaand(e) object(en)",
     "createNewFeaturesFromExistingTip": "Optie om gebruikers in staat te stellen een bestaand object te kopiëren om nieuwe objecten te creëren",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Filterwaarden van de widget Groepfilter op Vooraf ingestelde velden toepassen",
     "listenToGroupFilterTip": "Als er een filter wordt toegepast in de widget Groepfilter, pas de waarde dan toe op een overeenkomstig veld in de lijst met Vooraf ingestelde waarden.",
     "keepTemplateActive": "Houd geselecteerde template actief",
+    "editLayerAddedFromAddData": "Sta het bewerken van lagen toe die zijn toegevoegd vanuit de widget Gegevens toevoegen",
+    "editLayerAddedFromAddDataTip": "Bewerkbare lagen die aan de applicatie zijn toegevoegd met behulp van de widget Gegevens toevoegen, kunnen worden bewerkt",
     "keepTemplateActiveTip": "Als de templatekeuze weergegeven wordt, en als een template voordien geselecteerd werd, selecteer het dan nogmaals.",
     "geometryEditDefault": "Geometrie bewerken standaard inschakelen",
     "autoSaveEdits": "Slaat nieuw object automatisch op",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Ongeldige waarde in de overschakeling naar multiline-input",
     "featuresSelectionTolerance": "Bepaal de tolerantie voor de objectselectie (pixels)",
     "featuresSelectionToleranceTooltip": "Biedt gebruikers de mogelijkheid om eenvoudig het atttribuutbewerkingspaneel te openen door op het object te klikken",
-    "featuresSelectionToleranceErrorMsg": "Ongeldige tolerantiewaarde objectselectie"
+    "featuresSelectionToleranceErrorMsg": "Ongeldige tolerantiewaarde objectselectie",
+    "autoSaveAttrUpdates": "Sla attribuut updates automatisch op"
   },
   "editDescriptionPage": {
     "title": "Definieer de attribuutoverzichttekst voor <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Attribuut",
     "geocoderHint": "Om geocoder te wijzigen, ga naar de knop 'Geocoderinstellingen' in Algemene instellingen",
     "prevConfigruedFieldChangedMsg": "Eerder geconfigureerd attribuut kan niet worden gevonden in de huidige geocoderinstellingen. Attribuut is weer naar standaard teruggezet.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Deze tool verbruikt credits wanneer hij gebruikt wordt met de ArcGIS Online World Geocoding Service"
   },
   "coordinatesPage": {
     "popupTitle": "Coördinaten",
     "checkboxLabel": "Coördinaten ophalen",
     "coordinatesSelectTitle": "Referentiesysteem",
     "coordinatesAttributeTitle": "Attribuut",
-    "mapSpatialReference": "Ruimtelijke referentie van de kaart",
-    "latlong": "Breedtegraad/lengtegraad",
+    "mapSpatialReferenceOptionLabel": "Ruimtelijke referentie van de kaart",
+    "latLongOptionLabel": "Breedtegraad/lengtegraad",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Alle mogelijke groepen zijn al gecreëerd",
     "coordinatesSourceTitle": "Bron coördinaten",
     "featureLocation": "Ojectlocatie",
-    "myLocation": "Mijn locatie"
+    "myLocation": "Mijn locatie",
+    "LatLong": {
+      "y": "Breedte",
+      "x": "Lengte",
+      "xy": "Lengtegraad Breedtegraad",
+      "yx": "Breedtegraad Lengtegraad"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Voorinstelling",

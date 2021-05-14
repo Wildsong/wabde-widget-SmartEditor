@@ -112,7 +112,7 @@ define(
       },
       _getText: function () {
         var editorText;
-        editorText = this._editorObj.focusNode.innerHTML;
+        editorText = this._editorObj.get("value");
         return editorText;
       },
       _initEditor: function () {
@@ -162,6 +162,8 @@ define(
               h: box.h
             });
           }
+          //Set the height to resolve the issue of editor collapsing
+          this._editorObj.domNode.style.height = "245px";
         }
       },
       /**

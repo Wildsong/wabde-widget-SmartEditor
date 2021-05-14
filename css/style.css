@@ -225,6 +225,14 @@
     float: right;
 }
 
+.jimu-widget-smartEditor .noFeatureCancelBtnWrapper {
+    text-align: center;
+}
+
+.jimu-widget-smartEditor .noFeatureCancelBtn {
+    margin-top: 15px;
+}
+
 .jimu-widget-smartEditor .esriAttributeInspector .deleteButton {
     float: right;
     margin-right: 20px;
@@ -997,6 +1005,9 @@
       background-color: #ffffff;
   }
 
+  .jimu-widget-smartEditor .esriCTCanCreateOnlyOneFeature {
+      display: none;
+    }
 
   /* Copy Features ends */
 
@@ -1098,4 +1109,26 @@
 .jimu-rtl .jimu-widget-smartEditor-requiredFields .esriCTMarginLeft15 {
     margin-right: 15px;
     margin-left: 0px;
+}
+
+.claro .dijitSelectLabel {
+    text-overflow: ellipsis;
+    text-align: justify;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+/* Coordinate System select in move to xy location popup */
+.jimu-widget-smartEditor-XYCoordinates .esriCTFieldInput .dijitSelectLabel {
+    width: 290px;
+}
+
+/* select in value picker popup */
+.jimu-widget-smartEditor-multiple-value-picker .esriCTFieldContainer .dijitSelectLabel {
+    width: 225px;
+}
+
+/* select in required Fields popup */
+.jimu-widget-smartEditor-requiredFields .esriCTFieldContainer .dijitSelectLabel {
+    width: 200px;
 }

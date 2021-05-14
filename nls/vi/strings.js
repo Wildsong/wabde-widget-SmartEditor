@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Trình biên tập Thông minh",
   "_featureAction_SmartEditor": "Trình biên tập Thông minh",
   "noEditPrivileges": "Tài khoản của bạn không có quyền tạo hoặc sửa đổi dữ liệu.",
+  "loginPopupTitle": "Đăng nhập",
+  "loginPopupMessage": "${widgetName} yêu cầu quyền và credit để tra cứu và lưu trữ thông tin địa chỉ. Bạn có muốn đăng nhập và sử dụng tính năng này không?",
+  "noCreditsOrPrivilegeWarningMessage": "Tài khoản của bạn không yêu cầu quyền và credit để tra cứu và lưu trữ thông tin địa chỉ với ${widgetName}. Vui lòng liên hệ với quản trị viên của tổ chức bạn để yêu cầu quyền và credit.",
+  "unableToUseLocator": "Không thể truy cập bộ định vị. (Các) hành động thuộc tính địa chỉ sẽ không được thực hiện.",
+  "locatorDisabledWaning": "Không bật bộ định vị. Vui lòng liên hệ với quản trị viên của tổ chức bạn để yêu cầu tính năng này.",
+  "noFeatureInAIWarning": "Chưa chọn đối tượng nào. Vui lòng chọn một đối tượng để thực hiện chỉnh sửa hoặc nhấp vào hủy để quay lại màn hình chính.",
+  "noEditableLayerWarning": "Tài khoản của bạn không có quyền tạo hoặc sửa đổi dữ liệu, hoặc bản đồ web này không chứa bất kỳ lớp nào có thể chỉnh sửa.",
+  "noVisibleCreateLayerWarning": "(Các) lớp không hiển thị ở mức thu phóng hiện tại. Phóng to hoặc thu nhỏ để tạo/sửa đổi đối tượng.",
+  "noVisibleUpdateLayerWarning": "(Các) lớp không hiển thị ở mức thu phóng hiện tại. Phóng to hoặc thu nhỏ để sửa đổi đối tượng.",
+  "checkLayerVisibilityInWebMapWarning": "Đảm bảo các lớp hiển thị trong bản đồ để tạo hoặc sửa đổi các đối tượng.",
+  "showSelectionInAITitle": "Đối tượng được Chọn",
+  "showSelectionInAIMsg": "Bạn có muốn tải lựa chọn hiện tại trong ${widgetName}?",
   "widgetActive": "Hoạt động",
   "widgetNotActive": "Không Hoạt động",
   "pressStr": "Nhấn ",
@@ -62,20 +74,21 @@ define({
   "copyFeatures": {
     "title": "Sao chép Đối tượng",
     "createFeatures": "Tạo Đối tượng",
-    "createSingleFeature": "Tạo 1 Đối tượng Đa hình học",
+    "createSingleFeature": "Tạo 1 Đối tượng Đa phần",
+    "createOneSingleFeature": "Tạo Đối tượng",
     "noFeaturesSelectedMessage": "Không có Đối tượng nào được chọn",
-    "selectFeatureToCopyMessage": "Hãy chọn đối tượng để sao chép.",
-    "multipleFeatureSaveWarning": "Lưu ý: Tạo nhiều đối tượng bằng cách sao chép đối tượng sẽ lưu tất cả các đối tượng ngay lập tức",
+    "selectFeatureToCopyMessage": "Hãy chọn đối tượng để sao chép",
+    "multipleFeatureSaveWarning": "Lưu ý: Tạo nhiều đối tượng bằng cách sao chép chức năng sẽ lưu tất cả các đối tượng mới ngay lập tức",
     "copyFeatureUpdateGeometryError": "Không thể cập nhật hình học của đối tượng được chọn",
     "canNotSaveMultipleFeatureWarning": "Lưu ý: Không thể sao chép nhiều đối tượng sử dụng cùng một giá trị cho các trường giá trị duy nhất, vui lòng chỉ chọn một đối tượng",
     "createOnlyOneMultipartFeatureWarning": "Lưu ý: Chỉ có thể tạo một đối tượng nhiều phần"
   },
   "addingFeatureError": "Lỗi xảy ra khi thêm các đối tượng được chọn vào lớp. Vui lòng thử lại.",
-  "addingFeatureErrorCount": "Không thể sao chép '${copyFeatureErrorCount}' đối tượng.",
+  "addingFeatureErrorCount": "Không thể sao chép '${copyFeatureErrorCount}' đối tượng. Bạn có muốn thử lại để tìm (các) đối tượng bị thiếu không?",
   "selectingFeatureError": "Lỗi xảy ra khi chọn các đối tượng trong lớp. Vui lòng thử lại.",
   "customSelectOptionLabel": "Chọn đối tượng để sao chép",
-  "noFeatureSelectedMessage": "Không có đối tượng nào được chọn.",
-  "multipleFeatureSaveMessage": "Tất cả đối tượng sẽ được lưu ngay lập tức. Bạn có muốn tiếp tục?",
+  "noFeatureSelectedMessage": "Chưa chọn đối tượng nào",
+  "multipleFeatureSaveMessage": "Tất cả đối tượng sẽ được lưu ngay lập tức. Bạn có muốn tiếp tục không?",
   "relativeDates": {
     "dateTypeLabel": "Loại Ngày",
     "valueLabel": "Giá trị",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Bạn phải chỉ định giá trị ngày hoặc thời gian để có thể lưu giá trị cài đặt sẵn mặc định.",
     "customLabel": "Tùy chỉnh",
     "layerLabel": "Lớp",
-    "domainFieldHintLabel": "Giá trị được chọn là một miền giá trị mã hóa. Giá trị: ${domainValue} sẽ được sử dụng"
+    "domainFieldHintLabel": "Giá trị được chọn là một miền giá trị mã hóa. Giá trị: \"${domainValue}\" sẽ được sử dụng"
   },
   "valuePicker": {
     "popupTitle": "Chọn Giá trị",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Trường bắt buộc",
     "foundNullRecordCount": "${fieldName}(Tìm thấy trong ${count} bản ghi)"
   },
-  "cantLocateUserLocation": "Không thể xác định vị trí của bạn"
+  "cantLocateUserLocation": "Không thể xác định vị trí của bạn",
+  "tryAgainButtonLabel": "Thử lại",
+  "copyFeatureFailedPopupTitle": "Rất tiếc!"
 });

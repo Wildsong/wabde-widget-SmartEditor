@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Editor inteligent",
   "_featureAction_SmartEditor": "Editor inteligent",
   "noEditPrivileges": "Contul dumneavoastră nu are permisiunea de a crea sau modifica date.",
+  "loginPopupTitle": "Autentificare",
+  "loginPopupMessage": "${widgetName} necesită premisiuni și credite pentru a căuta și stoca informațiile privind adresa. Doriți să vă conectați și să folosiți această capacitate?",
+  "noCreditsOrPrivilegeWarningMessage": "Contul dvs. nu are permisiunile și creditele pentru a căuta și stoca informațiile privind adresele cu ${widgetName}. Contactați administratorul organizației pentru a cere permisiuni și credite.",
+  "unableToUseLocator": "Localizatorul nu este accesibil. Acțiunea(ile) atributului de adresă nu vor fi efectuate.",
+  "locatorDisabledWaning": "Localizatorul nu este activat. Contactați administratorul organizației pentru a cere această capacitate.",
+  "noFeatureInAIWarning": "Nu sunt selectate obiecte spațiale. Selectați un obiect spațial pentru a efectua editările sau dați clic pe anulare pentru a reveni la ecranul principal.",
+  "noEditableLayerWarning": "Contul dvs. nu are permisiunea de a crea sau modifica date sau această hartă web nu include niciun strat tematic editabil.",
+  "noVisibleCreateLayerWarning": "Straturile tematice nu sunt vizibile la nivelul actual de transforcare. Măriți sau micșorați imaginea pentru a crea/modifica obiecte spațiale.",
+  "noVisibleUpdateLayerWarning": "Straturile tematice nu sunt vizibile la nivelul actual de transforcare. Măriți sau micșorați imaginea pentru a modifica obiecte spațiale.",
+  "checkLayerVisibilityInWebMapWarning": "Asigurați-vă că straturile tematice sunt vizibile pe hartă pentru a crea sau modifica obiecte spațiale.",
+  "showSelectionInAITitle": "Obiecte spaţiale selectate",
+  "showSelectionInAIMsg": "Doriți să încărcați selecția actuală în ${widgetName}?",
   "widgetActive": "Activ",
   "widgetNotActive": "Inactiv",
   "pressStr": "Apăsaţi pe ",
@@ -62,20 +74,21 @@ define({
   "copyFeatures": {
     "title": "Copiere obiecte spațiale",
     "createFeatures": "Creare obiecte spațiale",
-    "createSingleFeature": "Creați un obiect spațial cu multiple forme geometrice",
+    "createSingleFeature": "Creați un obiect spațial cu multiple părți",
+    "createOneSingleFeature": "Creați obiect spațial",
     "noFeaturesSelectedMessage": "Niciun obiect spațial selectat",
-    "selectFeatureToCopyMessage": "Selectați obiectele spațiale care trebuie copiate.",
-    "multipleFeatureSaveWarning": "Notă: Crearea mai multor obiecte spațiale utilizând funcția de copiere va salva toate obiectele spațiale imediat",
+    "selectFeatureToCopyMessage": "Selectați obiectele spațiale care trebuie copiate",
+    "multipleFeatureSaveWarning": "Notă: Crearea mai multor obiecte spațiale utilizând funcția de copiere va salva imediat toate obiectele spațiale noi",
     "copyFeatureUpdateGeometryError": "Nu se poate actualiza geometria obiectelor spațiale selectate",
     "canNotSaveMultipleFeatureWarning": "Notă: Nu se pot copia obeicte spațiale multiple folosind aceeași valoare pentru câmpuri cu valori unice, selectați un singur obiect spațial",
     "createOnlyOneMultipartFeatureWarning": "Notă: poate fi creat un singur obiect spațial cu părți multiple"
   },
   "addingFeatureError": "Eroare la adăugare obiecte spațiale selectate. Încercați din nou.",
-  "addingFeatureErrorCount": "Obiecte spațiale '${copyFeatureErrorCount}’ nu au putut fi copiate.",
+  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' obiecte spațiale nu au fost copiate. Doriți să încercați din nou pentru obiectele spațiale lipsă?",
   "selectingFeatureError": "Eroare la adăugare obiecte spațiale selectate. Încercați din nou.",
   "customSelectOptionLabel": "Obiectele spațiale selectate care trebuie copiate",
-  "noFeatureSelectedMessage": "Niciun obiect spaţial selectat.",
-  "multipleFeatureSaveMessage": "Toate obiectele spațiale vor fi salvate imediat. Doriți să continuați?",
+  "noFeatureSelectedMessage": "Nu sunt selectate obiecte spațiale",
+  "multipleFeatureSaveMessage": "Toate obiectele spațiale vor fi salvate imediat. Doriţi să continuaţi?",
   "relativeDates": {
     "dateTypeLabel": "Tip dată",
     "valueLabel": "Valoare",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Trebuie specificată o valoare pentru dată sau oră pentru a putea salva valoarea presetată implicită.",
     "customLabel": "Personalizare",
     "layerLabel": "Strat tematic",
-    "domainFieldHintLabel": "Valoarea selectată este un domeniu cu valoare codificată. Va fi folosită valoarea ${domainValue}"
+    "domainFieldHintLabel": "Valoarea selectată este un domeniu cu valoare codificată. Va fi folosită valoarea: \"${domainValue}\""
   },
   "valuePicker": {
     "popupTitle": "Selectaţi valoarea",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Câmpuri obligatorii",
     "foundNullRecordCount": "${fieldName} (Găsit în ${count} înregistrări)"
   },
-  "cantLocateUserLocation": "Localizarea dvs. nu a putut fi stabilită."
+  "cantLocateUserLocation": "Localizarea dvs. nu a putut fi stabilită.",
+  "tryAgainButtonLabel": "Încercaţi din nou",
+  "copyFeatureFailedPopupTitle": "Hopa!"
 });

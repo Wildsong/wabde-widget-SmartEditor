@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "جميع الطبقات",
-    "title": "تحديد قالب لإنشاء المعالم",
+    "title": "تحديد قالب لإنشاء المعالم أو النقر على معلم بالخريطة لتحريره",
     "generalSettings": "إعدادات عامة",
     "layerSettings": "إعدادات الطبقة",
     "webmapSettingsRadioBtnLabel": "تنفيذ الإعدادات في خريطة الويب",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "هو خيار لإزالة المعلم من مجموعة التحديد عند حفظ السجل. وإذا كان عبارة عن السجل المحدد فقط، فإن اللوحة تعود إلى صفحة القالب.",
     "useFilterEditor": "استخدم عامل تصفية قالب المعلم",
     "useFilterEditorTip": "خيار لاستخدام منقى قالب التصفية الذي يوفر القدرة على عرض أحد قوالب الطبقة أو البحث عن القوالب باستخدام الاسم.",
+    "groupFilteredTemplates": "نتائج بحث المجموعة",
+    "groupFilteredTemplatesTip": "خيار تجميع نتائج البحث حسب الطبقة.",
     "displayShapeSelector": "إظهار خيارات الرسم",
     "createNewFeaturesFromExisting": "السماح للمستخدم بإنشاء معالم جديدة من المعالم الحالية",
     "createNewFeaturesFromExistingTip": "خيار يتيح للمستخدم نسخ المعلم الحالي لإنشاء معالم جديدة",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "تطبيق قيم التصفية من عنصر واجهة استخدام \"عامل تصفية المجموعة\" على الحقول المُعدة مُسبقًا",
     "listenToGroupFilterTip": "عند تطبيق عامل التصفية في عنصر واجهة استخدام \"عامل تصفية المجموعة\"، قم بتطبيق القيمة على الحقل المطابق في قائمة القيمة المُعدة مُسبقًا.",
     "keepTemplateActive": "اجعل القالب المحدد نشطًا",
+    "editLayerAddedFromAddData": "السماح بتحرير الطبقات المضافة من عنصر واجهة المستخدم \"إضافة بيانات\"",
+    "editLayerAddedFromAddDataTip": "يمكن تحرير الطبقات القابلة للتحرير المضافة إلى التطبيق باستخدام أداة إضافة بيانات",
     "keepTemplateActiveTip": "عند إظهار منتقى القالب، وإذا تم تحديد القالب مُسبقًا، قم بإعادة تحديده مرة أخرى.",
     "geometryEditDefault": "تمكين تحرير الشكل الهندسي افتراضيًا",
     "autoSaveEdits": "حفظ المعالم الجديدة تلقائيًا",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "قيمة غير صالحة عند التبديل إلى الإدخال متعدد الخطوط",
     "featuresSelectionTolerance": "تعيين سماحية اختيار المعلم (وحدات بكسل)",
     "featuresSelectionToleranceTooltip": "يتيح للمستخدمين فتح لوحة تحرير البيانات الجدولية بسهولة من خلال النقر فوق المعلم",
-    "featuresSelectionToleranceErrorMsg": "قيمة سماحية تحديد المعلم غير صالحة"
+    "featuresSelectionToleranceErrorMsg": "قيمة سماحية تحديد المعلم غير صالحة",
+    "autoSaveAttrUpdates": "حفظ تحديثات السمات تلقائيًا"
   },
   "editDescriptionPage": {
     "title": "نص النظرة العامة على تعريف البيانات الجدولية الخاص بـ <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "جدول البيانات",
     "geocoderHint": "لتغيير المكود الجغرافي، انتقل إلى زر 'إعدادات المكود الجغرافي' في الإعدادات العامة.",
     "prevConfigruedFieldChangedMsg": "لم يتم العثور على السمة المكونة سابقًا في إعدادات المكود الجغرافي. تم تعيين سمة على الإعدادات الافتراضية.",
-    "questionMark": "؟"
+    "questionMark": "؟",
+    "consumesCredits": "تستهلك هذه الأداة بيانات الاعتماد عند استخدام خدمة التكويد الجغرافي ArcGIS Online World."
   },
   "coordinatesPage": {
     "popupTitle": "إحداثيات",
     "checkboxLabel": "الحصول على الإحداثيات",
     "coordinatesSelectTitle": "نظام المرجع",
     "coordinatesAttributeTitle": "جدول البيانات",
-    "mapSpatialReference": "الإسناد المكاني للخريطة",
-    "latlong": "دائرة العرض/خط الطول",
+    "mapSpatialReferenceOptionLabel": "الإسناد المكاني للخريطة",
+    "latLongOptionLabel": "دائرة العرض/خط الطول",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "جميع المجموعات الممكنة تم إنشاؤها بالفعل",
     "coordinatesSourceTitle": "مصدر الإحداثيات",
     "featureLocation": "موقع المعلم",
-    "myLocation": "موقعي"
+    "myLocation": "موقعي",
+    "LatLong": {
+      "y": "خط عرض",
+      "x": "خط طول",
+      "xy": "خط الطول، ودائرة العرض",
+      "yx": "دائرة العرض وخط الطول"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "تعيين مُسبق",

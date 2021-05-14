@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Inteligentny edytor",
   "_featureAction_SmartEditor": "Inteligentny edytor",
   "noEditPrivileges": "Twoje konto nie ma uprawnień do tworzenia ani modyfikowania danych.",
+  "loginPopupTitle": "Zaloguj się",
+  "loginPopupMessage": "Widżet ${widgetName} wymaga uprawnień i kredytów, aby wyszukiwać i przechowywać informacje adresowe. Czy chcesz się zalogować i korzystać z tej funkcji?",
+  "noCreditsOrPrivilegeWarningMessage": "Twoje konto nie ma uprawnień ani kredytów, aby wyszukiwać i przechowywać informacje adresowe za pomocą widżetu ${widgetName}. Skontaktuj się z administratorem swojej instytucji, aby uzyskać uprawnienia i kredyty.",
+  "unableToUseLocator": "Lokalizator jest niedostępny. Działanie lub działania dotyczące atrybutów adresu nie zostaną wykonane.",
+  "locatorDisabledWaning": "Lokalizator nie jest włączony. Skontaktuj się z administratorem swojej instytucji, aby poprosić o dostęp do tej funkcji.",
+  "noFeatureInAIWarning": "Nie wybrano obiektu (obiektów). Wybierz obiekt, aby dokonać zmian lub kliknij opcję Anuluj, aby wrócić do ekranu głównego.",
+  "noEditableLayerWarning": "Twoje konto nie ma uprawnień do tworzenia lub modyfikowania danych. Możliwe też, że ta mapa internetowa nie zawiera żadnych warstw edytowalnych.",
+  "noVisibleCreateLayerWarning": "Warstwa lub warstwy nie są widoczne przy bieżącym poziomie powiększenia. Powiększ lub pomniejsz, aby utworzyć/zmodyfikować obiekty.",
+  "noVisibleUpdateLayerWarning": "Warstwa lub warstwy nie są widoczne przy bieżącym poziomie powiększenia. Powiększ lub pomniejsz, aby zmodyfikować obiekty.",
+  "checkLayerVisibilityInWebMapWarning": "Upewnij się, że warstwy są widoczne na mapie, aby utworzyć lub zmodyfikować obiekty.",
+  "showSelectionInAITitle": "Obiekty wybrane",
+  "showSelectionInAIMsg": "Czy chcesz wczytać bieżący wybór w widżecie ${widgetName}?",
   "widgetActive": "Aktywny",
   "widgetNotActive": "Nieaktywny",
   "pressStr": "Naciśnij ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Kopiuj obiekty",
     "createFeatures": "Utwórz obiekty",
-    "createSingleFeature": "Utwórz jeden obiekt o wielu geometriach",
+    "createSingleFeature": "Utwórz jeden obiekt wieloczęściowy",
+    "createOneSingleFeature": "Utwórz obiekt",
     "noFeaturesSelectedMessage": "Nie wybrano obiektów",
-    "selectFeatureToCopyMessage": "Wybierz obiekty do skopiowania.",
-    "multipleFeatureSaveWarning": "Uwaga: tworzenie wielu obiektów za pomocą kopiowania obiektów spowoduje natychmiastowe zapisanie wszystkich obiektów",
+    "selectFeatureToCopyMessage": "Wybierz obiekty do skopiowania",
+    "multipleFeatureSaveWarning": "Uwaga: utworzenie wielu obiektów za pomocą funkcji kopiowania spowoduje natychmiastowe zapisanie wszystkich nowych obiektów",
     "copyFeatureUpdateGeometryError": "Nie można zaktualizować geometrii wybranych obiektów",
     "canNotSaveMultipleFeatureWarning": "Uwaga: nie można skopiować wielu obiektów o tej samej wartości w polach o wartościach unikalnych; wybierz tylko jeden obiekt",
     "createOnlyOneMultipartFeatureWarning": "Uwaga: można utworzyć tylko jeden obiekt wieloczęściowy"
   },
   "addingFeatureError": "Wystąpił błąd podczas dodawania wybranych obiektów na warstwie. Spróbuj ponownie.",
-  "addingFeatureErrorCount": "Nie udało się skopiować '${copyFeatureErrorCount}' obiektów.",
+  "addingFeatureErrorCount": "Nie powiodło się skopiowanie obiektu lub obiektów: '${copyFeatureErrorCount}'. Czy chcesz spróbować ponownie dla brakującego obiektu lub brakujących obiektów?",
   "selectingFeatureError": "Wystąpił błąd podczas wybierania obiektów na warstwie. Spróbuj ponownie.",
   "customSelectOptionLabel": "Wybierz obiekty do skopiowania",
-  "noFeatureSelectedMessage": "Nie wybrano żadnych obiektów.",
+  "noFeatureSelectedMessage": "Nie wybrano obiektów",
   "multipleFeatureSaveMessage": "Wszystkie obiekty zostaną zapisane niezwłocznie. Czy chcesz kontynuować?",
   "relativeDates": {
     "dateTypeLabel": "Rodzaj dat",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Należy podać wartość daty lub czasu, aby można było zapisać domyślną wartość skonfigurowaną wstępnie.",
     "customLabel": "Niestandardowy",
     "layerLabel": "Warstwa",
-    "domainFieldHintLabel": "Wybrana wartość jest domeną wartości kodowych. Będzie używana wartość ${domainValue}"
+    "domainFieldHintLabel": "Wybrana wartość jest domeną wartości kodowych. Zostanie użyta wartość \"${domainValue}\""
   },
   "valuePicker": {
     "popupTitle": "Wybierz wartość",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Wymagane pola",
     "foundNullRecordCount": "${fieldName} (znaleziono w następującej liczbie rekordów: ${count})"
   },
-  "cantLocateUserLocation": "Nie można ustalić Twojej lokalizacji"
+  "cantLocateUserLocation": "Nie można ustalić Twojej lokalizacji",
+  "tryAgainButtonLabel": "Spróbuj ponownie",
+  "copyFeatureFailedPopupTitle": "Ojej!"
 });

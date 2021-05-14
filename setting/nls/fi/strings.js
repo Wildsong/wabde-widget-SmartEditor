@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Kaikki karttatasot",
-    "title": "Luo kohteita valitsemalla malli",
+    "title": "Valitse malli, jos haluat luoda kohteita, tai napsauta kohdetta kartalla, jos haluat muokata kohdetta",
     "generalSettings": "Yleiset asetukset",
     "layerSettings": "Karttatason asetukset",
     "webmapSettingsRadioBtnLabel": "Noudata web-kartan asetuksia",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Toiminto, joka poistaa kohteen valintajoukosta, kun tietue tallennetaan. Jos se on ainoa valittu tietue, paneeli vaihdetaan takaisin mallisivulle.",
     "useFilterEditor": "Käytä kohdemallien suodatinta",
     "useFilterEditorTip": "Toiminto, joka käyttää suodatinmallin valitsinta, joka antaa mahdollisuuden katsella yhtä karttatasomallia tai hakea malleja nimen mukaan.",
+    "groupFilteredTemplates": "Ryhmittele hakutulokset",
+    "groupFilteredTemplatesTip": "Vaihtoehto, jolla voit ryhmitellä hakutulokset karttatason mukaan.",
     "displayShapeSelector": "Näytä piirustusasetukset",
     "createNewFeaturesFromExisting": "Salli käyttäjän luoda uusia kohteita aiemmin luoduista kohteista",
     "createNewFeaturesFromExistingTip": "Asetus, joka sallii käyttäjän kopioida aiemmin luodun kohteen uusien kohteiden luontia varten",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Käytä ryhmäsuodattimen pienoisohjelman suodatinarvoja esiasetetuissa kentissä",
     "listenToGroupFilterTip": "Kun suodatinta käytetään ryhmäsuodattimen pienoisohjelmassa, käytä arvoa vastaavassa kentässä esiasetettujen arvojen luettelossa.",
     "keepTemplateActive": "Pidä valittu mallipohja aktiivisena",
+    "editLayerAddedFromAddData": "Salli tietojen lisäyksen pienoisohjelmasta lisättyjen karttatasojen muokkaus",
+    "editLayerAddedFromAddDataTip": "Tietojen lisäyksen pienoisohjelman avulla sovellukseen lisättyjä muokattavia karttatasoja voidaan muokata",
     "keepTemplateActiveTip": "Kun mallipohjan valitsin on näkyvissä, poista aiemmin valitun mallinpohjan valinta.",
     "geometryEditDefault": "Ota käyttöön geometrian muokkaus oletusarvoisesti",
     "autoSaveEdits": "Tallenna uudet kohteet automaattisesti",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Virheellinen arvo vaihdettaessa moniriviseen syöttöön",
     "featuresSelectionTolerance": "Määritä kohteiden valinnan toleranssi (pikseleinä)",
     "featuresSelectionToleranceTooltip": "Antaa käyttäjille mahdollisuuden avata helposti ominaisuustietojen muokkauspaneeli kohdetta napsauttamalla",
-    "featuresSelectionToleranceErrorMsg": "Virheellinen kohteiden valinnan toleranssiarvo"
+    "featuresSelectionToleranceErrorMsg": "Virheellinen kohteiden valinnan toleranssiarvo",
+    "autoSaveAttrUpdates": "Tallenna ominaisuustietojen päivitykset automaattisesti"
   },
   "editDescriptionPage": {
     "title": "Määritä ominaisuuden yleiskatsausteksti karttatasolle <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Ominaisuustieto",
     "geocoderHint": "Jos haluat vaihtaa geokooderin, valitse yleisten asetusten Geokooderin asetukset -painike",
     "prevConfigruedFieldChangedMsg": "Aiemmin määritettyä ominaisuustietoa ei löydy nykyisistä geokooderin asetuksista. Ominaisuustiedon oletusarvo on palautettu.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Tämä työkalu kuluttaa krediittejä, kun sitä käytetään ArcGIS Online World Geocoding Service -palvelun kanssa"
   },
   "coordinatesPage": {
     "popupTitle": "Koordinaatit",
     "checkboxLabel": "Nouda koordinaatit",
     "coordinatesSelectTitle": "Viitejärjestelmä",
     "coordinatesAttributeTitle": "Ominaisuustieto",
-    "mapSpatialReference": "Kartan koordinaatistotieto",
-    "latlong": "Leveysaste/Pituusaste",
+    "mapSpatialReferenceOptionLabel": "Kartan koordinaatistotieto",
+    "latLongOptionLabel": "Leveysaste/Pituusaste",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Kaikki mahdolliset ryhmät on jo luotu",
     "coordinatesSourceTitle": "Koordinaattien lähde",
     "featureLocation": "Kohteen sijainti",
-    "myLocation": "Oma sijainti"
+    "myLocation": "Oma sijainti",
+    "LatLong": {
+      "y": "Leveysaste",
+      "x": "Pituusaste",
+      "xy": "Pituusaste Leveysaste",
+      "yx": "Leveysaste Pituusaste"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Esiasetus",

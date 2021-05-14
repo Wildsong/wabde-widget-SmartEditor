@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Visi slāņi",
-    "title": "Izvēlēties veidni, lai veidotu elementus",
+    "title": "Atlasiet veidni, lai izveidotu elementus, vai noklikšķiniet uz elementa kartē, lai to rediģētu",
     "generalSettings": "Vispārīgie iestatījumi",
     "layerSettings": "Slāņu iestatījumi",
     "webmapSettingsRadioBtnLabel": "Ievērot tīmekļa kartes iestatījumus",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Opcija noņemt elementu no iestatītās izvēles, kad tiek saglabāts ieraksts. Ja tas ir vienīgais izvēlētais ieraksts, panelis tiek pārslēgts atpakaļ uz veidnes lapu.",
     "useFilterEditor": "Izmantot elementu veidnes filtru",
     "useFilterEditorTip": "Opcija izmantot atlasītāju Filtrēt veidni, kas sniedz iespēju skatīt viena slāņa veidni vai meklēt veidnes pēc nosaukuma.",
+    "groupFilteredTemplates": "Meklēšanas rezultātu grupēšana",
+    "groupFilteredTemplatesTip": "Iespēja grupēt meklēšanas rezultātus pēc slāņa.",
     "displayShapeSelector": "Parādīt zīmēšanas veidus",
     "createNewFeaturesFromExisting": "Atļaut lietotājam izveidot jaunus elementus no esošajiem elementiem",
     "createNewFeaturesFromExistingTip": "Iespēja, kas ļauj lietotājam kopēt esošos elementus, lai izveidotu jaunus elementus",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Lietot grupu filtra logrīka filtra vērtības iepriekšnoteiktajiem laukiem",
     "listenToGroupFilterTip": "Kad grupu filtra logrīkā tiek lietots filtrs, lietot vērtību atbilstošā iepriekšnoteikto vērtību saraksta laukā.",
     "keepTemplateActive": "Uzturēt atlasīto veidni aktīvu",
+    "editLayerAddedFromAddData": "Atļaut rediģēt slāņus, kas pievienoti no logrīka Datu pievienošana",
+    "editLayerAddedFromAddDataTip": "Var rediģēt slāņus, kas programmai pievienoti, izmantojot logrīku Datu pievienošana",
     "keepTemplateActiveTip": "Kad tiek parādīts veidņu atlasītājs, atkārtoti atlasīt veidni, ja tā ir bijusi atlasīta iepriekš.",
     "geometryEditDefault": "Aktivizēt ģeometrijas labojumus pēc noklusējuma",
     "autoSaveEdits": "Automātiski saglabāt jaunus elementus",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Laukā Pārslēgšanās uz vairākrindu ievadi ir nederīga vērtība",
     "featuresSelectionTolerance": "Iestatiet pielaidi elementu atlasei (pikseļos)",
     "featuresSelectionToleranceTooltip": "Ļaujiet lietotājiem ērti atvērt atribūtu rediģēšanas paneli, noklikšķinot uz elementa",
-    "featuresSelectionToleranceErrorMsg": "Nederīga elementa atlases pielaides vērtība"
+    "featuresSelectionToleranceErrorMsg": "Nederīga elementa atlases pielaides vērtība",
+    "autoSaveAttrUpdates": "Automātiski saglabāt atribūtu atjauninājumus"
   },
   "editDescriptionPage": {
     "title": "Definēt atribūtu pārskata tekstu slānim <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atribūti",
     "geocoderHint": "Lai mainītu ģeokodētāju, izmantojiet vispārējo iestatījumu pogu Ģeokodētāja iestatījumi",
     "prevConfigruedFieldChangedMsg": "Iepriekš konfigurētais atribūts nav atrasts pašreizējos ģeokodētāja iestatījumos. Atribūts ir atiestatīts uz noklusējumu.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Šis rīks patērē servisa kredītus, ja tiek izmantots kopā ar ArcGIS Online World Geocoding Service"
   },
   "coordinatesPage": {
     "popupTitle": "Koordinātas",
     "checkboxLabel": "Iegūt koordinātas",
     "coordinatesSelectTitle": "Atsauču sistēma",
     "coordinatesAttributeTitle": "Atribūti",
-    "mapSpatialReference": "Kartes telpiskā atskaite",
-    "latlong": "Platums/Garums",
+    "mapSpatialReferenceOptionLabel": "Kartes telpiskā atskaite",
+    "latLongOptionLabel": "Platums/Garums",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Visas iespējamās grupas jau ir izveidotas",
     "coordinatesSourceTitle": "Koordinātu avots",
     "featureLocation": "Elementa atrašanās vieta",
-    "myLocation": "Mana atrašanās vieta"
+    "myLocation": "Mana atrašanās vieta",
+    "LatLong": {
+      "y": "Platums",
+      "x": "Garums",
+      "xy": "Garums Platums",
+      "yx": "Platums Garums"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Iepriekš iestatīts",

@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "แก้ไขแบบสมาร์ท",
   "_featureAction_SmartEditor": "แก้ไขแบบสมาร์ท",
   "noEditPrivileges": "บัญชีของคุณไม่ได้รับอนุญาตให้สร้างหรือปรับเปลี่ยนข้อมูล",
+  "loginPopupTitle": "ลงชื่อเข้าใช้",
+  "loginPopupMessage": "${widgetName} ต้องการการอนุญาตและเครดิตเพื่อค้นหาและจัดเก็บข้อมูลที่อยู่ คุณต้องการลงชื่อเข้าใช้และใช้ความสามารถนี้หรือไม่",
+  "noCreditsOrPrivilegeWarningMessage": "บัญชีของคุณไม่มีสิทธิ์และเครดิตในการค้นหาและจัดเก็บข้อมูลที่อยู่ด้วย ${widgetName} โปรดติดต่อผู้ดูแลระบบขององค์กรของคุณเพื่อขอสิทธิ์และเครดิต",
+  "unableToUseLocator": "ไม่สามารถเข้าถึงตัวระบุตำแหน่งได้ จะยังไม่มีการดำเนินการในส่วนคุณลักษณะแอดเดรส",
+  "locatorDisabledWaning": "ตัวระบุตำแหน่งไม่พร้อมใช้งาน โปรดติดต่อผู้ดูแลระบบขององค์กรของคุณเพื่อขอขีดความสามารถนี้",
+  "noFeatureInAIWarning": "ไม่ได้เลือกคุณสมบัติ โปรดเลือกคุณสมบัติเพื่อทำการแก้ไขหรือคลิกยกเลิกเพื่อกลับไปที่หน้าจอหลัก",
+  "noEditableLayerWarning": "บัญชีของคุณไม่ได้รับอนุญาตให้สร้างหรือแก้ไขข้อมูลหรือแผนที่เว็บนี้ไม่มีชั้นข้อมูลที่แก้ไขได้",
+  "noVisibleCreateLayerWarning": "มองไม่เห็นชั้นข้อมูลที่ระดับการซูมปัจจุบัน ซูมเข้าหรือออกเพื่อสร้าง/แก้ไขฟีเจอร์",
+  "noVisibleUpdateLayerWarning": "มองไม่เห็นชั้นข้อมูลที่ระดับการซูมปัจจุบัน ซูมเข้าหรือออกเพื่อแก้ไขฟีเจอร์",
+  "checkLayerVisibilityInWebMapWarning": "ตรวจสอบให้แน่ใจว่าชั้นข้อมูลต่าง ๆ สามารถมองเห็นได้ในแผนที่เพื่อสร้างหรือปรับเปลี่ยนคุณสมบัติ",
+  "showSelectionInAITitle": "ฟีเจอร์ที่เลือก",
+  "showSelectionInAIMsg": "คุณต้องการโหลดการเลือกปัจจุบันใน ${widgetName} หรือไม่",
   "widgetActive": "ใช้การได้",
   "widgetNotActive": "ไม่สามารถใช้งานได้",
   "pressStr": "กด ",
@@ -62,20 +74,21 @@ define({
   "copyFeatures": {
     "title": "คัดลอกฟีเจอร์",
     "createFeatures": "สร้างฟีเจอร์",
-    "createSingleFeature": "สร้าง 1 รูปทรงเรขาคณิตหลายส่วน",
+    "createSingleFeature": "สร้างฟีเจอร์หลายส่วน 1 รายการ",
+    "createOneSingleFeature": "สร้างฟีเจอร์",
     "noFeaturesSelectedMessage": "ไม่ได้เลือกฟีเจอร์",
     "selectFeatureToCopyMessage": "โปรดเลือกฟีเจอร์ที่จะคัดลอก",
-    "multipleFeatureSaveWarning": "หมายเหตุ: การสร้างหลายฟีเจอร์โดยการคัดลอกฟีเจอร์ จะเป็นการบันทึกฟีเจอร์ทั้งหมดทันที",
+    "multipleFeatureSaveWarning": "หมายเหตุ: การสร้างคุณสมบัติหลายอย่างโดยใช้ฟังก์ชันการคัดลอกจะบันทึกคุณสมบัติใหม่ทั้งหมดทันที",
     "copyFeatureUpdateGeometryError": "ไม่สามารถอัพเดตเรขาคณิตของฟีเจอร์ที่เลือกได้",
     "canNotSaveMultipleFeatureWarning": "หมายเหตุ: ไม่สามารถคัดลอกหลายฟีเจอร์ โดยใช้ค่าเดียวกันสำหรับฟิลด์ค่าที่ไม่ซ้ำกันได้ โปรดเลือกเพียงฟีเจอร์เดียว",
     "createOnlyOneMultipartFeatureWarning": "หมายเหตุ: สามารถสร้างได้เพียงหนึ่งฟีเจอร์แบบหลายส่วน"
   },
   "addingFeatureError": "เกิดข้อผิดพลาดขณะเพิ่มฟีเจอร์ที่เลือกลงในชั้นข้อมูล โปรดลองอีกครั้ง",
-  "addingFeatureErrorCount": "ล้มเหลวในการคัดลอกฟีเจอร์ '${copyFeatureErrorCount}'",
+  "addingFeatureErrorCount": "คัดลอกฟีเจอร์ '${copyFeatureErrorCount}' ไม่สำเร็จ คุณต้องการลองอีกครั้งสำหรับฟีเจอร์ที่ขาดหายไปหรือไม่",
   "selectingFeatureError": "เกิดข้อผิดพลาดขณะเลือกฟีเจอร์ในชั้นข้อมูล โปรดลองอีกครั้ง",
   "customSelectOptionLabel": "เลือกฟีเจอร์ที่จะคัดลอก",
   "noFeatureSelectedMessage": "ไม่ได้เลือกฟีเจอร์",
-  "multipleFeatureSaveMessage": "ฟีเจอร์ทั้งหมดจะถูกบันทึกในทันที คุณต้องการดำเนินงานหรือไม่",
+  "multipleFeatureSaveMessage": "ฟีเจอร์ทั้งหมดจะถูกบันทึกในทันที คุณต้องการดำเนินการต่อหรือไม่",
   "relativeDates": {
     "dateTypeLabel": "ประเภทวันที่",
     "valueLabel": "ค่า",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "จะต้องระบุค่าวันที่หรือเวลา เพื่อให้สามารถบันทึกค่าพรีเซ็ตเริ่มต้นได้",
     "customLabel": "แก้ไขเอง",
     "layerLabel": "ชั้นข้อมูล",
-    "domainFieldHintLabel": "ค่าที่เลือกเป็นโดเมนค่าที่เข้ารหัสไว้ จะใช้งานค่า: ${domainValue}"
+    "domainFieldHintLabel": "ค่าที่เลือกเป็นโดเมนค่าที่เข้ารหัสไว้ ค่า: \"${domainValue}\" จะถูกใช้"
   },
   "valuePicker": {
     "popupTitle": "เลือกค่า",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "ฟิลด์ที่ต้องใช้หรือต้องมี",
     "foundNullRecordCount": "${fieldName} (พบใน ${count} บันทึกข้อมูล)"
   },
-  "cantLocateUserLocation": "ไม่สามารถระบุตำแหน่งของคุณได้"
+  "cantLocateUserLocation": "ไม่สามารถระบุตำแหน่งของคุณได้",
+  "tryAgainButtonLabel": "ลองอีกครั้ง",
+  "copyFeatureFailedPopupTitle": "ขออภัย!"
 });

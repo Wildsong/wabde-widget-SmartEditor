@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Tất cả các Lớp",
-    "title": "Chọn một mẫu để tạo các đối tượng",
+    "title": "Chọn một biểu mẫu để tạo các đối tượng hoặc nhấp vào một đối tượng trên bản đồ để chỉnh sửa",
     "generalSettings": "Thiết lập Tổng quan",
     "layerSettings": "Thiết lập Lớp",
     "webmapSettingsRadioBtnLabel": "Thiết lập nhận trả trong bản đồ web",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Tùy chọn để xóa đối tượng khỏi lựa chọn đã đặt khi bản ghi được lưu. Nếu đó là bản ghi duy nhất được chọn, bảng điều khiển được chuyển trở về trang mẫu.",
     "useFilterEditor": "Sử dụng bộ lọc mẫu đối tượng",
     "useFilterEditorTip": "Tùy chọn sử dụng chức năng chọn Bộ lọc Mẫu cung cấp khả năng xem một lớp mẫu hoặc tìm kiếm mẫu theo tên.",
+    "groupFilteredTemplates": "Nhóm các kết quả tìm kiếm",
+    "groupFilteredTemplatesTip": "Tùy chọn nhóm các kết quả tìm kiếm theo lớp.",
     "displayShapeSelector": "Hiện các tùy chọn vẽ",
     "createNewFeaturesFromExisting": "Cho phép người dùng tạo đối tượng mới từ đối tượng hiện có",
     "createNewFeaturesFromExistingTip": "Tùy chọn cho phép người dùng sao chép đối tượng hiện có để tạo đối tượng mới",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Áp dụng các giá trị bộ lọc từ tiện ích Bộ lọc Nhóm cho các trường Thiết lập sẵn",
     "listenToGroupFilterTip": "Khi áp dụng một bộ lọc trong tiện ích Bộ lọc Nhóm, bộ lọc sẽ áp dụng giá trị cho một trường phù hợp trong danh sách giá trị đã Thiết lập sẵn.",
     "keepTemplateActive": "Giữ cho biểu mẫu được chọn hoạt động",
+    "editLayerAddedFromAddData": "Cho phép chỉnh sửa các lớp được thêm từ tiện ích Thêm Dữ liệu",
+    "editLayerAddedFromAddDataTip": "Có thể chỉnh sửa các lớp được thêm vào ứng dụng bằng tiện ích Thêm Dữ liệu",
     "keepTemplateActiveTip": "Khi trình chọn biểu mẫu được hiển thị, nếu trước đó đã chọn một biểu mẫu, hãy bỏ chọn biểu mẫu đó.",
     "geometryEditDefault": "Bật chỉnh sửa hình học theo mặc định",
     "autoSaveEdits": "Tự động lưu đối tượng mới",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Giá trị không hợp lệ khi chuyển sang đầu vào nhiều dòng",
     "featuresSelectionTolerance": "Đặt sai số cho lựa chọn đối tượng (pixel)",
     "featuresSelectionToleranceTooltip": "Cho phép người dùng dễ dàng mở bảng chỉnh sửa thuộc tính bằng cách nhấp vào đối tượng địa lý",
-    "featuresSelectionToleranceErrorMsg": "Giá trị sai số lựa chọn đối tượng không hợp lệ"
+    "featuresSelectionToleranceErrorMsg": "Giá trị sai số lựa chọn đối tượng không hợp lệ",
+    "autoSaveAttrUpdates": "Tự động lưu các bản cập nhật thuộc tính"
   },
   "editDescriptionPage": {
     "title": "Xác định văn bản tổng quan của thuộc tính cho <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Thuộc tính",
     "geocoderHint": "Để thay đổi bộ mã hóa địa lý, chọn nút 'Cài đặt Bộ mã hóa địa lý' trong phần cài đặt chung",
     "prevConfigruedFieldChangedMsg": "Không tìm thấy thuộc tính được cấu hình trước đó trong cài đặt bộ mã hóa địa lý hiện tại. Thuộc tính đã được đặt lại về mặc định.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Công cụ này tiêu tốn điểm tín dụng khi dùng với Dịch vụ Mã hóa địa lý Thế giới Trực tuyến của ArcGIS"
   },
   "coordinatesPage": {
     "popupTitle": "Tọa độ",
     "checkboxLabel": "Nhận tọa độ",
     "coordinatesSelectTitle": "Hệ Tham chiếu",
     "coordinatesAttributeTitle": "Thuộc tính",
-    "mapSpatialReference": "Tham chiếu Không gian Bản đồ",
-    "latlong": "Vĩ độ/Kinh độ",
+    "mapSpatialReferenceOptionLabel": "Tham chiếu Không gian Bản đồ",
+    "latLongOptionLabel": "Vĩ độ/Kinh độ",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Tất cả các nhóm có thể có đã được tạo",
     "coordinatesSourceTitle": "Nguồn Tọa độ",
     "featureLocation": "Vị trí Đối tượng",
-    "myLocation": "Vị trí của tôi"
+    "myLocation": "Vị trí của tôi",
+    "LatLong": {
+      "y": "Vĩ độ",
+      "x": "Kinh độ",
+      "xy": "Kinh độ Vĩ độ",
+      "yx": "Vĩ độ Kinh độ"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Thiết lập trước",

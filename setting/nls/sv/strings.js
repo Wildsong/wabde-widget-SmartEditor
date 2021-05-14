@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Alla lager",
-    "title": "Välj en mall för att skapa geoobjekt",
+    "title": "Välj en mall för att skapa geoobjekt eller klicka på ett geoobjekt på kartan för att redigera det",
     "generalSettings": "Allmänna inställningar",
     "layerSettings": "Lagerinställningar",
     "webmapSettingsRadioBtnLabel": "Ta hänsyn till inställningar i webbkartan",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Alternativ för att ta bort geoobjektet ur urvalsuppsättningen när posten sparas. Om det är den enda valda posten återgår panelen till mallsidan.",
     "useFilterEditor": "Använd mallfilter för geoobjekt",
     "useFilterEditorTip": "Alternativ för att använda filtermallväljaren som ger möjlighet att visa ett lagers mall eller söka efter mallar utifrån namn.",
+    "groupFilteredTemplates": "Gruppera sökresultat",
+    "groupFilteredTemplatesTip": "Alternativ för att gruppera sökresultat efter lager.",
     "displayShapeSelector": "Visa ritalternativ",
     "createNewFeaturesFromExisting": "Tillåt att användaren skapar nya geoobjekt av befintliga geoobjekt",
     "createNewFeaturesFromExistingTip": "Alternativ för att låta användaren kopiera befintliga geoobjekt för att skapa nya geoobjekt",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Tillämpa filtreringsvärden från gruppfiltreringswidgeten på förinställda fält",
     "listenToGroupFilterTip": "När ett filter används i gruppfiltreringswidgeten tillämpas värdet på ett matchande fält i listan över förinställda värden.",
     "keepTemplateActive": "Låt den markerade mallen vara aktiv",
+    "editLayerAddedFromAddData": "Tillåt redigering av lager som lagts till från widgeten Lägg till data",
+    "editLayerAddedFromAddDataTip": "Redigerbara lager som lagts till i applikationen med hjälp av widgeten Lägg till data",
     "keepTemplateActiveTip": "Om en mall har valts tidigare när mallväljlaren visas, väljer du den.",
     "geometryEditDefault": "Aktivera geometriredigering som standard",
     "autoSaveEdits": "Spara nya geoobjekt automatiskt",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Ogiltigt värde under växlingen till indata med flera rader",
     "featuresSelectionTolerance": "Ange toleransen för val av geoobjekt (pixlar)",
     "featuresSelectionToleranceTooltip": "Gör det möjligt för användare att enkelt öppna attributredigeringsfönstret genom att klicka på geoobjektet",
-    "featuresSelectionToleranceErrorMsg": "Ogiltigt värde för tolerans för val av geoobjekt"
+    "featuresSelectionToleranceErrorMsg": "Ogiltigt värde för tolerans för val av geoobjekt",
+    "autoSaveAttrUpdates": "Spara attributuppdateringar automatiskt"
   },
   "editDescriptionPage": {
     "title": "Definiera attributöversiktstext för <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Attribut",
     "geocoderHint": "Du kan ändra geokodningstjänsten med knappen Inställningar för geokodning i de allmänna inställningarna",
     "prevConfigruedFieldChangedMsg": "Tidigare konfigurerat attribut har inte hittats i de aktuella geokodarinställningarna. Attributet har återställts till standard.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Det här verktyget förbrukar krediter när det används med tjänsten för världsgeokodning i ArcGIS Online."
   },
   "coordinatesPage": {
     "popupTitle": "Koordinater",
     "checkboxLabel": "Hämta koordinater",
     "coordinatesSelectTitle": "Referenssystem",
     "coordinatesAttributeTitle": "Attribut",
-    "mapSpatialReference": "Kartans geografiska referens",
-    "latlong": "Latitud/longitud",
+    "mapSpatialReferenceOptionLabel": "Kartans geografiska referens",
+    "latLongOptionLabel": "Latitud/longitud",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Alla möjliga grupper har redan skapats",
     "coordinatesSourceTitle": "Koordinatkälla",
     "featureLocation": "Geoobjektplats",
-    "myLocation": "Min plats"
+    "myLocation": "Min plats",
+    "LatLong": {
+      "y": "Latitud",
+      "x": "Longitud",
+      "xy": "Longitud latitud",
+      "yx": "Latitud longitud"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Förinställning",

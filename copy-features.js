@@ -34,7 +34,9 @@ define([
   'esri/tasks/QueryTask',
   'dojo/Deferred',
   'dojo/promise/all',
-  'jimu/dijit/LoadingIndicator'
+  'jimu/dijit/LoadingIndicator',
+  'dijit/ProgressBar',
+  'dojo/dom-style'
 ],
   function (
     _WidgetBase,
@@ -57,7 +59,9 @@ define([
     QueryTask,
     Deferred,
     all,
-    LoadingIndicator) {
+    LoadingIndicator,
+    ProgressBar,
+    domStyle) {
 
     return declare([_WidgetBase, Evented, _TemplatedMixin], {
 
@@ -80,7 +84,7 @@ define([
         this.loading = new LoadingIndicator({
           hidden: true
         });
-        this.loading.placeAt(this.domNode);
+        this.loading.placeAt(this.parentDomNode);
       },
 
       postCreate: function () {
@@ -89,6 +93,8 @@ define([
         this.featuresByLayerId = {};
         this.featureTitlesByLayerId = {};
         this.highlightGraphicsLayer = null;
+        this.applyEditsProgress = new ProgressBar(null, this.applyEditsProgressParentNode);
+        domStyle.set(this.applyEditsProgress.domNode, 'display', 'none');
         //handel button clicks
         this.own(on(this.cancelBtn, "click", lang.hitch(this, function () {
           this.cancelBtnClicked();
@@ -157,6 +163,7 @@ define([
             // Initially we need to highlight all the graphics, since all the features
             // are selected in the features list.
             this._highlightFeatures();
+            this.updateSingleFeatureButtonText();
           }));
         }
       },
@@ -187,9 +194,9 @@ define([
           if(featureLayerId) {
             layerObjectIdField = this._getObjectIdFieldOfLayer(featureLayerId);
             objectIdsOfSelectedFeaturesInLayer =
-            this._getSelectedFeatureObjectIds(this.featuresByLayerId[featureLayerId], layerObjectIdField);
-            deferredObj[featureLayerId] =
-            this._getSelectedFeatureGeometry(featureLayerId, objectIdsOfSelectedFeaturesInLayer);
+              this._getSelectedFeatureObjectIds(this.featuresByLayerId[featureLayerId], layerObjectIdField);
+            deferredObj[featureLayerId] = this._getFeatureByChunks(featureLayerId,
+              objectIdsOfSelectedFeaturesInLayer);
           }
         }
         all(deferredObj).then(lang.hitch(this, function (deferredObjDetails) {
@@ -198,7 +205,12 @@ define([
               this._updateGeometryForSelectedFeature(layerId, deferredObjDetails);
             }
           }
-          this.loading.hide();
+          // Initially we need to highlight all the graphics, since all the features
+          // are selected in the features list.
+          this._highlightFeatures();
+          setTimeout(lang.hitch(this, function () {
+            this.loading.hide();
+          }), 1000);
         }), lang.hitch(this, function () {
           this.loading.hide();
           Message({
@@ -223,12 +235,13 @@ define([
       _updateGeometryForSelectedFeature: function (layerId, deferredObjDetails) {
         var layerObjectIdField;
         layerObjectIdField = this._getObjectIdFieldOfLayer(layerId);
-        array.forEach(this.featuresByLayerId[layerId], lang.hitch(this, function(selectedFeature) {
-          array.forEach(deferredObjDetails[layerId].features,
-            lang.hitch(this, function(selectedMapFeature) {
-            if(selectedMapFeature.attributes[layerObjectIdField] ===
-              selectedFeature.attributes[layerObjectIdField]) {
-              selectedFeature.geometry = selectedMapFeature.geometry;
+        array.forEach(this.featuresByLayerId[layerId], lang.hitch(this, function (selectedFeature) {
+          array.some(deferredObjDetails[layerId],
+            lang.hitch(this, function (selectedMapFeature) {
+              if (selectedMapFeature.attributes[layerObjectIdField] ===
+                selectedFeature.attributes[layerObjectIdField]) {
+                selectedFeature.geometry = selectedMapFeature.geometry;
+                return true;
             }
           }));
         }));
@@ -240,6 +253,35 @@ define([
           objectIdsArray.push(currentFeature.attributes[layerObjectIdField]);
         }));
         return objectIdsArray;
+      },
+
+      _getFeatureByChunks: function (featureLayerId, objectIdsArray) {
+        var deferred, deferredList, currentLayer, chunkArr, chunkSize;
+        currentLayer = this.layerInfosObj.getLayerInfoById(featureLayerId);
+        chunkArr = [];
+        deferred = new Deferred();
+        deferredList = [];
+        //For layers added from an GPX file and CSV
+        if (currentLayer.layerObject.url === null || currentLayer.layerObject.url === "") {
+          chunkSize = objectIdsArray.length;
+        } else {
+          //get the layers max record count if not then make it as 999
+          chunkSize = currentLayer.layerObject.maxRecordCount || 999;
+        }
+        while (objectIdsArray.length > 0) {
+          deferredList.push(this._getSelectedFeatureGeometry(featureLayerId,
+            objectIdsArray.splice(0, chunkSize)));
+        }
+        //Once all the features are fetched, merge them
+        all(deferredList).then(lang.hitch(this, function (queryArray) {
+          var intersectingFeatures;
+          intersectingFeatures = [];
+          array.forEach(queryArray, lang.hitch(this, function (result) {
+            intersectingFeatures = intersectingFeatures.concat(result.features);
+          }));
+          deferred.resolve(intersectingFeatures);
+        }));
+        return deferred.promise;
       },
 
       /**
@@ -330,6 +372,7 @@ define([
           // hence highlight the features accordingly.
           this._highlightFeatures();
         }
+        this.updateSingleFeatureButtonText();
       },
 
       /**
@@ -359,6 +402,42 @@ define([
           }
         }));
         parentCheckbox.setValue(enableParent);
+        this.updateSingleFeatureButtonText();
+      },
+
+      /**
+       * change the text of the button "Create 1 Multi-Geometry feature" to "Create Feature"
+       * when only one feature is selected(checked) on the screen
+       */
+      updateSingleFeatureButtonText: function () {
+        var checkedCount = 0;
+        array.some(this.allChildCheckboxes, lang.hitch(this, function (checkBox) {
+          if (checkBox.getValue()) {
+            checkedCount++;
+          }
+          if (checkedCount > 1) {
+            return true;
+          }
+        }));
+
+        if (checkedCount === 1 || this.allChildCheckboxes.length === 1) {
+          domAttr.set(this.createSingleFeatureBtn, "innerHTML", this.nls.copyFeatures.createOneSingleFeature);
+          domAttr.set(this.createSingleFeatureBtn, "aria-label", this.nls.copyFeatures.createOneSingleFeature);
+          domAttr.set(this.createSingleFeatureBtn, "title", this.nls.copyFeatures.createOneSingleFeature);
+          domClass.add(this.createMultipleFeaturesBtn, "esriCTCanCreateOnlyOneFeature");
+          if (this.isPointGeometryFeatures) {
+            domClass.remove(this.createSingleFeatureBtn, "esriCTHidden");
+          }
+
+        } else {
+          domAttr.set(this.createSingleFeatureBtn, "innerHTML", this.nls.copyFeatures.createSingleFeature);
+          domAttr.set(this.createSingleFeatureBtn, "aria-label", this.nls.copyFeatures.createSingleFeature);
+          domAttr.set(this.createSingleFeatureBtn, "title", this.nls.copyFeatures.createSingleFeature);
+          domClass.remove(this.createMultipleFeaturesBtn, "esriCTCanCreateOnlyOneFeature");
+          if (this.isPointGeometryFeatures) {
+            domClass.add(this.createSingleFeatureBtn, "esriCTHidden");
+          }
+        }
       },
 
       /**
@@ -444,8 +523,10 @@ define([
        */
       _showHideSingleFeatureButton: function (geometryType) {
         if (geometryType === "esriGeometryPoint") {
+          this.isPointGeometryFeatures = true;
           domClass.add(this.createSingleFeatureBtn, "esriCTHidden");
         } else {
+          this.isPointGeometryFeatures = false;
           domClass.remove(this.createSingleFeatureBtn, "esriCTHidden");
         }
       },
@@ -526,6 +607,24 @@ define([
         }
         domAttr.set(this.warningMessage, "innerHTML", warningMessage);
         domAttr.set(this.warningMessage, "aria-label", warningMessage);
+      },
+
+      /**
+       * Shows the current progress on a scale of 0 to 100, making the `applyEditsProgress` progress bar
+       * visible when its value is between 0 and 100, exclusively.
+       * @param {number} value Progress percent, 0..100
+       */
+      setProgressPercentage: function (percentageValue) {
+        var value = parseFloat(percentageValue.toFixed());
+        if (value <= 0) {
+          this.applyEditsProgress.set({ value: 0 });
+          domStyle.set(this.applyEditsProgress.domNode, 'display', 'block');
+        } else if (value >= 100) {
+          this.applyEditsProgress.set({ value: 100 });
+          domStyle.set(this.applyEditsProgress.domNode, 'display', 'none');
+        } else {
+          this.applyEditsProgress.set({ value: value });
+        }
       }
     });
   });

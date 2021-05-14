@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Alle lag",
-    "title": "Velg mal for å opprette geoobjekter",
+    "title": "Velg mal for å opprette geoobjekter, eller klikk på et geoobjekt i kartet for å redigere det.",
     "generalSettings": "Generelle innstillinger",
     "layerSettings": "Laginnstillinger",
     "webmapSettingsRadioBtnLabel": "Behold innstillingene i webkartet",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Alternativ for å fjerne geoobjektet fra utvalget som er angitt når posten lagres. Hvis posten er den eneste valgte posten, går panelet tilbake til å vise malsiden.",
     "useFilterEditor": "Bruk geoobjektmal-filter",
     "useFilterEditorTip": "Alternativ for bruk av filtermalvelgeren som gjør det mulig å vise malen for ett lag eller søke etter maler basert på navn.",
+    "groupFilteredTemplates": "Grupper søkeresultater",
+    "groupFilteredTemplatesTip": "Alternativ for å gruppere søkeresultatene etter lag.",
     "displayShapeSelector": "Vis tegnealternativer",
     "createNewFeaturesFromExisting": "Tillat brukeren å opprette nye geoobjekter fra eksisterende geoobjekter",
     "createNewFeaturesFromExistingTip": "Alternativ for å tillate brukeren å kopiere eksisterende geoobjekt for å opprette nye geoobjekter",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Bruk filterverdier fra widgeten Grupper filter i Forhåndsinnstilte felt",
     "listenToGroupFilterTip": "Når et filter brukes i widgeten Grupper filter, bruker du verdien i et tilsvarende felt i listen Forhåndsinnstilte verdier.",
     "keepTemplateActive": "Hold valgt mal aktiv",
+    "editLayerAddedFromAddData": "Tillat redigering av lag som er lagt til fra miniprogrammet Legg til data.",
+    "editLayerAddedFromAddDataTip": "Redigerbare lag som er lagt til i applikasjonen ved hjelp av miniprogrammet Legg til data, kan redigeres.",
     "keepTemplateActiveTip": "Hvis en mal tidligere ble valgt når malvelgeren vises, velger du den på nytt.",
     "geometryEditDefault": "Aktiver geometriredigering som standard",
     "autoSaveEdits": "Lagre nye geoobjekter automatisk",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Ugyldig verdi i bytt til inndata i flere linjer",
     "featuresSelectionTolerance": "Angi toleransen for valg av geoobjekter (piksler)",
     "featuresSelectionToleranceTooltip": "Setter brukere i stand til enkelt å åpne panelet for attributtredigering ved å klikke på det aktuelle geoobjektet",
-    "featuresSelectionToleranceErrorMsg": "Ugyldig toleranseverdi for valg av geoobjekt"
+    "featuresSelectionToleranceErrorMsg": "Ugyldig toleranseverdi for valg av geoobjekt",
+    "autoSaveAttrUpdates": "Lagre attributtoppdateringer automatisk"
   },
   "editDescriptionPage": {
     "title": "Angi tekst for attributtoversikt for <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Attributt",
     "geocoderHint": "Hvis du vil endre geokodingsverktøy, velger du Innstillinger for geokoding i de generelle innstillingene",
     "prevConfigruedFieldChangedMsg": "Finner ikke tidligere konfigurert attributt i gjeldende innstillinger for geokoding. Attributtet er tilbakestilt til standardverdien.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Dette verktøyet bruker credits når det brukes sammen med tjenesten ArcGIS Online World Geocoding"
   },
   "coordinatesPage": {
     "popupTitle": "Koordinater",
     "checkboxLabel": "Hent koordinater",
     "coordinatesSelectTitle": "Referansesystem",
     "coordinatesAttributeTitle": "Attributt",
-    "mapSpatialReference": "Kartets romlige referanse",
-    "latlong": "Lengdegrad/breddegrad",
+    "mapSpatialReferenceOptionLabel": "Kartets romlige referanse",
+    "latLongOptionLabel": "Lengdegrad/breddegrad",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Alle mulige grupper er allerede opprettet",
     "coordinatesSourceTitle": "Koordinatkilde",
     "featureLocation": "Geoobjektlokasjon",
-    "myLocation": "Min lokasjon"
+    "myLocation": "Min lokasjon",
+    "LatLong": {
+      "y": "Breddegrad",
+      "x": "Lengdegrad",
+      "xy": "Lengdegrad breddegrad",
+      "yx": "Breddegrad lengdegrad"
+    },
+    "MapSpatialReference": {
+      "y": "J",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Forhåndsinnstilt",

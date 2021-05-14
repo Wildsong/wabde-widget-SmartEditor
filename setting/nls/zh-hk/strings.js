@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "所有圖層",
-    "title": "選擇範本以建立圖徵",
+    "title": "選擇樣板以建立圖徵，或按一下地圖上的圖徵予以編輯",
     "generalSettings": "一般設定",
     "layerSettings": "圖層設定",
     "webmapSettingsRadioBtnLabel": "遵守 Web 地圖中的設定",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "儲存記錄時，用來從選擇集中移除圖徵的選項。如果僅選擇該記錄，面板會切換回範本頁面。",
     "useFilterEditor": "使用圖徵範本篩選器",
     "useFilterEditorTip": "用來使用「篩選樣板」選取器的選項，可讓您檢視一個圖層的樣板或按名稱搜尋樣板。",
+    "groupFilteredTemplates": "群組搜尋結果",
+    "groupFilteredTemplatesTip": "用來按圖層分組搜尋結果的選項",
     "displayShapeSelector": "顯示繪製選項",
     "createNewFeaturesFromExisting": "允許使用者從現有的圖徵建立新圖徵",
     "createNewFeaturesFromExistingTip": "可讓使用者複製現有的圖徵以建立新圖徵的選項",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "將篩選器值從「群組篩選器」widget 套用至「預設」欄位",
     "listenToGroupFilterTip": "在「群組篩選器」widget 中套用篩選器時，將值套用至「預設」值清單中的符合欄位。",
     "keepTemplateActive": "維持所選樣版使用中",
+    "editLayerAddedFromAddData": "允許編輯從「新增資料」widget 中新增的圖層。",
+    "editLayerAddedFromAddDataTip": "可編輯使用「新增資料」widget 新增至應用程式的可編輯圖層",
     "keepTemplateActiveTip": "顯示樣版選取器時，如果先前已選擇樣版，請重新選擇它。",
     "geometryEditDefault": "預設會啟用幾何編輯",
     "autoSaveEdits": "自動儲存新圖徵",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "切換至多行輸入中出現無效值",
     "featuresSelectionTolerance": "設定圖徵選擇的容差 (像素)",
     "featuresSelectionToleranceTooltip": "使用者可按一下圖徵以輕鬆開啟屬性編輯面板",
-    "featuresSelectionToleranceErrorMsg": "無效的圖徵選擇容差值"
+    "featuresSelectionToleranceErrorMsg": "無效的圖徵選擇容差值",
+    "autoSaveAttrUpdates": "自動儲存屬性更新"
   },
   "editDescriptionPage": {
     "title": "定義 <b>${layername}</b> 的屬性概觀文字。 "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "屬性",
     "geocoderHint": "若要變更地理編碼器，請移至一般設定中的「地理編碼器設定」按鈕",
     "prevConfigruedFieldChangedMsg": "在目前的地理編碼器設定中找不到先前配置的屬性。 已將屬性重設為預設值。",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "使用 ArcGIS Online 世界地理編碼服務時，此工具會耗用點數"
   },
   "coordinatesPage": {
     "popupTitle": "座標",
     "checkboxLabel": "取得座標",
     "coordinatesSelectTitle": "參考系統",
     "coordinatesAttributeTitle": "屬性",
-    "mapSpatialReference": "地圖空間參考",
-    "latlong": "緯度/經度",
+    "mapSpatialReferenceOptionLabel": "地圖空間參考",
+    "latLongOptionLabel": "緯度/經度",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "已建立所有可能的群組",
     "coordinatesSourceTitle": "座標來源",
     "featureLocation": "圖徵位置",
-    "myLocation": "我的位置"
+    "myLocation": "我的位置",
+    "LatLong": {
+      "y": "緯度",
+      "x": "經度",
+      "xy": "經度 緯度",
+      "yx": "緯度 經度"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "預置",

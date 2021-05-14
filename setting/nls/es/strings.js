@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Todas las capas",
-    "title": "Seleccionar una plantilla para crear entidades",
+    "title": "Seleccione una plantilla para crear entidades o haga clic en una entidad en el mapa para editarla",
     "generalSettings": "Configuración general",
     "layerSettings": "Configuraciones de la capa",
     "webmapSettingsRadioBtnLabel": "Respetar los ajustes del mapa web",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Opción para eliminar la entidad del conjunto de selección al guardar el registro. Si es el único registro seleccionado, el panel vuelve a cambiar a la página de plantilla.",
     "useFilterEditor": "Usar filtro de plantilla de entidad",
     "useFilterEditorTip": "Opción para usar el selector de plantillas de filtro que permite ver la plantilla de una capa o buscar plantillas por nombre.",
+    "groupFilteredTemplates": "Agrupar resultados de búsqueda",
+    "groupFilteredTemplatesTip": "Opción para agrupar los resultados de búsqueda por capa.",
     "displayShapeSelector": "Mostrar opciones de dibujo",
     "createNewFeaturesFromExisting": "Permitir al usuario crear entidades nuevas a partir de entidades existentes",
     "createNewFeaturesFromExistingTip": "Opción que permite al usuario copiar la entidad existente para crear entidades nuevas",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Aplicar valores de filtro del widget Filtro de grupo a los campos predefinidos",
     "listenToGroupFilterTip": "Cuando se aplica un filtro en el widget Filtro de grupo, aplica el valor a un campo coincidente de la lista de valores predefinidos.",
     "keepTemplateActive": "Mantener plantilla seleccionada activa",
+    "editLayerAddedFromAddData": "Permitir la edición de capas agregadas desde el widget Agregar Datos",
+    "editLayerAddedFromAddDataTip": "Las capas editables agregadas a la aplicación mediante el widget Agregar datos pueden editarse",
     "keepTemplateActiveTip": "Cuando se muestra el selector de plantillas, si se seleccionó una plantilla previamente, vuelve a seleccionarla.",
     "geometryEditDefault": "Habilitar edición de geometría de forma predeterminada",
     "autoSaveEdits": "Guardar nueva entidad automáticamente",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Valor no válido en cambio a entrada multilínea",
     "featuresSelectionTolerance": "Establecer la tolerancia para la selección de entidades (píxeles)",
     "featuresSelectionToleranceTooltip": "Permite a los usuarios abrir fácilmente el panel de edición de atributos haciendo clic en la entidad",
-    "featuresSelectionToleranceErrorMsg": "Valor de tolerancia de selección de entidades no válido"
+    "featuresSelectionToleranceErrorMsg": "Valor de tolerancia de selección de entidades no válido",
+    "autoSaveAttrUpdates": "Guardar automáticamente las actualizaciones de atributos"
   },
   "editDescriptionPage": {
     "title": "Definir texto de descripción general de atributo para <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atributos",
     "geocoderHint": "para cambiar el geocodificador, vaya al botón 'Ajustes de geocodificador' en los ajustes generales",
     "prevConfigruedFieldChangedMsg": "No se encontró el atributo configurado anteriormente en la configuración del geocodificador actual. El atributo se ha restablecido al valor predeterminado.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Esta herramienta consume créditos cuando se utiliza con el Servicio de geocodificación mundial de ArcGIS Online"
   },
   "coordinatesPage": {
     "popupTitle": "Coordenadas",
     "checkboxLabel": "Obtener coordenadas",
     "coordinatesSelectTitle": "Sistema de Referencia",
     "coordinatesAttributeTitle": "Atributos",
-    "mapSpatialReference": "Asignar referencia espacial",
-    "latlong": "Latitud/longitud",
+    "mapSpatialReferenceOptionLabel": "Asignar referencia espacial",
+    "latLongOptionLabel": "Latitud/longitud",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Ya se han creado todos los grupos posibles",
     "coordinatesSourceTitle": "Fuente de coordenadas",
     "featureLocation": "Ubicación de entidad",
-    "myLocation": "Mi ubicación"
+    "myLocation": "Mi ubicación",
+    "LatLong": {
+      "y": "Latitud",
+      "x": "Longitud",
+      "xy": "Longitud Latitud",
+      "yx": "Latitud Longitud"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Predefinido",

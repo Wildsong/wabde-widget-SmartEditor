@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Akıllı Düzenleyici",
   "_featureAction_SmartEditor": "Akıllı Düzenleyici",
   "noEditPrivileges": "Hesabınızın veri oluşturma veya değiştirme izni yok.",
+  "loginPopupTitle": "Oturum Aç",
+  "loginPopupMessage": "${widgetName}, adres bilgilerinin aranması ve saklanması için izinler ve krediler gerektirir. Bu özelliği kullanmak için oturum açmak ister misiniz?",
+  "noCreditsOrPrivilegeWarningMessage": "Hesabınız, ${widgetName} ile adres bilgilerini aramak ve saklamak için gerekli izinlere ve kredilere sahip değil. İzin ve kredi istemek için lütfen kuruluş yöneticinizle iletişime geçin.",
+  "unableToUseLocator": "Konumlandırıcıya erişilemiyor. Adres öznitelik eylemi/eylemleri gerçekleştirilmeyecek.",
+  "locatorDisabledWaning": "Konumlandırıcı etkin değil. Bu özelliği talep etmek için lütfen kuruluş yöneticinizle iletişime geçin.",
+  "noFeatureInAIWarning": "Hiç detay seçilmedi. Lütfen düzenlemeleri gerçekleştirmek için bir detay seçin veya ana ekrana dönmek için İptal'e tıklayın.",
+  "noEditableLayerWarning": "Hesabınız veri oluşturmak ya da değiştirmek için gerekli izne sahip değil veya bu web haritası düzenlenebilir katman içermiyor.",
+  "noVisibleCreateLayerWarning": "Katmanlar mevcut yakınlaştırma seviyesinde görünür değil. Detay oluşturmak/değiştirmek için yakınlaştırın veya uzaklaştırın.",
+  "noVisibleUpdateLayerWarning": "Katmanlar mevcut yakınlaştırma seviyesinde görünür değil. Detayları değiştirmek için yakınlaştırın veya uzaklaştırın.",
+  "checkLayerVisibilityInWebMapWarning": "Detay oluşturmak veya detayları değiştirmek için katmanların haritada görünür olduğundan emin olun.",
+  "showSelectionInAITitle": "Seçili Detaylar",
+  "showSelectionInAIMsg": "Mevcut seçimi ${widgetName}'e yüklemek istiyor musunuz?",
   "widgetActive": "Etkin",
   "widgetNotActive": "Etkin Değil",
   "pressStr": "Basılacak Tuş ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Detayları Kopyala",
     "createFeatures": "Detay Oluştur",
-    "createSingleFeature": "1 Çoklu Geometri Detayı Oluştur",
+    "createSingleFeature": "1 Çok Parçalı Detay Oluştur",
+    "createOneSingleFeature": "Detay Oluştur",
     "noFeaturesSelectedMessage": "Seçili Detay Yok",
-    "selectFeatureToCopyMessage": "Lütfen kopyalanacak detayları seçin.",
-    "multipleFeatureSaveWarning": "Not: Detayı kopyala kullanarak birden fazla detay oluşturmak, tüm detayları anında kaydeder",
+    "selectFeatureToCopyMessage": "Lütfen kopyalanacak detayları seçin",
+    "multipleFeatureSaveWarning": "Not: Kopyala işlevselliğini kullanarak birden fazla detay oluşturmak, tüm detayları anında kaydeder",
     "copyFeatureUpdateGeometryError": "Seçilen detayların geometrisi güncellenemedi",
     "canNotSaveMultipleFeatureWarning": "Not: Benzersiz değer alanları için aynı değer kullanılarak birden fazla detay kopyalanamaz; lütfen sadece bir detay seçin",
     "createOnlyOneMultipartFeatureWarning": "Not: Sadece bir adet çok parçalı detay oluşturulabilir"
   },
   "addingFeatureError": "Seçilen detaylar katmana eklenirken hata oluştu. Yeniden deneyin.",
-  "addingFeatureErrorCount": "‘${copyFeatureErrorCount}' detayları kopyalanamadı.",
+  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' detay kopyalanamadı. Eksik detaylar için tekrar denemek ister misiniz?",
   "selectingFeatureError": "Katmanda detaylar seçilirken hata oluştu. Yeniden deneyin.",
   "customSelectOptionLabel": "Kopyalanacak detayları seç",
-  "noFeatureSelectedMessage": "Hiçbir detay seçilmedi.",
+  "noFeatureSelectedMessage": "Hiç detay seçilmedi",
   "multipleFeatureSaveMessage": "Tüm detaylar hemen kaydedilir. Devam etmek istiyor musunuz?",
   "relativeDates": {
     "dateTypeLabel": "Tarih Türü",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Önceden ayarlanmış varsayılan değeri kaydedebilmek için tarih veya saat için bir değer belirtilmelidir.",
     "customLabel": "Özel",
     "layerLabel": "Katman",
-    "domainFieldHintLabel": "Seçilen değer kodlu değer domainidir. Değer: ${domainValue} kullanılacak"
+    "domainFieldHintLabel": "Seçilen değer kodlu değer domainidir. Değer: \"${domainValue}\" kullanılacak"
   },
   "valuePicker": {
     "popupTitle": "Değer Seç",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Zorunlu alanlar",
     "foundNullRecordCount": "${fieldName} (${count} kayıtta bulundu)"
   },
-  "cantLocateUserLocation": "Konumunuz belirlenemedi"
+  "cantLocateUserLocation": "Konumunuz belirlenemedi",
+  "tryAgainButtonLabel": "Yeniden dene",
+  "copyFeatureFailedPopupTitle": "Hay aksi!"
 });

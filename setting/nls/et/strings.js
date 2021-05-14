@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Kõik kihid",
-    "title": "Valige objektide loomiseks mall",
+    "title": "Objektide loomiseks valige mall või objekti muutmiseks klõpsake seda.",
     "generalSettings": "Üldseaded",
     "layerSettings": "Kihi seaded",
     "webmapSettingsRadioBtnLabel": "Säilita veebikaardi seaded",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Valik objekti eemaldamiseks valitud komplektist, kui kirjet salvestatakse. Kui see on ainus valitud kirje, lülitub paneel tagasi mallilehele.",
     "useFilterEditor": "Kasuta objekti malli filtrit",
     "useFilterEditorTip": "Valik filtrimalli valija kasutamiseks, mille abil saab vaadata ühe kihi malle või otsida malle nime järgi.",
+    "groupFilteredTemplates": "Grupi otsingu tulemused",
+    "groupFilteredTemplatesTip": "Suvand otsingutulemuste grupeerimiseks kihtide kaupa",
     "displayShapeSelector": "Näita joonistamisvalikuid",
     "createNewFeaturesFromExisting": "Luba kasutajal luua uus (uued) objekt(id) olemasoleva(te)st objekti(de)st",
     "createNewFeaturesFromExistingTip": "Valik lubab kasutajal kopeerida olemasoleva objekti, et luua uusi objekte",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Grupeerimise filtri vidina filtriväärtuste rakendamine eelseatud väljadele",
     "listenToGroupFilterTip": "Kui filter on rakendatud rühmafiltri vidinas, rakendage väärtus vastavale väljale eelseatud väärtuste loendis.",
     "keepTemplateActive": "Valitud malli hoidmine aktiivsena",
+    "editLayerAddedFromAddData": "Luba vidina Lisa andmeid abil lisatud kihtide muutmist",
+    "editLayerAddedFromAddDataTip": "Muudetavaid kihte, mis on rakendusele lisatud vidina Lisa andmeid kaudu, saab muuta",
     "keepTemplateActiveTip": "Kui mall oli eelnevalt valitud, valige see mallivalija kuvamise korral uuesti.",
     "geometryEditDefault": "Luba vaikimisi geomeetriline redigeerimine",
     "autoSaveEdits": "Salvesta uued objektid automaatselt",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Mitmerealise sisestuse aktiveerimise väärtus ei sobi",
     "featuresSelectionTolerance": "Määra objekti valimise tolerants (pikslites)",
     "featuresSelectionToleranceTooltip": "Võimaldab kasutajatel objekti klõpsamise teel hõlpsalt avada atribuutide muutmise paneeli",
-    "featuresSelectionToleranceErrorMsg": "Objekti valimise tolerantsi väärtus ei sobi"
+    "featuresSelectionToleranceErrorMsg": "Objekti valimise tolerantsi väärtus ei sobi",
+    "autoSaveAttrUpdates": "Salvesta atribuudi uuendused automaatselt"
   },
   "editDescriptionPage": {
     "title": "Määratle kihi <b>${layername}</b> atribuutide ülevaate tekst "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atribuut",
     "geocoderHint": "Geokodeerija vahetamiseks valige üldsätete all nupp geokodeerija sätted",
     "prevConfigruedFieldChangedMsg": "Eelnevalt konfigureeritud atribuuti ei leita geokodeerija praegustes seadetes. Atribuut on lähtestatud vaikeväärtusele.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Kasutamisel koos teenusega ArcGIS Online World Geocoding Service tarbib see tööriist krediiti"
   },
   "coordinatesPage": {
     "popupTitle": "Koordinaadid",
     "checkboxLabel": "Hangi koordinaadid",
     "coordinatesSelectTitle": "Referentssüsteem",
     "coordinatesAttributeTitle": "Atribuut",
-    "mapSpatialReference": "Kaardi koordinaatsüsteem",
-    "latlong": "Laius/Pikkus",
+    "mapSpatialReferenceOptionLabel": "Kaardi koordinaatsüsteem",
+    "latLongOptionLabel": "Laius/Pikkus",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Kõik võimalikud grupid on juba loodud",
     "coordinatesSourceTitle": "Koordinaatide allikas",
     "featureLocation": "Objekti asukoht",
-    "myLocation": "Minu asukoht"
+    "myLocation": "Minu asukoht",
+    "LatLong": {
+      "y": "Laius",
+      "x": "Pikkus",
+      "xy": "Pikkuskraad, laiuskraad",
+      "yx": "Laiuskraad, pikkuskraad"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Eelseatud",

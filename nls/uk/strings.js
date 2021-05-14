@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Розумний редактор",
   "_featureAction_SmartEditor": "Розумний редактор",
   "noEditPrivileges": "Ваш обліковий запис не має дозволу створювати або змінювати дані.",
+  "loginPopupTitle": "Увійти в систему",
+  "loginPopupMessage": "${widgetName} потребує дозволів та кредитів для пошуку та зберігання адресної інформації. Бажаєте увійти у систему та використовувати цю можливість?",
+  "noCreditsOrPrivilegeWarningMessage": "Ваш обліковий запис не має дозволів та кредитів для пошуку та зберігання адресної інформації за допомогою ${widgetName}. Зверніться до адміністратора вашої організації для запиту дозволів і кредитів.",
+  "unableToUseLocator": "Локатор недоступний. Неможливо виконати дію(-ї) атрибутів адреси.",
+  "locatorDisabledWaning": "Локатор не активовано. Зверніться до адміністратора вашої організації для запиту цієї можливості.",
+  "noFeatureInAIWarning": "Об'єкт(-и) не вибрано. Виберіть об'єкт для редагування або натисніть «Скасувати», щоб повернутися на головний екран.",
+  "noEditableLayerWarning": "Ваш обліковий запис не має дозволу створювати або змінювати дані, або ця веб-карта не містить редагованих шарів.",
+  "noVisibleCreateLayerWarning": "Шар(-и) не відображається на поточному рівні масштабування. Збільшіть або зменшіть масштаб, щоб створити/змінити об'єкти.",
+  "noVisibleUpdateLayerWarning": "Шар(-и) не відображається на поточному рівні масштабування. Збільшіть або зменшіть масштаб, щоб змінити об'єкти.",
+  "checkLayerVisibilityInWebMapWarning": "Переконайтесь, що шари відображаються на карті для створення або зміни об’єктів.",
+  "showSelectionInAITitle": "Вибрані об’єкти",
+  "showSelectionInAIMsg": "Завантажити поточний вибір у ${widgetName}?",
   "widgetActive": "Активний",
   "widgetNotActive": "Не активний",
   "pressStr": "Натиснути ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Копіювати об'єкти",
     "createFeatures": "Створити об'єкти",
-    "createSingleFeature": "Створити 1 мультигеометричний об'єкт",
+    "createSingleFeature": "Створити 1 складений об'єкт",
+    "createOneSingleFeature": "Створити об'єкт",
     "noFeaturesSelectedMessage": "Об'єкти не вибрано",
-    "selectFeatureToCopyMessage": "Виберіть об'єкти для копіювання.",
-    "multipleFeatureSaveWarning": "Примітка: При створенні кількох об’єктів шляхом копіювання об’єкту всі об’єкти будуть одразу збережені",
+    "selectFeatureToCopyMessage": "Виберіть об'єкти для копіювання",
+    "multipleFeatureSaveWarning": "Примітка: при створенні кількох об’єктів за допомогою функціональності копіювання всі об’єкти будуть одразу збережені",
     "copyFeatureUpdateGeometryError": "Не вдалося оновити геометрію вибраних об'єктів",
     "canNotSaveMultipleFeatureWarning": "Примітка: неможливо скопіювати кілька об’єктів використовуючи однакове значення для полів унікальних значень, тому вибирайте лише один об’єкт",
     "createOnlyOneMultipartFeatureWarning": "Примітка: можна створити лише один складений об'єкт"
   },
   "addingFeatureError": "Помилка під час додавання вибраних об'єктів в шарі. Спробуйте знову.",
-  "addingFeatureErrorCount": "Не вдалося копіювати '${copyFeatureErrorCount}' об'єктів.",
+  "addingFeatureErrorCount": "Не вдалося копіювати '${copyFeatureErrorCount}' об'єкт(-и). Бажаєте повторити спробу для відсутніх об'єктів?",
   "selectingFeatureError": "Помилка під час вибору об'єктів в шарі. Спробуйте знову.",
   "customSelectOptionLabel": "Виберіть об'єкти для копіювання",
-  "noFeatureSelectedMessage": "Об'єкти не вибрано.",
+  "noFeatureSelectedMessage": "Об'єкти не вибрано",
   "multipleFeatureSaveMessage": "Всі об'єкти будуть зразу збережені. Бажаєте продовжити?",
   "relativeDates": {
     "dateTypeLabel": "Тип дати",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Для збереження заданого значення за замовчуванням повинне бути задане значення дати або часу.",
     "customLabel": "Задається користувачем",
     "layerLabel": "Шар",
-    "domainFieldHintLabel": "Вибране значення є кодованим доменом значень. Значення: ${domainValue} буде використовуватися"
+    "domainFieldHintLabel": "Вибране значення є кодованим доменом значень. Значення: \"${domainValue}\" буде використовуватися"
   },
   "valuePicker": {
     "popupTitle": "Вибрати значення",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Потрібні поля",
     "foundNullRecordCount": "${fieldName} (Знайдено за ${count} секунд)"
   },
-  "cantLocateUserLocation": "Не вдалося визначити ваше місцезнаходження"
+  "cantLocateUserLocation": "Не вдалося визначити ваше місцезнаходження",
+  "tryAgainButtonLabel": "Повторити спробу",
+  "copyFeatureFailedPopupTitle": "Ой!"
 });

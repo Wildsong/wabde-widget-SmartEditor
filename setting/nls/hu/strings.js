@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Összes réteg",
-    "title": "Válasszon sablont a vektoros elemek létrehozásához",
+    "title": "Válasszon sablont a vektoros elemek létrehozásához, vagy pedig kattintson a térképen szereplő vektoros elemre, és módosítsa.",
     "generalSettings": "Általános beállítások",
     "layerSettings": "Rétegbeállítások",
     "webmapSettingsRadioBtnLabel": "A webtérkép beállításainak betartása.",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Ezzel az opcióval beállítható, hogy a vektoros elem kiválasztása megszűnjön a rekord mentésekor. Ha az adott rekord az egyetlen kiválasztott rekord, akkor a panel a sablon oldalára vált vissza.",
     "useFilterEditor": "Vektoros elem sablonszűrőjének használata",
     "useFilterEditorTip": "Ezzel a lehetőséggel a sablonválasztó szűrő használata állítható be, amellyel megtekinthetők egy réteg sablonjai, vagy név szerint kereshetők a sablonok.",
+    "groupFilteredTemplates": "Keresési eredmények csoportosítása",
+    "groupFilteredTemplatesTip": "A keresési eredmények réteg szerinti csoportosítására szolgáló lehetőség.",
     "displayShapeSelector": "Rajzolási beállítások mutatása",
     "createNewFeaturesFromExisting": "Új vektoros elemek meglévő vektoros elemekből történő létrehozásának engedélyezése a felhasználó számára",
     "createNewFeaturesFromExistingTip": "Ezzel a beállítással engedélyezhető a felhasználónak, hogy meglévő vektoros elemet másoljon új vektoros elemek létrehozásához",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "A Csoportszűrő widgetből származó szűrőértékek alkalmazása az Előre beállított értékek mezőiben",
     "listenToGroupFilterTip": "Amikor egy szűrőt alkalmaznak a Group Filter widgetben, az adott érték alkalmazása egy megfelelő mezőre az Előre beállított értékek listában.",
     "keepTemplateActive": "A kiválasztott sablon maradjon aktív",
+    "editLayerAddedFromAddData": "Az Add Data widgetből hozzáadott rétegek szerkesztésének engedélyezése",
+    "editLayerAddedFromAddDataTip": "Az alkalmazáshoz az Add Data widget segítségével hozzáadott, szerkeszthető rétegek módosíthatók",
     "keepTemplateActiveTip": "A korábban kiválasztott sablon újbóli kiválasztása a sablonválasztó megjelenítésekor.",
     "geometryEditDefault": "Geometria szerkesztésének engedélyezése alapértelmezés szerint",
     "autoSaveEdits": "Új vektoros elemek automatikus mentése",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Érvénytelen érték a többsoros bevitelre váltáskor",
     "featuresSelectionTolerance": "Vektoros elem kiválasztási toleranciájának beállítása pixelben",
     "featuresSelectionToleranceTooltip": "Lehetővé teszi a felhasználó számára, hogy a vektoros elemre történő kattintással egyszerűen megnyithassa az attribútum szerkesztő panelt",
-    "featuresSelectionToleranceErrorMsg": "Érvénytelen vektoros elem kiválasztási tolerancia érték"
+    "featuresSelectionToleranceErrorMsg": "Érvénytelen vektoros elem kiválasztási tolerancia érték",
+    "autoSaveAttrUpdates": "Attribútumfrissítések automatikus mentése"
   },
   "editDescriptionPage": {
     "title": "Adja meg az attribútum-áttekintési szöveget a(z) <b>${layername}</b> réteghez "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Attribútum",
     "geocoderHint": "A geokódoló megváltoztatásához használja az általános beállítások között található „Geokódoló beállításai” gombot",
     "prevConfigruedFieldChangedMsg": "Az előzőleg konfigurált attribútum nem található az aktuális geokódoló-beállítások között. Megtörtént az attribútum visszaállítása az alapértelmezett értékre.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Ez az eszköz krediteket használ fel, amikor az ArcGIS Online Nemzetközi geokódoló szolgáltatással használják."
   },
   "coordinatesPage": {
     "popupTitle": "Koordináták",
     "checkboxLabel": "Koordináták beolvasása",
     "coordinatesSelectTitle": "Hivatkozási rendszer",
     "coordinatesAttributeTitle": "Attribútum",
-    "mapSpatialReference": "Térkép koordináta-rendszere",
-    "latlong": "Hosszúság/szélesség",
+    "mapSpatialReferenceOptionLabel": "Térkép koordináta-rendszere",
+    "latLongOptionLabel": "Hosszúság/szélesség",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Már valamennyi lehetséges csoportot létrehozták",
     "coordinatesSourceTitle": "Koordináta forrás",
     "featureLocation": "Vektoros elem helye",
-    "myLocation": "Saját helyzet"
+    "myLocation": "Saját helyzet",
+    "LatLong": {
+      "y": "Szélesség",
+      "x": "Hosszúság",
+      "xy": "Hosszúság, szélesség",
+      "yx": "Szélesség, hosszúság"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Előre beállított",

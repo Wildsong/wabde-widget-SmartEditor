@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Totes les capes",
-    "title": "Seleccioneu una plantilla per crear entitats",
+    "title": "Seleccioneu una plantilla per crear entitats o bé feu clic en una entitat del mapa per editar-la",
     "generalSettings": "Configuració general",
     "layerSettings": "Configuració de capa",
     "webmapSettingsRadioBtnLabel": "Respecta la configuració del mapa web",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Opció per eliminar l'entitat del conjunt de selecció en desar el registre. Si és l'únic registre seleccionat, la subfinestra torna a canviar a la pàgina de la plantilla.",
     "useFilterEditor": "Utilitza el filtre de plantilla d'entitat",
     "useFilterEditorTip": "Opció per utilitzar el selector de plantilles de filtre que permet veure la plantilla d'una capa o cercar plantilles pel nom.",
+    "groupFilteredTemplates": "Agrupa els resultats de la cerca",
+    "groupFilteredTemplatesTip": "Opció per agrupar els resultats de la cerca per capa.",
     "displayShapeSelector": "Mostra les opcions de dibuix",
     "createNewFeaturesFromExisting": "Permet que l'usuari creï noves entitats a partir d'entitats existents",
     "createNewFeaturesFromExistingTip": "Opció per permetre que l'usuari copiï una entitat existent per crear entitats noves",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Aplica valors de filtre del widget Filtre de grup als camps predefinits",
     "listenToGroupFilterTip": "Quan s'apliqui un filtre al widget Filtre de grup, apliqueu el valor a un camp coincident de la llista de valors predefinits.",
     "keepTemplateActive": "Mantén activa la plantilla seleccionada",
+    "editLayerAddedFromAddData": "Permet editar capes afegides des del widget Afegeix dades",
+    "editLayerAddedFromAddDataTip": "Les capes editables afegides a l'aplicació mitjançant el widget Afegeix dades es poden editar",
     "keepTemplateActiveTip": "Quan es mostri el selector de plantilles, si hi ha una plantilla seleccionada anteriorment, torneu a seleccionar-la.",
     "geometryEditDefault": "Habilita l'edició de geometria per defecte",
     "autoSaveEdits": "Desa les entitats noves automàticament",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "El valor de canvi a l'entrada de diverses línies no és vàlid",
     "featuresSelectionTolerance": "Establiu la tolerància per a la selecció de característiques (píxels)",
     "featuresSelectionToleranceTooltip": "Permet als usuaris obrir fàcilment el panell d’edició d’atributs fent clic a la característica",
-    "featuresSelectionToleranceErrorMsg": "Valor de tolerància de selecció de característica no vàlid"
+    "featuresSelectionToleranceErrorMsg": "Valor de tolerància de selecció de característica no vàlid",
+    "autoSaveAttrUpdates": "Desa actualitzacions d'atributs automàticament"
   },
   "editDescriptionPage": {
     "title": "Defineix el text de descripció general de l'atribut de <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Atribut",
     "geocoderHint": "Per canviar el geocodificador, aneu al botó \"Configuració del geocodificador\" a la configuració general",
     "prevConfigruedFieldChangedMsg": "L'atribut configurat anteriorment no es troba a la configuració del geocodificador actual. L'atribut s'ha restablert al valor per defecte.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Aquesta eina consumeix crèdits quan es fa servir amb el servei de geocodificació mundial de l'ArcGIS Online"
   },
   "coordinatesPage": {
     "popupTitle": "Coordenades",
     "checkboxLabel": "Obteniu les coordenades",
     "coordinatesSelectTitle": "Sistema de referència",
     "coordinatesAttributeTitle": "Atribut",
-    "mapSpatialReference": "Referència espacial del mapa",
-    "latlong": "Latitud/longitud",
+    "mapSpatialReferenceOptionLabel": "Referència espacial del mapa",
+    "latLongOptionLabel": "Latitud/longitud",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Tots els grups possibles ja s'han creat",
     "coordinatesSourceTitle": "Font de coordinades",
     "featureLocation": "Ubicación de entidad",
-    "myLocation": "La meva ubicació"
+    "myLocation": "La meva ubicació",
+    "LatLong": {
+      "y": "Latitud",
+      "x": "Longitud",
+      "xy": "Longitud Latitud",
+      "yx": "Latitud Longitud"
+    },
+    "MapSpatialReference": {
+      "y": "Y",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Predefineix",

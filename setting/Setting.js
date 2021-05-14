@@ -492,6 +492,24 @@ define([
           this.displayShapeSelector.set('checked', false);
         }
 
+        if (this.config.editor.hasOwnProperty("groupFilteredTemplates")) {
+          this.groupFilteredTemplates.set('checked', this.config.editor.groupFilteredTemplates);
+        }
+        else {
+          this.groupFilteredTemplates.set('checked', false);
+        }
+        this.own(on(this.useFilterEditor, 'click', lang.hitch(this, function () {
+          //if useFilterEditor is unchecked then uncheck groupFilteredTemplates
+          if (!this.useFilterEditor.get('checked')) {
+            this.groupFilteredTemplates.set('checked', false);
+          }
+        })));
+        this.own(on(this.groupFilteredTemplates, 'click', lang.hitch(this, function () {
+          //if groupFilteredTemplates is checked then check useFilterEditor
+          if (this.groupFilteredTemplates.get('checked')) {
+            this.useFilterEditor.set('checked', true);
+          }
+        })));
         if (this.config.editor.hasOwnProperty("createNewFeaturesFromExisting")) {
           this.createNewFeaturesFromExisting.set('checked', this.config.editor.createNewFeaturesFromExisting);
         }
@@ -535,6 +553,12 @@ define([
         else {
           this.listenToGF.set('checked', false);
         }
+        if (this.config.editor.hasOwnProperty("editAddDataLayers")) {
+          this.editAddDataLayers.set('checked', this.config.editor.editAddDataLayers);
+        }
+        else {
+          this.editAddDataLayers.set('checked', false);
+        }
         if (this.config.editor.hasOwnProperty("keepTemplateSelected")) {
           this.keepTemplateSelected.set('checked', this.config.editor.keepTemplateSelected);
         }
@@ -571,7 +595,7 @@ define([
         }
 
         this.own(on(this.autoSaveEdits, 'click', lang.hitch(this, function () {
-          if (this.autoSaveEdits.get('checked')) {
+          if (this.autoSaveEdits.get('checked') && !this.autoSaveAttrUpdates.get('checked')) {
             this.removeOnSave.set('checked', true);
           } else {
             //this.removeOnSave.set('checked', false);
@@ -648,6 +672,21 @@ define([
         } else {
           this.featuresSelectionTolerance.set('value', "20");
         }
+
+        if (this.config.editor.hasOwnProperty("autoSaveAttrUpdates")) {
+          this.autoSaveAttrUpdates.set('checked', this.config.editor.autoSaveAttrUpdates);
+        } else {
+          this.autoSaveAttrUpdates.set('checked', false);
+        }
+
+        this.own(on(this.autoSaveAttrUpdates, 'change', lang.hitch(this, function () {
+          if (this.autoSaveAttrUpdates.get('checked')) {
+            this.removeOnSave.set('checked', false);
+            this.removeOnSave.set('disabled', true);
+          } else {
+            this.removeOnSave.set('disabled', false);
+          }
+        })));
       },
 
       setConfig: function () {
@@ -1135,7 +1174,7 @@ define([
 
       _getText: function () {
         var editorText;
-        editorText = this._editorObj.focusNode.innerHTML;
+        editorText = this._editorObj.get("value");
         return editorText;
       },
       _initEditor: function () {
@@ -1228,6 +1267,10 @@ define([
           this.useFilterEditor.checked === undefined ?
             false : this.useFilterEditor.checked;
 
+        this.config.editor.groupFilteredTemplates =
+          this.groupFilteredTemplates.checked === undefined ?
+            false : this.groupFilteredTemplates.checked;
+
         this.config.editor.displayShapeSelector =
           this.displayShapeSelector.checked === undefined ?
             false : this.displayShapeSelector.checked;
@@ -1246,6 +1289,9 @@ define([
         this.config.editor.listenToGF =
           this.listenToGF.checked === undefined ?
             false : this.listenToGF.checked;
+        this.config.editor.editAddDataLayers =
+          this.editAddDataLayers.checked === undefined ?
+            false : this.editAddDataLayers.checked;
 
         this.config.editor.keepTemplateSelected =
           this.keepTemplateSelected.checked === undefined ?
@@ -1290,6 +1336,10 @@ define([
 
         this.config.editor.featuresSelectionTolerance =
           this.featuresSelectionTolerance.get("value");
+
+        this.config.editor.autoSaveAttrUpdates =
+          this.autoSaveAttrUpdates.checked === undefined ?
+            false : this.autoSaveAttrUpdates.checked;
       },
 
       _getConfigForCurrentDisplayedLayers: function () {
@@ -2449,8 +2499,7 @@ define([
           fields.splice(2, 0, {
             name: 'coordinateSourceTableValue',
             title: this.nls.coordinatesPage.coordinatesSourceTitle,
-            type: 'text',
-            hidden: true// hide coordinate source column
+            type: 'text'
           });
         }
 
@@ -2579,7 +2628,7 @@ define([
       },
 
       _addAttributeActionGroupRow: function (groupInfo, actionName) {
-        var table, name, dataType, addRowResult, coordinatesSource;
+        var table, name, dataType, addRowResult, coordinatesSource, coordinatesSystem, field;
         name = groupInfo.name;
         dataType = groupInfo.dataType;
         if (actionName === "Intersection") {
@@ -2588,7 +2637,13 @@ define([
         } else if (actionName === "Address") {
           table = this._addressActionGroupTable;
         } else if (actionName === "Coordinates") {
+          //field and coordinateSystem variables are required only in case of 
+          //coordinates, moving the code to appropriate place
+          field = groupInfo.attributeInfo.field;
+          coordinatesSystem = groupInfo.attributeInfo.coordinatesSystem;
           table = this._coordinatesActionGroupTable;
+          dataType = coordinatesSystem === "MGRS" ? this.nls.coordinatesPage.MGRS :
+            this.nls.coordinatesPage[coordinatesSystem][field];
           coordinatesSource = groupInfo.attributeInfo &&
             typeof (groupInfo.attributeInfo.coordinatesSource) !== "undefined" ?
             groupInfo.attributeInfo.coordinatesSource : "featureLocation";
@@ -2886,8 +2941,7 @@ define([
        */
       _onCoordinateBtnClick: function () {
         var rows = this._coordinatesActionGroupTable.getRows();
-        //when myLocation functionality will be added change 7 to 14
-        if (rows && rows.length < 7) {
+        if (rows && rows.length < 18) {
           this._configureCoordinatesActionGroup();
         } else {
           new Message({
@@ -2969,12 +3023,12 @@ define([
           "featureLocation": {},
           "myLocation": {}
         };
-        coordinatesOption.featureLocation.MapSpatialReference = ["X", "Y", "X Y"];
-        coordinatesOption.featureLocation.LatLong = ["Latitude", "Longitude", "Latitude Longitude"];
+        coordinatesOption.featureLocation.MapSpatialReference = ["X", "Y", "X Y" ,"Y X"];
+        coordinatesOption.featureLocation.LatLong = ["Latitude", "Longitude", "Latitude Longitude", "Longitude Latitude"];
         coordinatesOption.featureLocation.MGRS = ["MGRS"];
 
-        coordinatesOption.myLocation.MapSpatialReference = ["X", "Y", "X Y"];
-        coordinatesOption.myLocation.LatLong = ["Latitude", "Longitude", "Latitude Longitude"];
+        coordinatesOption.myLocation.MapSpatialReference = ["X", "Y", "X Y", "Y X"];
+        coordinatesOption.myLocation.LatLong = ["Latitude", "Longitude", "Latitude Longitude", "Longitude Latitude"];
         coordinatesOption.myLocation.MGRS = ["MGRS"];
 
         //get all rows added in coordinates group table
@@ -2989,8 +3043,14 @@ define([
               currentRow._configInfo.attributeInfo.coordinatesSource === tr._configInfo.attributeInfo.coordinatesSource &&
               currentRow._configInfo.dataType === tr._configInfo.dataType)) {
               configuredDataType = tr._configInfo.dataType;
+              //For backward change "latitude /Longitude" to "longitude /latitude"
+              //since that is the way it is storing the values
+              if (tr._configInfo.dataType === "Latitude Longitude" && tr._configInfo.attributeInfo &&
+                tr._configInfo.attributeInfo.field === "xy") {
+                configuredDataType = "Longitude Latitude";
+              }
               if (tr._configInfo.attributeInfo && tr._configInfo.attributeInfo.coordinatesSource) {
-                coordinateSource = tr._configInfo.attributeInfo.coordinatesSource
+                coordinateSource = tr._configInfo.attributeInfo.coordinatesSource;
               }
               if (coordinatesOption[coordinateSource].MapSpatialReference.indexOf(configuredDataType) > -1) {
                 index = coordinatesOption[coordinateSource].MapSpatialReference.indexOf(configuredDataType);

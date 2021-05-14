@@ -20,6 +20,8 @@ define(
         'dojo/dom-style',
         'dojo/string',
         'dojo/dom-attr',
+        "./utils",
+        "dojo/_base/kernel",
         "dijit/form/DateTextBox",
         "dijit/form/TimeTextBox",
         "dijit/form/NumberTextBox",
@@ -46,8 +48,9 @@ define(
         array,
         domStyle,
         string,
-        domAttr
-
+        domAttr,
+        editUtils,
+        kernel
     ) {
         return declare([BaseWidget, Evented, _WidgetsInTemplateMixin], {
             baseClass: "jimu-widget-smartEditor-setting-relativeDates",
@@ -643,7 +646,20 @@ define(
                         //then current displying value will be the seletected value 
                         selectedValue = this.initialValue;
                     } else {
-                        selectedValue = ""
+                        selectedValue = "";
+                    }
+                    if (kernel.locale === "ar" && this.layerSelector) {
+                        var fieldInfo, date, field, item;
+                        item = this.layerSelector.getSelectedItem();
+                        if (item) {
+                            fieldInfo = editUtils.getFieldInfosFromWebmap(item.layerInfo);
+                            field = presetUtils.getFieldInfoByFieldName(fieldInfo, this.fieldsDropdown.getValue());
+                            //If date field is selected then only proceed
+                            if (field.type === "esriFieldTypeDate") {
+                                date = jimuUtils.getDateByDateTimeStr(selectedValue);
+                                selectedValue = jimuUtils.localizeDateTimeByFieldInfo(date, field);
+                            }
+                        }
                     }
                     //emit the selected value
                     return {

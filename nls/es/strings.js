@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Editor inteligente",
   "_featureAction_SmartEditor": "Editor inteligente",
   "noEditPrivileges": "Su cuenta no tiene permiso para crear o modificar datos.",
+  "loginPopupTitle": "Inicie sesión",
+  "loginPopupMessage": "${widgetName} requiere permisos y créditos para buscar y almacenar información de direcciones. ¿Desea iniciar sesión y utilizar esta funcionalidad?",
+  "noCreditsOrPrivilegeWarningMessage": "Su cuenta no tiene los permisos y créditos para buscar y almacenar información de direcciones con ${widgetName}. Póngase en contacto con el administrador de su organización para solicitar permisos y créditos.",
+  "unableToUseLocator": "El localizador no está accesible. Las acciones de los atributos de dirección no se realizarán.",
+  "locatorDisabledWaning": "El localizador no está habilitado. Póngase en contacto con el administrador de su organización para solicitar esta funcionalidad.",
+  "noFeatureInAIWarning": "Ninguna entidad seleccionada. Seleccione una entidad para realizar ediciones o haga clic en cancelar para volver a la pantalla principal.",
+  "noEditableLayerWarning": "Su cuenta no tiene permiso para crear o modificar datos, o bien este mapa web no contiene ninguna capa editable.",
+  "noVisibleCreateLayerWarning": "Capa(s) no visible(s) en el nivel de zoom actual. Acérquese o aléjese para crear/modificar entidades.",
+  "noVisibleUpdateLayerWarning": "Capa(s) no visible(s) en el nivel de zoom actual. Acérquese o aléjese para modificar entidades.",
+  "checkLayerVisibilityInWebMapWarning": "Asegúrese de que las capas son visibles en el mapa para crear o modificar entidades.",
+  "showSelectionInAITitle": "Entidades seleccionadas",
+  "showSelectionInAIMsg": "¿Desea cargar la selección actual en ${widgetName}?",
   "widgetActive": "Activa",
   "widgetNotActive": "No activa",
   "pressStr": "Pulsar ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Copiar entidades",
     "createFeatures": "Crear entidades",
-    "createSingleFeature": "Crear 1 entidad de geometría múltiple",
+    "createSingleFeature": "Crear 1 entidad multiparte",
+    "createOneSingleFeature": "Crear entidad",
     "noFeaturesSelectedMessage": "No hay entidades seleccionadas",
-    "selectFeatureToCopyMessage": "Seleccione entidades para copiarlas.",
-    "multipleFeatureSaveWarning": "Nota: La creación de varias entidades mediante la función de copia guarda todas las entidades de forma inmediata",
+    "selectFeatureToCopyMessage": "Seleccione entidades para copiarlas",
+    "multipleFeatureSaveWarning": "Nota: la creación de varias entidades mediante la funcionalidad de copia guarda todas las entidades de forma inmediata",
     "copyFeatureUpdateGeometryError": "No se puede actualizar la geometría de entidades seleccionadas",
     "canNotSaveMultipleFeatureWarning": "Nota: No se pueden copiar varias entidades utilizando el mismo valor para los campos de valor único; seleccione solo una entidad",
     "createOnlyOneMultipartFeatureWarning": "Nota: Solo se puede crear una entidad multiparte"
   },
   "addingFeatureError": "Error al agregar las entidades seleccionadas en la capa. Inténtelo de nuevo.",
-  "addingFeatureErrorCount": "Error al copiar '${copyFeatureErrorCount}' entidades.",
+  "addingFeatureErrorCount": "Error al copiar \"${copyFeatureErrorCount}\" entidad(es) ¿Desea intentarlo de nuevo para las entidades faltantes?",
   "selectingFeatureError": "Error al seleccionar las entidades en la capa. Inténtelo de nuevo.",
   "customSelectOptionLabel": "Seleccionar las entidades a copiar",
-  "noFeatureSelectedMessage": "No hay entidades seleccionadas.",
+  "noFeatureSelectedMessage": "Ninguna entidad seleccionada",
   "multipleFeatureSaveMessage": "Todas las entidades se guardarán de inmediato. ¿Desea continuar?",
   "relativeDates": {
     "dateTypeLabel": "Tipo de datos",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Se debe especificar un valor de hora o fecha para poder guardar el valor preestablecido predeterminado.",
     "customLabel": "Personalizada",
     "layerLabel": "Capa",
-    "domainFieldHintLabel": "El valor seleccionado es un dominio de valor codificado. Se utilizará el valor: ${domainValue}"
+    "domainFieldHintLabel": "El valor seleccionado es un dominio de valor codificado. Se utilizará el valor \"${domainValue}\""
   },
   "valuePicker": {
     "popupTitle": "Seleccione un valor",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Campos requeridos",
     "foundNullRecordCount": "${fieldName} (Encontrado en ${count} registros)"
   },
-  "cantLocateUserLocation": "No se pudo determinar su ubicación"
+  "cantLocateUserLocation": "No se pudo determinar su ubicación",
+  "tryAgainButtonLabel": "Volver a intentar",
+  "copyFeatureFailedPopupTitle": "¡Ups!"
 });

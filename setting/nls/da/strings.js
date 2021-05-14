@@ -1,7 +1,7 @@
 define({
   "layersPage": {
     "allLayers": "Alle lag",
-    "title": "Vælg en skabelon til at oprette objekter med",
+    "title": "Vælg en skabelon for at oprette objekter, eller klik på et objekt på kortet for at redigere det",
     "generalSettings": "Generelle indstillinger",
     "layerSettings": "Lagindstillinger",
     "webmapSettingsRadioBtnLabel": "Overhold indstillinger i webkortet",
@@ -19,6 +19,8 @@ define({
     "removeOnSaveTip": "Indstilling, der fjerner objektet fra den angivne markering, når posten gemmes. Hvis det er den eneste valgte post, skifter panelet tilbage til skabelonsiden.",
     "useFilterEditor": "Brug objektskabelonfilter",
     "useFilterEditorTip": "Indstilling, der bruger filterskabelonvælgeren, som giver mulighed for at få vist en skabelon for et enkelt lag eller søge efter skabeloner efter navn.",
+    "groupFilteredTemplates": "Resultater for gruppesøgning",
+    "groupFilteredTemplatesTip": "Indstilling for at gruppere resulater efter lag",
     "displayShapeSelector": "Vis tegnefunktioner",
     "createNewFeaturesFromExisting": "Gør det muligt for brugeren at oprette et nyt/nye objekt(er) ud fra et eksisterende objekt(er)",
     "createNewFeaturesFromExistingTip": "En indstilling, der gør det muligt for brugeren at kopiere et eksisterende objekt med henblik på at oprette nye objekter",
@@ -30,6 +32,8 @@ define({
     "listenToGroupFilter": "Anvend filterværdier fra Gruppefiltrerings-widget'en til de forudindstillede felter",
     "listenToGroupFilterTip": "Når der anvendes et filter i Gruppefiltrerings-widget'en, skal værdien anvendes til et tilsvarende felt på listen Foruddefineret værdi.",
     "keepTemplateActive": "Bevar den valgte skabelon som aktiv",
+    "editLayerAddedFromAddData": "Tillad redigering af lag tilføjet fra Tilføj data-widget'en.",
+    "editLayerAddedFromAddDataTip": "Redigerbare lag, der tilføjet applikationen via Tilføj data-widget'en, kan redigeres",
     "keepTemplateActiveTip": "Hvis der tidligere har været valgt en skabelon, når skabelonvælgeren vises, skal du vælge skabelonen igen.",
     "geometryEditDefault": "Aktivér geometri-redigering som standard",
     "autoSaveEdits": "Gem nye objekter automatisk",
@@ -74,7 +78,8 @@ define({
     "invalidMaxCharacterErrorMsg": "Ugyldig værdi i skift til input med flere linjer",
     "featuresSelectionTolerance": "Indstil tolerancen for objektvalg (pixels)",
     "featuresSelectionToleranceTooltip": "Gør det muligt og nemt for brugerne at åbne panelet for attributredigering ved at klikke på objektet",
-    "featuresSelectionToleranceErrorMsg": "Ugyldig toleranceværdi for objektvalg"
+    "featuresSelectionToleranceErrorMsg": "Ugyldig toleranceværdi for objektvalg",
+    "autoSaveAttrUpdates": "Gem attributopdateringer automatisk"
   },
   "editDescriptionPage": {
     "title": "Definér attributoversigtsteksten for <b>${layername}</b> "
@@ -166,20 +171,33 @@ define({
     "selectFieldTitle": "Attribut",
     "geocoderHint": "Hvis du vil ændre geokodningstjeneste, skal du gå til knappen for indstillinger for geokodningstjeneste under de generelle indstillinger",
     "prevConfigruedFieldChangedMsg": "Den tidligere konfigurerede attribut findes ikke i de aktuelle geokodningsindstillinger. Attributten er blevet nulstillet til standardindstillingen.",
-    "questionMark": "?"
+    "questionMark": "?",
+    "consumesCredits": "Dette værktøj forbruger credits, når det benyttes sammen med ArcGIS Online World Geocoding Service"
   },
   "coordinatesPage": {
     "popupTitle": "Koordinater",
     "checkboxLabel": "Hent koordinater",
     "coordinatesSelectTitle": "Referencesystem",
     "coordinatesAttributeTitle": "Attribut",
-    "mapSpatialReference": "Kort-spatial reference",
-    "latlong": "Breddegrad/længdegrad",
+    "mapSpatialReferenceOptionLabel": "Kort-spatial reference",
+    "latLongOptionLabel": "Breddegrad/længdegrad",
     "MGRS": "MGRS",
     "allGroupsCreatedMsg": "Alle mulige grupper er allerede oprettet",
     "coordinatesSourceTitle": "Koordinater Kilde",
     "featureLocation": "Objektposition",
-    "myLocation": "Min position"
+    "myLocation": "Min position",
+    "LatLong": {
+      "y": "Bredde",
+      "x": "Længde",
+      "xy": "Længdegrad Breddegrad",
+      "yx": "Breddegrad Længdegrad"
+    },
+    "MapSpatialReference": {
+      "y": "J",
+      "x": "X",
+      "xy": "XY",
+      "yx": "YX"
+    }
   },
   "presetPage": {
     "popupTitle": "Forudindstillet",

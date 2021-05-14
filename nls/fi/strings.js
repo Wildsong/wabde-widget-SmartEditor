@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Älykäs muokkausohjelma",
   "_featureAction_SmartEditor": "Älykäs muokkausohjelma",
   "noEditPrivileges": "Tililläsi ei ole tietojen luonti- tai muokkausoikeuksia.",
+  "loginPopupTitle": "Kirjaudu sisään",
+  "loginPopupMessage": "${widgetName} edellyttää käyttöoikeuksia ja krediittejä, jotta osoitetietoja voidaan hakea ja tallentaa. Haluatko kirjautua sisään ja käyttää tätä ominaisuutta?",
+  "noCreditsOrPrivilegeWarningMessage": "Tililläsi ei ole käyttöoikeuksia ja krediittejä, joita osoitetietojen hakeminen ja tallentaminen pienoisohjelmalla ${widgetName} edellyttää. Ota yhteyttä organisaation pääkäyttäjään ja pyydä käyttöoikeuksia ja krediittejä.",
+  "unableToUseLocator": "Paikannin ei ole käytettävissä. Osoitteen ominaisuustiedon toiminto(j)a ei suoriteta.",
+  "locatorDisabledWaning": "Paikannin ei ole käytössä. Ota yhteyttä organisaation pääkäyttäjään ja pyydä tätä ominaisuutta.",
+  "noFeatureInAIWarning": "Yhtään kohdetta ei ole valittu. Valitse kohde, jotta voit tehdä muokkauksia, tai palaa päänäyttöön valitsemalla Peruuta.",
+  "noEditableLayerWarning": "Tilisi käyttöoikeudet eivät riitä aineiston luontiin tai muokkaukseen, tai tämä web-kartta ei sisällä muokattavia karttatasoja.",
+  "noVisibleCreateLayerWarning": "Karttaso(t) ei(vät) näy käytössä olevalla tarkennustasolla. Lähennä tai loitonna, jotta voit luoda/muokata kohteita.",
+  "noVisibleUpdateLayerWarning": "Karttaso(t) ei(vät) näy käytössä olevalla tarkennustasolla. Lähennä tai loitonna, jotta voit muokata kohteita.",
+  "checkLayerVisibilityInWebMapWarning": "Varmista, että karttatasot näkyvät kartassa, jotta voit luoda tai muokata kohteita.",
+  "showSelectionInAITitle": "Valitut kohteet",
+  "showSelectionInAIMsg": "Haluatko ladata nykyisen valinnan pienoisohjelmassa ${widgetName}?",
   "widgetActive": "Aktiivinen",
   "widgetNotActive": "Ei aktiivinen",
   "pressStr": "Paina ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Kopioi kohteet",
     "createFeatures": "Luo kohteet",
-    "createSingleFeature": "Luo yksi Multi-Geometry-kohde",
+    "createSingleFeature": "Luo yksi moniosainen kohde",
+    "createOneSingleFeature": "Luo kohde",
     "noFeaturesSelectedMessage": "Yhtään kohdetta ei ole valittu",
-    "selectFeatureToCopyMessage": "Valitse kopioitavat kohteet.",
-    "multipleFeatureSaveWarning": "Huomautus: useiden kohteiden luonti kohteen kopiointitoiminnolla tallentaa kaikki kohteet heti",
+    "selectFeatureToCopyMessage": "Valitse kopioitavat kohteet",
+    "multipleFeatureSaveWarning": "Huomautus: usean kohteen luonti kopiointitoiminnolla tallentaa kaikki uudet kohteet heti",
     "copyFeatureUpdateGeometryError": "Valittujen kohteiden geometriaa ei voi päivittää",
     "canNotSaveMultipleFeatureWarning": "Huomautus: useita kohteita ei voi kopioida käyttämällä samaa yksilöllisten arvokenttien arvoa. Valitse vain yksi kohde.",
     "createOnlyOneMultipartFeatureWarning": "Huomautus: vain yksi moniosainen kohde voidaan luoda"
   },
   "addingFeatureError": "Virhe lisättäessä valittuja kohteita karttatasoon. Yritä uudelleen.",
-  "addingFeatureErrorCount": "${copyFeatureErrorCount} kohteen kopiointi epäonnistui.",
+  "addingFeatureErrorCount": "${copyFeatureErrorCount} kohteen kopiointi ei onnistunut. Haluatko yrittää uudelleen puuttuvien kohteiden osalta?",
   "selectingFeatureError": "Virhe valittaessa kohteita karttatasosta. Yritä uudelleen.",
   "customSelectOptionLabel": "Valitse kopioitavat kohteet",
-  "noFeatureSelectedMessage": "Kohteita ei ole valittu.",
+  "noFeatureSelectedMessage": "Yhtään kohdetta ei ole valittu",
   "multipleFeatureSaveMessage": "Kaikki kohteet tallennetaan heti. Haluatko jatkaa?",
   "relativeDates": {
     "dateTypeLabel": "Päivämäärätyyppi",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Pakolliset kentät",
     "foundNullRecordCount": "${fieldName} (löytyi ${count} tietueesta)"
   },
-  "cantLocateUserLocation": "Sijaintiasi ei voitu määrittää"
+  "cantLocateUserLocation": "Sijaintiasi ei voitu määrittää",
+  "tryAgainButtonLabel": "Yritä uudelleen",
+  "copyFeatureFailedPopupTitle": "Hups!"
 });

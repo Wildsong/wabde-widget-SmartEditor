@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Chytrá editace",
   "_featureAction_SmartEditor": "Chytrá editace",
   "noEditPrivileges": "Váš online účet nemá přístupová práva k vytváření nebo úpravě dat.",
+  "loginPopupTitle": "Přihlásit",
+  "loginPopupMessage": "${widgetName} vyžaduje oprávnění a kredity pro vyhledání a ukládání informací o adrese. Chcete se přihlásit a používat tuto funkcionalitu?",
+  "noCreditsOrPrivilegeWarningMessage": "Váš účet nemá oprávnění a kredity pro vyhledání a ukládání informací o adrese pomocí ${widgetName}. Pokud chcete požádat o oprávnění a kredity, obraťte se na administrátora vaší organizace.",
+  "unableToUseLocator": "Lokátor není dostupný. Akce související s atributy adres nebudou provedeny.",
+  "locatorDisabledWaning": "Lokátor není povolen. Pokud chcete využívat tuto funkcionalitu, obraťte se na administrátora vaší organizace.",
+  "noFeatureInAIWarning": "Žádné prvky nebyly vybrány. Vyberte prvek, který chcete upravit, nebo klikněte na Storno pro návrat na hlavní obrazovku.",
+  "noEditableLayerWarning": "Váš účet nemá oprávnění vytvářet či upravovat data nebo tato webová mapa neobsahuje žádné editovatelné vrstvy.",
+  "noVisibleCreateLayerWarning": "Vrstvy nejsou na této úrovni přiblížení viditelné. Přiblížit nebo oddálit pro vytvoření/úpravu prvků.",
+  "noVisibleUpdateLayerWarning": "Vrstvy nejsou na této úrovni přiblížení viditelné. Přiblížit nebo oddálit pro úpravu prvků.",
+  "checkLayerVisibilityInWebMapWarning": "Pro vytvoření nebo úpravu prvků zkontrolujte, že vrstvy jsou viditelné v mapě.",
+  "showSelectionInAITitle": "Vybrané prvky",
+  "showSelectionInAIMsg": "Chcete načíst aktuální výběr do ${widgetName}?",
   "widgetActive": "Aktivní",
   "widgetNotActive": "Neaktivní",
   "pressStr": "Stisknutím ",
@@ -62,20 +74,21 @@ define({
   "copyFeatures": {
     "title": "Kopírovat prvky",
     "createFeatures": "Vytvořit prvky",
-    "createSingleFeature": "Vytvořit 1 prvek s vícenásobnou geometrií",
+    "createSingleFeature": "Vytvořit 1 vícenásobný prvek",
+    "createOneSingleFeature": "Vytvořit prvek",
     "noFeaturesSelectedMessage": "Nejsou vybrány žádné prvky",
-    "selectFeatureToCopyMessage": "Vyberte prvky ke zkopírování.",
-    "multipleFeatureSaveWarning": "Poznámka: Vytvoření více prvků pomocí nástroje kopírovat prvky všechny prvky okamžitě uloží.",
+    "selectFeatureToCopyMessage": "Vyberte prvky ke zkopírování",
+    "multipleFeatureSaveWarning": "Poznámka: Při vytváření více prvků pomocí funkce kopírovat, jsou všechny nové prvky okamžitě uloženy",
     "copyFeatureUpdateGeometryError": "Nelze aktualizovat geometrii vybraných prvků",
     "canNotSaveMultipleFeatureWarning": "Poznámka: Nelze kopírovat více prvků pomocí stejné hodnoty pro pole jedinečné hodnoty, vyberte prosím pouze jeden prvek",
     "createOnlyOneMultipartFeatureWarning": "Poznámka: Lze vytvořit pouze jeden vícenásobný prvek"
   },
   "addingFeatureError": "Během přidávání vybraných prvků ve vrstvě došlo k chybě. Zkuste to prosím znovu.",
-  "addingFeatureErrorCount": "'${copyFeatureErrorCount}' prvků se nepodařilo zkopírovat.",
+  "addingFeatureErrorCount": "„${copyFeatureErrorCount}” prvků se nepodařilo zkopírovat. Chcete to zkusit znovu pro chybějící prvky?",
   "selectingFeatureError": "Během výběru prvků ve vrstvě došlo k chybě. Zkuste to prosím znovu.",
   "customSelectOptionLabel": "Vyberte prvky, které se mají zkopírovat",
-  "noFeatureSelectedMessage": "Nejsou vybrány žádné prvky.",
-  "multipleFeatureSaveMessage": "Všechny prvky budou ihned uloženy. Chcete pokračovat?",
+  "noFeatureSelectedMessage": "Nebyly vybrány žádné prvky",
+  "multipleFeatureSaveMessage": "Všechny prvky budou ihned uloženy. Přejete si pokračovat?",
   "relativeDates": {
     "dateTypeLabel": "Typ data",
     "valueLabel": "Hodnota",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Aby bylo možné uložit výchozí přednastavenou hodnotu, musí být zadána hodnota pro datum nebo čas.",
     "customLabel": "Vlastní",
     "layerLabel": "Vrstva",
-    "domainFieldHintLabel": "Vybraná hodnota je doménou specifikovanou kódovanými hodnotami. Hodnota: bude použito ${domainValue}"
+    "domainFieldHintLabel": "Vybraná hodnota je doménou specifikovanou kódovanými hodnotami. Hodnota: „${domainValue}\" bude použita"
   },
   "valuePicker": {
     "popupTitle": "Vybrat hodnotu",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Povinná pole",
     "foundNullRecordCount": "${fieldName} (Nalezeno v ${count} záznamech)"
   },
-  "cantLocateUserLocation": "Vaši polohu nebylo možné určit."
+  "cantLocateUserLocation": "Vaši polohu nebylo možné určit.",
+  "tryAgainButtonLabel": "Zkusit znovu",
+  "copyFeatureFailedPopupTitle": "Chyba"
 });

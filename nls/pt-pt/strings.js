@@ -2,6 +2,18 @@ define({
   "_widgetLabel": "Editor Inteligente",
   "_featureAction_SmartEditor": "Editor Inteligente",
   "noEditPrivileges": "A sua conta não tem permissão para criar ou modificar dados.",
+  "loginPopupTitle": "Iniciar sessão",
+  "loginPopupMessage": "${widgetName} requer permissões e créditos para pesquisar e armazenar informações de endereço. Pretende iniciar sessão e usar esta função?",
+  "noCreditsOrPrivilegeWarningMessage": "A sua conta não tem as permissões nem os créditos para pesquisar e armazenar informações de endereço com ${widgetName}. Contacte o administrador da sua organização para solicitar permissões e créditos.",
+  "unableToUseLocator": "O localizador não está acessível. A ação ou ações do atributo de endereço não serão executadas.",
+  "locatorDisabledWaning": "O localizador não está ativado. Contacte o administrador da sua organização para solicitar esta função.",
+  "noFeatureInAIWarning": "Nenhum elemento selecionado. Selecione um elemento para realizar as edições ou clique em cancelar para regressar ao ecrã principal.",
+  "noEditableLayerWarning": "A sua conta não tem permissão para criar ou modificar dados ou este mapa web não contém nenhuma camada editável.",
+  "noVisibleCreateLayerWarning": "Camada ou camadas não visíveis no nível de zoom atual. Aumente ou diminua o zoom para criar/modificar elementos.",
+  "noVisibleUpdateLayerWarning": "Camada ou camadas não visíveis no nível de zoom atual. Aumente ou diminua o zoom para modificar elementos.",
+  "checkLayerVisibilityInWebMapWarning": "Certifique-se de que as camadas estão visíveis no mapa para criar ou modificar elementos.",
+  "showSelectionInAITitle": "Elementos Selecionados",
+  "showSelectionInAIMsg": "Pretende carregar a seleção atual em ${widgetName}?",
   "widgetActive": "Ativo",
   "widgetNotActive": "Não Ativo",
   "pressStr": "Pressione ",
@@ -62,19 +74,20 @@ define({
   "copyFeatures": {
     "title": "Copiar Elementos",
     "createFeatures": "Criar Elementos",
-    "createSingleFeature": "Criar 1 Elemento de Multi-Geometria",
+    "createSingleFeature": "Criar 1 Elemento de Múltiplas Partes",
+    "createOneSingleFeature": "Criar Elemento",
     "noFeaturesSelectedMessage": "Sem Elementos Selecionados",
-    "selectFeatureToCopyMessage": "Por favor, selecione elementos para copiar.",
-    "multipleFeatureSaveWarning": "Nota: a criação de múltiplos elementos utilizando copiar elemento irá guardar todos os elementos de imediato",
+    "selectFeatureToCopyMessage": "Selecione elementos para copiar",
+    "multipleFeatureSaveWarning": "Nota: a criação de múltiplos elementos utilizando a funcionalidade de copiar irá guardar todos os elementos de imediato",
     "copyFeatureUpdateGeometryError": "Não foi possível atualizar a geometria dos elementos selecionados",
     "canNotSaveMultipleFeatureWarning": "Nota: Não é possível copiar múltiplos elementos ao usar o mesmo valor para campos de valor único; selecione apenas um elemento",
     "createOnlyOneMultipartFeatureWarning": "Nota: Só pode ser criado um elemento de múltiplas partes"
   },
   "addingFeatureError": "Erro ao adicionar os elementos selecionados na camada. Tente novamente.",
-  "addingFeatureErrorCount": "Não foi possível copiar '${copyFeatureErrorCount}' elementos.",
+  "addingFeatureErrorCount": "Não foi possível copiar '${copyFeatureErrorCount}' elemento(s). Pretende tentar novamente para o(s) elemento(s) em falta?",
   "selectingFeatureError": "Erro ao selecionar elementos na camada. Tente novamente.",
   "customSelectOptionLabel": "Selecionar elementos para copiar",
-  "noFeatureSelectedMessage": "Nenhum elemento selecionado.",
+  "noFeatureSelectedMessage": "Nenhum elemento selecionado",
   "multipleFeatureSaveMessage": "Todos os elementos serão guardados de imediato. Pretende continuar?",
   "relativeDates": {
     "dateTypeLabel": "Tipo de Dados",
@@ -92,7 +105,7 @@ define({
     "relativeDateWarning": "Deve ser especificado um valor para a data ou hora para permitir guardar o valor padrão predefinido.",
     "customLabel": "Personalizar",
     "layerLabel": "Camada",
-    "domainFieldHintLabel": "O valor selecionado é um domínio de valor codificado. O valor: ${domainValue} será utilizado"
+    "domainFieldHintLabel": "O valor selecionado é um domínio de valor codificado. O valor: \"${domainValue}\" será usado"
   },
   "valuePicker": {
     "popupTitle": "Selecionar Valor",
@@ -105,5 +118,7 @@ define({
     "popupTittle": "Campos obrigatórios",
     "foundNullRecordCount": "${fieldName} (Encontrado em ${count} registos)"
   },
-  "cantLocateUserLocation": "Não foi possível determinar a sua localização"
+  "cantLocateUserLocation": "Não foi possível determinar a sua localização",
+  "tryAgainButtonLabel": "Tentar novamente",
+  "copyFeatureFailedPopupTitle": "Ups!"
 });
