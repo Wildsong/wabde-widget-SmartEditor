@@ -183,6 +183,7 @@ define(
         var layerChooserFromMapArgs;
         layerChooserFromMapArgs = {
           multiple: false,
+          onlyShowWebMapLayers: true,
           createMapResponse: this.map.webMapResponse,
           filter: this._createFiltersForLayerSelector()
         };
@@ -202,8 +203,8 @@ define(
         layerChooserFromMapArgs = this._createLayerChooserMapArgs();
         this._layerChooserFromMap = new LayerChooserFromMap(layerChooserFromMapArgs);
         this._layerChooserFromMap.startup();
-        layerInfosArray = this._layerChooserFromMap.layerInfosObj.getLayerInfoArray();
-        var tableInfosArray = this._layerChooserFromMap.layerInfosObj.getTableInfoArray();
+        layerInfosArray = this._layerChooserFromMap.layerInfosObj.getLayerInfoArrayOfWebmap();
+        var tableInfosArray = this._layerChooserFromMap.layerInfosObj.getTableInfoArrayOfWebmap();
         if (tableInfosArray && tableInfosArray.length > 0) {
 
           layerInfosArray = layerInfosArray.concat(tableInfosArray);
@@ -677,7 +678,11 @@ define(
             "width": "20%"
           }
         ];
-        headerDiv = domConstruct.create('thead', {});
+        headerDiv = domConstruct.create('thead', {
+          style: {
+            height: '58px !important'
+          }
+        });
         tr = headerDiv.insertRow(0);
         domClass.add(tr, "esriCTTableRow");
         array.forEach(headerDetails, lang.hitch(this, function (header, index) {

@@ -28,7 +28,8 @@ define(
     'dijit/form/ValidationTextBox',
     "dijit/form/Select",
     "./layersAndFieldsApplyOn",
-    'dojo/on'
+    'dojo/on',
+    'dojo/dom-attr'
   ],
   function (
     declare,
@@ -45,7 +46,8 @@ define(
     TextBox,
     Select,
     layersAndFieldsApplyOn,
-    on
+    on,
+    domAttr
   ) {
     return declare([BaseWidgetSetting, Evented, _TemplatedMixin], {
       baseClass: "jimu-widget-smartEditor-setting-address",
@@ -84,6 +86,7 @@ define(
         if (this._geocoderSettings && this._geocoderSettings.url && this._geocoderSettings.url !== worldGeocodeingService) {
           domClass.add(this.attributeInfoNode, "esriCTHidden");
         }
+        this._createCreditHelpPageURL();
       },
 
       _initControls: function () {
@@ -146,6 +149,13 @@ define(
         this.own(on(this.fieldSelector, "change", lang.hitch(this, function () {
           this._createLayersAndFields();
         })));
+      },
+
+      _createCreditHelpPageURL: function () {
+        var creditsHelpTopicId = "120001873", creditsHelpUrl;
+        creditsHelpUrl = this.portalInfo.helpBase +
+        this.portalInfo.helpMap.m[creditsHelpTopicId] || "";
+        domAttr.set(this.creditsLinkAnchor, "href", creditsHelpUrl);
       },
 
       showDialog: function () {

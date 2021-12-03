@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Grupi otsingu tulemused",
     "groupFilteredTemplatesTip": "Suvand otsingutulemuste grupeerimiseks kihtide kaupa",
     "displayShapeSelector": "Näita joonistamisvalikuid",
-    "createNewFeaturesFromExisting": "Luba kasutajal luua uus (uued) objekt(id) olemasoleva(te)st objekti(de)st",
+    "createNewFeaturesFromExisting": "Luba uu(t)e objekti(de) loomine olemasoleva(te)st objekti(de)st",
     "createNewFeaturesFromExistingTip": "Valik lubab kasutajal kopeerida olemasoleva objekti, et luua uusi objekte",
-    "copiedFeaturesOverrideDefaults": "Kopeeritud objektide väärtused alistavad vaikeväärtused",
+    "copiedFeaturesOverrideDefaults": "Kopeeritud objekti(de) väärtus(ed) alistavad sihtvälja(de) vaikeväärtuse(d)",
     "copiedFeaturesOverrideDefaultsTip": "Kopeeritud objektide väärtused alistavad malli vaikeväärtused ainult vastendatud välja(de)l.",
     "displayShapeSelectorTip": "Valik sobivate joonistamisvalikute loendi kuvamiseks valitud malli jaoks.",
     "displayPresetTop": "Kuva eelseadistatud väärtuse loend alguses",
@@ -43,10 +43,10 @@ define({
     "enableMovingSelectedFeatureToGPS": "Luba valitud punktobjekti teisaldamine GPS-i asukohta",
     "enableMovingSelectedFeatureToXY": "Luba valitud punktobjekti teisaldamine XY-asukohta",
     "featureTemplateLegendLabel": "Objektimalli ja filtriväärtuse sätted",
-    "saveSettingsLegendLabel": "Salvesta sätted",
+    "saveSettingsLegendLabel": "Salvesta seaded",
     "geometrySettingsLegendLabel": "Geomeetria sätted",
     "actionsSettingsLegendLabel": "Tegevuste seaded",
-    "buttonPositionsLabel": "Nuppude Salvesta, Kustuta, Tagasi ja Tühista paigutus",
+    "buttonPositionsLabel": "Nuppude Salvesta, Kustuta, Tagasi ja Sule asukoht",
     "belowEditLabel": "Muutmisvormi all",
     "aboveEditLabel": "Muutmisvormi kohal",
     "switchToMultilineInput": "Aktiveeri mitmerealine sisestus, kui välja pikkus ületab",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Kuva viip, kui lõikepunkti atribuudi tegevusega välja jaoks on saadaval mitu väärtust",
     "expandRelatedTable": "Laienda laadimisel kõik seotud tabelid/kihid",
     "expandMainTable": "Laienda laadimisel kõik emakihid",
+    "copyAndAppendFeatureLabel": "Kopeeri objektid ja lisa need",
+    "allowCopyPolygonLabel": "Luba punktile polügooni kopeerimine",
+    "allowCopyPolygonTooltip": "Valik polügooni objektide kopeerimise lubamiseks punkti geomeetria transformatsioonidega sihtobjekti mallidele",
+    "allowCopyLineLabel": "Luba joone kopeerimine punktile",
+    "allowCopyLineTooltip": "Valik jooneobjektide kopeerimise lubamiseks punkti geomeetria transformatsioonidega sihtobjekti mallidele",
+    "pointAtStartLabel": "Punkt alguses",
+    "pointAtStartTooltip": "Lisa punkt kopeeritava joone algusesse",
+    "pointAtEndLabel": "Punkt lõpus",
+    "pointAtEndTooltip": "Lisa punkt kopeeritava joone lõppu",
     "layerSettingsTable": {
       "allowDelete": "Luba kustutamine",
       "allowDeleteTip": "Luba kustutamine - valik, mis lubab kasutajal objekti kustutada; kui kiht ei toeta kustutamist, on see valik keelatud.",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Määra objekti valimise tolerants (pikslites)",
     "featuresSelectionToleranceTooltip": "Võimaldab kasutajatel objekti klõpsamise teel hõlpsalt avada atribuutide muutmise paneeli",
     "featuresSelectionToleranceErrorMsg": "Objekti valimise tolerantsi väärtus ei sobi",
-    "autoSaveAttrUpdates": "Salvesta atribuudi uuendused automaatselt"
+    "autoSaveAttrUpdates": "Salvesta atribuudi ja geomeetria uuendused automaatselt",
+    "defaultCoordinateSystem": "Vaikereferentssüsteem",
+    "defaultCoordinateSystemTooltip": "Valitud punktobjekti teisaldamisel uude asukohta määrake vaikereferentssüsteem"
   },
   "editDescriptionPage": {
     "title": "Määratle kihi <b>${layername}</b> atribuutide ülevaate tekst "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Kriteerium - saate muuta reegli järjestust ja määratleda selle sisselülitumise kriteeriumid"
     },
     "copyAction": {
-      "description": "Väljaväärtuse allikad töödeldakse järjest, kui need on aktiveeritud, kuni kehtivad kriteeriumid lülitatakse sisse või loend on lõpule viidud. Kriteeriumide määratlemiseks kasutage kriteeriumide muutmise nuppu.",
+      "description": "Väljaväärtuse allikaid töödeldakse järjest, kui need on aktiveeritud, kuni kehtivad kriteeriumid lülitatakse sisse või loend on lõpule viidud. Kasutage kriteeriumide määratlemiseks kriteeriumide muutmise nuppu.",
       "intersection": "Ristmik",
       "coordinates": "Koordinaadid",
       "address": "Aadress",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atribuut",
     "mapSpatialReferenceOptionLabel": "Kaardi koordinaatsüsteem",
     "latLongOptionLabel": "Laius/Pikkus",
-    "MGRS": "MGRS",
+    "MGRS": "Sõjaväevõrgustiku viitesüsteem (MGRS)",
     "allGroupsCreatedMsg": "Kõik võimalikud grupid on juba loodud",
     "coordinatesSourceTitle": "Koordinaatide allikas",
     "featureLocation": "Objekti asukoht",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Siin on loetletud kõik unikaalsed eelseadistatud väljanimed. Eelseadistatud välja eemaldamisel deaktiveeritakse vastava välja eelseadistus kõigis kihtides/tabelites."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Lõikumise vaiketolerants kõigil objektidel",
-    "pixelsToleranceTitle": "Lõikumise vaiketolerants (piksli väärtus), mida rakendatakse ainult punktobjektide korral"
+    "intersectionLabel": "Lõikumise vaiketolerants kõigil objektidel",
+    "intersectionTitle": "Luba lõikumiste globaalne tolerants",
+    "pixelsToleranceLabel": "Lõikumise vaiketolerants (piksli väärtus), mida rakendatakse ainult punktobjektide korral",
+    "pixelsToleranceTitle": "Kui kõigi objektide lõikumise tolerantsi väärtuseks on määratud 0, kasutage punktobjektide jaoks seda seadet"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfigureeri nutikas toiming",

@@ -99,6 +99,7 @@ define([
   './XYCoordinates',
   'jimu/dijit/LoadingIndicator',
   'esri/tasks/GeometryService',
+  'esri/geometry/geometryEngine',
   'esri/arcgis/Portal',
   "./coordinateUtils",
   "./addressUtils",
@@ -196,6 +197,7 @@ define([
     XYCoordinates,
     LoadingIndicator,
     GeometryService,
+    GeometryEngine,
     esriPortal,
     coordinateUtils,
     AddressUtils,
@@ -276,6 +278,10 @@ define([
       //canAutoUpdate is true means fields are changed manually so on attribute-change save the feature
       _chunkSizeForPolygonAndLineGeometry: 10, //chunk size for polygon and line geometry
       _chunkSizeForPointGeometry: 100, //chunk size for point geometry
+      fieldMappingDetails: {}, //Object to store field mapping details
+      promptedUserToShowSelectionInAI: false,
+      pendingSelectAction: false, //Flag to identify if the selection from other widget is pending 
+
       //widget_loaded: declare([Stateful], {
       //  loaded: null,
       //  _loadedGetter: function () {
@@ -292,6 +298,8 @@ define([
 
       postCreate: function () {
         this.inherited(arguments);
+        this.pendingSelectAction = false;
+        this.fieldMappingDetails = {};
         this._myLocationInfoDef = null;
         this._moveToGPSDef = null;
         this._myLocationInfoForMultipleFeatures = null;
@@ -315,6 +323,7 @@ define([
         this.objectIdArr = [];
         this.processedChunksCount = 0;
         this.canAutoUpdate = true;
+        this.promptedUserToShowSelectionInAI = false;
         //Comment out code for #475
         //this._createHiddenLocateButton();
         //For backward compatibility
@@ -493,7 +502,16 @@ define([
               //also update the current feature
               this.currentFeature = this.attrInspector._numFeatures ?
                 this.attrInspector._selection[this.attrInspector._featureIdx] : null;
+              //Loop through all the features and change the selection symbol
+              if (this.attrInspector._selection) {
+                array.forEach(this.attrInspector._selection, lang.hitch(this, function (feature) {
+                  feature.setSymbol(this._getSelectionSymbol(feature.getLayer().geometryType, false));
+                }));
+              }
               this.currentFeature.preEditAttrs = JSON.parse(JSON.stringify(this.currentFeature.attributes));
+              //Change the selection symbol of active feature
+              this.currentFeature.setSymbol(this._getSelectionSymbol(
+                this.currentFeature.getLayer().geometryType, true));
               this.currentLayerInfo = this._getLayerInfoByID(this.currentFeature._layer.id);
               // Update related records count
               if (this._relatedTablesInfo && this._relatedTablesInfo[this.currentFeature._layer.id]) {
@@ -506,12 +524,15 @@ define([
               //Set the layer title state based on visibility
               if (this._traversal.length <= 1) {
                 var layerTitleNode;
-                layerTitleNode = query(".esriCTItemTitle", this.domNode)[0];
-                if (this.currentFeature && this.currentFeature.geometry &&
-                  this.currentFeature._layer.visibleAtMapScale) {
-                  layerTitleNode.style.opacity = "1";
-                } else {
-                  layerTitleNode.style.opacity = "0.3";
+                layerTitleNode = query(".esriCTItemTitle", this.domNode);
+                if (layerTitleNode && layerTitleNode.length > 0) {
+                  layerTitleNode = layerTitleNode[0];
+                  if (this.currentFeature && this.currentFeature.geometry &&
+                    this.currentFeature._layer.visibleAtMapScale) {
+                    layerTitleNode.style.opacity = "1";
+                  } else {
+                    layerTitleNode.style.opacity = "0.3";
+                  }
                 }
               }
               //Show hide delete button based on configuration
@@ -540,7 +561,7 @@ define([
               this.loading.show();
               setTimeout(lang.hitch(this, function () {
                 if (this.attrInspector._attachmentEditor && (!this.currentLayerInfo.isEditable ||
-                  !this.currentLayerInfo._editFlag)) {
+                  !this._getEditFlagValue(this.currentLayerInfo))) {
                   this._disableAttachments(this.attrInspector._attachmentEditor, true, false);
                 }
                 this.loading.hide();
@@ -570,6 +591,7 @@ define([
         this._coordinates = new XYCoordinates({
           map: this.map,
           nls: this.nls,
+          config: this.config,
           geometryService: this.geometryService
         });
         //Listen for event and get the updated location
@@ -701,9 +723,11 @@ define([
 
         this.editToolbar = new Edit(this.map);
         this.drawToolbar = new Draw(this.map);
-
-        this._createDrawingToolbar();
-
+        //Create the draw toolbar after sometime as it breaks
+        //if some of its properties are loaded 
+        setTimeout(lang.hitch(this, function () {
+          this._createDrawingToolbar();
+        }), 200);
         // edit events
         this.own(on(this.editToolbar,
           "graphic-move-stop, rotate-stop, scale-stop, vertex-move-stop, vertex-click",
@@ -743,53 +767,60 @@ define([
             } else {
               timeoutValue = 1;
             }
-            setTimeout(lang.hitch(this, function () {
-              //Function below was to load level 1 user and disable the widget, but since level 1 should be able to edit
-              //public services, all paths initialize the control
-              this.initialLoad = true;
-              this.privilegeUtil.loadPrivileges(this._getPortalUrl()).then(lang.hitch(this, function (status) {
-                var valid = true;
-                this._user = null;
-                var portal = portalUtils.getPortal(this.appConfig.portalUrl);
-                var userInfo = this.privilegeUtil.getUser();
-                this._validateUserInfoAndLocator(portal).then(lang.hitch(this, function (canGeocode) {
-                  this.canGeocode = canGeocode;
-                  if (!status) {
-                    valid = this._initControl(operLayerInfos);
-                  } else {
-                    if (userInfo) {
-                      this._user = userInfo.username;
-                      if (this.privilegeUtil.userRole.canEditFeatures() === true) {
+            this._jimuLayerInfos = operLayerInfos;
+
+            this._updateConfiguredLayersInfos(this.config.editor.layerInfos).then(lang.hitch(this, function () {
+              setTimeout(lang.hitch(this, function () {
+                //Function below was to load level 1 user and disable the widget, but since level 1 should be able to edit
+                //public services, all paths initialize the control
+                this.initialLoad = true;
+                this.privilegeUtil.loadPrivileges(this._getPortalUrl()).then(lang.hitch(this, function (status) {
+                  var valid = true;
+                  this._user = null;
+                  var portal = portalUtils.getPortal(this.appConfig.portalUrl);
+                  var userInfo = this.privilegeUtil.getUser();
+                  this._validateUserInfoAndLocator(portal).then(lang.hitch(this, function (canGeocode) {
+                    this.canGeocode = canGeocode;
+                    if (!status) {
+                      valid = this._initControl(operLayerInfos);
+                    } else {
+                      if (userInfo) {
+                        this._user = userInfo.username;
                         valid = this._initControl(operLayerInfos);
-                      }
-                      else if (this.privilegeUtil.userRole.canEditFeaturesFullControl === true) {
-                        valid = this._initControl(operLayerInfos);
-                      }
-                      else {
-                        //valid = this._initControl(operLayerInfos);
-                        valid = false;
-                        //this._noPrivilegeHandler(window.jimuNls.noEditPrivileges);//this.nls.noEditPrivileges);
+                        // No need to check the user capabilities as we will now check 
+                        //if the user has rights to access the given layer
+                        /*    if (this.privilegeUtil.userRole.canEditFeatures() === true) {
+                             valid = this._initControl(operLayerInfos);
+                           }
+                           else if (this.privilegeUtil.userRole.canEditFeaturesFullControl === true) {
+                             valid = this._initControl(operLayerInfos);
+                           }
+                           else {
+                             //valid = this._initControl(operLayerInfos);
+                             valid = false;
+                             //this._noPrivilegeHandler(window.jimuNls.noEditPrivileges);//this.nls.noEditPrivileges);
+                           } */
                       }
                     }
+                    this.initialLoad = false;
+                  }));
+
+                  if (valid === false) {
+                    this._noPrivilegeHandler(window.jimuNls.noEditPrivileges);//this.nls.invalidConfiguration);
                   }
+
+                  this.shelter.hide();
+
+                }), lang.hitch(this, function () {
                   this.initialLoad = false;
+                  this._initControl(operLayerInfos);
+                  //this._noPrivilegeHandler(window.jimuNls.noEditPrivileges);//this.nls.noEditPrivileges);
                 }));
-
-                if (valid === false) {
-                  this._noPrivilegeHandler(window.jimuNls.noEditPrivileges);//this.nls.invalidConfiguration);
-                }
-
                 this.shelter.hide();
+                this._workBeforeCreate();
 
-              }), lang.hitch(this, function () {
-                this.initialLoad = false;
-                this._initControl(operLayerInfos);
-                //this._noPrivilegeHandler(window.jimuNls.noEditPrivileges);//this.nls.noEditPrivileges);
-              }));
-              this.shelter.hide();
-              this._workBeforeCreate();
-
-            }), timeoutValue);
+              }), timeoutValue);
+            }));
           }));
       },
 
@@ -880,18 +911,45 @@ define([
       */
       _isLocatorRequired: function () {
         var isRequired = false;
-        if (this.config.geocoderSettings.url && this.config.hasOwnProperty("attributeActionGroups") &&
-          Object.keys(this.config.attributeActionGroups.Address).length > 0) {
-          isRequired = true;
+        if (this.config.hasOwnProperty("geocoderSettings") && this.config.geocoderSettings &&
+          this.config.geocoderSettings.url) {
+          isRequired = this._isAddressAttributeActionEnabled();
         }
         return isRequired;
+      },
+
+      /**
+      * The function checks if attribute action group is added or
+      * at least one address attribute action is enabled on layer
+      */
+      _isAddressAttributeActionEnabled: function () {
+        var isEnabled = false;
+        if (this.config.hasOwnProperty("attributeActionGroups") &&
+          Object.keys(this.config.attributeActionGroups.Address).length > 0) {
+          isEnabled = true;
+        } else if (this.config.editor.hasOwnProperty("layerInfos")) {
+          array.some(this.config.editor.layerInfos, lang.hitch(this, function (layerInfo) {
+            if (layerInfo.fieldValues) {
+              for (var fieldName in layerInfo.fieldValues) {
+                for (var i = 0; i < layerInfo.fieldValues[fieldName].length; i++) {
+                  var actionObj = layerInfo.fieldValues[fieldName][i];
+                  if (actionObj && actionObj.actionName === "Address" && actionObj.enabled) {
+                    isEnabled = true;
+                    return true;
+                  }
+                }
+              }
+            }
+          }));
+        }
+        return isEnabled;
       },
 
       /**
       * Shows the message popup which asks user whether they want to login or not
       */
       _promptUserForLogin: function (portal) {
-        var def = new Deferred();
+        var def = new Deferred(), showMessage = true;
         var dialog = new Popup({
           titleLabel: this.nls.loginPopupTitle,
           width: 400,
@@ -904,6 +962,9 @@ define([
             label: this.nls.yes,
             classNames: ['jimu-btn'],
             onClick: lang.hitch(this, function () {
+              //Change the flag value to false
+              //So that the message will not be shown
+              showMessage = false;
               dialog.close();
               this._loginUser(portal, true).then(lang.hitch(this, function (isSuccessful) {
                 def.resolve(isSuccessful);
@@ -914,14 +975,18 @@ define([
             classNames: ['jimu-btn'],
             onClick: lang.hitch(this, function () {
               dialog.close();
-              //If user aborts the sign in process
-              //show the warning message
+            })
+          }],
+          onClose: lang.hitch(this, function () {
+            //If user aborts the sign in process
+            //show the warning message
+            if (showMessage) {
               new Message({
                 message: this.nls.unableToUseLocator
               });
               def.resolve(false);
-            })
-          }]
+            }
+          })
         });
         return def.promise;
       },
@@ -935,23 +1000,15 @@ define([
           portal.signIn().then(lang.hitch(this, function () {
             //Need to get the detailed user info as sign in gives basic information
             var userInfo = portal.getPortalUser();
-              //Check for user privileges to make sure user has the geocoding rights
+            //Check for user privileges to make sure user has the geocoding rights
             if (userInfo && this._checkUserPrivileges(userInfo)) {
-                //check if user has credits
-                //if user do not have credits then show the warning message
-                if (this._hasCredits(userInfo, portal)) {
-                  this._validateLocatorURL().then(lang.hitch(this, function (canPerformOperation) {
-                    this.userToken = userInfo.credential.token;
-                    loginDef.resolve(canPerformOperation);
-                  }));
-                } else {
-                  new Message({
-                    message: String.substitute(this.nls.noCreditsOrPrivilegeWarningMessage, {
-                      widgetName: this.label
-                    })
-                  });
-                  loginDef.resolve(false);
-                }
+              //check if user has credits
+              //if user do not have credits then show the warning message
+              if (this._hasCredits(userInfo, portal)) {
+                this._validateLocatorURL().then(lang.hitch(this, function (canPerformOperation) {
+                  this.userToken = userInfo.credential.token;
+                  loginDef.resolve(canPerformOperation);
+                }));
               } else {
                 new Message({
                   message: String.substitute(this.nls.noCreditsOrPrivilegeWarningMessage, {
@@ -960,6 +1017,14 @@ define([
                 });
                 loginDef.resolve(false);
               }
+            } else {
+              new Message({
+                message: String.substitute(this.nls.noCreditsOrPrivilegeWarningMessage, {
+                  widgetName: this.label
+                })
+              });
+              loginDef.resolve(false);
+            }
           }), lang.hitch(this, function () {
             //If user fails to sign in or aborts the sign in process
             //show the warning message
@@ -1106,6 +1171,12 @@ define([
         if (features.length === 0) {
           return;
         }
+        //When opened smart editor from select widget, selection is received in onReceiveData and also in the feature action
+        //When SE is not opened and using select widget if it is opened then we prompt user if the selection should be loaded in the SE or not
+        //so when this action is in progress we should return since after the user action those features will be shown in AI
+        if (this.promptedUserToShowSelectionInAI) {
+          return;
+        }
         if (this.state !== 'active') {
           this.widgetManager.activateWidget(this);
         }
@@ -1113,6 +1184,7 @@ define([
         if (this._validateFeatureChanged() && this.currentFeature) {
           // do not show templatePicker after saving
           if (this.config.editor.displayPromptOnSave && this.config.editor.displayPromptOnSave === true) {
+            this.pendingSelectAction = true;
             this._promptToResolvePendingEdit(false, { featureLayer: featureLayer, feature: firstFeature }, false, true);
           } else {
             this.load_from_featureaction(featureLayer, firstFeature);
@@ -1122,6 +1194,7 @@ define([
         }
       },
       load_from_featureaction: function (featureLayer, firstFeature) {
+        this.pendingSelectAction = false;
         //CT- Commented as now we need to clear multiple layer from multiple AI
         /* if (this.updateFeatures) {
            var layersRefresh = [];
@@ -1160,6 +1233,8 @@ define([
           this.loading.show();
           featureLayer = this._getLayerInfoByID(this.viewedLayerDetails.shift());
           firstFeature = this.viewedFeatureDetails.shift();
+          this._traverseToSelectedFeature(featureLayer, firstFeature);
+        } else if (featureLayer && firstFeature) {
           this._traverseToSelectedFeature(featureLayer, firstFeature);
         }
       },
@@ -1234,7 +1309,8 @@ define([
                   layer.clearSelection();
                   layer.refresh();
                   layerInfo = layerInfos.getLayerInfoById(layID);
-                  if (layerInfo.layerObject) {
+                  //Check if the layer info exist and then check for other properties
+                  if (layerInfo && layerInfo.layerObject) {
                     fs_url = layerInfo.layerObject.url;
                   }
                 }
@@ -1335,8 +1411,9 @@ define([
           return;
         }
         this._createOverDef.then(lang.hitch(this, function () {
-          this.feature_action_select(features, featureLayer);
-
+          setTimeout(lang.hitch(this, function () {
+            this.feature_action_select(features, featureLayer);
+          }), this.initialLoad ? 500 : 0);
         }));
         //if (this.loaded_state.get('loaded') === true) {
         //  this.feature_action_select(features, featureLayer);
@@ -1375,39 +1452,104 @@ define([
             }
             return;
           }
-          //If select and attribute table is emitting the data
-          //get the selected features of the layer and show the attribute inspector
-          if ((name === "Select" || name === "AttributeTable") && data &&
-            data.hasOwnProperty("selectionInfo") && !this._attrInspIsCurrentlyDisplayed) {
-            var featureSelectionObj = this._getFeaturesToBeSelectedInAI(data.selectionInfo);
-            //If the widget is opened for first time and there is existing selection
-            //ask user if he wants to load those selections in AI
-            if (this.initialLoad && Object.keys(featureSelectionObj.selectionInfo).length > 0) {
-              this._promptUserToShowSelectionInAI(featureSelectionObj.selectionInfo,
-                featureSelectionObj.layers);
-            } else {
-              this._showAttributeInspector(featureSelectionObj.selectionInfo, featureSelectionObj.layers);
-            }
-          } else if ((name === "Select" || name === "AttributeTable") && data &&
-            data.hasOwnProperty("selectionInfo") && this._attrInspIsCurrentlyDisplayed) {
-            //If AI is in display and selection do not have any features
-            //we need to hide the AI
+          var pendingEditsDef = new Deferred();
+          if (this.config.editor.displayPromptOnSave && this.currentFeature && this._validateFeatureChanged()) {
+            this.pendingSelectAction = true;
+            this._promptToResolvePendingEdit(false, null, false, true).then(lang.hitch(this, function () {
+              pendingEditsDef.resolve();
+            }), function () {
+              pendingEditsDef.resolve();
+            });
+          } else {
+            pendingEditsDef.resolve();
+          }
+
+          pendingEditsDef.then(lang.hitch(this, function () {
             var hideAI = true;
-            for (var layerID in data.selectionInfo) {
-              if (data.selectionInfo[layerID] &&
-                data.selectionInfo[layerID].length > 0) {
-                hideAI = false
+            if ((name === "Select" || name === "AttributeTable") && data &&
+              data.hasOwnProperty("selectionInfo")) {
+              //If AI is in display and selection do not have any features
+              //we need to hide the AI
+              for (var layerID in data.selectionInfo) {
+                if (data.selectionInfo[layerID] &&
+                  data.selectionInfo[layerID].length > 0) {
+                  hideAI = false;
+                }
               }
             }
-            //Hide the AI and show the appropriate message
-            if (hideAI) {
-              dojo.query(".jimu-widget-smartEditor .attributeInspectorMainDiv")[0].style.display = "none";
-              this._attrInspIsCurrentlyDisplayed = false;
-              domStyle.set(this.noFeatureWarningMessage, "display", "block");
-              this._setWidgetFirstFocusNode("noFeatures", true);
+            //If select and attribute table is emitting the data
+            //get the selected features of the layer and show the attribute inspector
+            if ((name === "Select" || name === "AttributeTable") && data &&
+              data.hasOwnProperty("selectionInfo") && !this._attrInspIsCurrentlyDisplayed) {
+              var featureSelectionObj = this._getFeaturesToBeSelectedInAI(data.selectionInfo);
+              //Refresh the layer to clear the previous selection
+              //If new selection is being made from Select widget
+              //The previous selection symbol of features (loaded in Attribute Inspector) was not getting cleared
+              this._refreshLayer();
+              //Hide the AI and show the appropriate message
+              if (hideAI) {
+                var templatePickerMainDiv =
+                  query(".jimu-widget-smartEditor .templatePickerMainDiv");
+                if (domStyle.get(this.noFeatureWarningMessage, "display") === 'none' &&
+                  templatePickerMainDiv &&
+                  domStyle.get(templatePickerMainDiv[0], 'display') !== 'block') {
+                  this._hideAIForNoFeaturesInSelection();
+                }
+              } else {
+                //If the widget is opened for first time and there is existing selection
+                //ask user if he wants to load those selections in AI
+                if (this.initialLoad && Object.keys(featureSelectionObj.selectionInfo).length > 0) {
+                  this.promptedUserToShowSelectionInAI = true;
+                  this._promptUserToShowSelectionInAI(featureSelectionObj.selectionInfo,
+                    featureSelectionObj.layers);
+                } else {
+                  this._showAttributeInspector(featureSelectionObj.selectionInfo, featureSelectionObj.layers);
+                }
+              }
+            } else if ((name === "Select" || name === "AttributeTable") && data &&
+              data.hasOwnProperty("selectionInfo") && this._attrInspIsCurrentlyDisplayed) {
+              //Refresh the layer to clear the previous selection
+              //If new selection is being made from Select widget
+              //The previous selection symbol of features (loaded in Attribute Inspector) was not getting cleared
+              this._refreshLayer();
+              //Hide the AI and show the appropriate message
+              if (hideAI) {
+                this._hideAIForNoFeaturesInSelection();
+              } else {
+                //If related features Attribute Inspector is currently being displayed
+                //and the feature selection is changed then clear the contents
+                //and show the new selection in the Attribute Inspector
+                if (this._traversal.length > 1) {
+                  this._attrInspIsCurrentlyDisplayed = false;
+                  //Clear nav buttons of the current AI and its DOM
+                  if (this.navButtonsDiv &&
+                    this.navButtonsDiv.parentNode) {
+                    this.navButtonsDiv.parentNode.removeChild(this.navButtonsDiv);
+                  }
+                  array.forEach(this._paginationNodeCollection, lang.hitch(this, function (node) {
+                    domConstruct.destroy(node);
+                  }));
+                  //Destroy all prev attributeInspectors
+                  array.forEach(this._attributeInspectorCollection, function (attributeInspector) {
+                    attributeInspector.destroy();
+                  });
+                  //Destroy the current instance of AI, this will make sure the remove all the 
+                  //changes by AI to the layer
+                  //e.g. dijits created in AI for each field
+                  if (this.attrInspector) {
+                    this.attrInspector.destroy();
+                  }
+                  this._navigateToMain(true);
+                  setTimeout(lang.hitch(this, function () {
+                    this.fetchDataByName("Select");
+                  }), 100);
+                } else {
+                  this._toggleAttrInspectorNavButtons();
+                }
+              }
+              this.updateFeatures = this.attrInspector._selection;
             }
-            this.updateFeatures = this.attrInspector._selection;
-          }
+          }));
           if (this.config.editor.hasOwnProperty("listenToGF")) {
             if (this.config.editor.listenToGF !== true) {
               return;
@@ -1419,12 +1561,12 @@ define([
             return;
           }
 
-          if(Array.isArray(data.message)) {
+          if (Array.isArray(data.message)) {
             //new at 7.4, group filter passes an array of all group filterings.
-            if(data.message.length > 0) {
-              array.forEach(data.message, lang.hitch(this, function(gf) {
+            if (data.message.length > 0) {
+              array.forEach(data.message, lang.hitch(this, function (gf) {
                 if (gf.hasOwnProperty("fields") &&
-                gf.hasOwnProperty("values")) {
+                  gf.hasOwnProperty("values")) {
                   //if groupName is available set preset values using it
                   //else for backward compatibility using field name set values for preset groups
                   if (gf.hasOwnProperty("groupName")) {
@@ -1440,7 +1582,7 @@ define([
           } else {
             //for backward compatibility when w2w was an object an dnot an array
             if (data.message.hasOwnProperty("fields") &&
-            data.message.hasOwnProperty("values")) {
+              data.message.hasOwnProperty("values")) {
               //if groupName is available set preset values using it
               //else for backward compatibility using field name set values for preset groups
               if (data.message.hasOwnProperty("groupName")) {
@@ -1455,14 +1597,37 @@ define([
         }
       },
 
+      _hideAIForNoFeaturesInSelection: function () {
+        dojo.query(".jimu-widget-smartEditor .attributeInspectorMainDiv")[0].style.display = "none";
+        this._attrInspIsCurrentlyDisplayed = false;
+        domStyle.set(this.noFeatureWarningMessage, "display", "block");
+        array.forEach(this.attrInspector.layerInfos, function (layerInfo) {
+          var layer = layerInfo.featureLayer;
+          layer.clearSelection();
+          layer.refresh();
+        });
+        if (this.navButtonsDiv &&
+          this.navButtonsDiv.parentNode) {
+          this.navButtonsDiv.parentNode.removeChild(this.navButtonsDiv);
+        }
+        array.forEach(this._paginationNodeCollection, lang.hitch(this, function (node) {
+          domConstruct.destroy(node);
+        }));
+        this._setWidgetFirstFocusNode("noFeatures", true);
+      },
+
       _getFeaturesToBeSelectedInAI: function (selectionInfo) {
         var updatedSelectionInfo = {}, layers = [];
         //Loop through all the layers and only keep the
         //Selection info of editable layers
         array.forEach(this.config.editor.configInfos, lang.hitch(this, function (layer) {
-          if (layer._editFlag) {
+          //if layer is editable from or has any relations
+          if ((layer._orgConfiguredEditFlag && layer._isEditableByUser) ||
+            this._hasAnyEditableLayerInRelation([layer])) {
             layers.push(layer);
-            if (selectionInfo[layer.layerInfo.id] && selectionInfo[layer.layerInfo.id].length > 0) {
+            if (layer.layerInfo.layerObject &&
+              layer.layerInfo.layerObject.getSelectedFeatures().length > 0 &&
+              selectionInfo[layer.layerInfo.id] && selectionInfo[layer.layerInfo.id].length > 0) {
               updatedSelectionInfo[layer.layerInfo.id] = selectionInfo[layer.layerInfo.id];
             }
           }
@@ -1471,6 +1636,12 @@ define([
           selectionInfo: updatedSelectionInfo,
           layers: layers
         };
+      },
+
+      _refreshLayer: function () {
+        array.forEach(this.config.editor.configInfos, lang.hitch(this, function (layer) {
+          layer.layerInfo.layerObject.refresh();
+        }));
       },
 
       _promptUserToShowSelectionInAI: function (selectionInfo, layers) {
@@ -1486,6 +1657,7 @@ define([
             label: this.nls.yes,
             classNames: ['jimu-btn'],
             onClick: lang.hitch(this, function () {
+              this.promptedUserToShowSelectionInAI = false;
               //If user press yes button
               //load the current selection in attribute inspector
               this._showAttributeInspector(selectionInfo, layers);
@@ -1495,6 +1667,7 @@ define([
             label: this.nls.no,
             classNames: ['jimu-btn'],
             onClick: lang.hitch(this, function () {
+              this.promptedUserToShowSelectionInAI = false;
               //If user press no button
               //close the dialog and do nothing
               dialog.close();
@@ -1528,6 +1701,12 @@ define([
                 this.loading.hide();
               }));
           }
+        } else {
+          //If no features are selected with select widget then 
+          //clear the previous selection on map as we show "no features" message in the smart editor panel
+          array.forEach(layers, lang.hitch(this, function (layer) {
+            layer.featureLayer.refresh();
+          }));
         }
       },
 
@@ -1599,6 +1778,14 @@ define([
         this.inherited(arguments);
 
         if (this.attrInspector) {
+          //clear all layers selection before destroying AI
+          if (this.attrInspector.layerInfos) {
+            array.forEach(this.attrInspector.layerInfos, function (layerInfo) {
+              var layer = layerInfo.featureLayer;
+              layer.clearSelection();
+              layer.refresh();
+            });
+          }
           this.attrInspector.destroy();
         }
         this.attrInspector = null;
@@ -1625,6 +1812,14 @@ define([
           this.drawingTool = null;
         }
         this._enableFeatureReduction();
+        this._removeLocalLayers();
+        if (this._copyFeaturesObj && this._copyFeaturesObj.highlightGraphicsLayer) {
+          this._copyFeaturesObj.highlightGraphicsLayer.clear();
+        }
+        if (this._copyFeaturesObj && this._copyFeaturesObj.fieldsMappingObj &&
+          this._copyFeaturesObj.fieldsMappingObj.fieldsPopup) {
+          this._copyFeaturesObj.fieldsMappingObj.fieldsPopup.close();
+        }
         this.inherited(arguments);
       },
       onActive: function () {
@@ -1703,6 +1898,14 @@ define([
                     this._attrInspIsCurrentlyDisplayed = false;
                     domStyle.set(this.noFeatureWarningMessage, "display", "block");
                     this._setWidgetFirstFocusNode("noFeatures", true);
+                    //Clear nav buttons of the current AI and its DOM
+                    if (this.navButtonsDiv &&
+                      this.navButtonsDiv.parentNode) {
+                      this.navButtonsDiv.parentNode.removeChild(this.navButtonsDiv);
+                    }
+                    array.forEach(this._paginationNodeCollection, lang.hitch(this, function (node) {
+                      domConstruct.destroy(node);
+                    }));
                   }
                 }));
               this.own(selectionCompleteHandle);
@@ -1713,26 +1916,78 @@ define([
         }
       },
 
-      //Added this function  mulitple layers cleard from out side the widget
+      //Added this function multiple layers cleared from out side the widget
       //should not fire the _layerChangeOutside multiple times
-      _onLayerSelectionCleared: function () {
+      _onLayerSelectionCleared: function (evt) {
         if (this._LayerSelectionClearedTimer) {
           clearTimeout(this._LayerSelectionClearedTimer);
         }
         this._LayerSelectionClearedTimer = setTimeout(lang.hitch(this, function () {
           if (!this._layerChangedOutside) {
             this._layerChangedOutside = true;
-            domStyle.set(this.noFeatureWarningMessage, "display", "none");
-            //show template picker and clear current AI
-            this._navigateToMain();
+            if (this.noFeatureWarningMessage) {
+              domStyle.set(this.noFeatureWarningMessage, "display", "none");
+            }
+            var updatedSelectionInfo = {}, layers = [];
+            //Loop through all the layers and only keep the
+            //Selection info of editable layers
+            array.forEach(this.attrInspector.layerInfos, lang.hitch(this, function (layer) {
+              layers.push(layer);
+              if (layer.featureLayer.getSelectedFeatures().length > 0) {
+                updatedSelectionInfo[layer.featureLayer.id] =
+                  this._getFeatureOIDArray(layer.featureLayer, layer.featureLayer.getSelectedFeatures());
+              }
+              //If the layer was cleared, then refresh the layer to make sure the symbology is refreshed on the map
+              if (evt.target.id === layer.featureLayer.id) {
+                layer.featureLayer.refresh();
+              }
+            }));
+            //Clear nav buttons of the current AI and its DOM
+            if (this.navButtonsDiv &&
+              this.navButtonsDiv.parentNode) {
+              this.navButtonsDiv.parentNode.removeChild(this.navButtonsDiv);
+            }
+            array.forEach(this._paginationNodeCollection, lang.hitch(this, function (node) {
+              domConstruct.destroy(node);
+            }));
+            //Destroy all prev attributeInspectors
+            array.forEach(this._attributeInspectorCollection, function (attributeInspector) {
+              attributeInspector.destroy();
+            });
+            //Destroy the current instance of AI, this will make sure the remove all the 
+            //changes by AI to the layer
+            //e.g. dijits created in AI for each field
+            if (this.attrInspector) {
+              this.attrInspector.destroy();
+            }
+            //If more than one layer features are still in the selection
+            //select the features and show the Attribute Inspector
+            //this should happen only if the parent layers are feature are being shown in the AI
+            //for related records AI, directly show the template picker screen
+            if (Object.keys(updatedSelectionInfo).length > 0 && this._traversal.length === 1) {
+              this._showAttributeInspector(updatedSelectionInfo, layers);
+            } else {
+              //show template picker and clear current AI
+              this._navigateToMain();
+            }
           }
         }), 100);
       },
 
-      _navigateToMain: function () {
+      _getFeatureOIDArray: function (layer, selectedFeatures) {
+        var OIDArray = [];
+        array.forEach(selectedFeatures, lang.hitch(this, function (currentFeature) {
+          OIDArray.push(Number(currentFeature.attributes[layer.objectIdField]));
+        }));
+        return OIDArray;
+      },
+
+      _navigateToMain: function (skipShowTemplate) {
         this._attrInspIsCurrentlyDisplayed = false;
         //this._mapClickHandler(true);
-        this._showTemplatePicker();
+        if (!skipShowTemplate) {
+          this._showTemplatePicker();
+        }
         //reset array
         this._traversal = [];
         this._nodesCollection = [];
@@ -1832,7 +2087,7 @@ define([
       * This updates the config object with the newly added layers
       */
       _addNewLayersInConfig: function () {
-        var configuredLayersArray = [];
+        var configuredLayersArray = [], newlyAddedLayers = [];
         //Create list of all the configured layers
         array.forEach(this.config.editor.configInfos, lang.hitch(this, function (currentConfig) {
           configuredLayersArray.push(currentConfig.featureLayer.id);
@@ -1846,15 +2101,40 @@ define([
               layerInfo.layerObject.type === "Feature Layer" && this._isValidLayer(layerInfo)) {
               var newLayerObj = {};
               newLayerObj = editUtils.createDefaultConfigInfo(layerInfo);
-              if (newLayerObj._editFlag) {
+              //If the config is saved and new layer is added in the web map
+              //The newly added layer is unchecked in the configuration
+              //So the same layer should not be shown in the template picker
+              //Unless it is configured, saved and marked as editable
+              if (!this._isNewLayerAddedInWebMap(newLayerObj) && newLayerObj._editFlag) {
                 newLayerObj.layerInfo = layerInfo;
                 newLayerObj.configFeatureLayer = newLayerObj.featureLayer;
                 newLayerObj.featureLayer = newLayerObj.layerInfo.layerObject;
                 newLayerObj.allowDelete = newLayerObj.configFeatureLayer.layerAllowsDelete || false;
-                this.config.editor.configInfos.splice(0, 0, newLayerObj);
+                newlyAddedLayers.push(newLayerObj);
               }
             }
           }));
+        //If new layers are added through "Add Data" widget
+        //then reverse the array and add them to the config
+        //this will make sure the layer order is maintained
+        if (newlyAddedLayers.length > 0) {
+          newlyAddedLayers.reverse();
+          array.forEach(newlyAddedLayers, lang.hitch(this, function (layerInfo) {
+            this.config.editor.configInfos.splice(0, 0, layerInfo);
+          }))
+        }
+      },
+
+      _isNewLayerAddedInWebMap: function (layerInfo) {
+        var isNewLayer = false;
+        array.some(this._jimuLayerInfos.getLayerInfoArrayOfWebmap(),
+          lang.hitch(this, function (layer) {
+            if (layer.id === layerInfo.featureLayer.id) {
+              isNewLayer = true;
+              return true;
+            }
+          }));
+        return isNewLayer;
       },
 
       _getTableInfos: function () {
@@ -1866,10 +2146,24 @@ define([
         return all(defs);
       },
 
+      _getIntersectionUtils: function () {
+        //if default pixels tolerance is configured then use it,
+        //else use 20px for backward compatibility
+        var pixelsTolerance = 20;
+        if (this.config.editor.hasOwnProperty("defaultPixelsTolerance")) {
+          pixelsTolerance = this.config.editor.defaultPixelsTolerance;
+        }
+        return new Intersection({
+          _jimuLayerInfos: this._jimuLayerInfos,
+          map: this.map,
+          "defaultToleranceSettings": this.config.editor.defaultToleranceSettings,
+          "defaultPixelsTolerance": pixelsTolerance
+        });
+      },
+
       _initControl: function (operLayerInfos) {
         this._userHasPrivilege = true;
-        this._jimuLayerInfos = operLayerInfos;
-        this._jimuLayerInfos.onlayerInfosChanged = lang.hitch(this, function (layerInfo, status) {
+        this.own(on(this._jimuLayerInfos, 'layerInfosChanged', lang.hitch(this, function (layerInfo, status) {
           //If the flag is not in the config or it is set to false
           //do not consider the newly added layers
           if (this.config.editor.hasOwnProperty("editAddDataLayers")) {
@@ -1935,34 +2229,36 @@ define([
             } else {
               //If template picker already exist
               //check if it has at least one editable layer
-              var layers = this._getEditableLayers(this.config.editor.configInfos, false);
-              if (layers.length === 0) {
-                this._creationDisabledOnAll = true;
-                //If no editable layers found, then hide all the main screen tools
-                this._showOrHideMainScreenTools(true);
-                //deactivate the toolbar
-                if (this.drawToolbar) {
-                  this.drawToolbar.deactivate();
-                }
-                if (this.templatePicker) {
-                  //Clear the selected template and activate the map click
-                  this._mapClickHandler(true);
-                  this._clearTemplateSelection();
-                }
-                this._checkForLayersInTemplatePicker();
-              } else {
-                this._creationDisabledOnAll = false;
-                //If no editable layers found, then hide all the main screen tools
-                this._showOrHideMainScreenTools(false);
-                //If preset table does not exist create the same
-                if (!this._isPresetTableCreated) {
-                  this._createPresetTable(this.config.editor.configInfos);
-                }
-                //update the template picker with newly added layers
-                this.templatePicker.attr("featureLayers", layers);
-                this.templatePicker.update();
-                this.templatePicker.clearSelection();
-              }
+              this._getEditableLayers(this.config.editor.configInfos).then(lang.hitch(this,
+                function (layers) {
+                  if (layers && layers.length === 0) {
+                    this._creationDisabledOnAll = true;
+                    //If no editable layers found, then hide all the main screen tools
+                    this._showOrHideMainScreenTools(true);
+                    //deactivate the toolbar
+                    if (this.drawToolbar) {
+                      this.drawToolbar.deactivate();
+                    }
+                    if (this.templatePicker) {
+                      //Clear the selected template and activate the map click
+                      this._mapClickHandler(true);
+                      this._clearTemplateSelection();
+                    }
+                    this._checkForLayersInTemplatePicker();
+                  } else {
+                    this._creationDisabledOnAll = false;
+                    //If no editable layers found, then hide all the main screen tools
+                    this._showOrHideMainScreenTools(false);
+                    //If preset table does not exist create the same
+                    if (!this._isPresetTableCreated) {
+                      this._createPresetTable(this.config.editor.configInfos);
+                    }
+                    //update the template picker with newly added layers
+                    this.templatePicker.attr("featureLayers", layers);
+                    this.templatePicker.update();
+                    this.templatePicker.clearSelection();
+                  }
+                }));
             }
             //Check if the filter editor is configured 
             //and accordingly add the layers in the filter editor
@@ -1976,7 +2272,7 @@ define([
             }
             this._setWidgetFirstFocusNode("templatePicker", true);
           }
-        });
+        })));
 
         //Get table infos so that all the tables layer objects are loaded
         //This will help in getting the capabilities and other layer infos
@@ -1989,18 +2285,7 @@ define([
           userToken: this.userToken,
           appConfig: this.appConfig
         });
-        //if default pixels tolerance is configured then use it,
-        //else use 20px for backward compatibility
-        var pixelsTolerance = 20;
-        if (this.config.editor.hasOwnProperty("defaultPixelsTolerance")) {
-          pixelsTolerance = this.config.editor.defaultPixelsTolerance;
-        }
-        this._intersectionUtils = new Intersection({
-          _jimuLayerInfos: this._jimuLayerInfos,
-          map: this.map,
-          "defaultToleranceSettings": this.config.editor.defaultToleranceSettings,
-          "defaultPixelsTolerance": pixelsTolerance
-        });
+        this._intersectionUtils = this._getIntersectionUtils();
         var onlyConfiged = false;
         if (this.config.editor && this.config.editor.layerInfos) {
           onlyConfiged = this.config.editor.layerInfos.length > 0;
@@ -2008,7 +2293,7 @@ define([
         //If honor web map configuration is true then get all the newly added layers from the web map
         if (this.config.editor.hasOwnProperty("honorWebMapConfiguration") &&
           this.config.editor.honorWebMapConfiguration) {
-            onlyConfiged = false;
+          onlyConfiged = false;
         }
         this.config.editor.configInfos = editUtils.getConfigInfos(this._jimuLayerInfos,
           this.config.editor.layerInfos, false, onlyConfiged);
@@ -2262,7 +2547,7 @@ define([
           }
           else {
             var gpFilterTemplates = false;
-            if (this.config.editor.hasOwnProperty("groupFilteredTemplates")){
+            if (this.config.editor.hasOwnProperty("groupFilteredTemplates")) {
               gpFilterTemplates = this.config.editor.groupFilteredTemplates;
             }
             this._filterEditorNode = domConstruct.create("div", {});
@@ -2363,7 +2648,7 @@ define([
         }));
       },
 
-      _getCopyAttributes: function (layerInfo, geometry) {
+      _getCopyAttributes: function (layerInfo, geometry, copyingMultipleFeatures) {
         var defList = [], copyAttributesInfo = {}, coordinatesDef, resultDef;
         resultDef = new Deferred();
         coordinatesDef = new Deferred();
@@ -2384,13 +2669,19 @@ define([
               needMyLocation = true;
             }
           }
-          if (needAddress && needIntersection) {
+          if (needAddress && needIntersection && needMyLocation) {
             break;
           }
         }
         //Get data required for intersection
         if (needIntersection) {
-          defList.push(this._intersectionUtils.getDistinctLayers(layerInfo, geometry));
+          // in case of copying multiple features new instance of intersection utils is required
+          if (copyingMultipleFeatures) {
+            var intersectionUtils = this._getIntersectionUtils();
+            defList.push(intersectionUtils.getDistinctLayers(layerInfo, geometry));
+          } else {
+            defList.push(this._intersectionUtils.getDistinctLayers(layerInfo, geometry));
+          }
         }
         //Get coordinates info and on completing coordinates info get address info
         defList.push(coordinatesDef);
@@ -2420,21 +2711,21 @@ define([
                 coordinatesDef.resolve(copyAttributesInfo);
               }
             }));
-          }), lang.hitch(this, function(){
+          }), lang.hitch(this, function () {
             copyAttributesInfo.Coordinates = {};
             copyAttributesInfo.Address = {};
-            copyAttributesInfo.MyLocation = { Coordinates: {}};
+            copyAttributesInfo.MyLocation = { Coordinates: {} };
             //once all coordinate, address and myLocation infos are available resolve def
             coordinatesDef.resolve(copyAttributesInfo);
           }));
         //Once all info for Intersection, Coordinates and Address are available
         //resolve main result def with copyAttributesInfo object
         all(defList).then(lang.hitch(this, function (allResult) {
-          if(needIntersection) {
+          if (needIntersection) {
             copyAttributesInfo.Intersection = allResult[0].result;
             //store the multiple values object in copyAttributesInfo
             copyAttributesInfo.multipleValues = allResult[0].multipleValues;
-          } else{
+          } else {
             copyAttributesInfo.Intersection = {};
             //store the multiple values object in copyAttributesInfo
             copyAttributesInfo.multipleValues = undefined;
@@ -2494,6 +2785,8 @@ define([
 
       // this function also create a new attribute inspector for the local layer
       _addGraphicToLocalLayer: function (evt, copiedAttributes) {
+        var numberFieldDataTypes =
+          ["esriFieldTypeSmallInteger", "esriFieldTypeInteger", "esriFieldTypeDouble", "esriFieldTypeSingle"];
         if (this.templatePicker === undefined ||
           this.templatePicker === null) { return; }
         if (!this.templatePicker.getSelected()) { return; }
@@ -2535,7 +2828,11 @@ define([
             }), 100);
           }
 
-          var newAttributes = lang.clone(selectedTemp.template.prototype.attributes);
+          var newAttributes = {};
+          if (selectedTemp && selectedTemp.template && selectedTemp.template.prototype &&
+            selectedTemp.template.prototype.attributes) {
+            newAttributes = lang.clone(selectedTemp.template.prototype.attributes);
+          }
 
           if (this.cacheLayer.geometryType === "esriGeometryPolyline" && evt.geometry.type === 'polygon') {
             evt.geometry = this._polygonToPolyline(evt.geometry);
@@ -2546,13 +2843,77 @@ define([
             //if copying features and have the copied attributes, then use them
             if (copiedAttributes) {
               var selectedFeaturesAttributes = lang.clone(copiedAttributes);
-              //copy only those attributes which are not available in template or
-              //if the value in template for those attribute is null or
-              //override defaults by copied feature is true
-              for (var attrKey in selectedFeaturesAttributes) {
-                if (!newAttributes.hasOwnProperty(attrKey) || newAttributes[attrKey] === null ||
-                  this.config.editor.overrideDefaultsByCopiedFeature) {
-                  newAttributes[attrKey] = selectedFeaturesAttributes[attrKey];
+              var sourceLayerId, targetLayerId = selectedTemp.featureLayer.id;
+              if (evt.layer && evt.layer.id) {
+                sourceLayerId = evt.layer.id;
+              }
+              //if field mapping details available use them else copy attributes according to old pattern
+              if (sourceLayerId && this.fieldMappingDetails[targetLayerId] && this.fieldMappingDetails[targetLayerId][sourceLayerId]) {
+                //push those attributes in newAttributes which are not available in default template but have field mapping
+                for (var tField in this.fieldMappingDetails[targetLayerId][sourceLayerId]) {
+                  if (!newAttributes.hasOwnProperty(tField)) {
+                    newAttributes[tField] = null;
+                  }
+                }
+                for (var attributeKey in newAttributes) {
+                  var sourceLayerField, targetLayerField, sourceField;
+                  if (!newAttributes.hasOwnProperty(attributeKey) || newAttributes[attributeKey] === null ||
+                    this.config.editor.overrideDefaultsByCopiedFeature) {
+                    sourceField = this.fieldMappingDetails[targetLayerId][sourceLayerId][attributeKey];
+                    if (sourceField && selectedFeaturesAttributes.hasOwnProperty(sourceField)) {
+                      targetLayerField = this.templatePicker.getSelected().featureLayer.getField(attributeKey);
+                      if (this._jimuLayerInfos.getLayerInfoById(sourceLayerId) &&
+                        this._jimuLayerInfos.getLayerInfoById(sourceLayerId).layerObject) {
+                        sourceLayerField =
+                          this._jimuLayerInfos.getLayerInfoById(sourceLayerId).layerObject.getField(sourceField);
+                      }
+                      //Check if source layer field is a domain field and target layer field
+                      //is a non domain field. If yes, then use the domain name instead of a code
+                      if (sourceLayerField &&
+                        sourceLayerField.domain && sourceLayerField.domain.codedValues &&
+                        !targetLayerField.domain) {
+                        array.some(sourceLayerField.domain.codedValues, lang.hitch(this,
+                          function (codedValueObj) {
+                            if (codedValueObj.code === selectedFeaturesAttributes[sourceField]) {
+                              //if target has number field then copy the domain code
+                              //as it is a number field, the code will always be a number
+                              if (numberFieldDataTypes.indexOf(targetLayerField.type) !== -1) {
+                                newAttributes[attributeKey] = codedValueObj.code;
+                                return true;
+                              } else {
+                                newAttributes[attributeKey] = codedValueObj.name;
+                                return true;
+                              }
+                            }
+                          }));
+                      } else {
+                        //If source field is of type date and target layer not a date field
+                        //then format the date value as per the field format 
+                        if (sourceLayerField && sourceLayerField.type === "esriFieldTypeDate" &&
+                          targetLayerField.type !== "esriFieldTypeDate" &&
+                          selectedFeaturesAttributes[sourceField]) {
+                          var fieldInfo;
+                          fieldInfo = this._getPopupFieldInfo(sourceField,
+                            this._jimuLayerInfos.getLayerInfoById(sourceLayerId));
+                          newAttributes[attributeKey] =
+                            utils.getDateTimeStrByFieldInfo(selectedFeaturesAttributes[sourceField], fieldInfo);
+                        } else {
+                          //Otherwise copy the value as it is
+                          newAttributes[attributeKey] = selectedFeaturesAttributes[sourceField];
+                        }
+                      }
+                    }
+                  }
+                }
+              } else {
+                //copy only those attributes which are not available in template or
+                //if the value in template for those attribute is null or
+                //override defaults by copied feature is true
+                for (var attrKey in selectedFeaturesAttributes) {
+                  if (!newAttributes.hasOwnProperty(attrKey) || newAttributes[attrKey] === null ||
+                    this.config.editor.overrideDefaultsByCopiedFeature) {
+                    newAttributes[attrKey] = selectedFeaturesAttributes[attrKey];
+                  }
                 }
               }
             }
@@ -2591,8 +2952,8 @@ define([
                 }
                 //after adding new feature add value picker buttons and show value picker
                 setTimeout(lang.hitch(this, function () {
-                this._addValuePicker(copyAttributesInfo);
-              }), 200);
+                  this._addValuePicker(copyAttributesInfo);
+                }), 200);
               }));
             }));
 
@@ -2720,10 +3081,10 @@ define([
                 return field.toJson();
               }
             }),
-            "types": layer.types && array.map(layer.types, function(type) {
+            "types": layer.types && array.map(layer.types, function (type) {
               return type.toJson();
             }),
-            "templates": layer.templates && array.map(layer.templates, function(template) {
+            "templates": layer.templates && array.map(layer.templates, function (template) {
               return template.toJson();
             }),
             "capabilities": "Create,Delete,Query,Update,Uploads,Editing",
@@ -2957,6 +3318,19 @@ define([
         return hasAttachments;
       },
 
+      _getEditFlagValue: function (layerInfo, checkEditableByUser) {
+        var flagValue = false;
+        if (layerInfo.hasOwnProperty('_orgConfiguredEditFlag')) {
+          flagValue = layerInfo._orgConfiguredEditFlag;
+          if (checkEditableByUser) {
+            flagValue = layerInfo._orgConfiguredEditFlag && layerInfo._isEditableByUser;
+          }
+        } else {
+          flagValue = layerInfo._editFlag;
+        }
+        return flagValue;
+      },
+
       _toggleEditGeoSwitch: function (disable) {
         var isVisible = false;
         //return if _editGeomSwitch is not available or
@@ -2966,7 +3340,7 @@ define([
           return;
         }
         if (disable === false && this.currentLayerInfo.featureLayer.visibleAtMapScale) {
-          if (this.currentLayerInfo && this.currentLayerInfo._editFlag) {
+          if (this.currentLayerInfo && this._getEditFlagValue(this.currentLayerInfo, true)) {
             dojo.style(this._editGeomSwitch.domNode.parentNode, "display", "block");
             isVisible = true;
           } else {
@@ -3035,7 +3409,7 @@ define([
           if (showLayer) {
             return true;
           }
-          if (layer._editFlag === true) {
+          if (this._getEditFlagValue(layer, true)) {
             showLayer = true;
           } else if (layer.relationshipInfos && layer.relationshipInfos.length > 0) {
             showLayer = this._hasAnyEditableLayerInRelation(layer.relationshipInfos);
@@ -3075,8 +3449,9 @@ define([
         }, this.contentWrapper);
         if (evt && evt.feature) {
           layer = evt.feature._layer;
-          //update symbol of prev selected feature
-          if (this.currentFeature && layer.id === this.currentFeature._layer.id) {
+          //update symbol of prev selected feature only if parent features are traversed,
+          //if navigating to related feature it should keep selected its parent
+          if (this.currentFeature && this._traversal.length <= 1) {
             this.currentFeature.setSymbol(this._getSelectionSymbol(
               this.currentFeature.getLayer().geometryType, false));
           }
@@ -3093,9 +3468,10 @@ define([
           //add timeout as it is taking some time to load editor
           this.loading.show();
           setTimeout(lang.hitch(this, function () {
-            if (this.attrInspector._attachmentEditor && ((!this.currentLayerInfo.isEditable ||
-              !this.currentLayerInfo._editFlag) || (this.currentLayerInfo &&
-                !this.currentLayerInfo.configFeatureLayer.layerAllowsUpdate))) {
+            if (this.attrInspector &&
+              this.attrInspector._attachmentEditor && ((!this.currentLayerInfo.isEditable ||
+                !this._getEditFlagValue(this.currentLayerInfo)) || (this.currentLayerInfo &&
+                  !this.currentLayerInfo.configFeatureLayer.layerAllowsUpdate))) {
               this._disableAttachments(this.attrInspector._attachmentEditor, true, false);
             }
             this.loading.hide();
@@ -3120,7 +3496,10 @@ define([
                       (this.currentLayerInfo.featureLayer.hasZ && this.currentLayerInfo.featureLayer.enableZDefaults)) &&
                     (!this.currentLayerInfo.featureLayer.hasM ||
                       (this.currentLayerInfo.featureLayer.hasM && this.currentLayerInfo.featureLayer.allowUpdateWithoutMValues))) {
-                    this._activateEditToolbar(this.currentFeature);
+                    //activate the toolbar if the widget is active
+                    if (domClass.contains(this.widgetActiveIndicator, "widgetActive")) {
+                      this._activateEditToolbar(this.currentFeature);
+                    }
                     //Added else if to solve the issue when feature is created and have disable geometry,
                     //once after saving the feature after editing geometry,
                     //the checkbox gets hidden but the tool remains active to edit geometry
@@ -3225,6 +3604,23 @@ define([
                     }), function () {
                     });
                   } else {
+                    if (this.pendingSelectAction) {
+                      this._attrInspIsCurrentlyDisplayed = false;
+                      //Clear nav buttons of the current AI and its DOM
+                      if (this.navButtonsDiv &&
+                        this.navButtonsDiv.parentNode) {
+                        this.navButtonsDiv.parentNode.removeChild(this.navButtonsDiv);
+                      }
+                      array.forEach(this._paginationNodeCollection, lang.hitch(this, function (node) {
+                        domConstruct.destroy(node);
+                      }));
+                      //Destroy all prev attributeInspectors
+                      array.forEach(this._attributeInspectorCollection, function (attributeInspector) {
+                        attributeInspector.destroy();
+                      });
+                      this.pendingSelectAction = false;
+                      return;
+                    }
                     this._fetchRelatedRecords(isNewFeature, evt.feature._layer,
                       relationshipId, layerId, parentOID, parentFeatureIndexInAI, relatedOBJID, fKeyField);
                     //reset the relatedOBJID variable once used as it fetches the wrong results next time
@@ -3373,8 +3769,10 @@ define([
                       this.viewedLayerDetails.shift();
                       relatedFeatures = this.viewedFeatureDetails.shift();
                     }
-                    var tableTitle = query("[layerid='" + relatedFeatureLayerId + "']", this.contentWrapper)[0];
-                    tableTitle.click();
+                    var tableTitle = query("[layerid='" + relatedFeatureLayerId + "']", this.contentWrapper);
+                    if (tableTitle && tableTitle.length > 0) {
+                      tableTitle[0].click();
+                    }
                   }
                   if (this.viewedLayerDetails.length === 0) {
                     this.loading.hide();
@@ -3421,7 +3819,7 @@ define([
         //Show textArea instead of text boxes - fix for github ticket #248
         if (this.config.editor.hasOwnProperty("canSwitchToMultilineInput") &&
           this.config.editor.canSwitchToMultilineInput) {
-          //loop through all the laeyr infos and its fieldinfos
+          //loop through all the layer infos and its fieldinfos
           array.forEach(layerInfos, lang.hitch(this, function (layer) {
             if (layer.fieldInfos) {
               array.forEach(layer.fieldInfos, lang.hitch(this, function (field) {
@@ -3733,7 +4131,7 @@ define([
                   //Disable attachments editor for the layers which are not editable
                   //add timeout as it is taking some time to load editor
                   if (this.attrInspector._attachmentEditor && (!this.currentLayerInfo.isEditable ||
-                    !this.currentLayerInfo._editFlag)) {
+                    !this._getEditFlagValue(this.currentLayerInfo))) {
                     this._disableAttachments(this.attrInspector._attachmentEditor, true, false);
                   }
                 }
@@ -3761,13 +4159,11 @@ define([
           }
         })));
 
-        //if the event handler exist, remove it
-        //This makes sure at a time only one handler exist for AI's next event
-        if (this.AINext) {
-          this.AINext.remove();
-        }
         this.AINext = this.own(on.pausable(this.attrInspector, "next", lang.hitch(this, function (evt) {
           if (this.currentFeature && this.config.editor.displayPromptOnSave && this._validateFeatureChanged()) {
+            if (this.pendingSelectAction) {
+              return
+            }
             this._promptToResolvePendingEdit(false, null, false).then(
               lang.hitch(this, function () {
                 this._processNextButtonClicked(true, evt, null, def, feature);
@@ -3807,7 +4203,7 @@ define([
                   'class': 'atiAttachmentEditor',
                   attachmentsRequiredMsg: this.attrInspector.attachmentsRequiredMsg,
                   currentAction: this.currentAction,
-                  deleteAttachmentText : this.nls.deleteAttachment
+                  deleteAttachmentText: this.nls.deleteAttachment
                 },
                 attachNode);
               this.attrInspector._attachmentUploader.startup();
@@ -3837,13 +4233,14 @@ define([
           this._processRelationAndShowAttrInspector(false, null, layer, null, null, true);
         }
         setTimeout(lang.hitch(this, function () {
-          if (this.config.editor.removeOnSave && this.attrInspector._numFeatures === 0) {
+          if (this.attrInspector &&
+            this.config.editor.removeOnSave && this.attrInspector._numFeatures === 0) {
             this._setWidgetFirstFocusNode("templatePicker", true);
           } else {
             setTimeout(lang.hitch(this, function () {
               //set first and last focus node when AI is in display
               if (this._attrInspIsCurrentlyDisplayed) {
-              this._setWidgetFirstFocusNode("AI", true);
+                this._setWidgetFirstFocusNode("AI", true);
               }
             }), 1000);
           }
@@ -3921,13 +4318,14 @@ define([
       _validateDateTimeField: function () {
         var dijit;
         //Check if attribute inspector is fully loaded
-        if (!this.attrInspector._currentLInfo ||
+        if (!this.attrInspector ||
+          !this.attrInspector._currentLInfo ||
           !this.attrInspector._currentLInfo.fieldInfos) {
           return;
         }
         array.some(this.attrInspector._currentLInfo.fieldInfos,
           lang.hitch(this, function (field) {
-            if (field.type === "esriFieldTypeDate") {
+            if (field.type === "esriFieldTypeDate" && field.isEditable) {
               dijit = this._getCurrentFieldDijit(field.fieldName);
               //If the date field value is EMPTY
               //disable the time field dijit
@@ -3939,8 +4337,10 @@ define([
                 } else {
                   //Enable the time field only if feature is in create mode
                   //Or layer allows update
+                  //Enable time only when date dijit is enabled
                   if (this.currentLayerInfo.isCache ||
-                    this.currentLayerInfo.configFeatureLayer.layerAllowsUpdate) {
+                    this.currentLayerInfo.configFeatureLayer.layerAllowsUpdate &&
+                    this._getEditFlagValue(this.currentLayerInfo) && !dijit[0].get("disabled")) {
                     dijit[1].set("disabled", false);
                   }
                 }
@@ -4058,13 +4458,19 @@ define([
                   break;
               }
             }
-            this.drawToolbar.activate(draw_type);
+            //check if valid draw type is being selected and then only pass
+            //it to the draw tool bar 
+            //https://github.com/ArcGIS/solutions-widget-smart-editor/issues/570#issuecomment-843383232
+            if (draw_type !== "EXTENT" && draw_type !== "POLYGON" &&
+              draw_type !== "FREEHAND_POLYGON") {
+              this.drawToolbar.activate(draw_type);
+            }
             this._setDrawingToolbar(shape_type, draw_type);
 
           }
 
           else if (this.drawToolbar) {
-            this._setDrawingToolbar("select", null);
+            this._setDrawingToolbar("select", null, true);
             this.drawToolbar.deactivate();
             // this._lastDrawnShape = null;
           }
@@ -4113,7 +4519,9 @@ define([
           if (options.hasOwnProperty("_drawType")) {
             this.currentDrawType = options._drawType;
           }
-          if (options.hasOwnProperty("_drawType") && options._drawType === "SELECT") {
+          if (options.hasOwnProperty("_drawType") && (options._drawType === "EXTENT"
+            || options._drawType === "POLYGON" ||
+            options._drawType === "FREEHAND_POLYGON")) {
             this.drawingTool.set('label', options.label);
             this.drawingTool.set('iconClass', options.iconClass);
             if (this.drawToolbar) {
@@ -4121,6 +4529,8 @@ define([
             }
             if (this._selectTool) {
               this._selectTool.setFeatureLayers(this._getOrClearSelectableLayers(false));
+              //Activate appropriate tool from select widget
+              this._selectTool._setCurrentGeoInfo(this._getSelectedGeoTypeInfo(options._drawType));
               this._selectTool.activate();
             }
           } else if (shapeType !== "select") {
@@ -4178,6 +4588,17 @@ define([
         // To activate/de-activate select tool, based on current draw type
         this._changeSelectToolState(canClear);
       },
+
+      _getSelectedGeoTypeInfo: function (drawType) {
+        var geoTypeInfo;
+        array.some(this._selectTool._geoTypeInfos, lang.hitch(this, function (currentGeoType) {
+          if (currentGeoType.geoType === drawType) {
+            geoTypeInfo = currentGeoType;
+            return true;
+          }
+        }));
+        return geoTypeInfo;
+      },
       _createDrawingToolbar: function () {
 
         if (this.config.editor.hasOwnProperty("displayShapeSelector")) {
@@ -4192,6 +4613,11 @@ define([
               id: "drawingTool"
             }, this.drawingOptionsDiv);
             this.drawingTool.startup();
+            //because of time out draw tool not available at point where we actually want to hide it
+            //so when all layers are non-editable then hide it immediately once its get created
+            if (this.drawingTool && this.drawingTool.domNode && !this.templatePicker) {
+              dojo.style(this.drawingTool.domNode, "display", "none");
+            }
             // check the "createNewFeaturesFromExisting" property for backward compatibility
             if ((this.config.editor.hasOwnProperty("createNewFeaturesFromExisting") &&
               (this.config.editor.createNewFeaturesFromExisting === true))) {
@@ -4221,7 +4647,9 @@ define([
             this.config.editor.hasOwnProperty("createNewFeaturesFromExisting") &&
             this.config.editor.createNewFeaturesFromExisting) {
             addOption = false;
-            if ((options.hasOwnProperty("_drawType") && options._drawType === "SELECT") ||
+            if ((options.hasOwnProperty("_drawType") && (options._drawType === "EXTENT" ||
+              options._drawType === "POLYGON" ||
+              options._drawType === "FREEHAND_POLYGON")) ||
               options.id === "seNewSelection" || options.id === "sePointTool" ||
               options.id === "seDrawPolyline" || options.id === "seDrawPolygon") {
               addOption = true;
@@ -4229,8 +4657,10 @@ define([
           } else {
             addOption = true;
             // check the "createNewFeaturesFromExisting" property for backward compatibility
-            if ((options.hasOwnProperty("_drawType") && options._drawType === "SELECT")) {
-              if (this.config.editor.hasOwnProperty("createNewFeaturesFromExisting") && this.config.editor.createNewFeaturesFromExisting) {
+            if ((options.hasOwnProperty("_drawType") && options._drawType === "EXTENT" ||
+              options._drawType === "POLYGON" || options._drawType === "FREEHAND_POLYGON")) {
+              if (this.config.editor.hasOwnProperty("createNewFeaturesFromExisting") &&
+                this.config.editor.createNewFeaturesFromExisting) {
                 addOption = true;
               } else {
                 addOption = false;
@@ -4257,116 +4687,42 @@ define([
         if (this.config.editor === undefined || this.config.editor === null) {
           return;
         }
-        var layers = this._getEditableLayers(this.config.editor.configInfos, false);
-        //CT: Commented the code as it was clearing parent features selection when moving to related feature
-        //this._layerChangeOutside();
-        if (layers.length < 1) {
-          this._creationDisabledOnAll = true;
-          if (this.currentLayerInfo &&
-            !this.currentLayerInfo.isCache && this._attrInspIsCurrentlyDisplayed &&
-            this._attrInspIsCurrentlyDisplayed === true) {
-            this.attrInspector.refresh();
-            this.attrInspector.first();
-          }
-        } else if (this._templatePickerNeedsToBeCreated()) {
-          if (this._attrInspIsCurrentlyDisplayed && this._attrInspIsCurrentlyDisplayed === true) {
-            this._recreateOnNextShow = true;
-            //AI should be refreshed only when user is working with existing features
-            if (!this.currentLayerInfo.isCache) {
-              this.attrInspector.refresh();
-              this.attrInspector.first();
-            }
-            return;
-          }
-          if (this.templatePicker &&
-            this.templatePicker !== null) {
-            //Get the current selected drawing tool to reset on template
-            var curSelectedDrawOption = this.currentDrawType;
-            selectedTemplate = this.templatePicker.getSelected();
-            if (selectedTemplate === null) {
-              if (this.drawToolbar) {
-
-                this.drawToolbar.deactivate();
+        this._getEditableLayers(this.config.editor.configInfos).then(lang.hitch(this,
+          function (layers) {
+            //CT: Commented the code as it was clearing parent features selection when moving to related feature
+            //this._layerChangeOutside();
+            if (layers.length < 1) {
+              this._creationDisabledOnAll = true;
+              if (this.currentLayerInfo &&
+                !this.currentLayerInfo.isCache && this._attrInspIsCurrentlyDisplayed &&
+                this._attrInspIsCurrentlyDisplayed === true) {
+                this.attrInspector.refresh();
+                this.attrInspector.first();
               }
-            }
-            this._select_change_event.remove();
-            this.templatePicker.destroy();
-            this._resetEditingVariables();
-            if (this.drawToolbar) {
-              this.drawToolbar.deactivate();
-            }
-            if (this.drawingTool) {
-              this._setDrawingToolbar("select", null, canClear);
-            }
-          }
-          else {
-            this._createAutoSaveSwitch(this.config.editor.autoSaveEdits);
-          }
-          //create template picker
-          this.templatePickerNode = domConstruct.create("div",
-            { 'class': "eeTemplatePicker" }
-          );
-          //if (this.state === "active") {
-          //  this.widgetActiveIndicator = domConstruct.create("div",
-          //   { 'class': "widgetActive" }
-          //   );
-          //}
-          //else {
-          //  this.widgetActiveIndicator = domConstruct.create("div",
-          //  { 'class': "widgetNotActive" }
-          //  );
-          //}
-          this.templatePickerDiv.appendChild(this.templatePickerNode);
-          this.templatePicker = new TemplatePicker({
-            featureLayers: layers,
-            'class': 'esriTemplatePicker',
-            grouping: true,
-            maxLabelLength: "25",
-            showTooltip: false
-          }, this.templatePickerNode);
-          this.templatePicker.startup();
-          domAttr.set(this.templatePicker.domNode, "tabindex", "-1");
-          aspect.after(this.templatePicker, "update", lang.hitch(this, function () {
-            //as soon as update is called, some checkboc node is getting active in template picker
-            //hence call this function to remove those checkbox from flow
-            this._handle508AccessibilityForTemplatePicker();
-            //also after update is called after some time new nodes are added also remove them from flow
-            setTimeout(lang.hitch(this, function () {
-              this._handle508AccessibilityForTemplatePicker();
-            }), 2000);
-            //Check if layers are present in the template picker
-            //If not show the appropriate message to the user
-            this._checkForLayersInTemplatePicker();
-          }));
-          this._addFilterEditor(layers);
-          // wire up events
-
-          if (selectedTemplate !== null && this.templatePicker) {
-            var keysArr = Object.getOwnPropertyNames(this.templatePicker._itemWidgets);
-            var templateItems = [];
-            array.forEach(this.templatePicker._flItems, function (flItems) {
-              array.forEach(flItems, function (flItem) {
-                templateItems.push(flItem);
-              });
-            });
-            if (templateItems.length === keysArr.length) {
-              var itemFnd = array.some(templateItems, function (item, index) {
-                if (selectedTemplate.featureLayer.id === item.layer.id &&
-                  item.template.name === selectedTemplate.template.name &&
-                  item.template.drawingTool === selectedTemplate.template.drawingTool &&
-                  item.template.description === selectedTemplate.template.description &&
-                  item.type === selectedTemplate.type) {
-                  var dom = dojo.byId(keysArr[index]);
-                  on.emit(dom, "click", {
-                    bubbles: true,
-                    cancelable: true
-                  });
-                  this._activateTemplateToolbar(curSelectedDrawOption);
-                  return true;
+            } else if (this._templatePickerNeedsToBeCreated()) {
+              if (this._attrInspIsCurrentlyDisplayed && this._attrInspIsCurrentlyDisplayed === true) {
+                this._recreateOnNextShow = true;
+                //AI should be refreshed only when user is working with existing features
+                if (!this.currentLayerInfo.isCache) {
+                  this.attrInspector.refresh();
+                  this.attrInspector.first();
                 }
-              }, this);
+                return;
+              }
+              if (this.templatePicker &&
+                this.templatePicker !== null) {
+                //Get the current selected drawing tool to reset on template
+                var curSelectedDrawOption = this.currentDrawType;
+                selectedTemplate = this.templatePicker.getSelected();
+                if (selectedTemplate === null) {
+                  if (this.drawToolbar) {
 
-              if (itemFnd === false) {
+                    this.drawToolbar.deactivate();
+                  }
+                }
+                this._select_change_event.remove();
+                this.templatePicker.destroy();
+                this._resetEditingVariables();
                 if (this.drawToolbar) {
                   this.drawToolbar.deactivate();
                 }
@@ -4374,114 +4730,190 @@ define([
                   this._setDrawingToolbar("select", null, canClear);
                 }
               }
+              else {
+                this._createAutoSaveSwitch(this.config.editor.autoSaveEdits);
+              }
+              //create template picker
+              this.templatePickerNode = domConstruct.create("div",
+                { 'class': "eeTemplatePicker" }
+              );
+              //if (this.state === "active") {
+              //  this.widgetActiveIndicator = domConstruct.create("div",
+              //   { 'class': "widgetActive" }
+              //   );
+              //}
+              //else {
+              //  this.widgetActiveIndicator = domConstruct.create("div",
+              //  { 'class': "widgetNotActive" }
+              //  );
+              //}
+              this.templatePickerDiv.appendChild(this.templatePickerNode);
+              this.templatePicker = new TemplatePicker({
+                featureLayers: layers,
+                'class': 'esriTemplatePicker',
+                grouping: true,
+                maxLabelLength: "25",
+                showTooltip: false
+              }, this.templatePickerNode);
+              this.templatePicker.startup();
+              domAttr.set(this.templatePicker.domNode, "tabindex", "-1");
+              aspect.after(this.templatePicker, "update", lang.hitch(this, function () {
+                //as soon as update is called, some checkboc node is getting active in template picker
+                //hence call this function to remove those checkbox from flow
+                this._handle508AccessibilityForTemplatePicker();
+                //also after update is called after some time new nodes are added also remove them from flow
+                setTimeout(lang.hitch(this, function () {
+                  this._handle508AccessibilityForTemplatePicker();
+                }), 2000);
+                //Check if layers are present in the template picker
+                //If not show the appropriate message to the user
+                this._checkForLayersInTemplatePicker();
+              }));
+              this._addFilterEditor(layers);
+              // wire up events
+
+              if (selectedTemplate !== null && this.templatePicker) {
+                var keysArr = Object.getOwnPropertyNames(this.templatePicker._itemWidgets);
+                var templateItems = [];
+                array.forEach(this.templatePicker._flItems, function (flItems) {
+                  array.forEach(flItems, function (flItem) {
+                    templateItems.push(flItem);
+                  });
+                });
+                if (templateItems.length === keysArr.length) {
+                  var itemFnd = array.some(templateItems, function (item, index) {
+                    if (selectedTemplate.featureLayer.id === item.layer.id &&
+                      item.template.name === selectedTemplate.template.name &&
+                      item.template.drawingTool === selectedTemplate.template.drawingTool &&
+                      item.template.description === selectedTemplate.template.description &&
+                      item.type === selectedTemplate.type) {
+                      var dom = dojo.byId(keysArr[index]);
+                      on.emit(dom, "click", {
+                        bubbles: true,
+                        cancelable: true
+                      });
+                      this._activateTemplateToolbar(curSelectedDrawOption);
+                      return true;
+                    }
+                  }, this);
+
+                  if (itemFnd === false) {
+                    if (this.drawToolbar) {
+                      this.drawToolbar.deactivate();
+                    }
+                    if (this.drawingTool) {
+                      this._setDrawingToolbar("select", null, canClear);
+                    }
+                  }
+                }
+                else {
+                  if (this.drawToolbar) {
+                    this.drawToolbar.deactivate();
+                  }
+                  if (this.drawingTool) {
+                    this._setDrawingToolbar("select", null, canClear);
+                  }
+                }
+              }
+              else {
+                if (this.drawToolbar) {
+                  this.drawToolbar.deactivate();
+                }
+                if (this.drawingTool) {
+                  this._setDrawingToolbar("select", null, canClear);
+                }
+              }
+              this._select_change_event = on(this.templatePicker, "selection-change",
+                lang.hitch(this, this._template_change));
+              this.own(this._select_change_event);
+            }
+            if (layers.length < 1) {
+              this._creationDisabledOnAll = true;
             }
             else {
+              this._creationDisabledOnAll = false;
+            }
+            if (this._creationDisabledOnAll) {
               if (this.drawToolbar) {
                 this.drawToolbar.deactivate();
               }
               if (this.drawingTool) {
                 this._setDrawingToolbar("select", null, canClear);
               }
-            }
-          }
-          else {
-            if (this.drawToolbar) {
-              this.drawToolbar.deactivate();
-            }
-            if (this.drawingTool) {
-              this._setDrawingToolbar("select", null, canClear);
-            }
-          }
-          this._select_change_event = on(this.templatePicker, "selection-change",
-            lang.hitch(this, this._template_change));
-          this.own(this._select_change_event);
-        }
-        if (layers.length < 1) {
-          this._creationDisabledOnAll = true;
-        }
-        else {
-          this._creationDisabledOnAll = false;
-        }
-        if (this._creationDisabledOnAll) {
-          if (this.drawToolbar) {
-            this.drawToolbar.deactivate();
-          }
-          if (this.drawingTool) {
-            this._setDrawingToolbar("select", null, canClear);
-          }
-          if (this.templatePicker) {
-            dojo.style(this.templatePicker.domNode, "display", "none");
-            if (this.config.editor.autoSaveEdits) {
-              this._createAutoSaveSwitch(false);
-            }
-            //Clear the selected template and activate the map click
-            this._mapClickHandler(true);
-            this._clearTemplateSelection();
-          }
-          if (this.drawingTool) {
-            dojo.style(this.drawingTool.domNode, "display", "none");
-          }
-          if (this._filterEditor) {
-            dojo.style(this._filterEditor.domNode, "display", "none");
-          }
+              if (this.templatePicker) {
+                dojo.style(this.templatePicker.domNode, "display", "none");
+                if (this.config.editor.autoSaveEdits) {
+                  this._createAutoSaveSwitch(false);
+                }
+                //Clear the selected template and activate the map click
+                this._mapClickHandler(true);
+                this._clearTemplateSelection();
+              }
+              if (this.drawingTool) {
+                dojo.style(this.drawingTool.domNode, "display", "none");
+              }
+              if (this._filterEditor) {
+                dojo.style(this._filterEditor.domNode, "display", "none");
+              }
 
-          if (this._isPresetTableCreated) {
-            query(".presetFieldsTableDiv")[0].style.display = "none";
-          }
-        } else {
-          if (this.templatePicker) {
-            dojo.style(this.templatePicker.domNode, "display", "block");
-          }
-          if (this.config.editor.autoSaveEdits) {
-            this._createAutoSaveSwitch(true);
-          }
-          if (this.drawingTool) {
-            dojo.style(this.drawingTool.domNode, "display", "block");
-          }
-          if (this._filterEditor) {
-            dojo.style(this._filterEditor.domNode, "display", "block");
-          }
-          //Show preset table if it is already created
-          if (this._isPresetTableCreated) {
-            query(".presetFieldsTableDiv")[0].style.display = "block";
-          }
-        }
-        //if valid config infos create preset table
-        if (this.config.editor.configInfos && !this._isPresetTableCreated) {
-          this._createPresetTable(this.config.editor.configInfos);
-        }
-        //If template picker is not created on load
-        //show the appropriate message
-        this._checkForLayersInTemplatePicker();
-        //After template picker is created after some time
-        //new nodes are added so remove them from flow
-        setTimeout(lang.hitch(this, function () {
-          this._handle508AccessibilityForTemplatePicker();
-          this._setWidgetFirstFocusNode("templatePicker", false);
-        }), 2000);
+              if (this._isPresetTableCreated) {
+                query(".presetFieldsTableDiv")[0].style.display = "none";
+              }
+            } else {
+              if (this.templatePicker) {
+                dojo.style(this.templatePicker.domNode, "display", "block");
+              }
+              if (this.config.editor.autoSaveEdits) {
+                this._createAutoSaveSwitch(true);
+              }
+              if (this.drawingTool) {
+                dojo.style(this.drawingTool.domNode, "display", "block");
+              }
+              if (this._filterEditor) {
+                dojo.style(this._filterEditor.domNode, "display", "block");
+              }
+              //Show preset table if it is already created
+              if (this._isPresetTableCreated) {
+                query(".presetFieldsTableDiv")[0].style.display = "block";
+              }
+            }
+            //if valid config infos create preset table
+            if (this.config.editor.configInfos && !this._isPresetTableCreated) {
+              this._createPresetTable(this.config.editor.configInfos);
+            }
+            //If template picker is not created on load
+            //show the appropriate message
+            this._checkForLayersInTemplatePicker();
+            //After template picker is created after some time
+            //new nodes are added so remove them from flow
+            setTimeout(lang.hitch(this, function () {
+              this._handle508AccessibilityForTemplatePicker();
+              this._setWidgetFirstFocusNode("templatePicker", false);
+            }), 2000);
+          }));
       },
 
       _checkForLayersInTemplatePicker: function () {
         if (!this.templatePicker || domStyle.get(this.templatePicker.domNode, "display") === "none") {
           var hasAtLeastOneCreateLayer = false, hasAtLeastOneUpdateOnlyLayer = false,
             hasAllCreateDisabled = true, message = "";
-          //Check if template has at least one editable layer
-          //and also at least one update only layer
+          //Check if at least one update only layer
           array.some(this.config.editor.configInfos, lang.hitch(this, function (configInfo) {
-            if (configInfo._editFlag && configInfo.configFeatureLayer.layerAllowsCreate) {
+            if (this._getEditFlagValue(configInfo)) {
               if (configInfo.allowUpdateOnly) {
                 hasAtLeastOneUpdateOnlyLayer = true;
-              } else {
-                hasAtLeastOneCreateLayer = true;
-                hasAtLeastOneUpdateOnlyLayer = false;
                 return true;
               }
             }
           }));
-          //Check if all the layers are disabled for create and update
+
+          //If at least one layer is allowing create, then hasAtLeastOneUpdateOnlyLayer & hasAllCreateDisabled will be false,
+          //as we will be showing template picker
           array.some(this.config.editor.configInfos, lang.hitch(this, function (configInfo) {
-            if (configInfo._editFlag && configInfo.configFeatureLayer.layerAllowsCreate &&
+            if (this._getEditFlagValue(configInfo) && configInfo.configFeatureLayer.layerAllowsCreate &&
               !configInfo.allowUpdateOnly) {
+              hasAtLeastOneCreateLayer = true;
+              hasAtLeastOneUpdateOnlyLayer = false;
               hasAllCreateDisabled = false;
               return true;
             }
@@ -4493,7 +4925,11 @@ define([
             if (this._checkForLayersVisibilityInMap(true)) {
               //If layer is editable and set visible: true in the web map it means
               //layer is not shown because of it is out of scale
-              message = this.nls.noVisibleCreateLayerWarning;
+              if (this._doesAllLayersOutOfMapScale()) {
+                message = this.nls.noVisibleCreateLayerWarning;
+              } else {
+                message = this.config.editor.editDescription;
+              }
             } else {
               //If layer is editable and set visible: false in the web map
               //show message about changing layers visibility
@@ -4585,7 +5021,7 @@ define([
           //return flag value as false
           if (configInfo.allowUpdateOnly && configInfo.layerInfo &&
             configInfo.layerInfo.layerObject &&
-            configInfo.layerInfo.layerObject.visibleAtMapScale) {
+            configInfo.layerInfo.layerObject.visibleAtMapScale && configInfo.layerInfo.layerObject.visible) {
             isAllLayersOutOfMapScale = false;
             return true;
           }
@@ -4608,7 +5044,7 @@ define([
               isLayersVisibleOnMap = true;
               return true;
             }
-          } else if (checkCreateCapability && configInfo._editFlag) {
+          } else if (checkCreateCapability && this._getEditFlagValue(configInfo)) {
             if (configInfo.layerInfo && configInfo.layerInfo._visible) {
               isLayersVisibleOnMap = true;
               return true;
@@ -4734,7 +5170,7 @@ define([
         if (gridMsg && gridMsg.length > 0) {
           domAttr.set(gridMsg[0], "tabindex", "-1");
         }
-    },
+      },
 
       isGuid: function (value) {
         if (value[0] === "{") {
@@ -4952,7 +5388,7 @@ define([
         //if current layerInfo dont have editFlag return
         if (checked &&
           (this._ignoreEditGeometryToggle ||
-            (this.currentLayerInfo && !this.currentLayerInfo._editFlag))) {
+            (this.currentLayerInfo && !this._getEditFlagValue(this.currentLayerInfo)))) {
           return;
         }
 
@@ -5186,7 +5622,7 @@ define([
 
           }, this);
           //layer info will not be available for related layer infos so add it
-          if (!currentConfig.layerInfo) {
+          if (!currentConfig.layerInfo && currentConfig.featureLayer && currentConfig.featureLayer.id) {
             currentConfig.layerInfo = this._jimuLayerInfos.getLayerOrTableInfoById(currentConfig.featureLayer.id);
             //get layers configFeatureLayer info
             var layerConfig = editUtils.getConfigInfo(currentConfig.layerInfo, {});
@@ -5255,44 +5691,106 @@ define([
         };
 
       },
-      _getEditableLayers: function (layerInfos, allLayers) {
-        var layers = [];
+      _getEditableLayers: function (layerInfos) {
+        var layers = [], isEditableDefs = [], layerDefCom = new Deferred();
+        this.loading.show();
         array.forEach(layerInfos, function (layerInfo) {
-          if (layerInfo._editFlag) {
-            if (!layerInfo.allowUpdateOnly || allLayers) { //
-              var layerObject = this.map.getLayer(layerInfo.featureLayer.id);
-              if (layerObject &&
-                layerObject.visible &&
-                layerObject.isVisibleAtScale(this.map.getScale()) &&
-                layerObject.isEditable &&
-                layerObject.isEditable()) {
-                layers.push(layerObject);
+          var isEditableDef;
+          var editFlagValue = false;
+          //use _orgConfiguredEditFlag if available else use _editFlag
+          if (layerInfo.hasOwnProperty('_orgConfiguredEditFlag')) {
+            editFlagValue = layerInfo._orgConfiguredEditFlag;
+          } else {
+            editFlagValue = layerInfo._editFlag;
+          }
+          if (editFlagValue) {
+            var layerInfoObject = this._jimuLayerInfos.getLayerInfoByTopLayerId(layerInfo.featureLayer.id);
+            if (layerInfoObject.layerObject &&
+              layerInfoObject.layerObject.visible &&
+              layerInfoObject.layerObject.isVisibleAtScale(this.map.getScale()) &&
+              layerInfoObject.layerObject.isEditable()) {
+              isEditableDef = layerInfoObject.isEditable();
+            }
+          }
+          //If layer is un editable from config set it as false
+          if (!isEditableDef) {
+            isEditableDef = new Deferred();
+            isEditableDef.resolve(false);
+          }
+          isEditableDefs.push(isEditableDef);
+        }, this);
+
+        all(isEditableDefs).then(lang.hitch(this, function (isEditableLayers) {
+          array.forEach(isEditableLayers, lang.hitch(this, function (isEditable, index) {
+            if (layerInfos[index]) {
+              //store original config value for _editFlag, as it will be changed if layer is not editable
+              //this should be stored only once otherwise it will be overridden
+              if (!layerInfos[index].hasOwnProperty('_orgConfiguredEditFlag')) {
+                layerInfos[index]._orgConfiguredEditFlag = lang.clone(layerInfos[index]._editFlag);
+              }
+              //store isEditable flag to know if the layer is editable by user
+              layerInfos[index]._isEditableByUser = isEditable;
+              //if layer is updateOnly  set edit flag to false, 
+              //if layer is not update only and 
+              //   if it is editable by user add it to editableLayer options
+              //   else set edit flag to false
+              if (!layerInfos[index].allowUpdateOnly) {
+                if (isEditable) {
+                  layers.push(this.map.getLayer(layerInfos[index].featureLayer.id));
+                } else {
+                  layerInfos[index]._editFlag = false;
+                }
+              } else {
+                layerInfos[index]._editFlag = false;
               }
             }
+          }));
+          layerDefCom.resolve(layers);
+          this.loading.hide();
+        }));
+        return layerDefCom.promise;
+      },
+
+      _updateConfiguredLayersInfos: function (layerInfos) {
+        var isEditableDefs = [], layerDefCom = new Deferred();
+        this.loading.show();
+        array.forEach(layerInfos, function (layerInfo) {
+          var layerInfoObject = this._jimuLayerInfos.getLayerInfoByTopLayerId(layerInfo.featureLayer.id);
+          var isEditableDef;
+          if (layerInfoObject) {
+            isEditableDef = layerInfoObject.isEditable();
+          }
+          //If layer is un editable from config or layer is update only, set it as false
+          isEditableDefs.push(isEditableDef);
+        }, this);
+
+        all(isEditableDefs).then(lang.hitch(this, function (isEditableLayers) {
+          array.forEach(isEditableLayers, lang.hitch(this, function (isEditable, index) {
+            if (!isEditable) {
+              layerInfos[index]._editFlag = false;
+              if (layerInfos[index].relationshipInfos &&
+                layerInfos[index].relationshipInfos.length > 0) {
+                this._updateConfiguredRelations(layerInfos[index].relationshipInfos);
+              }
+            }
+          }));
+          layerDefCom.resolve();
+          this.loading.hide();
+        }));
+        return layerDefCom.promise;
+      },
+
+      _updateConfiguredRelations: function (layerInfos) {
+        array.forEach(layerInfos, function (layerInfo) {
+          layerInfo._editFlag = false;
+          if (layerInfo.relationshipInfos &&
+            layerInfo.relationshipInfos.length > 0) {
+            this._updateConfiguredRelations(layerInfo.relationshipInfos);
           }
         }, this);
 
-        return layers;
       },
-      _getEditableLayersInfos: function (layerInfos, allLayers) {
-        var layers = [];
-        array.forEach(layerInfos, function (layerInfo) {
-          if (layerInfo._editFlag) {
-            if (!layerInfo.allowUpdateOnly || allLayers) { //
-              var layerObject = this.map.getLayer(layerInfo.featureLayer.id);
-              if (layerObject &&
-                layerObject.visible &&
-                layerObject.isVisibleAtScale(this.map.getScale()) &&
-                layerObject.isEditable &&
-                layerObject.isEditable()) {
-                layers.push(layerInfo);
-              }
-            }
-          }
-        }, this);
 
-        return layers;
-      },
       _getClonedRelationInfo: function (relations) {
         var newRelations = [];
         for (var i = 0; i < relations.length; i++) {
@@ -5547,7 +6045,7 @@ define([
                   }
                 } else {
                   //If xy is a field store both x y in same field
-                  if (copyAction.field === "xy"  || copyAction.field === "yx") {
+                  if (copyAction.field === "xy" || copyAction.field === "yx") {
                     attributes[fieldName] = this._getOutputString(copyAction.coordinatesSystem,
                       copyAttrInfo.Coordinates[copyAction.coordinatesSystem], copyAction.field);
                   } else {
@@ -5582,13 +6080,13 @@ define([
           //else set null as multiple values. since no field is involved in intersection multiple values should be null
           if (copyAttrInfo) {
             if (copyAttrInfo.multipleValues && inIntersectionActionFields.length > 0) {
-            var involvedMultipleValues = {}
-            array.forEach(inIntersectionActionFields, function (fld) {
-              involvedMultipleValues[fld] = copyAttrInfo.multipleValues[fld];
-            });
-            copyAttrInfo.multipleValues = involvedMultipleValues;
-          } else {
-            copyAttrInfo.multipleValues = null;
+              var involvedMultipleValues = {}
+              array.forEach(inIntersectionActionFields, function (fld) {
+                involvedMultipleValues[fld] = copyAttrInfo.multipleValues[fld];
+              });
+              copyAttrInfo.multipleValues = involvedMultipleValues;
+            } else {
+              copyAttrInfo.multipleValues = null;
             }
           }
         }
@@ -5683,7 +6181,7 @@ define([
               fieldInfo.type === "esriFieldTypeGlobalID" ||
               fieldInfo.type === "esriFieldTypeRaster" ||
               fieldInfo.type === "esriFieldTypeXML") {
-                return false;
+              return false;
             }
             return true;
           });
@@ -5740,7 +6238,8 @@ define([
         if (this.templatePicker) {
           hasTemplate = this.templatePicker.getSelected() ? true : false;
         }
-        if (!this._attrInspIsCurrentlyDisplayed &&
+        //Check for graphic instance before proceeding further
+        if (evt.graphic && !this._attrInspIsCurrentlyDisplayed &&
           evt.mapPoint &&
           hasTemplate === false) {
           //to resolve gitHub ticket #285 - Cannot click on offset to edit a feature
@@ -5962,7 +6461,7 @@ define([
       getUniqueFieldErrorMsg: function (errorStr) {
         var fieldNameInStr = "", fieldNameValue = "", fieldNameInfoObj = {},
           uniqueIndexSplitArray = errorStr.split("with unique index '"),
-            duplicateKeySplitArray = errorStr.split("duplicate key value is (");
+          duplicateKeySplitArray = errorStr.split("duplicate key value is (");
         if (uniqueIndexSplitArray.length >= 2) {
           fieldNameInStr = uniqueIndexSplitArray[1].split(".")[0].split("_Index")[0];
         }
@@ -5970,15 +6469,15 @@ define([
           fieldNameValue = duplicateKeySplitArray[1].split(")")[0];
         }
         fieldNameInfoObj =
-        presetUtils.getFieldInfoByFieldName(this.attrInspector._currentLInfo.fieldInfos, fieldNameInStr);
+          presetUtils.getFieldInfoByFieldName(this.attrInspector._currentLInfo.fieldInfos, fieldNameInStr);
         //Implemented https://github.com/ArcGIS/solutions-widget-smart-editor/issues/462#issuecomment-689001256
-        if(fieldNameInfoObj.type === "esriFieldTypeDate") {
-          if(fieldNameValue.indexOf('.'>-1)){
+        if (fieldNameInfoObj.type === "esriFieldTypeDate") {
+          if (fieldNameValue.indexOf('.' > -1)) {
             fieldNameValue = fieldNameValue.split('.')[0];
           }
         }
         return String.substitute(this.nls.uniqueValueErrorMessage, {
-          fieldName: fieldNameInfoObj.label || fieldNameInfoObj.name || ""
+          fieldName: fieldNameInfoObj.label || fieldNameInfoObj.name || fieldNameValue
         });
       },
       addDeferred: function (postDef, feature, featureLayer, deferred) {
@@ -5987,7 +6486,7 @@ define([
           // sometimes a successfully update returns an empty array
           if (updated && updated.length > 0 && updated[0].hasOwnProperty("error")) {
             errorMsg = updated[0].error.toString();
-            if(errorMsg.toLowerCase().indexOf("cannot insert duplicate key row") !== -1){
+            if (errorMsg.toLowerCase().indexOf("cannot insert duplicate key row") !== -1) {
               errorMsg = this.getUniqueFieldErrorMsg(errorMsg);
             }
             Message({
@@ -6003,7 +6502,7 @@ define([
           }
           else if (added && added.length > 0 && added[0].hasOwnProperty("error")) {
             errorMsg = added[0].error.toString();
-            if(errorMsg.toLowerCase().indexOf("cannot insert duplicate key row") !== -1){
+            if (errorMsg.toLowerCase().indexOf("cannot insert duplicate key row") !== -1) {
               errorMsg = this.getUniqueFieldErrorMsg(errorMsg);
             }
             Message({
@@ -6372,7 +6871,7 @@ define([
 
           })
         });
-        domAttr.set(dialog.disabledButtons[0], "tabindex" , tabindex);
+        domAttr.set(dialog.disabledButtons[0], "tabindex", tabindex);
         return pendingEditsDef.promise;
       },
 
@@ -6434,13 +6933,19 @@ define([
           }
           this.updateFeatures.splice(this.updateFeatures.indexOf(feature), 1);
           //update symbol of prev selected feature
-          this.currentFeature.setSymbol(this._getSelectionSymbol(
-            this.currentFeature.getLayer().geometryType, false));
+          if (this.currentFeature) {
+            this.currentFeature.setSymbol(this._getSelectionSymbol(
+              this.currentFeature.getLayer().geometryType, false));
+          }
           //update current feature instance
-          this.currentFeature = this.attrInspector._currentFeature;
+          if (this.attrInspector && this.attrInspector._currentFeature) {
+            this.currentFeature = this.attrInspector._currentFeature;
+            this.currentFeature.preEditAttrs = JSON.parse(JSON.stringify(this.currentFeature.attributes));
+          }
           //If layer is visible and edit geometry flag is set to true
           //update the current feature and highlight the selection on the map
-          if (this.currentLayerInfo.featureLayer.visibleAtMapScale &&
+          if (this.currentLayerInfo && this.currentLayerInfo.featureLayer &&
+            this.currentLayerInfo.featureLayer.visibleAtMapScale &&
             this.config.editor.hasOwnProperty("editGeometryDefault") &&
             this.config.editor.editGeometryDefault === true && this.attrInspector._currentFeature) {
             setTimeout(lang.hitch(this, function () {
@@ -6451,8 +6956,10 @@ define([
             }), 100);
           }
           //update the current selected features highlight symbol
-          this.currentFeature.setSymbol(this._getSelectionSymbol(
-            this.currentFeature.getLayer().geometryType, true));
+          if (this.currentFeature) {
+            this.currentFeature.setSymbol(this._getSelectionSymbol(
+              this.currentFeature.getLayer().geometryType, true));
+          }
           //bypass moving to the next record if the user click next and was prompted to save
           //Refresh layer title once the current feature is removed from the AI
           this._refreshLayerTitle();
@@ -6678,7 +7185,9 @@ define([
             this.attrInspector.refresh();
             this._createSmartAttributes();
             this._createAttributeInspectorTools();
-            this._attributeInspectorTools.triggerFormValidation();
+            if (this._attributeInspectorTools) {
+              this._attributeInspectorTools.triggerFormValidation();
+            }
             //this._sytleFields(this.attrInspector);
             if (this.currentFeature && this.currentFeature.getLayer().originalLayerId) {
               this._enableAttrInspectorSaveButton(this._validateAttributes());
@@ -6754,14 +7263,19 @@ define([
       _showTemplatePicker: function () {
 
         // hide the attr inspector and show the main template picker div
-        query(".jimu-widget-smartEditor .attributeInspectorMainDiv")[0].style.display = "none";
-        query(".jimu-widget-smartEditor .templatePickerMainDiv")[0].style.display = "block";
-
+        var aIMainDiv = query(".jimu-widget-smartEditor .attributeInspectorMainDiv");
+        if (aIMainDiv.length > 0) {
+          aIMainDiv[0].style.display = "none";
+        }
+        var templatePickerMainDiv = query(".jimu-widget-smartEditor .templatePickerMainDiv");
+        if (templatePickerMainDiv.length > 0) {
+          templatePickerMainDiv[0].style.display = "block";
+        }
 
         if (this.templatePicker) {
           var persistIndexValue = 0;  //so it doesn't reset to zero like _selectTemplateIndex when setting doesn't hold template
           if (this.templatePicker._selectedInfo && this.templatePicker._selectedInfo.hasOwnProperty("selRow")) {
-            persistIndexValue = (this.templatePicker._selectedInfo.selRow > 0)?this.templatePicker._selectedInfo.selRow - 1:this.templatePicker._selectedInfo.selRow;
+            persistIndexValue = (this.templatePicker._selectedInfo.selRow > 0) ? this.templatePicker._selectedInfo.selRow - 1 : this.templatePicker._selectedInfo.selRow;
           }
           if (this.config.editor.hasOwnProperty("keepTemplateSelected")) {
             if (this.config.editor.keepTemplateSelected !== true) {
@@ -6781,39 +7295,39 @@ define([
               and then tries to scroll to row (it lazy loads so it's not always accurate).
               Then it locates the template and fakes a click to get back the selection.
             */
-           var currentRow = persistIndexValue;
-           var selectedinfo = null;
-           var selected = null;
-           if (this.templatePicker._selectedInfo && this.templatePicker._selectedInfo.hasOwnProperty("selRow")) {
-             selectedinfo = this.templatePicker._selectedInfo;
-             currentRow = (this.templatePicker._selectedInfo.selRow > 0)?this.templatePicker._selectedInfo.selRow - 1:this.templatePicker._selectedInfo.selRow;
-             selected = this.templatePicker.getSelected();
-             this._selectTemplateIndex = currentRow;
-           }
-           this.templatePicker.update();
-           this.templatePicker.grid.scrollToRow(currentRow);
-           setTimeout(lang.hitch(this, function() {
+            var currentRow = persistIndexValue;
+            var selectedinfo = null;
+            var selected = null;
+            if (this.templatePicker._selectedInfo && this.templatePicker._selectedInfo.hasOwnProperty("selRow")) {
+              selectedinfo = this.templatePicker._selectedInfo;
+              currentRow = (this.templatePicker._selectedInfo.selRow > 0) ? this.templatePicker._selectedInfo.selRow - 1 : this.templatePicker._selectedInfo.selRow;
+              selected = this.templatePicker.getSelected();
+              this._selectTemplateIndex = currentRow;
+            }
+            this.templatePicker.update();
+            this.templatePicker.grid.scrollToRow(currentRow);
+            setTimeout(lang.hitch(this, function () {
 
               if (selected !== null && this.templatePicker) {
-               this.templatePicker.grid.store.fetch({
-                 onComplete: lang.hitch(this, function(its) {
-                   var found = this.templatePicker._locate(selected, selectedinfo, its);
-                   var cellNode = found && this.templatePicker.grid.views.views[0].getCellNode(found[0], found[1]);
-                   if (cellNode) {
-                     /* fake a row click event to restore the selection
-                       rows before lazy load maintain their selection, so only fake the click when it pass this point otherwise it toggles it off.
-                       Don't know the threshold but used rowsPerPage property as the point to call fake click.
-                     */
-                     if(this._selectTemplateIndex > (this.templatePicker.grid.rowsPerPage)) {
-                       this.templatePicker._rowClicked({ cellNode: cellNode, rowIndex: found[0], cellIndex: found[1] }, true);
-                     }
-                     this.templatePicker.grid.scrollToRow(currentRow);
-                   }
+                this.templatePicker.grid.store.fetch({
+                  onComplete: lang.hitch(this, function (its) {
+                    var found = this.templatePicker._locate(selected, selectedinfo, its);
+                    var cellNode = found && this.templatePicker.grid.views.views[0].getCellNode(found[0], found[1]);
+                    if (cellNode) {
+                      /* fake a row click event to restore the selection
+                        rows before lazy load maintain their selection, so only fake the click when it pass this point otherwise it toggles it off.
+                        Don't know the threshold but used rowsPerPage property as the point to call fake click.
+                      */
+                      if (this._selectTemplateIndex > (this.templatePicker.grid.rowsPerPage)) {
+                        this.templatePicker._rowClicked({ cellNode: cellNode, rowIndex: found[0], cellIndex: found[1] }, true);
+                      }
+                      this.templatePicker.grid.scrollToRow(currentRow);
+                    }
 
-                 })
-               });
-             }
-           }),500);
+                  })
+                });
+              }
+            }), 500);
           }
         }
         this._resetEditingVariables();
@@ -6868,10 +7382,10 @@ define([
         var sw = registry.byId("savePresetValueSwitch");
         // sw.set('checked', checked === null ? !sw.checked : checked);
         // code written to handle checkbox check as checkbox changed to jimu checkbox
-        if(checked) {
+        if (checked) {
           sw.check();
         }
-        else{
+        else {
           sw.uncheck();
         }
         this._usePresetValues = sw.checked;
@@ -6963,8 +7477,13 @@ define([
           else {
             switch (f.type) {
               case "esriFieldTypeString":
+                //check if the attribute value is not empty
+                //Alos, check if value has a trim method
+                //this is beacuse we can add any type of data in 
+                //string field and numbers will not have trim method
                 if (this.currentFeature.attributes[f.name] === "" ||
                   (this.currentFeature.attributes[f.name] &&
+                    this.currentFeature.attributes[f.name].hasOwnProperty("trim") &&
                     this.currentFeature.attributes[f.name].trim() === "")) {
                   errorObj[f.alias] = "Empty string";
                 }
@@ -7167,8 +7686,9 @@ define([
           setTimeout(lang.hitch(this, function () {
             //perform any edit geom switch functionality
             //only when working with main layers feature and not on related features
-            if (this._traversal.length < 2 && this._editGeomSwitch.domNode) {
-            // code return to handle checkbox check as jimu checkbox added
+            if (this._traversal.length < 2 && this._editGeomSwitch.domNode &&
+              domClass.contains(this.widgetActiveIndicator, "widgetActive")) {
+              // code return to handle checkbox check as jimu checkbox added
               this._editGeomSwitch.check();
             }
           }), 100);
@@ -7211,7 +7731,10 @@ define([
                 lang.hitch(this, function () {
                   if (!this.templatePicker ||
                     domStyle.get(this.templatePicker.domNode, "display") === "none") {
-                    this._checkForLayersInTemplatePicker();
+                    this._getEditableLayers(this.config.editor.configInfos).then(lang.hitch(this,
+                      function () {
+                        this._checkForLayersInTemplatePicker();
+                      }));
                   }
                 })));
             }
@@ -7262,6 +7785,10 @@ define([
         //When the widget configuration is changed and widget reopens
         if (this.valuePicker) {
           this.valuePicker.hideDialog();
+        }
+        //clear the selected template once the widget closes
+        if (this.templatePicker && this.templatePicker.getSelected()) {
+          this.templatePicker.clearSelection();
         }
       },
       _update: function () {
@@ -7463,10 +7990,12 @@ define([
           var descriptionNode;
           descriptionNode = query(".editDescription", this.attrInspector.domNode.parentElement);
           if (descriptionNode && descriptionNode.length > 0) {
-              domAttr.set(descriptionNode[0], "tabindex", tabindex);
+            domAttr.set(descriptionNode[0], "tabindex", tabindex);
           }
           //Change the edit geometry switch tabindex
-          domAttr.set(this._editGeomSwitch.domNode, "tabindex", tabindex);
+          if (this._editGeomSwitch && this._editGeomSwitch.domNode) {
+            domAttr.set(this._editGeomSwitch.domNode, "tabindex", tabindex);
+          }
           this._setTabIndexToAttachmentSection(tabindex);
         }
       },
@@ -7757,7 +8286,7 @@ define([
                       var hasCoordinatesSystemKey =
                         copyAttrInfo.MyLocation.Coordinates.hasOwnProperty(copyAction.coordinatesSystem);
                       //If xy is a field store both x y in same field
-                      if (copyAction.field === "xy"  || copyAction.field === "yx") {
+                      if (copyAction.field === "xy" || copyAction.field === "yx") {
                         if (hasCoordinatesSystemKey) {
                           value = this._getOutputString(copyAction.coordinatesSystem,
                             copyAttrInfo.MyLocation.Coordinates[copyAction.coordinatesSystem], copyAction.field);
@@ -7771,7 +8300,7 @@ define([
                     } else {
                       //for feature loaction
                       //If xy is a field store both x y in same field
-                      if (copyAction.field === "xy"  || copyAction.field === "yx") {
+                      if (copyAction.field === "xy" || copyAction.field === "yx") {
                         value = this._getOutputString(copyAction.coordinatesSystem,
                           copyAttrInfo.Coordinates[copyAction.coordinatesSystem], copyAction.field);
                       } else {
@@ -7801,13 +8330,13 @@ define([
               //else set null as multiple values. since no field is involved in intersection multiple values should be null
               if (copyAttrInfo) {
                 if (copyAttrInfo.multipleValues && inIntersectionActionFields.length > 0) {
-                var involvedMultiplValues = {}
-                array.forEach(inIntersectionActionFields, function (fld) {
-                  involvedMultiplValues[fld] = copyAttrInfo.multipleValues[fld];
-                });
-                copyAttrInfo.multipleValues = involvedMultiplValues;
-              } else {
-                copyAttrInfo.multipleValues = null;
+                  var involvedMultiplValues = {}
+                  array.forEach(inIntersectionActionFields, function (fld) {
+                    involvedMultiplValues[fld] = copyAttrInfo.multipleValues[fld];
+                  });
+                  copyAttrInfo.multipleValues = involvedMultiplValues;
+                } else {
+                  copyAttrInfo.multipleValues = null;
                 }
               }
               //as we are refresing attributes again add value picker for the updated multiple values and show value picker popup
@@ -7881,10 +8410,23 @@ define([
        * the geomtery type of selected template.
        */
       _getOrClearSelectableLayers: function (clearSelection) {
-        var layers, selectionMgr, selectedTemplate, featureLayerObject, selectedGeometryType;
+        var layers, selectionMgr, selectedTemplate, featureLayerObject, selectedGeometryType,
+          canCopyLineToPoint = false, canCopyPolygonToPoint = false;
         layers = [];
+        //For the initial load do not clear the layer selections
+        if (this.initialLoad || this.initialLoad === undefined) {
+          return;
+        }
         if (clearSelection) {
           selectionMgr = SelectionManager.getInstance();
+        }
+        if (this.config.editor.hasOwnProperty("copyLineToPoint") &&
+          this.config.editor.copyLineToPoint.enabled) {
+          canCopyLineToPoint = true;
+        }
+        if (this.config.editor.hasOwnProperty("copyPolygonToPoint") &&
+          this.config.editor.copyPolygonToPoint.enabled) {
+          canCopyPolygonToPoint = true;
         }
         if (this.templatePicker) {
           selectedTemplate = this.templatePicker.getSelected();
@@ -7906,6 +8448,13 @@ define([
               } else if (selectedGeometryType &&
                 layerObj.hasOwnProperty("geometryType") &&
                 layerObj.geometryType === selectedGeometryType) {
+                layers.push(layerObj);
+                //Add the layer if
+                //1. Line layer : Selected template layer is point and copy line to point falg is set to true in config
+                //2. Polygon layer : Selected template layer is point and copy polygon to point flag is set to true in config
+              } else if (selectedGeometryType === "esriGeometryPoint" &&
+                ((layerObj.geometryType === "esriGeometryPolyline" && canCopyLineToPoint) ||
+                  (layerObj.geometryType === "esriGeometryPolygon" && canCopyPolygonToPoint))) {
                 layers.push(layerObj);
               }
             }
@@ -7937,6 +8486,7 @@ define([
         this._selectTool = new FeatureSetChooserForMultipleLayers({
           map: this.map,
           updateSelection: true,
+          geoTypes: ['POLYGON', 'EXTENT', 'FREEHAND_POLYGON'],
           fullyWithin: false
         });
         this._selectTool.setFeatureLayers(this._getOrClearSelectableLayers(false));
@@ -7956,7 +8506,8 @@ define([
             }
             //Pass selected features to selectFeaturesToCopy method,
             //and allow user to choose among selctd features
-            this._copyFeaturesObj.selectFeaturesToCopy(selectedFeatures);
+            var targetLayerDetails = this._getLayerInfoByID(this.templatePicker.getSelected().featureLayer.id);
+            this._copyFeaturesObj.selectFeaturesToCopy(selectedFeatures, targetLayerDetails);
             this._setWidgetFirstFocusNode("copyFeatures", true);
             // After selecting feature, copy feature list is created.
             // Since this selection selects the features with default cyan color it needs to be removed or reset it.
@@ -8053,7 +8604,11 @@ define([
           map: this.map,
           parentDomNode: this.domNode,
           hideMultipleFeatureButton: this._layerHasUniqueFields(),
-          widgetId: this.widgetId
+          widgetId: this.widgetId,
+          config: this.config,
+          editUtils: editUtils,
+          fieldMappingDetails: this.fieldMappingDetails,
+          usePresetValues: this._usePresetValues
         }, domConstruct.create("div", {}, this.copyFeaturesMainNode));
         //handle create-single-feature event and display copy asset msg
         this.own(on(this._copyFeaturesObj, "createSingleFeature",
@@ -8070,14 +8625,23 @@ define([
             // update single feature
             var featureLayerObject = this.templatePicker.getSelected().featureLayer;
             var featureLayerInfo = this._getLayerInfoByID(featureLayerObject.id);
-            var singleFeature = this._updateAllSelectedGeometries([singleFeatureObj.graphic], featureLayerInfo, singleFeatureObj.layerObj)[0];
-            // if feature selection found
-            // in case of single copied feature, add it to graphics layer and allow user to save it
-            if (singleFeature) {
-              this._addGraphicToLocalLayer(singleFeature, singleFeature.attributes);
-            } else {
-              this.loading.hide();
-            }
+            var singleFeature = this._updateAllSelectedGeometries([singleFeatureObj.graphic], featureLayerInfo,
+              singleFeatureObj.layerObj)[0];
+            singleFeature.layer = singleFeatureObj.layerObj;
+            //Check if the selected feature and selected template are of differrent type
+            //If yes, then convert the feature geometry based on the config values
+            //If feature and selected templayer layer is of same type then same geometry will be returned
+            this._checkAndUpdateFeatureGeometry([singleFeature], featureLayerInfo).then(lang.hitch(this,
+              function (featureArray) {
+                singleFeature = featureArray[0];
+                // if feature selection found
+                // in case of single copied feature, add it to graphics layer and allow user to save it
+                if (singleFeature) {
+                  this._addGraphicToLocalLayer(singleFeature, singleFeature.attributes);
+                } else {
+                  this.loading.hide();
+                }
+              }));
           })));
         //handle create-multiple-features event and display copy asset msg
         this.own(on(this._copyFeaturesObj, "createMultipleFeatures",
@@ -8094,16 +8658,23 @@ define([
                 var featureLayerObject = this.templatePicker.getSelected().featureLayer;
                 var featureLayerInfo = this._getLayerInfoByID(featureLayerObject.id);
                 var singleFeature = this._updateAllSelectedGeometries(allSelectedGeometries, featureLayerInfo)[0];
-                if(this.templatePicker.hasOwnProperty("_selectedInfo")) {
-                  if(this.templatePicker._selectedInfo.hasOwnProperty("selRow")) {
-                    this._selectTemplateIndex = this.templatePicker._selectedInfo.selRow;
-                  }
-                }
-                if(singleFeature) {
-                this._addGraphicToLocalLayer(singleFeature, singleFeature.attributes);
-                } else {
-                  this.loading.hide();
-                }
+                //Check if the selected feature and selected template are of differrent type
+                //If yes, then convert the feature geometry based on the config values
+                //If feature and selected templayer layer is of smae type then same geometry will be returned
+                this._checkAndUpdateFeatureGeometry([singleFeature], featureLayerInfo).then(lang.hitch(this,
+                  function (featureArray) {
+                    singleFeature = featureArray[0];
+                    if (this.templatePicker.hasOwnProperty("_selectedInfo")) {
+                      if (this.templatePicker._selectedInfo.hasOwnProperty("selRow")) {
+                        this._selectTemplateIndex = this.templatePicker._selectedInfo.selRow;
+                      }
+                    }
+                    if (singleFeature) {
+                      this._addGraphicToLocalLayer(singleFeature, singleFeature.attributes);
+                    } else {
+                      this.loading.hide();
+                    }
+                  }));
               } else {
                 //map features
                 this.allSelectedGeometries = allSelectedGeometries;
@@ -8158,10 +8729,83 @@ define([
        */
       _onCopyFeatureCancelButtonClicked: function () {
         this._hideCopyFeatureDiv();
-        this._changeSelectToolState();
         // destroy copy feature instance
         this._destroyCopyFeatureInstance();
         this._setWidgetFirstFocusNode("templatePicker", true);
+        //Clear the template picker
+        if (this.templatePicker) {
+          this.templatePicker.clearSelection();
+        }
+      },
+
+      _isNumeric: function (n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      },
+
+      _isGuid: function (value, allowBlank) {
+        if (allowBlank === true && (value === "" || value === null)) {
+          return true;
+        }
+        if (value === "" || value === null) {
+          return false;
+        }
+        if (value[0] === "{") {
+          value = value.substring(1, value.length - 1);
+        }
+        var regexGuid = /^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$/gi;
+        return regexGuid.test(value);
+      },
+
+      /**
+       * This function checks and updates the feature attribute as per fields restrictions
+       * @param {Array of layer fields} fieldInfos 
+       * @param {Attributes of the feature} attributes 
+       * @returns 
+       */
+      _checkFeatureData: function (fieldInfos, attributes) {
+        array.forEach(fieldInfos, function (finfo) {
+          if (attributes.hasOwnProperty(finfo.fieldName)) {
+            switch (finfo.type) {
+              case "esriFieldTypeString":
+                if (finfo.length > 0 && attributes[finfo.fieldName] !== null &&
+                  attributes[finfo.fieldName] !== undefined) {
+                  if (attributes[finfo.fieldName].length > finfo.length) {
+                    attributes[finfo.fieldName] =
+                      attributes[finfo.fieldName].substring(0, finfo.length);
+                  }
+                }
+                break;
+              case "esriFieldTypeGUID":
+                if (this._isGuid(attributes[finfo.fieldName], false)) {
+                  if (attributes[finfo.fieldName][0] !== "{") {
+                    attributes[finfo.fieldName] = "{" + attributes[finfo.fieldName];
+                  }
+                  if (attributes[finfo.fieldName][attributes[finfo.fieldName].length - 1] !== "}") {
+                    attributes[finfo.fieldName] = attributes[finfo.fieldName] + "}";
+                  }
+                }
+                break;
+              case "esriFieldTypeSingle":
+              case "esriFieldTypeDouble":
+                if (this._isNumeric(attributes[finfo.fieldName])) {
+                  attributes[finfo.fieldName] = parseFloat(attributes[finfo.fieldName]);
+                }
+                break;
+              case "esriFieldTypeDate":
+                if (this._isNumeric(attributes[finfo.fieldName])) {
+                  attributes[finfo.fieldName] = parseInt(attributes[finfo.fieldName], 10);
+                }
+                break;
+              case "esriFieldTypeSmallInteger":
+              case "esriFieldTypeInteger":
+                if (this._isNumeric(attributes[finfo.fieldName])) {
+                  attributes[finfo.fieldName] = parseInt(attributes[finfo.fieldName], 10);
+                }
+                break;
+            }
+          }
+        }, this);
+        return attributes;
       },
 
       /**
@@ -8169,6 +8813,8 @@ define([
        * @param {*} allSelectedGeometries features that needs to be added
        */
       _addSelectedFeatureInTheLayer: function (allSelectedGeometries) {
+        var numberFieldDataTypes =
+          ["esriFieldTypeSmallInteger", "esriFieldTypeInteger", "esriFieldTypeDouble", "esriFieldTypeSingle"];
         // While adding features in the layer, attribute must be added and it should be fetched from template-picker
         var selectedTemp = this.templatePicker.getSelected() || this._currentSelectedTemplate;
         var deferredArray;
@@ -8194,86 +8840,190 @@ define([
           }
         }
         allSelectedGeometries = this._updateAllSelectedGeometries(allSelectedGeometries, featureLayerInfo);
-        this.nullAttributeCountRecord = lang.clone(selectedTemp.template.prototype.attributes);
-        for (var attrKey in this.nullAttributeCountRecord) {
-          this.nullAttributeCountRecord[attrKey] = 0;
-        }
-        this.requiredFieldsArray = this._getRequiredFields(featureLayerInfo.fieldInfos);
-        //get MyLocation info for multiple features only once and then get the copy attributes
-        this._myLocationInfoForMultipleFeatures = null;
-        this._getMyLocationInfo(needMyLocation).then(lang.hitch(this, function (myLocationInfo) {
-          this._myLocationInfoForMultipleFeatures = myLocationInfo;
-          array.forEach(allSelectedGeometries, lang.hitch(this, function (selectedFeatureDetail) {
-            var featureDef = this._getCopyAttributes(featureLayerInfo, selectedFeatureDetail.geometry);
-            deferredArray.push(featureDef);
-          }));
-          all(deferredArray).then(lang.hitch(this, function (copyAttributesInfoArray) {
-            array.forEach(allSelectedGeometries, lang.hitch(this, function (selectedFeatureDetail, index) {
-              var copyAttributesInfo = copyAttributesInfoArray[index];
-              var selectedFeaturesAttributes = lang.clone(selectedFeatureDetail.attributes);
-              var newAttributes = lang.clone(selectedTemp.template.prototype.attributes);
-              //copy only those attributes which are not available in template or
-              //if the value in template for those attribute is null or
-              //override defaults by copied feature is true
-              for (var attributeKey in selectedFeaturesAttributes) {
-                if (!newAttributes.hasOwnProperty(attributeKey) || newAttributes[attributeKey] === null ||
-                  this.config.editor.overrideDefaultsByCopiedFeature) {
-                  newAttributes[attributeKey] = selectedFeaturesAttributes[attributeKey];
-                }
-              }
-              this._modifyAttributesWithPresetValues(newAttributes, featureLayerInfo, copyAttributesInfo);
-              for (var attrKey in newAttributes) {
-                var attrValue = this._trimAttrValue(newAttributes[attrKey]);
-                //if attributes value is required and its getting null or blank value
-                //than increase count for that attribut
-                if (this.requiredFieldsArray.indexOf(attrKey) !== -1 &&
-                  newAttributes.hasOwnProperty(attrKey) &&
-                  [null, undefined, ''].indexOf(attrValue) !== -1) {
-                  this.nullAttributeCountRecord[attrKey] = this.nullAttributeCountRecord[attrKey] + 1;
-                }
-              }
-              this.copyMultipleFeatureGraphics.push({
-                attributes: newAttributes,
-                geometry: selectedFeatureDetail.geometry
-              });
-            }));
-            var requiredFieldsInfos = [];
-            for (var attrKey in this.nullAttributeCountRecord) {
-              //attribute found null in any of selected records feature
-              //get its field info and push to requiredFieldsInfos array
-              if (this.nullAttributeCountRecord[attrKey] > 0) {
-                requiredFieldsInfos.push(presetUtils.getFieldInfoByFieldName(featureLayerInfo.fieldInfos, attrKey));
-              }
+        //Check if the selected feature and selected template are of differrent type
+        //If yes, then convert the feature geometry based on the config values
+        //If feature and selected templayer layer is of smae type then same geometry will be returned
+        this._checkAndUpdateFeatureGeometry(allSelectedGeometries, featureLayerInfo).then(lang.hitch(this,
+          function (allSelectedGeometries) {
+            this.nullAttributeCountRecord = {};
+            if (selectedTemp && selectedTemp.template && selectedTemp.template.prototype &&
+              selectedTemp.template.prototype.attributes) {
+              this.nullAttributeCountRecord = lang.clone(selectedTemp.template.prototype.attributes);
             }
+            for (var attrKey in this.nullAttributeCountRecord) {
+              this.nullAttributeCountRecord[attrKey] = 0;
+            }
+            this.requiredFieldsArray = this._getRequiredFields(featureLayerInfo.fieldInfos);
+            //get MyLocation info for multiple features only once and then get the copy attributes
+            this._myLocationInfoForMultipleFeatures = null;
+            this._getMyLocationInfo(needMyLocation).then(lang.hitch(this, function (myLocationInfo) {
+              this._myLocationInfoForMultipleFeatures = myLocationInfo;
+              array.forEach(allSelectedGeometries, lang.hitch(this, function (selectedFeatureDetail) {
+                var featureDef = this._getCopyAttributes(featureLayerInfo, selectedFeatureDetail.geometry, true);
+                deferredArray.push(featureDef);
+              }));
+              all(deferredArray).then(lang.hitch(this, function (copyAttributesInfoArray) {
+                array.forEach(allSelectedGeometries, lang.hitch(this, function (selectedFeatureDetail, index) {
+                  var copyAttributesInfo = copyAttributesInfoArray[index];
+                  var selectedFeaturesAttributes = lang.clone(selectedFeatureDetail.attributes);
+                  var newAttributes = {};
+                  if (selectedTemp && selectedTemp.template && selectedTemp.template.prototype &&
+                    selectedTemp.template.prototype.attributes) {
+                    newAttributes = lang.clone(selectedTemp.template.prototype.attributes);
+                  }
+                  //push all the required feilds in the new attributes if not available in default template
+                  for (var i = 0; i < this.requiredFieldsArray.length; i++) {
+                    if (!newAttributes.hasOwnProperty(this.requiredFieldsArray[i])) {
+                      newAttributes[this.requiredFieldsArray[i]] = null;
+                      //Set count to 0 of the  required filed in nullAttributeCountRecord if not available 
+                      if (!this.nullAttributeCountRecord.hasOwnProperty(this.requiredFieldsArray[i])) {
+                        this.nullAttributeCountRecord[this.requiredFieldsArray[i]] = 0;
+                      }
+                    }
+                  }
 
-            //requiredFieldsInfos length is greater then zero means
-            //required field has null or blank values in some or all records
-            //so show that fields into required fields popup
-            if (requiredFieldsInfos.length > 0) {
-              this.loading.hide();
-              var requiredFieldsObj = new requiredFields({
-                requiredFieldsInfos: requiredFieldsInfos,
-                nls: this.nls,
-                presetUtils: presetUtils,
-                AttributesCount: this.nullAttributeCountRecord
-              });
+                  var targetLayerId = selectedTemp.featureLayer.id;
+                  var sourceLayerId = selectedFeatureDetail.layer.id;
+                  //if field mapping details available use them else copy attributes according to old pattern
+                  if (this.fieldMappingDetails[targetLayerId] && this.fieldMappingDetails[targetLayerId][sourceLayerId]) {
+                    //push those attributes in newAttributes which are not available in default template but have field mapping
+                    for (var tField in this.fieldMappingDetails[targetLayerId][sourceLayerId]) {
+                      if (!newAttributes.hasOwnProperty(tField)) {
+                        newAttributes[tField] = null;
+                      }
+                    }
+                    for (var attributeKey in newAttributes) {
+                      var sourceLayerField, targetLayerField, sourceField;
+                      if (!newAttributes.hasOwnProperty(attributeKey) || newAttributes[attributeKey] === null ||
+                        this.config.editor.overrideDefaultsByCopiedFeature) {
+                        sourceField = this.fieldMappingDetails[targetLayerId][sourceLayerId][attributeKey];
+                        targetLayerField = this.templatePicker.getSelected().featureLayer.getField(attributeKey);
+                        if (sourceField) {
+                          if (this._jimuLayerInfos.getLayerInfoById(sourceLayerId) &&
+                            this._jimuLayerInfos.getLayerInfoById(sourceLayerId).layerObject) {
+                            sourceLayerField =
+                              this._jimuLayerInfos.getLayerInfoById(sourceLayerId).layerObject.getField(sourceField);
+                          }
+                          //Check if source layer field is a domain field and target layer field
+                          //is a non domain field. If yes, then use the domain name instead of a code
+                          if (sourceLayerField &&
+                            sourceLayerField.domain && sourceLayerField.domain.codedValues &&
+                            !targetLayerField.domain) {
+                            array.some(sourceLayerField.domain.codedValues, lang.hitch(this,
+                              function (codedValueObj) {
+                                if (codedValueObj.code === selectedFeaturesAttributes[sourceField]) {
+                                  //if target has number field then copy the domain code
+                                  //as it is a number field, the code will always be a number
+                                  if (numberFieldDataTypes.indexOf(targetLayerField.type) !== -1) {
+                                    newAttributes[attributeKey] = codedValueObj.code;
+                                    return true;
+                                  } else {
+                                    newAttributes[attributeKey] = codedValueObj.name;
+                                    return true;
+                                  }
+                                }
+                              }));
+                          } else {
+                            //If source field is of type date and target layer not a date field
+                            //then format the date value as per the field format 
+                            if (sourceLayerField && sourceLayerField.type === "esriFieldTypeDate" &&
+                              targetLayerField.type !== "esriFieldTypeDate" &&
+                              selectedFeaturesAttributes[sourceField]) {
+                              var fieldInfo;
+                              fieldInfo = this._getPopupFieldInfo(sourceField,
+                                this._jimuLayerInfos.getLayerInfoById(sourceLayerId));
+                              newAttributes[attributeKey] =
+                                utils.getDateTimeStrByFieldInfo(selectedFeaturesAttributes[sourceField], fieldInfo);
+                            } else {
+                              //Otheriwse copy the value as it is
+                              newAttributes[attributeKey] = selectedFeaturesAttributes[sourceField];
+                            }
+                          }
+                        }
+                      }
+                    }
+                  } else {
+                    //copy only those attributes which are not available in template or
+                    //if the value in template for those attribute is null or
+                    //override defaults by copied feature is true
+                    for (var attributeKey in selectedFeaturesAttributes) {
+                      if (!newAttributes.hasOwnProperty(attributeKey) || newAttributes[attributeKey] === null ||
+                        this.config.editor.overrideDefaultsByCopiedFeature) {
+                        newAttributes[attributeKey] = selectedFeaturesAttributes[attributeKey];
+                      }
+                    }
+                  }
+                  this._modifyAttributesWithPresetValues(newAttributes, featureLayerInfo, copyAttributesInfo);
+                  for (var attrKey in newAttributes) {
+                    var attrValue = this._trimAttrValue(newAttributes[attrKey]);
+                    //if attributes value is required and its getting null or blank value
+                    //than increase count for that attribut
+                    if (this.requiredFieldsArray.indexOf(attrKey) !== -1 &&
+                      newAttributes.hasOwnProperty(attrKey) &&
+                      [null, undefined, ''].indexOf(attrValue) !== -1) {
+                      this.nullAttributeCountRecord[attrKey] = this.nullAttributeCountRecord[attrKey] + 1;
+                    }
+                  }
+                  this.copyMultipleFeatureGraphics.push({
+                    attributes: newAttributes,
+                    geometry: selectedFeatureDetail.geometry
+                  });
+                }));
+                var requiredFieldsInfos = [];
+                for (var attrKey in this.nullAttributeCountRecord) {
+                  //attribute found null in any of selected records feature
+                  //get its field info and push to requiredFieldsInfos array
+                  if (this.nullAttributeCountRecord[attrKey] > 0) {
+                    requiredFieldsInfos.push(presetUtils.getFieldInfoByFieldName(featureLayerInfo.fieldInfos, attrKey));
+                  }
+                }
 
-              this.own(on(requiredFieldsObj, "providedValuesToRequiredFields",
-                lang.hitch(this, function (providedRequiredAttrObj) {
-                  this.loading.show();
+                //requiredFieldsInfos length is greater then zero means
+                //required field has null or blank values in some or all records
+                //so show that fields into required fields popup
+                if (requiredFieldsInfos.length > 0) {
+                  this.loading.hide();
+                  var requiredFieldsObj = new requiredFields({
+                    requiredFieldsInfos: requiredFieldsInfos,
+                    nls: this.nls,
+                    presetUtils: presetUtils,
+                    AttributesCount: this.nullAttributeCountRecord
+                  });
+
+                  this.own(on(requiredFieldsObj, "providedValuesToRequiredFields",
+                    lang.hitch(this, function (providedRequiredAttrObj) {
+                      this.loading.show();
+                      var selectedFeatureArr = [];
+                      array.forEach(this.copyMultipleFeatureGraphics, lang.hitch(this, function (graphic) {
+                        var newAttributes = graphic.attributes;
+                        for (var attrKey in newAttributes) {
+                          var attrValue = this._trimAttrValue(newAttributes[attrKey]);
+                          //if attributes value is required and selected feature has null value for that attribute or
+                          //default vallue is also null then update attr value with user entered value
+                          if (this.requiredFieldsArray.indexOf(attrKey) !== -1 &&
+                            newAttributes.hasOwnProperty(attrKey) &&
+                            [null, undefined, ''].indexOf(attrValue) !== -1) {
+                            newAttributes[attrKey] = providedRequiredAttrObj[attrKey];
+                          }
+                        }
+                        //updates attributes to honoring the fields restriction like field length etc
+                        newAttributes = this._checkFeatureData(featureLayerInfo.fieldInfos, newAttributes);
+                        //perform feature creation
+                        var newGraphic = new Graphic(graphic.geometry, null, newAttributes);
+                        // store original attrs for later use
+                        newGraphic.preEditAttrs = JSON.parse(JSON.stringify(newGraphic.attributes));
+                        selectedFeatureArr.push(newGraphic);
+                      }));
+                      this._applyEdits(selectedFeatureArr);
+                    })));
+                } else {
+                  //all required fields has values so no need to show required fields
+                  //perform applyedits
                   var selectedFeatureArr = [];
                   array.forEach(this.copyMultipleFeatureGraphics, lang.hitch(this, function (graphic) {
                     var newAttributes = graphic.attributes;
-                    for (var attrKey in newAttributes) {
-                      var attrValue = this._trimAttrValue(newAttributes[attrKey]);
-                      //if attributes value is required and selected feature has null value for that attribute or
-                      //default vallue is also null then update attr value with user entered value
-                      if (this.requiredFieldsArray.indexOf(attrKey) !== -1 &&
-                        newAttributes.hasOwnProperty(attrKey) &&
-                        [null, undefined, ''].indexOf(attrValue) !== -1) {
-                        newAttributes[attrKey] = providedRequiredAttrObj[attrKey];
-                      }
-                    }
+                    //updates attributes to honoring the fields restriction like field length etc
+                    newAttributes = this._checkFeatureData(featureLayerInfo.fieldInfos, newAttributes);
                     //perform feature creation
                     var newGraphic = new Graphic(graphic.geometry, null, newAttributes);
                     // store original attrs for later use
@@ -8281,28 +9031,34 @@ define([
                     selectedFeatureArr.push(newGraphic);
                   }));
                   this._applyEdits(selectedFeatureArr);
-                })));
-            } else {
-              //all required fields has values so no need to show required fields
-              //perform applyedits
-              var selectedFeatureArr = [];
-              array.forEach(this.copyMultipleFeatureGraphics, lang.hitch(this, function (graphic) {
-                var newAttributes = graphic.attributes;
-                //perform feature creation
-                var newGraphic = new Graphic(graphic.geometry, null, newAttributes);
-                // store original attrs for later use
-                newGraphic.preEditAttrs = JSON.parse(JSON.stringify(newGraphic.attributes));
-                selectedFeatureArr.push(newGraphic);
+                }
+              }), lang.hitch(this, function (error) {
+                this.loading.hide();
+                Message({
+                  message: this.nls.addingFeatureError + " " + error.message
+                });
               }));
-              this._applyEdits(selectedFeatureArr);
-            }
-          }), lang.hitch(this, function (error) {
-            this.loading.hide();
-            Message({
-              message: this.nls.addingFeatureError + " " + error.message
-            });
+            }));
           }));
-        }));
+      },
+
+      _getPopupFieldInfo: function (fieldName, layerInfo) {
+        var fInfo, popupInfo, fieldInfos;
+        popupInfo = layerInfo.getPopupInfo();
+        //If popup is configured then get the popup field infos
+        //If popup is disable then get the required field info from "getPopupFieldFromLayerField" method
+        if (popupInfo) {
+          fieldInfos = popupInfo.fieldInfos;
+          array.some(fieldInfos, function (field) {
+            if (field.fieldName === fieldName) {
+              fInfo = field;
+              return true;
+            }
+          });
+        } else {
+          fInfo = utils.getPopupFieldFromLayerField(layerInfo.layerObject.getField(fieldName));
+        }
+        return fInfo;
       },
 
       /**
@@ -8330,16 +9086,16 @@ define([
           }
           if (featureAddingFailed > 0) {
             //if some features are failed then recreate copy feature with failed features
-            this._copyFeaturesObj.selectFeaturesToCopy(selectedFeatures);
+            var targetLayerDetails = this._getLayerInfoByID(this.templatePicker.getSelected().featureLayer.id);
+            this._copyFeaturesObj.selectFeaturesToCopy(selectedFeatures, targetLayerDetails);
             failedCountString = String.substitute(this.nls.addingFeatureErrorCount, {
               copyFeatureErrorCount: featureAddingFailed
             });
           }
           if (this.objectIdArr.length === 0 && featureAddingFailed > 0) {
             this.loading.hide();
-            Message({
-              message: this.nls.addingFeatureError + " " + failedCountString
-            });
+            //prompt user and ask if user wants to try copying the features again
+            this._promptUserToCopyFailedFeatures(failedCountString);
           } else if (this.objectIdArr.length > 0 && featureAddingFailed > 0) {
             this._promptUserToCopyFailedFeatures(failedCountString);
             this._selectFeaturesInTheLayer(this.objectIdArr);
@@ -8354,8 +9110,9 @@ define([
        * This function is used to activate/de-activate custom select tool.
        */
       _changeSelectToolState: function (canClear) {
-        this._getOrClearSelectableLayers(canClear === false ? false : true);
-        if (this.currentDrawType === "SELECT" &&
+        this._getOrClearSelectableLayers(canClear === false || canClear === undefined ? false : true);
+        if ((this.currentDrawType === "EXTENT" || this.currentDrawType === "POLYGON" ||
+          this.currentDrawType === "FREEHAND_POLYGON") &&
           this.templatePicker &&
           this.templatePicker.getSelected() &&
           this._selectTool) {
@@ -8397,7 +9154,7 @@ define([
         query(".jimu-widget-smartEditor .templatePickerMainDiv")[0].style.display = "block";
         //after hiding when we show template picker sometimes it becomes empty, hence update it
         //if (this.templatePicker) {
-          //this.templatePicker.update();
+        //this.templatePicker.update();
         //}
         var selected = null;
         var selectedinfo = null;
@@ -8406,7 +9163,7 @@ define([
           var currentRow = 0;
           if (this.templatePicker._selectedInfo && this.templatePicker._selectedInfo.hasOwnProperty("selRow")) {
             selectedinfo = this.templatePicker._selectedInfo;
-            currentRow = (this.templatePicker._selectedInfo.selRow > 0)?this.templatePicker._selectedInfo.selRow - 1:this.templatePicker._selectedInfo.selRow;
+            currentRow = (this.templatePicker._selectedInfo.selRow > 0) ? this.templatePicker._selectedInfo.selRow - 1 : this.templatePicker._selectedInfo.selRow;
             //this._selectTemplateIndex = currentRow;
           }
           this.templatePicker.update();
@@ -8416,7 +9173,7 @@ define([
               if (this.config.editor.keepTemplateSelected === true) {
                 if (selected !== null) {
                   this.templatePicker.grid.store.fetch({
-                    onComplete: lang.hitch(this, function(its) {
+                    onComplete: lang.hitch(this, function (its) {
                       var found = this.templatePicker._locate(selected, selectedinfo, its);
                       var cellNode = found && this.templatePicker.grid.views.views[0].getCellNode(found[0], found[1]);
                       if (cellNode) {
@@ -8424,7 +9181,7 @@ define([
                           rows before lazy load maintain their selection, so only fake the click when it pass this point otherwise it toggles it off.
                           Don't know the threshold but used rowsPerPage property as the point to call fake click.
                         */
-                        if(currentRow > (this.templatePicker.grid.rowsPerPage)) {
+                        if (currentRow > (this.templatePicker.grid.rowsPerPage)) {
                           this.templatePicker._rowClicked({ cellNode: cellNode, rowIndex: found[0], cellIndex: found[1] }, true);
                         }
                       }
@@ -8635,7 +9392,7 @@ define([
           var currentRow = this._selectTemplateIndex;
           if (this.templatePicker._selectedInfo && this.templatePicker._selectedInfo.hasOwnProperty("selRow")) {
             selectedinfo = this.templatePicker._selectedInfo;
-            currentRow = (this.templatePicker._selectedInfo.selRow > 0)?this.templatePicker._selectedInfo.selRow - 1:this.templatePicker._selectedInfo.selRow;
+            currentRow = (this.templatePicker._selectedInfo.selRow > 0) ? this.templatePicker._selectedInfo.selRow - 1 : this.templatePicker._selectedInfo.selRow;
             this._selectTemplateIndex = currentRow;
           }
           this.templatePicker.grid.scrollToRow(currentRow);
@@ -8648,7 +9405,7 @@ define([
               if (this.config.editor.keepTemplateSelected === true) {
                 if (selected !== null) {
                   this.templatePicker.grid.store.fetch({
-                    onComplete: lang.hitch(this, function(its) {
+                    onComplete: lang.hitch(this, function (its) {
                       var found = this.templatePicker._locate(selected, selectedinfo, its);
                       var cellNode = found && this.templatePicker.grid.views.views[0].getCellNode(found[0], found[1]);
                       if (cellNode) {
@@ -8657,8 +9414,8 @@ define([
                           Don't know the threshold but used rowsPerPage property as the point to call fake click.
                         */
                         //if(this._selectTemplateIndex > (this.templatePicker.grid.rowsPerPage)) {
-                          this.templatePicker._rowClicked({ cellNode: cellNode, rowIndex: found[0], cellIndex: found[1] }, true);
-                          this._activateTemplateToolbar(null);
+                        this.templatePicker._rowClicked({ cellNode: cellNode, rowIndex: found[0], cellIndex: found[1] }, true);
+                        this._activateTemplateToolbar(null);
                         //}
                         this.templatePicker.grid.scrollToRow(currentRow);
                       }
@@ -8683,8 +9440,14 @@ define([
       _updatedDrawingOptions: function () {
         for (var property in SEDrawingOptions) {
           array.forEach(SEDrawingOptions[property], lang.hitch(this, function (option, index) {
-            if (option.hasOwnProperty("_drawType") && option._drawType === "SELECT") {
-              SEDrawingOptions[property][index].label = this.nls.customSelectOptionLabel;
+            if (option.hasOwnProperty("_drawType")) {
+              if (option._drawType === "EXTENT") {
+                SEDrawingOptions[property][index].label = this.nls.copyFeaturesWithRect;
+              } else if (option._drawType === "POLYGON") {
+                SEDrawingOptions[property][index].label = this.nls.copyFeaturesWithPolygon;
+              } else if (option._drawType === "FREEHAND_POLYGON") {
+                SEDrawingOptions[property][index].label = this.nls.copyFeaturesWithLasso;
+              }
             }
           }));
         }
@@ -8726,22 +9489,95 @@ define([
               sourceInfo = editUtils.createDefaultConfigInfo(this._jimuLayerInfos.getLayerInfoById(sourceLayer.id));
             }
           }
-          if(sourceInfo) {
-          var sourceInfoObj = this._getInfoDetails(sourceInfo);
-          var finalAttributeObj;
-          finalAttributeObj = {};
-          for (var attr in selectedFeature.attributes) {
-            var keyInLowerCase = attr.toLowerCase();
-            if (targetInfoObj.hasOwnProperty(keyInLowerCase) &&
-              sourceInfoObj.hasOwnProperty(keyInLowerCase) &&
-              targetInfoObj[keyInLowerCase].type === sourceInfoObj[keyInLowerCase].type) {
-              finalAttributeObj[targetInfoObj[keyInLowerCase].name] = lang.clone(selectedFeature.attributes[attr]);
+          if (sourceInfo) {
+            var sourceInfoObj = this._getInfoDetails(sourceInfo);
+            var finalAttributeObj;
+            finalAttributeObj = {};
+            var targetLayerId = targetLayerInfo.featureLayer.id;
+            //if field mapping details available then the source fields original attributes will be required to get the matched fields values
+            //else for old pattern, we will match the fields type and name and create attribute obj according to target layers fields 
+            if (this.fieldMappingDetails[targetLayerId] && this.fieldMappingDetails[targetLayerId][sourceLayer.id]) {
+              finalAttributeObj = lang.clone(selectedFeature.attributes);
+            } else {
+              for (var attr in selectedFeature.attributes) {
+                var keyInLowerCase = attr.toLowerCase();
+                if (targetInfoObj.hasOwnProperty(keyInLowerCase) &&
+                  sourceInfoObj.hasOwnProperty(keyInLowerCase) &&
+                  targetInfoObj[keyInLowerCase].type === sourceInfoObj[keyInLowerCase].type) {
+                  finalAttributeObj[targetInfoObj[keyInLowerCase].name] = lang.clone(selectedFeature.attributes[attr]);
+                }
+              }
             }
-          }
-          updatedFeatures.push(new Graphic(selectedFeature.geometry, null, finalAttributeObj));
+            //Create the new graphic object and add a layer instance to it
+            var newGraphic = new Graphic(selectedFeature.geometry, null, finalAttributeObj);
+            newGraphic.layer = sourceLayer;
+            updatedFeatures.push(newGraphic);
           }
         }));
         return updatedFeatures;
+      },
+
+      /**
+       * This function checks the geometry type of source and target
+       * and then returns the features with updated geometries
+       */
+      _checkAndUpdateFeatureGeometry: function (allSelectedGeometries, featureLayerInfo) {
+        var def, deferredArray = [];
+        def = new Deferred();
+        //Loop through all the geometrie and convert geometries based on the configuration
+        array.forEach(allSelectedGeometries, lang.hitch(this, function (feature) {
+          var sourceLayer = feature.layer;
+          if (sourceLayer.geometryType !== featureLayerInfo.featureLayer.geometryType) {
+            deferredArray.push(this._getUpdatedGeometry(sourceLayer.geometryType, feature));
+          }
+        }));
+        //Once all the features are updated then return features
+        all(deferredArray).then(lang.hitch(this, function () {
+          def.resolve(allSelectedGeometries);
+        }));
+        return def.promise;
+      },
+
+      /**
+      * This function updates the feature geometry based on the configuration
+      */
+      _getUpdatedGeometry: function (souceLayerGeoType, feature) {
+        var geoDef = new Deferred(), feature;
+        featureGeometry = feature.geometry;
+        //for the polygon geometry
+        if (souceLayerGeoType === "esriGeometryPolygon") {
+          //get the polygon centroid
+          var centroid = featureGeometry.getCentroid();
+          //If the centroid is inside the polygon geometry
+          //then use the same point or else use the label point
+          if (GeometryEngine.intersects(centroid, featureGeometry)) {
+            feature.geometry = featureGeometry.getCentroid();
+            geoDef.resolve();
+          } else {
+            this.geometryService.labelPoints([featureGeometry], lang.hitch(this,
+              function (labelPoint) {
+                feature.geometry = labelPoint[0];
+                geoDef.resolve();
+              }));
+          }
+        } else {
+          var pathIndex = 0;
+          var combinedLine = new Polyline({
+            paths: featureGeometry.paths.flat(),
+            spatialReference: featureGeometry.spatialReference
+          });
+          //for polyline
+          //get the first or last point of the line based on configuration
+          if (this.config.editor.copyLineToPoint.type === "end") {
+            pathIndex = combinedLine.paths.length - 1;
+          }
+          feature.geometry = new Point(
+            combinedLine.paths[pathIndex][0],
+            combinedLine.paths[pathIndex][1],
+            this.map.spatialReference);
+          geoDef.resolve();
+        }
+        return geoDef.promise;
       },
 
       /**
@@ -8786,10 +9622,10 @@ define([
         }
         else if (screen === "AI") {
           if (this.attrInspector && this.attrInspector.attributeTable) {
-          //Loop through all the attribute inspector fields and make sure all the disabled
-          //atrributes are repalced with read only attribtues
-          var node, listContainer, tabindexForControls;
-          node = registry.findWidgets(this.attrInspector.attributeTable);
+            //Loop through all the attribute inspector fields and make sure all the disabled
+            //atrributes are repalced with read only attribtues
+            var node, listContainer, tabindexForControls;
+            node = registry.findWidgets(this.attrInspector.attributeTable);
             if (this.attrInspector.domNode.parentElement &&
               this.attrInspector.domNode.parentElement.parentElement) {
               listContainer = query(".esriCTItemContent",
@@ -8801,34 +9637,34 @@ define([
                   tabindexForControls = "-1";
                 }
               }
-            this._setTabIndexToListItems(null, false, tabindexForControls);
-          }
-          array.forEach(node, lang.hitch(this, function (node) {
-            if (node.focusNode && domAttr.get(node.focusNode, "disabled")) {
-              domAttr.set(node.focusNode, "disabled", false);
-              domAttr.set(node.focusNode, "readonly", true);
+              this._setTabIndexToListItems(null, false, tabindexForControls);
             }
-            //Set aria-labels to all the controls
+            array.forEach(node, lang.hitch(this, function (node) {
+              if (node.focusNode && domAttr.get(node.focusNode, "disabled")) {
+                domAttr.set(node.focusNode, "disabled", false);
+                domAttr.set(node.focusNode, "readonly", true);
+              }
+              //Set aria-labels to all the controls
               if (node.focusNode && node.domNode.parentElement &&
                 node.domNode.parentElement.parentElement) {
-              var label = query(".atiLabel", node.domNode.parentElement.parentElement);
-              if (label && label[0]) {
-                var fieldLabel = label[0].innerHTML;
-                //if field is required then skip the html text from being used in aria-label
-                //and set aria-required property to true
-                if (fieldLabel.indexOf('<a class="asteriskIndicator"> *</a>') >= 0) {
-                  fieldLabel = fieldLabel.replace('<a class="asteriskIndicator"> *</a>', '');
-                  domAttr.set(node.focusNode, "aria-required", "true");
-                } else if (fieldLabel.indexOf('<span class="atiRequiredField"> *</span>') >= 0) {
-                  fieldLabel = fieldLabel.replace('<span class="atiRequiredField"> *</span>', '');
-                  domAttr.set(node.focusNode, "aria-required", "true");
-                } else{
-                  domAttr.set(node.focusNode, "aria-required", "false");
+                var label = query(".atiLabel", node.domNode.parentElement.parentElement);
+                if (label && label[0]) {
+                  var fieldLabel = label[0].innerHTML;
+                  //if field is required then skip the html text from being used in aria-label
+                  //and set aria-required property to true
+                  if (fieldLabel.indexOf('<a class="asteriskIndicator"> *</a>') >= 0) {
+                    fieldLabel = fieldLabel.replace('<a class="asteriskIndicator"> *</a>', '');
+                    domAttr.set(node.focusNode, "aria-required", "true");
+                  } else if (fieldLabel.indexOf('<span class="atiRequiredField"> *</span>') >= 0) {
+                    fieldLabel = fieldLabel.replace('<span class="atiRequiredField"> *</span>', '');
+                    domAttr.set(node.focusNode, "aria-required", "true");
+                  } else {
+                    domAttr.set(node.focusNode, "aria-required", "false");
+                  }
+                  domAttr.set(node.focusNode, "aria-label", fieldLabel);
                 }
-                domAttr.set(node.focusNode, "aria-label", fieldLabel);
               }
-            }
-          }));
+            }));
           }
           nodeObj.firstNode = this._getFirstFocusNodeForAttributeInspectorScreen();
           nodeObj.lastNode = this._getLastFocusNodeForAttributeInspectorScreen();
@@ -8857,7 +9693,7 @@ define([
             firstNode = this._filterEditor.selectDropDown;
             //If filter display shape selector is enabled and copy featues is enabled,
             //set its dom node as the first focus node
-          } else if (this.config.editor.displayShapeSelector === true ||
+          } else if (this.drawingTool && this.config.editor.displayShapeSelector === true ||
             (this.config.editor.hasOwnProperty("createNewFeaturesFromExisting") &&
               (this.config.editor.createNewFeaturesFromExisting === true))) {
             firstNode = this.drawingTool.focusNode;
@@ -8880,9 +9716,9 @@ define([
         if (this.config.editor.hasOwnProperty("displayPresetTop") &&
           this.config.editor.displayPresetTop === false &&
           domStyle.get(this.presetFieldsTableDiv, "display") === "block") {
-            //If preset is enabled,
-            //check for all the preset groups
-            //and accordingly set the last focus node
+          //If preset is enabled,
+          //check for all the preset groups
+          //and accordingly set the last focus node
           var presetValueTable = query("#eePresetValueBody")[0];
           if (presetValueTable) {
             var inputElements = query(".preset-value-editable .ee-inputField");
@@ -8910,11 +9746,12 @@ define([
         } else if ((this.config.editor.displayShapeSelector === true ||
           (this.config.editor.hasOwnProperty("createNewFeaturesFromExisting") &&
             (this.config.editor.createNewFeaturesFromExisting === true))) &&
-          !this._creationDisabledOnAll) {
+          !this._creationDisabledOnAll && this.drawingTool) {
           lastNode = this.drawingTool.focusNode;
           //If auto save functionality is enabled,
           //set its dom node as the last focus node
-        } else if (this.config.editor.useFilterEditor && !this._creationDisabledOnAll) {
+        } else if (this._filterEditor &&
+          this.config.editor.useFilterEditor && !this._creationDisabledOnAll) {
           lastNode = this._filterEditor.filterTextBox;
           //If filter display shape selector is enabled and copy featues is enabled,
           //set its dom node as the last focus node
@@ -8963,7 +9800,7 @@ define([
             if (itemNode && itemNode.length > 0 &&
               !domClass.contains(itemNode[0], "esriCTDisableToggling")) {
               firstNode = itemNode[0].children[0];
-            } else if ( layerDescriptionNode && layerDescriptionNode.length > 0) {
+            } else if (layerDescriptionNode && layerDescriptionNode.length > 0) {
               firstNode = layerDescriptionNode[0];
             }
             else if (this.attrInspector && this.attrInspector.attributeTable) {
@@ -9013,7 +9850,7 @@ define([
                 firstNode = this.cancelButton;
               }
             }
-          } else if (this.attrInspector._numFeatures > 1) {
+          } else if (this.attrInspector._numFeatures > 1 && this.attrInspector.navButtons) {
             //If more then one feature is present in AI,
             //first nav button as the first focus node
             var navButtonWidgets = registry.findWidgets(this.attrInspector.navButtons);
@@ -9042,10 +9879,10 @@ define([
             } else {
               lastNode = this.cancelButton;
             }
-            } else {
-              lastNode = saveBtn;
-            }
+          } else {
+            lastNode = saveBtn;
           }
+        }
         //Check if related layer item exist and it is open
         //then set the last node in related item list
         var relatedTitleContainer, detailsContainer, relatedItemDOM;
@@ -9121,8 +9958,10 @@ define([
         if (!lastNode && this.attrInspector._numFeatures > 1) {
           //If more then one feature is present in AI,
           //first nav button as the first focus node
-          var navButtonWidgets = registry.findWidgets(this.attrInspector.navButtons);
-          lastNode = navButtonWidgets[navButtonWidgets.length - 1].focusNode;
+          if (this.attrInspector && this.attrInspector.navButtons) {
+            var navButtonWidgets = registry.findWidgets(this.attrInspector.navButtons);
+            lastNode = navButtonWidgets[navButtonWidgets.length - 1].focusNode;
+          }
         }
         //Check position of save and clear button and set the last focus node
         //then set the last focus node accordingly
@@ -9146,12 +9985,12 @@ define([
 
       /* Value Picker functions */
 
-      _canShowValuePicker: function(){
+      _canShowValuePicker: function () {
         var showValuePicker;
         //check if show value picker is configured, if notthe by default set showValuepicker to false
-        if(this.config.editor.hasOwnProperty("showValuePicker")){
+        if (this.config.editor.hasOwnProperty("showValuePicker")) {
           showValuePicker = this.config.editor.showValuePicker;
-        } else{
+        } else {
           showValuePicker = false
         }
         //set showValuePicker to false if autoSave mode is on
@@ -9219,8 +10058,8 @@ define([
 
       _createValuePickerButton: function (field, fieldLabel, container, isFieldDisabled, fieldDijit) {
         var fieldLabels = {}, classNames = "esriCTValuePickerButton";
-        if(isFieldDisabled){
-          classNames +=" disabled";
+        if (isFieldDisabled) {
+          classNames += " disabled";
         }
         //create field label object which will be used when valuePicker button is clicked
         fieldLabels[field] = fieldLabel;
@@ -9252,7 +10091,7 @@ define([
         //show value picker when currentMultipleValues is valid
         if (this.currentMultipleValues) {
           //hide the previous value picker if it exist
-          if(this.valuePicker){
+          if (this.valuePicker) {
             this.valuePicker.hideDialog();
           }
           //create new instance on value picker

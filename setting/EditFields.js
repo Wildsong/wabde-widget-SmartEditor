@@ -311,6 +311,7 @@ define(
           layerInfos: this.layerInfos,
           isRelatedLayer: this.isRelatedLayer,
           map: this.map,
+          portalInfo: this.portalInfo,
           _fieldType: tr.fieldType,
           _attributeActionsTable: this._attributeActionsTable
         });

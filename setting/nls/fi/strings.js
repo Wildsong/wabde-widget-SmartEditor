@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Ryhmittele hakutulokset",
     "groupFilteredTemplatesTip": "Vaihtoehto, jolla voit ryhmitellä hakutulokset karttatason mukaan.",
     "displayShapeSelector": "Näytä piirustusasetukset",
-    "createNewFeaturesFromExisting": "Salli käyttäjän luoda uusia kohteita aiemmin luoduista kohteista",
-    "createNewFeaturesFromExistingTip": "Asetus, joka sallii käyttäjän kopioida aiemmin luodun kohteen uusien kohteiden luontia varten",
-    "copiedFeaturesOverrideDefaults": "Kopioitujen kohteiden arvot ohittavat oletusarvot",
+    "createNewFeaturesFromExisting": "Salli uusien kohteiden luonti aiemmin luoduista kohteista",
+    "createNewFeaturesFromExistingTip": "Asetus, joka sallii käyttäjän kopioida aiemmin luotuja kohteita uusien kohteiden luontia varten",
+    "copiedFeaturesOverrideDefaults": "Kopioitujen kohteiden arvot korvaavat kohdekenttien oletusarvot",
     "copiedFeaturesOverrideDefaultsTip": "Kopioitujen kohteiden arvot korvaavat mallin oletusarvot vain vastaavien kenttien osalta",
     "displayShapeSelectorTip": "Vaihtoehto, joka tuo näkyviin valitun mallin kelvollisten piirustusasetusten luettelon.",
     "displayPresetTop": "Näytä ennalta määritetty arvoluettelo ylhäällä",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Tallenna asetukset",
     "geometrySettingsLegendLabel": "Geometria-asetukset",
     "actionsSettingsLegendLabel": "Toimintojen asetukset",
-    "buttonPositionsLabel": "Tallenna-, Poista-, Takaisin- ja Peruuta-painikkeiden sijainti",
+    "buttonPositionsLabel": "Tallenna-, Poista-, Takaisin- ja Sulje-painikkeiden sijainti",
     "belowEditLabel": "Muokkauslomakkeen alapuolella",
     "aboveEditLabel": "Muokkauslomakkeen yläpuolella",
     "switchToMultilineInput": "Vaihda moniriviseen syöttöön, kun kentän pituus ylittyy",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Näytä kehote, kun useita arvoja on käytettävissä kentälle, jossa on leikkauksen ominaisuustietotoiminto",
     "expandRelatedTable": "Laajenna kaikki liittyvät taulut tai karttatasot latauksen yhteydessä",
     "expandMainTable": "Laajenna kaikki pääkarttatasot latauksen yhteydessä",
+    "copyAndAppendFeatureLabel": "Kopioi ja liitä kohteita",
+    "allowCopyPolygonLabel": "Salli aluekohteen kopiointi pisteeseen",
+    "allowCopyPolygonTooltip": "Asetus, joka sallii aluekohteiden kopioinnin pistekohdemalleihin, joissa on geometriamuunnoksia",
+    "allowCopyLineLabel": "Salli viivan kopiointi pisteeseen",
+    "allowCopyLineTooltip": "Asetus, joka sallii viivakohteiden kopioinnin pistekohdemalleihin, joissa on geometriamuunnoksia",
+    "pointAtStartLabel": "Piste alkuun",
+    "pointAtStartTooltip": "Lisää piste kopioitavan viivan alkuun",
+    "pointAtEndLabel": "Piste loppuun",
+    "pointAtEndTooltip": "Lisää piste kopioitavan viivan loppuun",
     "layerSettingsTable": {
       "allowDelete": "Salli poisto",
       "allowDeleteTip": "Salli poisto – Toiminto, joka sallii käyttäjän poistaa kohteen. Se on pois käytöstä, jos karttataso ei tue poistamista.",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Määritä kohteiden valinnan toleranssi (pikseleinä)",
     "featuresSelectionToleranceTooltip": "Antaa käyttäjille mahdollisuuden avata helposti ominaisuustietojen muokkauspaneeli kohdetta napsauttamalla",
     "featuresSelectionToleranceErrorMsg": "Virheellinen kohteiden valinnan toleranssiarvo",
-    "autoSaveAttrUpdates": "Tallenna ominaisuustietojen päivitykset automaattisesti"
+    "autoSaveAttrUpdates": "Tallenna ominaisuustietojen ja geometrian päivitykset automaattisesti",
+    "defaultCoordinateSystem": "Oletusviitejärjestelmä",
+    "defaultCoordinateSystemTooltip": "Määritä oletusviitejärjestelmä, kun valittu pistekohde siirretään uuteen sijaintiin"
   },
   "editDescriptionPage": {
     "title": "Määritä ominaisuuden yleiskatsausteksti karttatasolle <b>${layername}</b> "
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Ominaisuustieto",
     "mapSpatialReferenceOptionLabel": "Kartan koordinaatistotieto",
     "latLongOptionLabel": "Leveysaste/Pituusaste",
-    "MGRS": "MGRS",
+    "MGRS": "MGRS (Military Grid Reference System)",
     "allGroupsCreatedMsg": "Kaikki mahdolliset ryhmät on jo luotu",
     "coordinatesSourceTitle": "Koordinaattien lähde",
     "featureLocation": "Kohteen sijainti",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Kaikki yksilölliset ennalta määritetyt kenttien nimet on lueteltu tässä. Ennalta määritetyn kentän poistaminen poistaa käytöstä vastaavan kentän esiasetuksena kaikista karttatasoista ja taulukoista."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Leikkauskohdan toleranssin oletusarvo kaikille kohteille",
-    "pixelsToleranceTitle": "Leikkauskohdan toleranssin oletusarvo (pikseliarvo), jota käytetään vain pistekohteissa"
+    "intersectionLabel": "Leikkauskohdan toleranssin oletusarvo kaikille kohteille",
+    "intersectionTitle": "Ota käyttöön yleinen toleranssi leikkauskohtia varten",
+    "pixelsToleranceLabel": "Leikkauskohdan toleranssin oletusarvo (pikseliarvo), jota käytetään vain pistekohteissa",
+    "pixelsToleranceTitle": "Jos leikkauskohdan toleranssin oletusarvoksi on määritetty 0 kaikille kohteille, käytä tätä asetusta pistekohteille"
   },
   "smartActionsPage": {
     "smartActionLabel": "Määritä älykäs toiminto",

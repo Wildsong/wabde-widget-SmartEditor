@@ -431,6 +431,7 @@ define(
                 layerChooserFromMapArgs = {
                     multiple: false,
                     createMapResponse: this.map.webMapResponse,
+                    onlyShowWebMapLayers: true,
                     filter: this._createFiltersForLayerSelector()
                 };
                 return layerChooserFromMapArgs;
@@ -607,7 +608,10 @@ define(
                 })));
                 if (this.valueProvider) {
                     this.valueProvider.placeAt(this.valueProviderContainer);
-                    if (this.relativeDates && this.relativeDates.chooseFromLayerInfo && this.relativeDates.chooseFromLayerInfo.selectedValue && this._isFirsTime) {
+                    if (this.relativeDates && this.relativeDates.chooseFromLayerInfo &&
+                        this.relativeDates.chooseFromLayerInfo.selectedValue &&
+                        new Date(this.relativeDates.chooseFromLayerInfo.selectedValue) != "Invalid Date" &&
+                        this._isFirsTime) {
                         partObj.valueObj.value = this.relativeDates.chooseFromLayerInfo.selectedValue;
                         this._isFirsTime = false;
                     }

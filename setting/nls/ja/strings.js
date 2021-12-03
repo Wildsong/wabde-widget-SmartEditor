@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "検索結果のグループ",
     "groupFilteredTemplatesTip": "レイヤーごとに検索結果をグループ化するためのオプションです。",
     "displayShapeSelector": "描画オプションの表示",
-    "createNewFeaturesFromExisting": "ユーザーが既存のフィーチャから新しいフィーチャを作成できるようにします",
+    "createNewFeaturesFromExisting": "既存のフィーチャから新しいフィーチャを作成できるようにします",
     "createNewFeaturesFromExistingTip": "ユーザーが既存のフィーチャをコピーして新しいフィーチャを作成できるようにするオプション",
-    "copiedFeaturesOverrideDefaults": "コピーされたフィーチャの値はデフォルトをオーバーライドします",
+    "copiedFeaturesOverrideDefaults": "コピーされたフィーチャの値によって、ターゲット フィールドのデフォルトの値がオーバーライドされます",
     "copiedFeaturesOverrideDefaultsTip": "コピーされたフィーチャの値によって、一致したフィールドのデフォルトのテンプレート値のみがオーバーライドされます",
     "displayShapeSelectorTip": "選択したテンプレートに関する有効な描画オプションのリストを表示するためのオプション。",
     "displayPresetTop": "設定済みの値のリストを上部に表示",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "設定の保存",
     "geometrySettingsLegendLabel": "ジオメトリ設定",
     "actionsSettingsLegendLabel": "アクション設定",
-    "buttonPositionsLabel": "[保存]、[削除]、[戻る]、および [キャンセル] ボタンの位置",
+    "buttonPositionsLabel": "[保存]、[削除]、[戻る]、および [閉じる] ボタンの位置",
     "belowEditLabel": "編集フォームの下",
     "aboveEditLabel": "編集フォームの上",
     "switchToMultilineInput": "フィールドの長さを超えたときに複数行の入力に切り替え",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "交点属性アクションが指定されたフィールドに対し複数の値が使用可能な場合、プロンプトを表示",
     "expandRelatedTable": "すべての関連テーブルまたはレイヤーを読み込み時に展開",
     "expandMainTable": "すべての親レイヤーを読み込み時に展開",
+    "copyAndAppendFeatureLabel": "フィーチャのコピーと追加",
+    "allowCopyPolygonLabel": "ポイントへのポリゴンのコピーを許可",
+    "allowCopyPolygonTooltip": "ジオメトリを変換して、ポイント ターゲット フィーチャ テンプレートにポリゴン フィーチャをコピーすることを許可するオプション",
+    "allowCopyLineLabel": "ポイントへのラインのコピーを許可",
+    "allowCopyLineTooltip": "ジオメトリを変換して、ポイント ターゲット フィーチャ テンプレートにライン フィーチャをコピーすることを許可するオプション",
+    "pointAtStartLabel": "始点",
+    "pointAtStartTooltip": "コピー対象ラインの先頭にポイントを追加します",
+    "pointAtEndLabel": "終点",
+    "pointAtEndTooltip": "コピー対象ラインの末尾にポイントを追加します",
     "layerSettingsTable": {
       "allowDelete": "削除の許可",
       "allowDeleteTip": "削除の許可 - ユーザーがフィーチャを削除することを許可するオプション。レイヤーが削除をサポートしていない場合は無効化されます。",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "フィーチャ選択の許容値の設定 (ピクセル単位)",
     "featuresSelectionToleranceTooltip": "フィーチャをクリックすると、属性編集パネルを簡単に開くことができます。",
     "featuresSelectionToleranceErrorMsg": "無効なフィーチャ選択の許容値",
-    "autoSaveAttrUpdates": "属性の更新を自動的に保存"
+    "autoSaveAttrUpdates": "属性とジオメトリの更新を自動的に保存",
+    "defaultCoordinateSystem": "デフォルトの参照系",
+    "defaultCoordinateSystemTooltip": "選択したポイント フィーチャを新しい位置に移動する際のデフォルトの参照系を設定します"
   },
   "editDescriptionPage": {
     "title": "<b>${layername}</b> の属性概要テキストの定義 "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "条件 - ルールの順序を変更し、ルールが始動する場合の条件を定義します"
     },
     "copyAction": {
-      "description": "アクティブになっている場合、フィールド値のソースは、有効な条件を始動するかリストが完了するまで、順番に処理されます。条件を定義するには、[条件編集] ボタンを使用します。",
+      "description": "アクティブになっている場合、フィールド値のソースは、有効な条件を始動するかリストが完了するまで、順番に処理されます。 条件を定義するには、[条件編集] ボタンを使用します。",
       "intersection": "交点",
       "coordinates": "座標",
       "address": "住所",
@@ -149,7 +160,7 @@ define({
       "editGroupHint": "警告: 個別編集は、このフィールドに関連する選択したスマート アクションをグループから削除します",
       "popupTitle": "編集オプションの選択",
       "editAttributeGroup": "選択した属性アクションはグループから定義されます。 属性アクションを編集するには、次のいずれかのオプションを選択します。",
-      "expression": "選択したスマート アクションの条件式はグループから定義されます。 スマート アクションの条件式を編集するには、次のいずれかのオプションを選択します。",
+      "expression": "選択したスマート アクションの式はグループから定義されます。 スマート アクションの式を編集するには、次のいずれかのオプションを選択します。",
       "editGroupButton": "グループの編集",
       "editIndependentlyButton": "個別編集"
     }
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "属性",
     "mapSpatialReferenceOptionLabel": "マップの空間参照",
     "latLongOptionLabel": "緯度/経度",
-    "MGRS": "MGRS",
+    "MGRS": "MGRS (Military Grid Reference System)",
     "allGroupsCreatedMsg": "可能なすべてのグループがすでに作成されています",
     "coordinatesSourceTitle": "座標ソース",
     "featureLocation": "フィーチャの場所",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "ここには、すべての一意のプリセット フィールドの名前が表示されます。 プリセット フィールドを削除すると、すべてのレイヤー/テーブルから、プリセットとして使用される各フィールドは無効になります。"
   },
   "intersectionTolerance": {
-    "intersectionTitle": "すべてのフィーチャのデフォルトの交差許容値",
-    "pixelsToleranceTitle": "ポイント フィーチャのみに適用されるデフォルトの交差許容値 （ピクセル値）"
+    "intersectionLabel": "すべてのフィーチャのデフォルトの交差許容値",
+    "intersectionTitle": "交点のグローバル許容値を有効化",
+    "pixelsToleranceLabel": "ポイント フィーチャのみに適用されるデフォルトの交差許容値 (ピクセル値)",
+    "pixelsToleranceTitle": "すべてのフィーチャのデフォルトの交差許容値が 0 に設定されている場合、この設定をポイント フィーチャに使用します"
   },
   "smartActionsPage": {
     "smartActionLabel": "スマート アクションの構成",
@@ -261,7 +274,7 @@ define({
     "warningMsgOnLayerChange": "定義した条件式と条件式が適用されるフィールドがクリアされます。",
     "smartActionsTable": {
       "name": "名前",
-      "expression": "条件式",
+      "expression": "式",
       "definedFor": "定義対象"
     }
   },

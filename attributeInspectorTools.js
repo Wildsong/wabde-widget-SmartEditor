@@ -23,6 +23,7 @@ define([
   'dojo/dom-class',
   'dojo/topic',
   'dijit/registry',
+  'jimu/utils',
   'jimu/BaseWidgetSetting'
 ], function (
   declare,
@@ -33,8 +34,9 @@ define([
   domClass,
   topic,
   registry,
+  jimuUtils,
   BaseWidgetSetting
-  ) {
+) {
   return declare([BaseWidgetSetting], {
     _attrInspector: null,
     _feature: null,
@@ -67,6 +69,7 @@ define([
       if (this._attTable === undefined || this._attTable === null) {
         return;
       }
+      this._checkDisplayFormat();
       this._addValidation();
     },
     _checkFeatureData: function (attributes) {
@@ -74,8 +77,8 @@ define([
         if (attributes.hasOwnProperty(finfo.fieldName)) {
           switch (finfo.type) {
             case "esriFieldTypeString":
-              if (finfo.length > 0 && attributes[finfo.fieldName] !== null) {
-
+              if (finfo.length > 0 && attributes[finfo.fieldName] !== null &&
+                attributes[finfo.fieldName] !== undefined) {
                 if (attributes[finfo.fieldName].length > finfo.length) {
                   attributes[finfo.fieldName] =
                     attributes[finfo.fieldName].substring(0, finfo.length);
@@ -140,7 +143,7 @@ define([
             case "esriFieldTypeSingle":
             case "esriFieldTypeDouble":
               if (finfo.nullable === false && (finfo.domain === undefined ||
-               finfo.domain === null)) {
+                finfo.domain === null)) {
                 this._requiredNonDomainDecFields.push(fieldLabel);
               }
               this._dblFieldNames.push(finfo.fieldName);
@@ -247,7 +250,7 @@ define([
                 on(rowInfo[0], "change", lang.hitch(this, function () {
                   if (this._isGuid(rowInfo[0].get("value"), true) === false) {
                     domClass.add(rowInfo[2], ["dijitTextBoxError", "dijitValidationTextBox",
-                         "dijitValidationTextBoxError", "dijitError"]);
+                      "dijitValidationTextBoxError", "dijitError"]);
                   }
                   else {
                     if (domClass.contains(rowInfo[2], "dijitTextBoxError")) {
@@ -354,6 +357,47 @@ define([
       catch (err) {
         console.log(err);
         return null;
+      }
+    },
+
+    _checkDisplayFormat: function () {
+      var integerFields = [
+        "esriFieldTypeSmallInteger",
+        "esriFieldTypeInteger",
+        "esriFieldTypeSingle",
+        "esriFieldTypeDouble"];
+      if (this._attTable === undefined || this._attTable === null) {
+        return;
+      }
+      if (this._attTable.length > 0) {
+        array.forEach(this._attTable, lang.hitch(this, function (row) {
+          var rowInfo = this._getRowInfo(row);
+          var rowFieldName = row.getAttribute("data-fieldname");
+          if (rowInfo && rowFieldName) {
+            array.some(this._fieldInfo, lang.hitch(this, function (field) {
+              if (field.name === rowFieldName && integerFields.indexOf(field.type) !== -1 &&
+                !field.domain) {
+                if (field.hasOwnProperty("format") && field.format) {
+                  if (field.format.hasOwnProperty('digitSeparator')) {
+                    //If digit separator is turned off
+                    //we need to set the pattern so that the digit separator's are not shown
+                    if (!field.format.digitSeparator) {
+                      var pattern = "#.";
+                      rowInfo[0].constraints.pattern = pattern;
+                      //Check if the field has a value
+                      //If yes, just set the value, this will make sure the pattern is applied for
+                      //the default values
+                      if (!isNaN(rowInfo[0].value)) {
+                        rowInfo[0].set('value', rowInfo[0].value);
+                      }
+                    }
+                  }
+                }
+                return true;
+              }
+            }));
+          }
+        }));
       }
     }
 

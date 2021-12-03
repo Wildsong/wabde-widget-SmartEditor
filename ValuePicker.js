@@ -54,12 +54,11 @@ define(
         this.showDialog();
       },
 
-      _isFieldDisabled: function(fieldName){
-        var returnValue;
-        if(!this.disabledFields || this.disabledFields.length===0){
+      _isFieldDisabled: function (fieldName) {
+        if (!this.disabledFields || this.disabledFields.length === 0) {
           return false;
         }
-        else if(this.disabledFields && this.disabledFields.indexOf(fieldName) > -1){
+        else if (this.disabledFields && this.disabledFields.indexOf(fieldName) > -1) {
           return true;
         }
         return false;
@@ -67,7 +66,6 @@ define(
 
       _initControls: function () {
         if (this.showForField) {
-          domClass.add(this.valuePickerHint, "esriCTHidden");
           this.addField(this.showForField);
         } else if (this.multipleValues) {
           for (var fieldName in this.multipleValues) {
@@ -146,7 +144,7 @@ define(
         var fieldPopupInfo = this._getPopupFieldInfo(fieldName);
         var result = jimuUtils._getValues(this.layerInfo.layerInfo.layerObject, fieldPopupInfo, fieldName, values);
         //added this code as it was failing in API for numbers  
-        result = array.map(result, function(option){
+        result = array.map(result, function (option) {
           return {
             value: option.value,
             label: option.label + ""

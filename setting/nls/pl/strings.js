@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Grupuj wyniki wyszukiwania",
     "groupFilteredTemplatesTip": "Opcja służąca do grupowania wyników wyszukiwania według warstwy.",
     "displayShapeSelector": "Pokaż opcje wyświetlania",
-    "createNewFeaturesFromExisting": "Pozwala użytkownikowi na tworzenie nowych obiektów na podstawie obiektów istniejących",
-    "createNewFeaturesFromExistingTip": "Opcja pozwalająca użytkownikowi na kopiowanie istniejącego obiektu w celu utworzenia nowych obiektów",
-    "copiedFeaturesOverrideDefaults": "Wartości skopiowanych obiektów zastępują wartości domyślne",
+    "createNewFeaturesFromExisting": "Zezwalaj na tworzenie nowych obiektów na podstawie obiektów istniejących",
+    "createNewFeaturesFromExistingTip": "Opcja pozwalająca użytkownikowi na kopiowanie istniejących obiektów w celu utworzenia nowych obiektów",
+    "copiedFeaturesOverrideDefaults": "Wartości ze skopiowanych obiektów zastępują wartości domyślne w polach docelowych",
     "copiedFeaturesOverrideDefaultsTip": "Wartości ze skopiowanych obiektów zastąpią domyślne wartości szablonu jedynie w przypadku zgodnych pól",
     "displayShapeSelectorTip": "Opcja wyświetlania listy opcji wyświetlania dostępnych dla wybranego szablonu.",
     "displayPresetTop": "Wyświetl listę wstępnie ustawionych wartości na górze",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Zapisz ustawienia",
     "geometrySettingsLegendLabel": "Ustawienia geometrii",
     "actionsSettingsLegendLabel": "Ustawienia działań",
-    "buttonPositionsLabel": "Pozycja przycisków Zapisz, Usuń, Wstecz i Anuluj",
+    "buttonPositionsLabel": "Pozycja przycisków Zapisz, Usuń, Wstecz i Zamknij",
     "belowEditLabel": "Poniżej formularza edycji",
     "aboveEditLabel": "Powyżej formularza edycji",
     "switchToMultilineInput": "Przełącz na wielowierszowe pole wejściowe, gdy długość pola przekracza",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Wyświetl monit, gdy dla pola z działaniem atrybutu przecięcia dostępnych jest wiele wartości",
     "expandRelatedTable": "Rozwiń wszystkie powiązane tabele/warstwy przy wczytywaniu",
     "expandMainTable": "Rozwiń wszystkie warstwy nadrzędne przy wczytywaniu",
+    "copyAndAppendFeatureLabel": "Kopiuj i dołącz obiekty",
+    "allowCopyPolygonLabel": "Zezwalaj na kopiowanie poligonu do punktu",
+    "allowCopyPolygonTooltip": "Opcja pozwalająca na kopiowanie obiektów poligonowych do docelowych szablonów obiektów punktowych z transformacjami geometrycznymi",
+    "allowCopyLineLabel": "Zezwalaj na kopiowanie linii do punktu",
+    "allowCopyLineTooltip": "Opcja pozwalająca na kopiowanie obiektów liniowych do docelowych szablonów obiektów punktowych z transformacjami geometrycznymi",
+    "pointAtStartLabel": "Punkt na początku",
+    "pointAtStartTooltip": "Dodaj punkt na początku kopiowanej linii",
+    "pointAtEndLabel": "Punkt na końcu",
+    "pointAtEndTooltip": "Dodaj punkt na końcu kopiowanej linii",
     "layerSettingsTable": {
       "allowDelete": "Zezwalaj na usuwanie",
       "allowDeleteTip": "Zezwalaj na usuwanie — opcja umożliwiająca użytkownikowi usuwanie obiektów; wyłączona, jeśli warstwa nie obsługuje usuwania",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Skonfiguruj tolerancję na potrzeby wyboru obiektów (w pikselach)",
     "featuresSelectionToleranceTooltip": "Umożliwia użytkownikom łatwe otwieranie panelu edycji atrybutów przez kliknięcie obiektu",
     "featuresSelectionToleranceErrorMsg": "Nieprawidłowa wartość tolerancji selekcji obiektów",
-    "autoSaveAttrUpdates": "Automatycznie zapisuj aktualizacje atrybutów"
+    "autoSaveAttrUpdates": "Automatycznie zapisuj aktualizacje atrybutów i geometrii",
+    "defaultCoordinateSystem": "Domyślny system odniesienia",
+    "defaultCoordinateSystemTooltip": "Ustaw domyślny system odniesienia podczas przenoszenia wybranego obiektu punktowego do nowej lokalizacji"
   },
   "editDescriptionPage": {
     "title": "Zdefiniuj tekst opisu atrybutów dla warstwy <b>${layername}</b> "
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atrybut",
     "mapSpatialReferenceOptionLabel": "Odniesienie przestrzenne mapy",
     "latLongOptionLabel": "Szer. geogr./dł. geogr.",
-    "MGRS": "MGRS",
+    "MGRS": "Military Grid Reference System (MGRS)",
     "allGroupsCreatedMsg": "Wszystkie możliwe grupy zostały już utworzone",
     "coordinatesSourceTitle": "Źródło współrzędnych",
     "featureLocation": "Lokalizacja obiektu",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "W tym miejscu są wyświetlane wszystkie nazwy wstępnie skonfigurowanych pól. Usunięcie wstępnie skonfigurowanego pola spowoduje, że nie będzie można go już używać w żadnych warstwach ani tabelach."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Domyślna tolerancja przecięcia dla wszystkich obiektów",
-    "pixelsToleranceTitle": "Domyślna tolerancja przecięcia (wartość wyrażona w pikselach) stosowana tylko w przypadku obiektów punktowych"
+    "intersectionLabel": "Domyślna tolerancja przecięcia dla wszystkich obiektów",
+    "intersectionTitle": "Umożliwia włączenie globalnej tolerancji dla przecięć.",
+    "pixelsToleranceLabel": "Domyślna tolerancja przecięcia (wartość wyrażona w pikselach) stosowana tylko w przypadku obiektów punktowych",
+    "pixelsToleranceTitle": "Jeśli domyślna tolerancja przecięcia wszystkich obiektów jest ustawiona na wartość 0, użyj tego ustawienia dla obiektów punktowych."
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfiguruj inteligentne działanie",

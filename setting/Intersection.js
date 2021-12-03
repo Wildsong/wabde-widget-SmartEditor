@@ -495,6 +495,7 @@ define(
         var layerChooserFromMapArgs;
         layerChooserFromMapArgs = {
           multiple: false,
+          onlyShowWebMapLayers: true,
           createMapResponse: this.map.webMapResponse,
           filter: this._createFiltersForLayerSelector()
         };
@@ -568,7 +569,7 @@ define(
         layerChooserFromMapArgs = this._createLayerChooserMapArgs();
         this._layerChooserFromMap = new LayerChooserFromMap(layerChooserFromMapArgs);
         this._layerChooserFromMap.startup();
-        layerInfosArray = this._layerChooserFromMap.layerInfosObj.getLayerInfoArray();
+        layerInfosArray = this._layerChooserFromMap.layerInfosObj.getLayerInfoArrayOfWebmap();
         //Create total layers array
         this._getAllFilteredLayers(layerInfosArray, defList);
         return defList;

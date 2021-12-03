@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "群組搜尋結果",
     "groupFilteredTemplatesTip": "用來按圖層分組搜尋結果的選項",
     "displayShapeSelector": "顯示繪製選項",
-    "createNewFeaturesFromExisting": "允許使用者從現有的圖徵建立新圖徵",
+    "createNewFeaturesFromExisting": "允許從現有圖徵建立新圖徵",
     "createNewFeaturesFromExistingTip": "可讓使用者複製現有的圖徵以建立新圖徵的選項",
-    "copiedFeaturesOverrideDefaults": "複製的圖徵值將覆寫預設值",
+    "copiedFeaturesOverrideDefaults": "所複製圖徵的值會覆寫目標欄位中的預設值",
     "copiedFeaturesOverrideDefaultsTip": "只會針對符合的欄位，將複製的圖徵值覆寫預設樣板值",
     "displayShapeSelectorTip": "用來顯示所選樣板的有效繪製選項清單的選項。",
     "displayPresetTop": "在頂端顯示預設值清單",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "儲存設定",
     "geometrySettingsLegendLabel": "幾何設定",
     "actionsSettingsLegendLabel": "動作設定",
-    "buttonPositionsLabel": "「儲存」、「刪除」、「上一步」和「取消」按鈕的位置",
+    "buttonPositionsLabel": "「儲存」、「刪除」、「上一步」和「關閉」按鈕的位置",
     "belowEditLabel": "編輯表單下方",
     "aboveEditLabel": "編輯表單上方",
     "switchToMultilineInput": "超過欄位長度時切換至多行輸入",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "當具有交匯點屬性動作的欄位有多個可用值時顯示提示",
     "expandRelatedTable": "載入時展開所有相關表格/圖層",
     "expandMainTable": "載入時展開所有父圖層",
+    "copyAndAppendFeatureLabel": "複製和附加圖徵",
+    "allowCopyPolygonLabel": "允許複製多邊形至點",
+    "allowCopyPolygonTooltip": "允許將多邊形圖徵複製到點目標圖徵範本中並進行幾何轉換",
+    "allowCopyLineLabel": "允許複製線至點",
+    "allowCopyLineTooltip": "允許將線圖徵複製到點目標圖徵範本中並進行幾何轉換",
+    "pointAtStartLabel": "開頭點",
+    "pointAtStartTooltip": "在要複製的線開頭處新增一個點",
+    "pointAtEndLabel": "結尾點",
+    "pointAtEndTooltip": "在要複製的線結尾處新增一個點",
     "layerSettingsTable": {
       "allowDelete": "允許刪除",
       "allowDeleteTip": "允許刪除 - 用來允許使用者刪除圖徵的選項；如果圖層不支援刪除則停用",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "設定圖徵選擇的容差 (像素)",
     "featuresSelectionToleranceTooltip": "使用者可按一下圖徵以輕鬆開啟屬性編輯面板",
     "featuresSelectionToleranceErrorMsg": "無效的圖徵選擇容差值",
-    "autoSaveAttrUpdates": "自動儲存屬性更新"
+    "autoSaveAttrUpdates": "自動儲存屬性和幾何更新",
+    "defaultCoordinateSystem": "預設參考系統",
+    "defaultCoordinateSystemTooltip": "將所選點圖徵移到新位置時設定預設參考系統"
   },
   "editDescriptionPage": {
     "title": "定義 <b>${layername}</b> 的屬性概觀文字。 "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "準則 - 變更規則的順序和定義觸發時的準則"
     },
     "copyAction": {
-      "description": "如果已啟動欄位值來源，則會依序處理，直到觸發有效條件或完成清單。使用「條件編輯」按鈕來定義條件。",
+      "description": "如果已啟動欄位值來源，則會依序處理，直到觸發有效條件或完成清單。 使用「條件編輯」按鈕來定義條件。",
       "intersection": "十字路口",
       "coordinates": "座標",
       "address": "地址",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "屬性",
     "mapSpatialReferenceOptionLabel": "地圖空間參考",
     "latLongOptionLabel": "緯度/經度",
-    "MGRS": "MGRS",
+    "MGRS": "軍事網格參考系統 (MGRS)",
     "allGroupsCreatedMsg": "已建立所有可能的群組",
     "coordinatesSourceTitle": "座標來源",
     "featureLocation": "圖徵位置",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "這裡將列出所有唯一預設欄位名稱。 移除預設欄位將停用所有圖層/表格所預設的相對欄位。"
   },
   "intersectionTolerance": {
-    "intersectionTitle": "所有圖徵的預設交匯點容差",
-    "pixelsToleranceTitle": "僅適用點圖徵的預設交匯點容差 (像素值)"
+    "intersectionLabel": "所有圖徵的預設交匯點容差",
+    "intersectionTitle": "啟用交會處的全域容差",
+    "pixelsToleranceLabel": "僅適用點圖徵的預設交匯點容差 (像素值)",
+    "pixelsToleranceTitle": "若將所有圖徵的預設交會處容差設為 0，則將此設定用於點圖徵"
   },
   "smartActionsPage": {
     "smartActionLabel": "配置智慧動作",
@@ -261,7 +274,7 @@ define({
     "warningMsgOnLayerChange": "將清除定義的表達式和套用它的欄位。",
     "smartActionsTable": {
       "name": "名稱",
-      "expression": "運算式",
+      "expression": "表達式",
       "definedFor": "定義對象"
     }
   },
@@ -308,7 +321,7 @@ define({
     "customLabel": "自訂"
   },
   "relativeDomains": {
-    "fieldSetTitle": "清單",
+    "fieldSetTitle": "列表",
     "valueText": "數值",
     "defaultText": "預設",
     "selectedDomainFieldsHint": "選擇的網域欄位: ${domainFields}",

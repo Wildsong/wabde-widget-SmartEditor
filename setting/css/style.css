@@ -299,6 +299,11 @@
     display: inline-flex
 }
 
+.jimu-widget-smartEditor-setting .esriCTRadioButtonParentContainer {
+    margin-left: 70px;
+    padding: 5px 0px;
+}
+
 .jimu-widget-smartEditor-setting .esriCTRadioLabel {
     vertical-align: top;
     padding-right: 40px;
@@ -449,7 +454,7 @@ jimu-widget-smartEditor-setting a.attDescrip:hover {
 .claro .jimu-widget-smartEditor-setting-intersection .esriCTDropDownContainer .dijitSelect {
     height: 27px;
     margin-top: 1px;
-    width: 100%;
+    width: 99%;
     float: left;
 }
 
@@ -517,6 +522,7 @@ jimu-widget-smartEditor-setting a.attDescrip:hover {
 }
 .jimu-widget-smartEditor-setting-address .esriCTCreditWarningContainer {
     font-size: 13px;
+    margin-bottom: 5px;
 }
 
 .jimu-widget-smartEditor-setting-intersection .esriCTDataTypeDropdown .dijitSelectLabel {
@@ -714,6 +720,11 @@ jimu-widget-smartEditor-setting a.attDescrip:hover {
     margin-right: 20px;
 }
 
+.jimu-rtl .jimu-widget-smartEditor-setting .esriCTRadioButtonParentContainer {
+    margin-right: 70px;
+    margin-left: 0px;
+}
+
 .jimu-rtl .jimu-widget-smartEditor-setting .esriCTRadioLabel {
     padding-right: 0px;
     padding-left: 40px;
@@ -771,6 +782,21 @@ jimu-widget-smartEditor-setting a.attDescrip:hover {
 .jimu-rtl .jimu-widget-smartEditor-setting .esriCTGlobalToleranceTextbox {
     float: right;
     margin-right: 15px;
+}
+
+.jimu-widget-smartEditor-setting .esriCTDefaultCoordSelect {
+    width: 30%;
+    float: left;
+    margin: 0 10px 0 15px;
+}
+
+.jimu-rtl .jimu-widget-smartEditor-setting .esriCTDefaultCoordSelect {
+    float: right;
+    margin: 0 15px 0 10px;
+}
+
+.jimu-widget-smartEditor-setting .esriCTDefaultCoordSelect .dijitSelectLabel{
+    width: 230px;
 }
 
 .jimu-widget-smartEditor-setting .esriCTMaxCharacterLimitTextBox {
@@ -937,7 +963,7 @@ jimu-widget-smartEditor-setting a.attDescrip:hover {
 .jimu-widget-smartEditor-setting-smartActionGroup .esriCTTableMainNode {
     width: 100%;
     border-collapse: collapse;
-    height: 100%;
+    position: relative;
 }
 
 .jimu-widget-smartEditor-setting-smartActionGroup .esriCTTableRow {

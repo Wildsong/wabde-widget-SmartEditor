@@ -257,8 +257,8 @@ define(
        * This function is used to pass appropriate params to functions to create layer and fields to apply on
        */
       _addLayerAndFields: function () {
-        var layerDetails, layerToExpand = [], layersFieldValues;
-        layerDetails = this.layerDetails, hasFields = false;
+        var layerDetails, layerToExpand = [], layersFieldValues, hasFields = false;
+        layerDetails = this.layerDetails;
         for (var layerId in layerDetails) {
           if (Object.keys(layerDetails[layerId]).length > 0) {
             hasFields = true;

@@ -128,6 +128,7 @@ define([
       _configuredGeocoderSettings: {},
       _configuredPresetInfos: {},
       _totalLayers: [],
+      _portalInfo: null,
 
       postMixInProperties: function () {
         //mixin default nls with widget nls
@@ -528,6 +529,10 @@ define([
           //if createNewFeaturesFromExisting is unchecked then uncheck overrideDefaultsByCopiedFeature
           if (!this.createNewFeaturesFromExisting.get('checked')) {
             this.overrideDefaultsByCopiedFeature.set('checked', false);
+            this.allowCopyPolygonNode.set('checked', false);
+            this.allowCopyLineNode.set('checked', false);
+            this.copyPointAtStart.set('disabled', true);
+            this.copyPointAtEnd.set('disabled', true);
           }
         })));
 
@@ -535,6 +540,25 @@ define([
           //if overrideDefaultsByCopiedFeature is checked then check createNewFeaturesFromExisting
           if (this.overrideDefaultsByCopiedFeature.get('checked')) {
             this.createNewFeaturesFromExisting.set('checked', true);
+          }
+        })));
+
+        this.own(on(this.allowCopyPolygonNode, 'click', lang.hitch(this, function () {
+          //if allowCopyPolygonToPoint is checked then check createNewFeaturesFromExisting
+          if (this.allowCopyPolygonNode.get('checked')) {
+            this.createNewFeaturesFromExisting.set('checked', true);
+          }
+        })));
+
+        this.own(on(this.allowCopyLineNode, 'click', lang.hitch(this, function () {
+          //if allowCopyLineToPoint is checked then check createNewFeaturesFromExisting
+          if (this.allowCopyLineNode.get('checked')) {
+            this.createNewFeaturesFromExisting.set('checked', true);
+            this.copyPointAtStart.set('disabled', false);
+            this.copyPointAtEnd.set('disabled', false);
+          } else {
+            this.copyPointAtStart.set('disabled', true);
+            this.copyPointAtEnd.set('disabled', true);
           }
         })));
 
@@ -639,11 +663,17 @@ define([
           this.enableMovingSelectedFeatureToGPS.set('checked', false);
         }
 
+        this.own(on(this.enableMovingSelectedFeatureToXY, 'click', lang.hitch(this, function () {
+          this._onMoveFeatureToXYChkChange();
+        })));
+
         if (this.config.editor.hasOwnProperty("enableMovingSelectedFeatureToXY")) {
           this.enableMovingSelectedFeatureToXY.set('checked', this.config.editor.enableMovingSelectedFeatureToXY);
+          this._onMoveFeatureToXYChkChange();
         }
         else {
           this.enableMovingSelectedFeatureToXY.set('checked', false);
+          this.defaultCoordinateSystem.set('disabled', true);
         }
 
         if (this.config.editor.hasOwnProperty("showActionButtonsAbove")) {
@@ -687,6 +717,28 @@ define([
             this.removeOnSave.set('disabled', false);
           }
         })));
+
+        if (this.config.editor.hasOwnProperty("copyPolygonToPoint") &&
+          this.config.editor.copyPolygonToPoint.enabled) {
+          this.allowCopyPolygonNode.set('checked', true);
+        } else {
+          this.allowCopyPolygonNode.set('checked', false);
+        }
+
+        if (this.config.editor.hasOwnProperty("copyLineToPoint") &&
+          this.config.editor.copyLineToPoint.enabled) {
+          this.allowCopyLineNode.set('checked', true);
+          if (this.config.editor.copyLineToPoint.type === 'start') {
+            this.copyPointAtStart.set('checked', true);
+          } else {
+            this.copyPointAtEnd.set('checked', true);
+          }
+        } else {
+          this.allowCopyLineNode.set('checked', false);
+          this.copyPointAtStart.set('checked', true);
+          this.copyPointAtStart.set('disabled', true);
+          this.copyPointAtEnd.set('disabled', true);
+        }
       },
 
       setConfig: function () {
@@ -764,6 +816,12 @@ define([
             } else {
               this.maxCharacter.set("value", 35);
             }
+
+            if (this.config.editor.hasOwnProperty("defaultCoordinateSystem")) {
+              this.defaultCoordinateSystem.set("value", this.config.editor.defaultCoordinateSystem);
+            } else {
+              this.defaultCoordinateSystem.set("value", "Map Spatial Reference");
+            }
             setTimeout(lang.hitch(this, function () {
               this.resize();
               //destroy loading indicator
@@ -781,6 +839,7 @@ define([
           portalUtils.getPortalSelfInfo(this.appConfig.portalUrl).then(lang.hitch(
             this,
             function (portalInfo) {
+              this._portalInfo = portalInfo;
               // get helper-services from portal object
               var helperServices = portalInfo && portalInfo.helperServices;
               var geocodeURL = "";
@@ -789,13 +848,33 @@ define([
                 helperServices.geocode[0].url) {
                 geocodeURL = helperServices.geocode[0].url;
               }
-              def.resolve(geocodeURL);
+              //Get the help page details
+              //required for creating a credits help link
+              this._getHelpPageDetails().then(lang.hitch(this,
+                function (helpMapObj) {
+                  //add the helpMap object in the portal object
+                  this._portalInfo.helpMap = helpMapObj;
+                  def.resolve(geocodeURL);
+                }));
             }), lang.hitch(this, function () {
               def.resolve("");
             }));
         } else {
           def.resolve("");
         }
+        return def.promise;
+      },
+
+      _getHelpPageDetails: function () {
+        var def = new Deferred();
+        esriRequest({
+          url: this.appConfig.portalUrl + "sharing/rest/portals/helpmap?f=json",
+          handleAs: 'json',
+        }).then(lang.hitch(this, function (response) {
+          def.resolve(response.helpMap);
+        }), lang.hitch(this, function () {
+          def.resolve({});
+        }));
         return def.promise;
       },
 
@@ -817,7 +896,7 @@ define([
             }
             def.resolve(defaultGeocoderSettings);
           }), lang.hitch(this, function () {
-            def.resolve(defaultGeocoderSettings);
+            def.resolve(null);
           }));
         }));
         return def.promise;
@@ -903,8 +982,8 @@ define([
           //Add ref to configInfo in each row
           addRowResult.tr._configInfo = configInfo;
           //Disable the edit checkbox if webmap config is selected
+          nl = query(".editable", addRowResult.tr);
           if (this.webmapSettingsRadioBtn.checked) {
-            nl = query(".editable", addRowResult.tr);
             nl.forEach(function (node) {
               var widget = registry.getEnclosingWidget(node.childNodes[0]);
               widget.setStatus(false);
@@ -913,14 +992,23 @@ define([
           //add layer id to uniquely identify the row
           addRowResult.tr._layerId = configInfo.layerInfo.layerObject.id;
           nl = query(".allowDelete", addRowResult.tr);
-          if (configInfo.featureLayer.layerAllowsDelete === false) {
-            nl.forEach(function (node) {
-
-              var widget = registry.getEnclosingWidget(node.childNodes[0]);
-
+          nl.forEach(function (node) {
+            var widget = registry.getEnclosingWidget(node.childNodes[0]);
+            on(widget, "change", lang.hitch(this, function (checked) {
+              //Update the value of hidden check box
+              //if the delete check box value changes
+              var hiddenDeleteCheckBox = query(".allowDeleteHidden", addRowResult.tr);
+              if (hiddenDeleteCheckBox && hiddenDeleteCheckBox[0]) {
+                var widget = registry.getEnclosingWidget(
+                  hiddenDeleteCheckBox[0].childNodes[0]);
+                widget.setValue(checked);
+              }
+            }));
+            if (configInfo.featureLayer.layerAllowsDelete === false) {
               widget.setStatus(false);
-            });
-          }
+            }
+          });
+
           //For webmap settings
           if (this.webmapSettingsRadioBtn.checked) {
             //disable the allow delete check box if webmap settings radio button is checked
@@ -938,16 +1026,26 @@ define([
             nl.forEach(function (node) {
 
               var widget = registry.getEnclosingWidget(node.childNodes[0]);
-              widget.setValue(false);
+              // widget.setValue(false);
               widget.setStatus(false);
-            });
+          });
           }
           //fetch update only check boxes
           nl = query(".allowUpdateOnly", addRowResult.tr);
-          nl.forEach(function (node) {
+          nl.forEach(lang.hitch(this, function (node) {
             var widget = registry.getEnclosingWidget(node.childNodes[0]);
+            on(widget, "change", lang.hitch(this, function (checked) {
+              //Update the value of hidden check box
+              //if the geometry check box value changes
+              var hiddenUpdateOnlyCheckBox = query(".allowUpdateOnlyHidden", addRowResult.tr);
+              if (hiddenUpdateOnlyCheckBox && hiddenUpdateOnlyCheckBox[0]) {
+                var widget = registry.getEnclosingWidget(
+                  hiddenUpdateOnlyCheckBox[0].childNodes[0]);
+                widget.setValue(checked);
+              }
+            }));
             if (configInfo.featureLayer.layerAllowsUpdate === false) {
-              widget.setValue(false);
+              // widget.setValue(false);
               widget.setStatus(false);
             }
             //if related item is accessed and it is layer, then disable and check the checkbox
@@ -955,12 +1053,22 @@ define([
               widget.setValue(true);
               widget.setStatus(false);
             }
-          });
+          }));
 
           //fetch disable geometry check boxes
           nl = query(".disableGeometryUpdate", addRowResult.tr);
-          nl.forEach(function (node) {
+          nl.forEach(lang.hitch(this, function (node) {
             var widget = registry.getEnclosingWidget(node.childNodes[0]);
+            on(widget, "change", lang.hitch(this, function (checked) {
+              //Update the value of hidden check box
+              //if the geometry check box value changes
+              var hiddenDisableGeomCheckBox = query(".disableGeometryUpdateHidden", addRowResult.tr);
+              if (hiddenDisableGeomCheckBox && hiddenDisableGeomCheckBox[0]) {
+                var widget = registry.getEnclosingWidget(
+                  hiddenDisableGeomCheckBox[0].childNodes[0]);
+                widget.setValue(checked);
+              }
+            }));
             if (configInfo.featureLayer.layerAllowGeometryUpdates === false ||
               this.webmapSettingsRadioBtn.checked) {
               widget.setValue(false);
@@ -971,7 +1079,7 @@ define([
               widget.setValue(true);
               widget.setStatus(false);
             }
-          });
+          }));
 
           //if layer don't allow updating & creating of features
           //disable editable & geometryUpdate checkbox
@@ -994,6 +1102,29 @@ define([
               thCbx.setStatus(true);
             }
           }
+
+          /** 
+           * The below code block should be written only after setting the values for all checkboxes,
+           * since the below code will disable the checkboxes and after disabling we cannot set the checkbox value
+           * */
+          //Only when Custom settings are used, for a row if edit checkbox is unchecked then disable all the checkboxes
+          if (!this.webmapSettingsRadioBtn.checked) {
+            //Loop through all the checkboxes and enable/disable them
+            //based on the state of editable checkbox
+            var editableRows = query(".editable", addRowResult.tr);
+            editableRows.forEach(lang.hitch(this, function (node) {
+              var widget = registry.getEnclosingWidget(node.childNodes[0]);
+              if (widget) {
+                if (!widget.getValue()) {
+                  this._editCheckBoxChangeHandler(false, node, configInfo, isRelatedInfo);
+                }
+                on(widget, "change", lang.hitch(this, function (checked) {
+                  this._editCheckBoxChangeHandler(checked, node, configInfo, isRelatedInfo);
+                }));
+              }
+            }));
+          }
+
           //Show warning icon if related item is layer
           if (isRelatedInfo && !configInfo.layerInfo.isTable) {
             var checkBoxRow = query(".edit, .editable", addRowResult.tr)[0];
@@ -1141,6 +1272,7 @@ define([
           editUtils: editUtils,
           map: this.map,
           _smartActionsTable: this._smartActionsTable,
+          portalInfo: this._portalInfo,
           _attributeActionsTable: {
             "Intersection": this._intersectionActionGroupTable,
             "Address": this._addressActionGroupTable,
@@ -1340,6 +1472,24 @@ define([
         this.config.editor.autoSaveAttrUpdates =
           this.autoSaveAttrUpdates.checked === undefined ?
             false : this.autoSaveAttrUpdates.checked;
+
+        // Allow copy polygon to point
+        this.config.editor.copyPolygonToPoint = {
+          enabled: this.allowCopyPolygonNode.checked === undefined ? false : this.allowCopyPolygonNode.checked
+        }
+
+        var copyLineToPointType;
+        if (this.copyPointAtStart.checked) {
+          copyLineToPointType = 'start';
+        } else {
+          copyLineToPointType = 'end';
+        }
+
+        // Allow copy line to point
+        this.config.editor.copyLineToPoint = {
+          enabled: this.allowCopyLineNode.checked === undefined ? false : this.allowCopyLineNode.checked,
+          type: copyLineToPointType
+        }
       },
 
       _getConfigForCurrentDisplayedLayers: function () {
@@ -1515,6 +1665,7 @@ define([
         this.config.editor.honorWebMapConfiguration = this.webmapSettingsRadioBtn.checked ? true : false;
         this.config.editor.expandRelatedTableOnLoad = this.expandRelatedTableNode.checked ? true : false;
         this.config.editor.expandMainLayerOnLoad = this.expandMainLayerNode.checked ? true : false;
+        this.config.editor.defaultCoordinateSystem = this.defaultCoordinateSystem.get('value');
           this._loading.hide();
           def.resolve(this.config);
         }), 200);
@@ -2165,13 +2316,13 @@ define([
                 tableBodyScrollDOM = query(".tableBodyScroll>tbody",this.smartActionsTableNode.domNode);
             if (tableSADOM.length && tableBodyScrollDOM.length) {
               var tableParentHt = domStyle.getComputedStyle(tableSADOM[0].parentElement).height;
-              domStyle.set(tableSADOM[0], "height", tableParentHt);
+            //  domStyle.set(tableSADOM[0], "height", tableParentHt);
               var tableTheadHt = domStyle.getComputedStyle(query(".tableBodyScroll>thead",
                 this.smartActionsTableNode.domNode)[0]).height;
               domStyle.set(tableBodyScrollDOM[0], "height",
                 (parseFloat(tableParentHt) - parseFloat(tableTheadHt) - 10) + "px");
               domStyle.set(tableBodyScrollDOM[0], "overflow-y", "auto");
-              domStyle.set(tableBodyScrollDOM[0], "max-height", "calc(100% - 10px)");
+           //   domStyle.set(tableBodyScrollDOM[0], "max-height", "calc(100% - 10px)");
             }
           }), 200);
         }
@@ -2373,8 +2524,8 @@ define([
         layerChooserFromMapArgs = this._createLayerChooserMapArgs();
         this._layerChooserFromMap = new LayerChooserFromMap(layerChooserFromMapArgs);
         this._layerChooserFromMap.startup();
-        layerInfosArray = this._layerChooserFromMap.layerInfosObj.getLayerInfoArray();
-        var tableInfosArray = this._layerChooserFromMap.layerInfosObj.getTableInfoArray();
+        layerInfosArray = this._layerChooserFromMap.layerInfosObj.getLayerInfoArrayOfWebmap();
+        var tableInfosArray = this._layerChooserFromMap.layerInfosObj.getTableInfoArrayOfWebmap();
         if (tableInfosArray && tableInfosArray.length > 0) {
 
           layerInfosArray = layerInfosArray.concat(tableInfosArray);
@@ -2387,6 +2538,7 @@ define([
         var layerChooserFromMapArgs;
         layerChooserFromMapArgs = {
           multiple: false,
+          onlyShowWebMapLayers: true,
           createMapResponse: this.map.webMapResponse,
           filter: this._createFiltersForLayerSelector()
         };
@@ -2830,6 +2982,7 @@ define([
           params.prevName = lang.clone(tr._configInfo.name);
           params._fieldValues.Address = tr._configInfo.attributeInfo;
         }
+        params.portalInfo = this._portalInfo;
         var addressObj = new Address(params);
         this.own(on(addressObj, "groupInfoUpdated", lang.hitch(this, function (groupInfo) {
           if (!tr) {
@@ -3071,6 +3224,52 @@ define([
         var ht = targetTabPanel.offsetParent.offsetHeight;
         var tabPanelHt = ht - 50;
         domStyle.set(targetTabPanel, "height", tabPanelHt + "px");
+      },
+
+      _canChangeCheckBoxStatus: function (node, configInfo) {
+        //Check for the node class and accordingly return the layers property
+        if (domClass.contains(node, "allowUpdateOnly")) {
+          return configInfo.featureLayer.layerAllowsUpdate &&
+            configInfo.featureLayer.layerAllowsCreate;
+        } else if (domClass.contains(node, "allowDelete")) {
+          return configInfo.featureLayer.layerAllowsDelete;
+        } else if (domClass.contains(node, "disableGeometryUpdate")) {
+          return configInfo.featureLayer.layerAllowGeometryUpdates;
+        }
+      },
+
+      /**
+       * This function is used to handle change event of edit checkbox of each row
+       */
+      _editCheckBoxChangeHandler: function (checked, node, configInfo, isRelatedInfo) {
+        query(".jimu-checkbox", node.parentElement).forEach(lang.hitch(this,
+          function (checkBoxNode) {
+            if (!domClass.contains(checkBoxNode.parentElement, "editable")) {
+              var checkBoxWidget = registry.getEnclosingWidget(checkBoxNode);
+              //for related disableGeometry editing will always be disabled
+              if (isRelatedInfo && domClass.contains(checkBoxNode.parentElement, "disableGeometryUpdate")) {
+                checkBoxWidget.setStatus(false);
+              } //for related layer allowUpdateOnly will be disabled since for related layer you cannot create features using SE
+              else if (isRelatedInfo && !configInfo.layerInfo.isTable && domClass.contains(checkBoxNode.parentElement, "allowUpdateOnly")) {
+                checkBoxWidget.setStatus(false);
+              } //For all other cases, Change the checkbox state only if layer allows the particular action
+              else if (this._canChangeCheckBoxStatus(checkBoxNode.parentElement, configInfo)) {
+                checkBoxWidget.setStatus(checked);
+              }
+            }
+          }));
+      },
+
+      /**
+       * This function is used to enable or disable defaultCoordinateSystem
+       * on move feature to XY chk change
+       */
+      _onMoveFeatureToXYChkChange: function () {
+        if (this.enableMovingSelectedFeatureToXY.get('checked')) {
+          this.defaultCoordinateSystem.set('disabled', false);
+        } else {
+          this.defaultCoordinateSystem.set('disabled', true);
+        }
       }
     });
   });

@@ -414,6 +414,7 @@ define(
           _fieldValues: this._configuredFieldValues,
           _geocoderSettings: this._geocoderSettings,
           _validGeocoderFields: this._validGeocoderFields,
+          portalInfo: this.portalInfo,
           isGroup: false
         });
         this.own(on(this._addressDijit, "attributeActionUpdated",

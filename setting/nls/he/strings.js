@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "קיבוץ תוצאות חיפוש",
     "groupFilteredTemplatesTip": "אפשרות לקבץ את תוצאות החיפוש לפי שכבה.",
     "displayShapeSelector": "הצג אפשרויות שרטוט",
-    "createNewFeaturesFromExisting": "אפשר למשתמש ליצור ישויות חדשות מישויות קיימות",
+    "createNewFeaturesFromExisting": "אפשר יצירת ישות/יות חדשה/ות מישות/יות קיימת/ות",
     "createNewFeaturesFromExistingTip": "אפשרות שהמשתמש יוכל להעתיק ישות קיימת וליצור ישויות חדשות",
-    "copiedFeaturesOverrideDefaults": "הערכים של הישויות שהועתקו מחליפים את ברירות המחדל",
+    "copiedFeaturesOverrideDefaults": "ערך/ים מישות/יות שהועתקה/ו גובר/ים על ערך/ים בשדה/ות יעד",
     "copiedFeaturesOverrideDefaultsTip": "ערכים מישויות שהועתקו יחליפו את הערכים מתבנית ברירת המחדל רק עבור השדות המתאימים",
     "displayShapeSelectorTip": "אפשרות להציג רשימה של אפשרויות שרטוט חוקיות עבור התבנית שנבחרה.",
     "displayPresetTop": "הצג רשימת ערכים קבועה מראש למעלה",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "שמור הגדרות",
     "geometrySettingsLegendLabel": "הגדרות גיאומטריה",
     "actionsSettingsLegendLabel": "הגדרות של פעולות",
-    "buttonPositionsLabel": "מיקום לחצני השמירה, המחיקה, החזרה והביטול",
+    "buttonPositionsLabel": "המיקום של הלחצנים 'שמירה', 'מחיקה', 'הקודם' ו'סגירה'",
     "belowEditLabel": "מתחת לטופס העריכה",
     "aboveEditLabel": "מעל טופס העריכה",
     "switchToMultilineInput": "עבור לקלט מרובה קווים כאשר אורך השדה מעל",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "הצג הודעה כאשר יש כמה ערכים זמינים לשדה עם פעולה של מאפיין צומת",
     "expandRelatedTable": "הרחב את כל הטבלאות/השכבות הקשורות בעת טעינה",
     "expandMainTable": "הרחב את כל שכבות האב בעת טעינה",
+    "copyAndAppendFeatureLabel": "העתק וצרף ישויות",
+    "allowCopyPolygonLabel": "אפשר העתקת פוליגון לנקודה",
+    "allowCopyPolygonTooltip": "בחירה לאפשר העתקת ישויות פוליגון אל תבניות ישויות נקודה של יעד עם התמרות גיאומטריה.",
+    "allowCopyLineLabel": "אפשר העתקת קו לנקודה",
+    "allowCopyLineTooltip": "בחירה לאפשר העתקת ישויות קו אל תבניות ישויות נקודה של יעד עם התמרות גיאומטריה.",
+    "pointAtStartLabel": "נקודה בהתחלה",
+    "pointAtStartTooltip": "הוסף נקודה בהתחלת הקו שמועתק",
+    "pointAtEndLabel": "נקודה בסוף",
+    "pointAtEndTooltip": "הוסף נקודה בסוף הקו שמועתק",
     "layerSettingsTable": {
       "allowDelete": "אפשר מחיקה",
       "allowDeleteTip": "התר מחיקה - אפשרות להתיר למשתמש למחוק ישות; מושבת אם השכבה לא תומכת במחיקה",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "הגדר את הטולרנס לצורך בחירת ישויות (פיקסלים)",
     "featuresSelectionToleranceTooltip": "מאפשר למשתמשים לפתוח בקלות את חלונית עריכת התכונות על ידי לחיצה על הישות",
     "featuresSelectionToleranceErrorMsg": "ערך לא חוקי של טולרנס לבחירת ישויות",
-    "autoSaveAttrUpdates": "שמור עדכוני תכונות באופן אוטומטי"
+    "autoSaveAttrUpdates": "שמור עדכוני תכונות וגיאומטריה באופן אוטומטי",
+    "defaultCoordinateSystem": "מערכת ייחוס של ברירת מחדל",
+    "defaultCoordinateSystemTooltip": "הגדר מערכת ייחוס של ברירת מחדל בעת העברה של ישות נקודה שנבחרה למיקום חדש"
   },
   "editDescriptionPage": {
     "title": "הגדר טקסט סקירה כללית לישויות עבור <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "קריטריונים - שנה את סדר הכלל והגדר את הקריטריונים להפעלתו"
     },
     "copyAction": {
-      "description": "המקורות של ערכי השדות עוברים עיבוד לפי הסדר, אם הם מופעלים, עד שקריטריון חוקי מתמלא או עד שהמערכת מגיע לסוף הרשימה. השתמש בלחצן העריכה של הקריטריונים כדי להגדיר את הקריטריונים.",
+      "description": "מקור ערכי השדות מעובדים לפי הסדר אם הם מופעלים עד הפעלה של קריטריון תקף או עד להשלמת הרשימה. השתמש בלחצן 'ערוך קריטריונים' להגדרת הקריטריון.",
       "intersection": "חיתוך",
       "coordinates": "קואורדינטות",
       "address": "כתובת",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "מאפיין",
     "mapSpatialReferenceOptionLabel": "ייחוס מרחבי של מפה",
     "latLongOptionLabel": "קו רוחב/אורך",
-    "MGRS": "MGRS",
+    "MGRS": "מערכת ייחוס גריד צבאי (MGRS)",
     "allGroupsCreatedMsg": "כל הקבוצות האפשריות כבר נוצרו",
     "coordinatesSourceTitle": "מקור הקואורדינטות",
     "featureLocation": "מיקום ישויות",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "כל שמות השדות הקבועים מראש הייחודיים מפורטים כאן. הסרה של שדה קבוע מראש תביא להשבתת השדה התואם כערך קבוע מראש בכל השכבות/הטבלאות."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "טולרנס ברירת המחדל של צמתים לכל הישויות",
-    "pixelsToleranceTitle": "טולרנס ברירת המחדל של צמתים (ערך פיקסל) שיחול על ישויות נקודתיות בלבד"
+    "intersectionLabel": "טולרנס ברירת המחדל של צמתים לכל הישויות",
+    "intersectionTitle": "הפעל סיבולת גלובלית להצטלבויות",
+    "pixelsToleranceLabel": "טולרנס ברירת המחדל של צמתים (ערך פיקסל) שיחול על ישויות נקודתיות בלבד",
+    "pixelsToleranceTitle": "אם סיבולת ברירת המחדל להצטלבויות עבור כל היישויות מוגדרת ל-0, השתמש בהגדרה הזו ליישויות נקודה"
   },
   "smartActionsPage": {
     "smartActionLabel": "הגדר פעולה חכמה",
@@ -274,7 +287,7 @@ define({
     "alreadyAppliedActionLayerMsg": "פעולת ${action} בוצעה על שדה זה בהגדרות השכבה",
     "appliedGroupName": "${groupName}",
     "noPresetFieldsMsg": "לקבוצה הזו אין שדות משויכים.",
-    "presetNoFieldWarningMsg": "יש להגדיר לפחות שדה אחד לקבוצה שנקבעה מראש:${groupName}"
+    "presetNoFieldWarningMsg": "הגדר לפחות שדה אחד לקבוצה שנקבעה מראש : ${groupName}"
   },
   "chooseFromLayer": {
     "fieldLabel": "שדה",

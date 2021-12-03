@@ -39,10 +39,22 @@ define([
         label: window.apiNls.widgets.editor.tools.NLS_pointLbl
       },
       {
-        id: "seSelectFeaturesToCopyPoint",
-        iconClass: "seToolbarIcon seNewSelectionIcon",
+        id: "seSelectFeaturesPointToRect",
+        iconClass: "feature-action icon-select-by-rect",
         label: "",
-        _drawType: "SELECT"
+        _drawType: "EXTENT"
+      },
+      {
+        id: "seSelectFeaturesPointToLine",
+        iconClass: "feature-action icon-select-by-polygon",
+        label: "",
+        _drawType: "POLYGON"
+      },
+      {
+        id: "seSelectFeaturesPointToLasso",
+        iconClass: "feature-action icon-select-by-freehand-polygon",
+        label: "",
+        _drawType: "FREEHAND_POLYGON"
       }
     ],
     esriGeometryPolyline: [
@@ -124,10 +136,22 @@ define([
         label: window.apiNls.widgets.editor.tools.NLS_triangleLbl
       },
       {
-        id: "seSelectFeaturesToCopyPolyline",
-        iconClass: "seToolbarIcon seNewSelectionIcon",
+        id: "seSelectFeaturesLineToRect",
+        iconClass: "feature-action icon-select-by-rect",
         label: "",
-        _drawType: "SELECT"
+        _drawType: "EXTENT"
+      },
+      {
+        id: "seSelectFeaturesLineToLine",
+        iconClass: "feature-action icon-select-by-polygon",
+        label: "",
+        _drawType: "POLYGON"
+      },
+      {
+        id: "seSelectFeaturesLineToLasso",
+        iconClass: "feature-action icon-select-by-freehand-polygon",
+        label: "",
+        _drawType: "FREEHAND_POLYGON"
       }
     ],
     esriGeometryPolygon: [
@@ -208,12 +232,23 @@ define([
         _disabledIcon: "seToolbarIcon seTriangleIcon",
         _drawType: Draw.TRIANGLE,
         label: window.apiNls.widgets.editor.tools.NLS_triangleLbl
+      }, {
+        id: "seSelectFeaturesPolygonToRect",
+        iconClass: "feature-action icon-select-by-rect",
+        label: "",
+        _drawType: "EXTENT"
       },
       {
-        id: "seSelectFeaturesToCopyPolygon",
-        iconClass: "seToolbarIcon seNewSelectionIcon",
+        id: "seSelectFeaturesPolygonToLine",
+        iconClass: "feature-action icon-select-by-polygon",
         label: "",
-        _drawType: "SELECT"
+        _drawType: "POLYGON"
+      },
+      {
+        id: "seSelectFeaturesPolygonToLasso",
+        iconClass: "feature-action icon-select-by-freehand-polygon",
+        label: "",
+        _drawType: "FREEHAND_POLYGON"
       }
     ]
   };

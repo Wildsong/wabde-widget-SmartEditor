@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Výsledky vyhledávání skupin",
     "groupFilteredTemplatesTip": "Možnost seskupit výsledky vyhledávání podle vrstvy.",
     "displayShapeSelector": "Zobrazit možnosti kreslení",
-    "createNewFeaturesFromExisting": "Umožní uživateli vytvořit nové prvky z existujících prvků",
-    "createNewFeaturesFromExistingTip": "Možnost povolení uživateli kopírovat existující prvek za účelem vytvoření nových prvků",
-    "copiedFeaturesOverrideDefaults": "Hodnoty kopírovaných prvků přepíší výchozí hodnoty",
+    "createNewFeaturesFromExisting": "Povolit vytváření nových prvků z existujících prvků",
+    "createNewFeaturesFromExistingTip": "Možnost povolující uživateli kopírovat existující prvky za účelem vytváření nových prvků",
+    "copiedFeaturesOverrideDefaults": "Hodnoty zkopírovaných prvků přepíší výchozí hodnoty v cílových polích",
     "copiedFeaturesOverrideDefaultsTip": "Hodnoty z kopírovaných prvků přepíší hodnoty výchozí šablony pouze u spárovaných polí",
     "displayShapeSelectorTip": "Možnost zobrazení seznamu platných možností kreslení pro zvolenou šablonu.",
     "displayPresetTop": "Zobrazit nahoře seznam přednastavených hodnot",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Uložit nastavení",
     "geometrySettingsLegendLabel": "Nastavení geometrie",
     "actionsSettingsLegendLabel": "Nastavení akcí",
-    "buttonPositionsLabel": "Pozice tlačítek Uložit, Odstranit, Zpět a Zrušit",
+    "buttonPositionsLabel": "Pozice tlačítek Uložit, Odstranit, Zpět a Zavřít",
     "belowEditLabel": "Pod editačním formulářem",
     "aboveEditLabel": "Nad editačním formulářem",
     "switchToMultilineInput": "Pokud je délka pole větší, přejděte do režimu víceřádkového vstupu",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Zobrazí výzvu, když je pro pole s akcí atributu průsečíku k dispozici více hodnot",
     "expandRelatedTable": "Rozbalit všechny související tabulky/vrstvy při nahrávání",
     "expandMainTable": "Rozbalit všechny nadřazené vrstvy při nahrávání",
+    "copyAndAppendFeatureLabel": "Kopírovat a připojit prvky",
+    "allowCopyPolygonLabel": "Povolit kopírování polygonu do bodu",
+    "allowCopyPolygonTooltip": "Možnost povolující kopírování polygonových prvků do šablon bodových cílových prvků s provedením transformací geometrie",
+    "allowCopyLineLabel": "Povolit kopírování linie do bodu",
+    "allowCopyLineTooltip": "Možnost povolující kopírování liniových prvků do šablon bodových cílových prvků s provedením transformací geometrie",
+    "pointAtStartLabel": "Počáteční bod",
+    "pointAtStartTooltip": "Přidat bod na začátek kopírované linie",
+    "pointAtEndLabel": "Koncový bod",
+    "pointAtEndTooltip": "Přidat bod na konec kopírované linie",
     "layerSettingsTable": {
       "allowDelete": "Povolit odstranění",
       "allowDeleteTip": "Povolit odstranění – Umožňuje uživatelům odstranit prvek; tato možnost je zakázána, pokud vrstva nepodporuje odstraňování",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Nastavte toleranci pro výběr prvku (pixely)",
     "featuresSelectionToleranceTooltip": "Umožňuje uživatelům snadno otevřít panel úprav atributů kliknutím na prvek",
     "featuresSelectionToleranceErrorMsg": "Neplatná hodnota tolerance výběru prvku",
-    "autoSaveAttrUpdates": "Automaticky ukládat aktualizace atributů"
+    "autoSaveAttrUpdates": "Automaticky ukládat aktualizace atributů a geometrie",
+    "defaultCoordinateSystem": "Výchozí referenční systém",
+    "defaultCoordinateSystemTooltip": "Nastavit výchozí referenční systém při přesunu vybraného bodového prvku do nového umístění"
   },
   "editDescriptionPage": {
     "title": "Definujte text přehledu atributů pro vrstvu <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Kritéria – Změňte pořadí pravidla a definujte kritéria po jeho spuštění"
     },
     "copyAction": {
-      "description": "Zdroje hodnot polí se zpracovávají v daném pořadí, pokud je aktivováno, dokud nedojde k spuštění platného kritéria nebo není dokončen seznam. Pokud si přejete definovat kritéria, použijte tlačítko Úprava kritérií.",
+      "description": "Zdroje hodnot polí se zpracovávají v daném pořadí, pokud je aktivováno, dokud nedojde k spuštění platného kritéria nebo není dokončen seznam. Pokud si přejete definovat kritéria, použijte tlačítko Upravit kritéria.",
       "intersection": "Průsečík",
       "coordinates": "Souřadnice",
       "address": "Adresa",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atribut",
     "mapSpatialReferenceOptionLabel": "Souřadnicový systém mapy",
     "latLongOptionLabel": "Zeměpisná šířka/délka",
-    "MGRS": "MGRS",
+    "MGRS": "Referenční systém vojenské sítě (MGRS)",
     "allGroupsCreatedMsg": "Všechny možné skupiny jsou již vytvořeny",
     "coordinatesSourceTitle": "Zdroj souřadnic",
     "featureLocation": "Umístění prvku",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Zde jsou uvedeny všechny názvy přednastavených polí. Po odstranění přednastaveného pole nebude dané pole přednastavené v žádné vrstvě/tabulce."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Výchozí hodnota tolerance průsečíku pro všechny prvky",
-    "pixelsToleranceTitle": "Výchozí tolerance průsečíků (hodnota v pixelech), která se použije pouze u bodových prvků"
+    "intersectionLabel": "Výchozí hodnota tolerance průsečíku pro všechny prvky",
+    "intersectionTitle": "Povolit globální toleranci pro průsečíky",
+    "pixelsToleranceLabel": "Výchozí tolerance průsečíků (hodnota v pixelech), která se použije pouze u bodových prvků",
+    "pixelsToleranceTitle": "Pokud je výchozí tolerance průsečíků pro všechny prvky nastavena na 0, použijte toto nastavení pro bodové prvky."
   },
   "smartActionsPage": {
     "smartActionLabel": "Nastavit chytrou akci",

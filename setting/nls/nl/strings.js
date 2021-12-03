@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Zoekresultaten groeperen",
     "groupFilteredTemplatesTip": "Optie om zoekresultaten per laag te groeperen.",
     "displayShapeSelector": "Tekenopties weergeven",
-    "createNewFeaturesFromExisting": "Het gebruikers toestaan (een) nieuw(e) object(en) te creëren op basis van (een) bestaand(e) object(en)",
-    "createNewFeaturesFromExistingTip": "Optie om gebruikers in staat te stellen een bestaand object te kopiëren om nieuwe objecten te creëren",
-    "copiedFeaturesOverrideDefaults": "De standaardwaarden worden overschreven door de gekopieerde objectwaarden",
+    "createNewFeaturesFromExisting": "Sta het maken van nieuwe object(en) toe van bestaande object(en)",
+    "createNewFeaturesFromExistingTip": "Optie om de gebruiker toe te staan bestaande objecten te kopiëren om nieuwe objecten te maken",
+    "copiedFeaturesOverrideDefaults": "Waarde(n) van gekopieerde object(en) overschrijven standaardwaarde(n) in doelveld(en)",
     "copiedFeaturesOverrideDefaultsTip": "De waarden van het standaardsjabloon worden alleen voor de/het overeenkomstige veld(en) overschreven door de waarden van de gekopieerde objecten",
     "displayShapeSelectorTip": "Optie om een ​​lijst met geldige tekenopties voor de geselecteerde template weer te geven.",
     "displayPresetTop": "Toon de vooraf ingestelde waardenlijst bovenaan",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Instellingen opslaan",
     "geometrySettingsLegendLabel": "Geometrie-instellingen",
     "actionsSettingsLegendLabel": "Actie-instellingen",
-    "buttonPositionsLabel": "Positie van de knoppen ‘Opslaan’, ‘Delete’, ‘Terug’ en ‘Wissen’",
+    "buttonPositionsLabel": "Positie van de knoppen ‘Opslaan’, ‘Verwijderen’, ‘Terug’ en ‘Sluiten’",
     "belowEditLabel": "Onder formulier bewerken",
     "aboveEditLabel": "Boven formulier bewerken",
     "switchToMultilineInput": "Schakel over naar multiline-input als de veldlengte groter is dan",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Geef een vraag weer wanneer er meerdere waarden beschikbaar zijn voor een veld met een kruispuntattribuutactie",
     "expandRelatedTable": "Alle gerelateerde tabellen/lagen uitvouwen bij het laden",
     "expandMainTable": "Alle bovenliggende lagen uitvouwen",
+    "copyAndAppendFeatureLabel": "Objecten kopiëren en toevoegen",
+    "allowCopyPolygonLabel": "Copy polygon to point toestaan",
+    "allowCopyPolygonTooltip": "Optie om het kopiëren van polygoonobjecten naar puntdoel objectsjablonen met geometrie transformaties toe te staan",
+    "allowCopyLineLabel": "Kopielijn laten wijzen",
+    "allowCopyLineTooltip": "Optie om het kopiëren van lijnobjecten naar puntobject sjablonen met geometrie transformaties toe te staan",
+    "pointAtStartLabel": "Punt bij start",
+    "pointAtStartTooltip": "Voeg een punt toe aan het begin van de regel die wordt gekopieerd",
+    "pointAtEndLabel": "Punt aan het einde",
+    "pointAtEndTooltip": "Voeg een punt toe aan het einde van de regel die wordt gekopieerd",
     "layerSettingsTable": {
       "allowDelete": "Verwijderen toestaan",
       "allowDeleteTip": "Verwijderen toestaan - Optie om de gebruiker een object te laten verwijderen; uitgeschakeld als de laag verwijderen niet ondersteunt",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Bepaal de tolerantie voor de objectselectie (pixels)",
     "featuresSelectionToleranceTooltip": "Biedt gebruikers de mogelijkheid om eenvoudig het atttribuutbewerkingspaneel te openen door op het object te klikken",
     "featuresSelectionToleranceErrorMsg": "Ongeldige tolerantiewaarde objectselectie",
-    "autoSaveAttrUpdates": "Sla attribuut updates automatisch op"
+    "autoSaveAttrUpdates": "Attribuut- en geometrie-updates automatisch opslaan",
+    "defaultCoordinateSystem": "Standaard referentiesysteem",
+    "defaultCoordinateSystemTooltip": "Stel het standaard referentiesysteem in als een geselecteerd puntobject naar een nieuwe locatie wordt verplaatst"
   },
   "editDescriptionPage": {
     "title": "Definieer de attribuutoverzichttekst voor <b>${layername}</b> "
@@ -149,7 +160,7 @@ define({
       "editGroupHint": "Waarschuwing: Onafhankelijk bewerken zal de geselecteerde slimme actie die is geassocieerd met dit veld uit de groep verwijderen",
       "popupTitle": "Kies bewerkingsoptie",
       "editAttributeGroup": "De geselecteerde attribuutactie is gedefinieerd vanuit de groep. Kies een van de volgende opties om de attribuutactie te bewerken:",
-      "expression": "De expressie van de de geselecteerde slimme actie wordt gedefinieerd vanuit de groep. Kies een van de volgende opties om een expressie van een de slimme actie te bewerken:",
+      "expression": "De expressie van de geselecteerde slimme actie wordt gedefinieerd vanuit de groep. Kies een van de volgende opties om een expressie van een de slimme actie te bewerken:",
       "editGroupButton": "Bewerk groep",
       "editIndependentlyButton": "Onafhankelijk bewerken"
     }
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Attribuut",
     "mapSpatialReferenceOptionLabel": "Ruimtelijke referentie van de kaart",
     "latLongOptionLabel": "Breedtegraad/lengtegraad",
-    "MGRS": "MGRS",
+    "MGRS": "Militair rasterreferentiesysteem (Military Grid Reference System -MGRS)",
     "allGroupsCreatedMsg": "Alle mogelijke groepen zijn al gecreëerd",
     "coordinatesSourceTitle": "Bron coördinaten",
     "featureLocation": "Ojectlocatie",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Alle unieke vooringestelde veldnamen worden hier vermeld. Door een presetveld te verwijderen wordt het respectieve veld uitgeschakeld als preset van alle lagen/tabellen."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Standaard kruispunttolerantie voor alle objecten",
-    "pixelsToleranceTitle": "Standaard kruispunttolerantie (pixelwaarde) die alleen voor puntobjecten moet worden toegepast"
+    "intersectionLabel": "Standaard kruispunttolerantie voor alle objecten",
+    "intersectionTitle": "Een internationale tolerantie voor kruispunten mogelijk maken",
+    "pixelsToleranceLabel": "Standaard kruispunttolerantie (pixelwaarde) die alleen voor puntobjecten moet worden toegepast",
+    "pixelsToleranceTitle": "Gebruik deze instelling voor puntobjecten als de standaard kruispunttolerantie voor alle objecten is ingesteld op 0"
   },
   "smartActionsPage": {
     "smartActionLabel": "Smart Action configureren",

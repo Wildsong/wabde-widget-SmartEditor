@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Grupper søkeresultater",
     "groupFilteredTemplatesTip": "Alternativ for å gruppere søkeresultatene etter lag.",
     "displayShapeSelector": "Vis tegnealternativer",
-    "createNewFeaturesFromExisting": "Tillat brukeren å opprette nye geoobjekter fra eksisterende geoobjekter",
-    "createNewFeaturesFromExistingTip": "Alternativ for å tillate brukeren å kopiere eksisterende geoobjekt for å opprette nye geoobjekter",
-    "copiedFeaturesOverrideDefaults": "Verdier fra kopierte geoobjekter overstyrer standardverdiene",
+    "createNewFeaturesFromExisting": "Tillat oppretting av nytt/nye geoobjekt(er) fra eksisterende geoobjekt(er)",
+    "createNewFeaturesFromExistingTip": "Alternativ som tillater at brukeren kopierer eksisterende geoobjekter for opprette nye geoobjekter",
+    "copiedFeaturesOverrideDefaults": "Verdien(e) fra de(t) kopierte geoobjektet/geoobjektene overstyrer standardverdien(e) i målfeltet/målfeltene",
     "copiedFeaturesOverrideDefaultsTip": "Verdier fra de kopierte geoobjektene vil overstyre malens standardverdier bare for matchende felt",
     "displayShapeSelectorTip": "Alternativ for å vise en liste over gyldige tegnealternativer for den valgte malen.",
     "displayPresetTop": "Vis forhåndsinnstilt verdiliste øverst",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Lagre innstillinger",
     "geometrySettingsLegendLabel": "Geometriinnstillinger",
     "actionsSettingsLegendLabel": "Handlingsinnstillinger",
-    "buttonPositionsLabel": "Plassering av knappene Lagre, Slett, Tilbake og Avbryt",
+    "buttonPositionsLabel": "Plassering av knappene Lagre, Slett, Tilbake og Lukk",
     "belowEditLabel": "Under redigeringsskjema",
     "aboveEditLabel": "Over redigeringsskjema",
     "switchToMultilineInput": "Bytt til inndata i flere linjer når feltlengden overskrides",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Vis en melding når flere verdier er tilgjengelige for et felt med en krysningspunkt attributthandling",
     "expandRelatedTable": "Utvid alle relaterte tabeller/lag ved lasting",
     "expandMainTable": "Utvid alle overordnede lag ved lasting",
+    "copyAndAppendFeatureLabel": "Kopier og føy til geoobjekter",
+    "allowCopyPolygonLabel": "Tillat kopiering av polygon til punkt",
+    "allowCopyPolygonTooltip": "Alternativ som tillater at polygongeoobjekter kopieres inn i maler for punktbaserte målgeoobjekter med geometritransformasjoner",
+    "allowCopyLineLabel": "Tillat kopiering av linje til punkt",
+    "allowCopyLineTooltip": "Alternativ som tillater at linjegeoobjekter kopieres inn i maler for punktbaserte målgeoobjekter med geometritransformasjoner",
+    "pointAtStartLabel": "Punkt på begynnelsen",
+    "pointAtStartTooltip": "Legg til et punkt på begynnelsen av linjen som kopieres",
+    "pointAtEndLabel": "Punkt på slutten",
+    "pointAtEndTooltip": "Legg til et punkt på slutten av linjen som kopieres",
     "layerSettingsTable": {
       "allowDelete": "Tillat sletting",
       "allowDeleteTip": "Tillat sletting – Alternativ som tillater at brukeren sletter et geoobjekt; deaktivert dersom laget ikke støtter sletting",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Angi toleransen for valg av geoobjekter (piksler)",
     "featuresSelectionToleranceTooltip": "Setter brukere i stand til enkelt å åpne panelet for attributtredigering ved å klikke på det aktuelle geoobjektet",
     "featuresSelectionToleranceErrorMsg": "Ugyldig toleranseverdi for valg av geoobjekt",
-    "autoSaveAttrUpdates": "Lagre attributtoppdateringer automatisk"
+    "autoSaveAttrUpdates": "Lagre attributt- og geometrioppdateringer automatisk",
+    "defaultCoordinateSystem": "Standard referansesystem",
+    "defaultCoordinateSystemTooltip": "Angi standard referansesystem når et valgt punktgeoobjekt skal flyttes til en ny lokasjon"
   },
   "editDescriptionPage": {
     "title": "Angi tekst for attributtoversikt for <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Kriterier – Endrer rekkefølgen for regelen og definerer kriteriene for når den utløses"
     },
     "copyAction": {
-      "description": "Kilder til feltverdier behandles i rekkefølge, hvis det er aktivert, til et gyldig vilkår utløses eller listen er fullført. Bruk knappen for redigering av vilkår til å definere vilkårene.",
+      "description": "Hvis det er aktivert, behandles kilder til feltverdier i rekkefølge til et gyldig kriterium utløses eller listen er fullført. Bruk knappen for redigering av kriterier til å angi kriteriene.",
       "intersection": "Kryss",
       "coordinates": "Koordinater",
       "address": "Adresse",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Attributt",
     "mapSpatialReferenceOptionLabel": "Kartets romlige referanse",
     "latLongOptionLabel": "Lengdegrad/breddegrad",
-    "MGRS": "MGRS",
+    "MGRS": "Militært rutenettsystem (MGRS)",
     "allGroupsCreatedMsg": "Alle mulige grupper er allerede opprettet",
     "coordinatesSourceTitle": "Koordinatkilde",
     "featureLocation": "Geoobjektlokasjon",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Navnene på alle unike forhåndsinnstilte felt er oppført her. Hvis du fjerner et forhåndsinnstilt felt, deaktiveres det aktuelle feltet som forhåndsinnstilling fra alle lag/tabeller."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Standard krysningtoleranse for alle geoobjekter",
-    "pixelsToleranceTitle": "Standard krysningtoleranse (pikselverdi) som skal brukes kun til punktgeoobjekter"
+    "intersectionLabel": "Standard krysningtoleranse for alle geoobjekter",
+    "intersectionTitle": "Aktiver en global toleranse for krysninger",
+    "pixelsToleranceLabel": "Standard krysningtoleranse (pikselverdi) som skal brukes kun til punktgeoobjekter",
+    "pixelsToleranceTitle": "Hvis standard krysningstoleranse for alle geoobjekter er satt til 0, skal denne innstillingen brukes for punktgeoobjekter"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfigurer smart handling",

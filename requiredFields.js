@@ -143,7 +143,7 @@ define(
             if (node[0].hasOwnProperty("fieldType") && ["richtext", "textarea"].indexOf(node[0].fieldType) !== -1) {
               //for richtext and textarea fields
               var fieldLength = this.presetUtils.getFieldInfoByFieldName(this.requiredFieldsInfos, node[0].name).length;
-              //if entered value length is greater than field lenght then truncate value
+              //if entered value length is greater than field length then truncate value
               var nodeValue = node[0].getValue();
               if (nodeValue.length > fieldLength) {
                 nodeValue = nodeValue.slice(0, fieldLength);

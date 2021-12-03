@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "分组搜索结果",
     "groupFilteredTemplatesTip": "按图层分组搜索结果选项",
     "displayShapeSelector": "显示绘制选项",
-    "createNewFeaturesFromExisting": "允许用户从现有要素创建新要素",
+    "createNewFeaturesFromExisting": "允许从现有要素创建新要素",
     "createNewFeaturesFromExistingTip": "允许用户复制现有要素以创建新要素的选项",
-    "copiedFeaturesOverrideDefaults": "复制的要素值会覆盖默认值",
+    "copiedFeaturesOverrideDefaults": "复制的要素中的值将覆盖目标字段中的默认值",
     "copiedFeaturesOverrideDefaultsTip": "复制的要素中的值将仅覆盖匹配字段的默认模板值",
     "displayShapeSelectorTip": "该选项用于显示一系列所选模板的有效绘制选项。",
     "displayPresetTop": "在顶部显示预设值列表",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "保存设置",
     "geometrySettingsLegendLabel": "几何设置",
     "actionsSettingsLegendLabel": "操作设置",
-    "buttonPositionsLabel": "“保存”、“删除”、“返回”和“取消”按钮的位置",
+    "buttonPositionsLabel": "“保存”、“删除”、“返回”和“关闭”按钮的位置",
     "belowEditLabel": "下方编辑表单",
     "aboveEditLabel": "上方编辑表单",
     "switchToMultilineInput": "如果超出字段长度，则将切换到多行输入",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "如果在相交属性操作中对于一个字段有多个值可用，则将显示提示。",
     "expandRelatedTable": "加载时展开所有相关表格/图层",
     "expandMainTable": "加载时展开所有父图层",
+    "copyAndAppendFeatureLabel": "复制和追加要素",
+    "allowCopyPolygonLabel": "允许将面复制到点",
+    "allowCopyPolygonTooltip": "允许通过几何变换将面要素复制到点目标要素模板的选项",
+    "allowCopyLineLabel": "允许将线复制到点",
+    "allowCopyLineTooltip": "允许通过几何变换将线要素复制到点目标要素模板的选项",
+    "pointAtStartLabel": "始端的点",
+    "pointAtStartTooltip": "在要复制的线的起点添加点",
+    "pointAtEndLabel": "终点",
+    "pointAtEndTooltip": "在要复制的线的终点添加点",
     "layerSettingsTable": {
       "allowDelete": "允许删除",
       "allowDeleteTip": "允许删除 - 选项允许用户删除要素；如果图层不支持删除，则禁用",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "设置要素选择的容差（以像素为单位）",
     "featuresSelectionToleranceTooltip": "用户只需单击要素即可轻松打开属性编辑面板",
     "featuresSelectionToleranceErrorMsg": "要素选择容差值无效",
-    "autoSaveAttrUpdates": "自动保存属性更新"
+    "autoSaveAttrUpdates": "自动保存属性和几何更新",
+    "defaultCoordinateSystem": "默认参考系统",
+    "defaultCoordinateSystemTooltip": "设置将所选点要素移动到新位置时的默认参考系统"
   },
   "editDescriptionPage": {
     "title": "为 <b>${layername}</b> 定义属性概览文本 "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "条件 - 触发后，可更改规则的顺序并定义条件"
     },
     "copyAction": {
-      "description": "如果已激活字段值源，则会按顺序处理，直到触发有效条件或列表完成为止。使用“标准编辑”按钮定义标准。",
+      "description": "如果已激活字段值源，则会按顺序处理，直到触发有效条件或列表完成为止。 使用“标准编辑”按钮定义标准。",
       "intersection": "交叉口",
       "coordinates": "坐标",
       "address": "地址",
@@ -145,8 +156,8 @@ define({
       "disabled": "已禁用"
     },
     "editOptionsPopup": {
-      "editAttributeGroupHint": "警告：独立编辑将从组中删除与此字段关联的选定属性操作",
-      "editGroupHint": "警告：独立编辑将从组中删除与此字段关联的选定智能操作",
+      "editAttributeGroupHint": "警告：独立编辑将从组中移除与此字段关联的选定属性操作",
+      "editGroupHint": "警告：独立编辑将从组中移除与此字段关联的选定智能操作",
       "popupTitle": "选择编辑选项",
       "editAttributeGroup": "可从组中定义选定的属性操作。 选择以下选项之一以编辑属性操作：",
       "expression": "可从组中定义选定智能操作的表达式。 选择以下选项之一以编辑智能操作表达式：",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "属性",
     "mapSpatialReferenceOptionLabel": "地图空间参考",
     "latLongOptionLabel": "纬度/经度",
-    "MGRS": "MGRS",
+    "MGRS": "军事格网参考系 (MGRS)",
     "allGroupsCreatedMsg": "已创建所有可能的组",
     "coordinatesSourceTitle": "坐标源",
     "featureLocation": "要素位置",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "下方列出了所有唯一预设字段名称。 移除预设字段的操作将禁用所有图层/表中的相应预设字段。"
   },
   "intersectionTolerance": {
-    "intersectionTitle": "所有要素的默认交点容差",
-    "pixelsToleranceTitle": "默认交点容差(像素值)仅适用于点要素"
+    "intersectionLabel": "所有要素的默认交点容差",
+    "intersectionTitle": "启用全局相交容差。",
+    "pixelsToleranceLabel": "默认交点容差(像素值)仅适用于点要素",
+    "pixelsToleranceTitle": "如果所有要素的默认相交容差设置为 0，则将此设置用于点要素。"
   },
   "smartActionsPage": {
     "smartActionLabel": "配置智能操作",

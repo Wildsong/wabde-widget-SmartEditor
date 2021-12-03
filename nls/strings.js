@@ -5,9 +5,9 @@ define({
     noEditPrivileges: "Your account does not have permission to create or modify data.",
     loginPopupTitle: "Sign In",
     loginPopupMessage: "${widgetName} requires permissions and credits to look up and store address information. Would you like to sign in and use this capability?",
-    noCreditsOrPrivilegeWarningMessage: "Your account does not have the permissions and credits to look up and store address information with ${widgetName}. Please contact your organization administrator to request permissions and credits.",
-    unableToUseLocator: "Locator is not accessible. The address attribute action(s) will not be performed.",
-    locatorDisabledWaning: "Locator is not enabled. Please contact your organization administrator to request this capability.",
+    noCreditsOrPrivilegeWarningMessage: "Your account does not have the permissions and credits to look up and store address information with ${widgetName}. Please contact your organization administrator to request permissions and credits. Click OK to continue editing.",
+    unableToUseLocator: "Locator is not accessible. The address attribute action(s) will not be performed. Click OK to continue editing.",
+    locatorDisabledWaning: "Locator is not enabled. Please contact your organization administrator to request this capability. Click OK to continue editing.",
     noFeatureInAIWarning: "No feature(s) selected. Please select a feature to perform edits or click cancel to return to the main screen.",
     noEditableLayerWarning: "Your account does not have permission to create or modify data, or this web map does not contain any editable layers.",
     noVisibleCreateLayerWarning: "Layer(s) not visible at the current zoom level. Zoom in or out to create/modify features.",
@@ -73,21 +73,26 @@ define({
     mapNavigationLocked: "Map Navigation: Locked", // displayed as a tooltip on map navigation locked button
     mapNavigationUnLocked: "Map Navigation: Unlocked", // displayed as a tooltip on map navigation unlocked button
     copyFeatures: {
-      title: "Copy Features",
+      title: "Select features to copy",
       createFeatures: "Create Features",
       createSingleFeature: "Create 1 Multi-Part Feature",
       createOneSingleFeature: "Create Feature",
       noFeaturesSelectedMessage: "No Features Selected",
       selectFeatureToCopyMessage: "Please select features to copy",
-      multipleFeatureSaveWarning: "Note: Creating multiple features using the copy functionality will save all the new features immediately",
+      multipleFeatureSaveWarning: "Creating multiple features using this functionality will save all the new features immediately. Field matching is not supported when creating a new multi-part feature.",
       copyFeatureUpdateGeometryError: "Unable to update geometry of selected features",
-      canNotSaveMultipleFeatureWarning: "Note: Cannot copy multiple features using the same value for unique value fields, please select only one feature",
-      createOnlyOneMultipartFeatureWarning: "Note: Only one multi-part feature can be created"
+      canNotSaveMultipleFeatureWarning: "Cannot copy multiple features using the same value for unique value fields, please select only one feature",
+      createOnlyOneMultipartFeatureWarning: "Only one multi-part feature can be created",
+      layerLabel: "${layerName} (${selectedFeatures}/${totalFeatures})",
+      layerAriaLabel: "${layerName} ${selectedFeatures} of ${totalFeatures} features selected"
     },
     addingFeatureError: "Error while adding selected features in the layer. Please try again.", // error message while adding features
     addingFeatureErrorCount: "\'${copyFeatureErrorCount}\' feature(s) failed to be copied. Would you like to try again for the missing feature(s)?",
     selectingFeatureError: "Error while selecting features in the layer. Please try again.", // error message while selecting features
     customSelectOptionLabel: "Select features to copy", // displayed as a label for custom select tool
+    copyFeaturesWithPolygon: "Copy by polygon",
+    copyFeaturesWithRect: "Copy by rectangle",
+    copyFeaturesWithLasso: "Copy by lasso",
     noFeatureSelectedMessage: "No features selected", // Displayed when no features are selected while using custom select tool
     multipleFeatureSaveMessage: "All the features will be saved immediately. Would you like to proceed?",
     relativeDates: {
@@ -118,6 +123,20 @@ define({
       displayMsg :"Required fields cannot be blank. Provide values for common fields below.",
       popupTittle: "Required fields",
       foundNullRecordCount: "${fieldName} (Found in ${count} records)"
+    },
+    fieldsMapping: {
+      popupTittle: "Fields Matching",
+      fieldsMatchingCheckboxLabel: "Value(s) from copied feature(s) override default value(s) in target field(s)",
+      resetLabel: "Reset",
+      clearLabel: "Clear",
+      fieldsInTargetLayerLabel: "Target",
+      fieldsInSourceLayerLabel: "Source",
+      targetFieldsMatchedLabel: "${layerName} (${matchedFields}/${totalFields} fields matched)",
+      selectSourceFieldLabel: "- Select -",
+      selectFieldAriaLabel: "Select source field for target field ${targetField}",
+      informativeText: "Review the fields matching from source to target and customize if needed.",
+      dynamicValueText: "A dynamic value is set",
+      noFieldsToMatchLabel: "No fields to match"
     },
     cantLocateUserLocation : "Your location could not be determined",
     tryAgainButtonLabel : "Try again",

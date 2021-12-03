@@ -22,6 +22,8 @@ define([
   'dojo/_base/array',
   'dojo/dom-construct',
   'dojo/on',
+  'dojo/query',
+  'dojo/string',
   'dojo/keys',
   'jimu/dijit/CheckBox',
   'dojo/dom-class',
@@ -36,7 +38,9 @@ define([
   'dojo/promise/all',
   'jimu/dijit/LoadingIndicator',
   'dijit/ProgressBar',
-  'dojo/dom-style'
+  'dojo/dom-style',
+  'jimu/dijit/Popup',
+  './fieldsMapping'
 ],
   function (
     _WidgetBase,
@@ -47,6 +51,8 @@ define([
     array,
     domConstruct,
     on,
+    dojoQuery,
+    String,
     keys,
     CheckBox,
     domClass,
@@ -61,7 +67,9 @@ define([
     all,
     LoadingIndicator,
     ProgressBar,
-    domStyle) {
+    domStyle,
+    Popup,
+    fieldsMapping) {
 
     return declare([_WidgetBase, Evented, _TemplatedMixin], {
 
@@ -76,11 +84,13 @@ define([
       highlightGraphicsLayer: null, // to store the object of graphics layer used to highlight features
       allChildCheckboxes: [],
       loading: null,
+      fieldsMappingObj: null,
+      layerOrderSequence: [],
 
       startup: function () {
         this.inherited(arguments);
         this.highlightGraphicsLayer =
-        this._createNewGraphicsLayer("highlightGraphicsLayer");
+          this._createNewGraphicsLayer("highlightGraphicsLayer");
         this.loading = new LoadingIndicator({
           hidden: true
         });
@@ -93,6 +103,8 @@ define([
         this.featuresByLayerId = {};
         this.featureTitlesByLayerId = {};
         this.highlightGraphicsLayer = null;
+        this.fieldsMappingObj = null;
+        this.layerOrderSequence = [];
         this.applyEditsProgress = new ProgressBar(null, this.applyEditsProgressParentNode);
         domStyle.set(this.applyEditsProgress.domNode, 'display', 'none');
         //handel button clicks
@@ -118,9 +130,16 @@ define([
             this._createSingleFeatureBtnClicked();
           }
         })));
+        this.own(on(this.fieldsMatchingBtn, "click",
+          lang.hitch(this, this._fieldMatchingBtnClicked)));
+        this.own(on(this.fieldsMatchingBtn, "keydown", lang.hitch(this, function (evt) {
+          if (evt.keyCode === keys.ENTER || evt.keyCode === keys.SPACE) {
+            this._fieldMatchingBtnClicked();
+          }
+        })));
       },
 
-      selectFeaturesToCopy: function (selectedFeatures) {
+      selectFeaturesToCopy: function (selectedFeatures, targetLayerDetails) {
         this.allChildCheckboxes = [];
         if (selectedFeatures && selectedFeatures.length > 0) {
           //clear objects
@@ -128,37 +147,42 @@ define([
           this.layerCheckBoxNodes = {};
           this.featuresByLayerId = {};
           this.featureTitlesByLayerId = {};
-          this._changeWarningNote(selectedFeatures[0]._layer.geometryType);
+          this.targetLayerDetails = targetLayerDetails;
+          var geometryType = this.targetLayerDetails.featureLayer.geometryType;
+          this._changeWarningNote(geometryType);
           //show/hide singleFeature button
-          this._showHideSingleFeatureButton(selectedFeatures[0]._layer.geometryType);
+          this._showHideSingleFeatureButton(geometryType);
           //show/hide multipleFeature button
-          this._showHideMultipleFeatureButton(selectedFeatures[0]._layer.geometryType);
+          this._showHideMultipleFeatureButton(geometryType);
           //First show the main node in which copy features list is shown
           domClass.remove(this.mainNode, "esriCTHidden");
           //Process selected features and arrange them by layer ids
           var processDeferred = new Deferred();
-          this._processSelectedFeatures(selectedFeatures, processDeferred).then(lang.hitch(this, function() {
+          this._processSelectedFeatures(selectedFeatures, processDeferred).then(lang.hitch(this, function () {
             //Empty the list container
             domConstruct.empty(this.layerListTable);
-            //Create list for each layer
+            var matchedLayerId = [];
+            //Create list for each layer according to layers order in map
+            array.forEach(this.layerInfosObj.getLayerInfoArray(), lang.hitch(this,
+              function (layerInfo) {
+                if (this.featureTitlesByLayerId.hasOwnProperty(layerInfo.id)) {
+                  matchedLayerId.push(layerInfo.id);
+                  this._createFeatureListUI(layerInfo.id, geometryType);
+                  return true;
+                }
+              }));
+
+            //create feature list UI for the layers whose id is not matched with layerInfos id. for e.g.KML layer 
             for (var layerId in this.featureTitlesByLayerId) {
-              var layer, layerName, groupNode;
-              //Get layerinfo by id
-              layer = this.layerInfosObj.getLayerInfoById(layerId);
-              //Get the layer title
-              layerName = layer.title ? layer.title : layer.name;
-              //Create a node for this layer and it's features
-              groupNode = domConstruct.create('div', {}, this.layerListTable);
-              //Create layer(parent) node
-              this.layerCheckBoxNodes[layerId] =
-                this._createListNode(layerName, groupNode, false, layerId, selectedFeatures[0]._layer.geometryType);
-              if (!this.checkBoxNodes[layerId]) {
-                this.checkBoxNodes[layerId] = [];
+              if (this.featureTitlesByLayerId.hasOwnProperty(layerId) && matchedLayerId.indexOf(layerId) === -1 &&
+                this.layerInfosObj.getLayerInfoById(layerId)) {
+                this._createFeatureListUI(layerId, geometryType);
               }
-              //Create list node for each feature in the layer
-              if (this.featureTitlesByLayerId[layerId].length > 0) {
-                this._createFeatureEntries(layerId, groupNode, selectedFeatures[0]._layer.geometryType);
-              }
+            }
+
+            //Check number of layers in the DOM and accordingly expand the first layer
+            if (this._canExpandFirstLayerNode()) {
+              dojoQuery(".esriCTExpandCollapseNode", this.domNode)[0].click();
             }
             // Initially we need to highlight all the graphics, since all the features
             // are selected in the features list.
@@ -169,12 +193,31 @@ define([
       },
 
       /**
+       * This function decides whether to open the first layer node or not
+       */
+      _canExpandFirstLayerNode: function () {
+        var canExpand = false, keys = [];
+        keys = Object.keys(this.layerCheckBoxNodes);
+        //If only one layer found for the copy features then set the flag
+        //value to true
+        if (this.layerCheckBoxNodes && keys.length === 1) {
+          canExpand = true;
+          //If more than one layer if found and first layer has a 10 or less features
+          //set the flag value to true
+        } else if (keys.length > 1 && this.layerOrderSequence && this.layerOrderSequence[0] &&
+          this.layerOrderSequence[0] <= 10) {
+          canExpand = true;
+        }
+        return canExpand;
+      },
+
+      /**
        * This function creates objects of selected feature and
        * titles and arrange them by layer ids
        */
       _processSelectedFeatures: function (selectedFeatures, processDeferred) {
         var deferredObj = {}, objectIdsOfSelectedFeaturesInLayer, layerId, featureLayerId,
-        layerObjectIdField;
+          layerObjectIdField;
         this.featuresByLayerId = {};
         this.featureTitlesByLayerId = {};
         array.forEach(selectedFeatures, lang.hitch(this, function (feature) {
@@ -185,13 +228,13 @@ define([
           this.featuresByLayerId[feature._layer.id].push(feature);
           var objectIdField = this.layerInfosObj.getLayerInfoById(feature._layer.id).layerObject.objectIdField;
           //feature title is blank then use objectIdField value as featue title
-          var featureTitle = feature.getTitle()? feature.getTitle(): feature.attributes[objectIdField];
+          var featureTitle = feature.getTitle() ? feature.getTitle() : feature.attributes[objectIdField];
           this.featureTitlesByLayerId[feature._layer.id].push(featureTitle);
         }));
         //show loading indicator till we get complete geometries of all the features
         this.loading.show();
         for (featureLayerId in this.featuresByLayerId) {
-          if(featureLayerId) {
+          if (featureLayerId) {
             layerObjectIdField = this._getObjectIdFieldOfLayer(featureLayerId);
             objectIdsOfSelectedFeaturesInLayer =
               this._getSelectedFeatureObjectIds(this.featuresByLayerId[featureLayerId], layerObjectIdField);
@@ -200,8 +243,8 @@ define([
           }
         }
         all(deferredObj).then(lang.hitch(this, function (deferredObjDetails) {
-          for(layerId in deferredObjDetails) {
-            if(layerId) {
+          for (layerId in deferredObjDetails) {
+            if (layerId) {
               this._updateGeometryForSelectedFeature(layerId, deferredObjDetails);
             }
           }
@@ -223,7 +266,7 @@ define([
       /**
        * This function is used to get objectid field of layer
        */
-      _getObjectIdFieldOfLayer: function(layerId) {
+      _getObjectIdFieldOfLayer: function (layerId) {
         var currentLayerObjectIdField;
         currentLayerObjectIdField = this.layerInfosObj.getLayerInfoById(layerId).layerObject.objectIdField;
         return currentLayerObjectIdField;
@@ -242,14 +285,14 @@ define([
                 selectedFeature.attributes[layerObjectIdField]) {
                 selectedFeature.geometry = selectedMapFeature.geometry;
                 return true;
-            }
-          }));
+              }
+            }));
         }));
       },
 
-      _getSelectedFeatureObjectIds: function(selectedFeaturesInLayer, layerObjectIdField) {
+      _getSelectedFeatureObjectIds: function (selectedFeaturesInLayer, layerObjectIdField) {
         var objectIdsArray = [];
-        array.forEach(selectedFeaturesInLayer, lang.hitch (this, function (currentFeature) {
+        array.forEach(selectedFeaturesInLayer, lang.hitch(this, function (currentFeature) {
           objectIdsArray.push(currentFeature.attributes[layerObjectIdField]);
         }));
         return objectIdsArray;
@@ -309,9 +352,10 @@ define([
       /**
        * This function create entries in the list for each feature
        */
-      _createFeatureEntries: function (layerId, groupNode, selectedLayerGeometryType) {
+      _createFeatureEntries: function (layerId, groupNode, selectedLayerGeometryType, checkBoxWrapper) {
         array.forEach(this.featureTitlesByLayerId[layerId], lang.hitch(this, function (feature) {
-          var checkBox = this._createListNode(feature, groupNode, true, layerId, selectedLayerGeometryType);
+          var checkBox = this._createListNode(feature, groupNode, true, layerId, selectedLayerGeometryType,
+            checkBoxWrapper);
           this.checkBoxNodes[layerId].push(checkBox);
           this.allChildCheckboxes.push(checkBox);
         }));
@@ -320,33 +364,85 @@ define([
       /**
        * This function creates the checkbox in the list and handle its events
        */
-      _createListNode: function (layerLabel, groupNode, isChild, layerId, selectedLayerGeometryType) {
-        var parentNode, checkBoxNode, checkBox, checked;
+      _createListNode: function (layerLabel, groupNode, isChild, layerId, selectedLayerGeometryType,
+        checkBoxWrapper) {
+        var parentNode, checkBoxNode, checkBox, checked, expandCollapseDOM;
         //Create nodes to hold the checkbox
         parentNode = domConstruct.create('div', {
           'class': 'jimu-widget-row esriCTCopyFeaturesNode'
-        }, groupNode);
+        });
         checkBoxNode = domConstruct.create('div', {
-          'class': 'jimu-float-leading checkBoxNode'
+          'class': 'jimu-float-leading checkBoxNode',
+          'style': 'width: calc(100% - 20px)'
         }, parentNode);
         //Create a new checkbox
         checked = (selectedLayerGeometryType === "esriGeometryPoint" && this.hideMultipleFeatureButton) ?
           false : true;
         checkBox = new CheckBox({ label: layerLabel, checked: checked }, checkBoxNode);
+        domAttr.set(checkBox.domNode, "layerName", layerLabel);
         //Based on if the node is for parent(Layer) /child(feature) add required events & classes
         if (isChild) {
           domClass.add(parentNode, "esriCTCopyFeaturesChildNode");
           domAttr.set(checkBox.domNode, "parentLayerId", layerId);
           on(checkBox.domNode, 'click', lang.hitch(this, this._childNodeStateChanged));
+          domAttr.set(checkBoxWrapper, "expandLayerId", layerId);
+          domConstruct.place(parentNode, checkBoxWrapper);
         } else {
+          this._updateParentCheckBoxLabel(checkBox, layerLabel,
+            this.featureTitlesByLayerId[layerId].length, layerId);
+          //Create expand/collapse node
+          expandCollapseDOM = domConstruct.create("div", {
+            "class": "esriCTExpandCollapseNode collapsed",
+            "tabindex": "0",
+            "role": "button",
+            "aria-label": layerLabel,
+            "aria-expanded": "false"
+          });
+          domConstruct.place(expandCollapseDOM, parentNode, "first");
+          //set the attributes
           domAttr.set(checkBox.domNode, "layerId", layerId);
+          domAttr.set(checkBox.domNode, "layerName", layerLabel);
+          domAttr.set(expandCollapseDOM, "layerId", layerId);
           //layer geometry type is point and has unique field then disable parent
           if (!checked) {
+            this._updateParentCheckBoxLabel(checkBox, layerLabel, 0, layerId);
             checkBox.setStatus(false);
           }
           on(checkBox.domNode, 'click', lang.hitch(this, this._parentNodeStateChanged));
+          domConstruct.place(parentNode, groupNode, "first");
+          //Add event listener for expand collapse node
+          this.own(on(expandCollapseDOM, "click", lang.hitch(this, function (evt) {
+            this._expandButtonClicked(evt);
+          })));
+
+          this.own(on(expandCollapseDOM, "keydown", lang.hitch(this, function (evt) {
+            if (evt.keyCode === keys.ENTER || evt.keyCode === keys.SPACE) {
+              this._expandButtonClicked(evt);
+            }
+          })));
         }
         return checkBox;
+      },
+
+      /**
+       * Callback handler for expand/collapse button click event
+       */
+      _expandButtonClicked: function (evt) {
+        var layerName, childCheckBoxDom;
+        layerName = domAttr.get(evt.currentTarget, "layerId");
+        childCheckBoxDom = dojoQuery("[expandLayerId=" + layerName + "]", this.domNode)[0];
+        //Add expand or collapse class based on the current state
+        if (childCheckBoxDom) {
+          if (domClass.contains(evt.currentTarget, "expanded")) {
+            domClass.replace(evt.currentTarget, "collapsed", "expanded");
+            domAttr.set(evt.currentTarget, "aria-expanded", "false");
+            domClass.add(childCheckBoxDom, "esriCTHidden");
+          } else {
+            domClass.replace(evt.currentTarget, "expanded", "collapsed");
+            domAttr.set(evt.currentTarget, "aria-expanded", "true");
+            domClass.remove(childCheckBoxDom, "esriCTHidden");
+          }
+        }
       },
 
       /**
@@ -356,6 +452,7 @@ define([
       _parentNodeStateChanged: function (evt) {
         var layerId = domAttr.get(evt.currentTarget, "layerId");
         var parentCheckbox = this.layerCheckBoxNodes[layerId];
+        var layerName = domAttr.get(parentCheckbox.domNode, "layerName");
         //Parent is disabled in case of layer geometry type is point and has unique field
         //Then dont do anything on click
         if (parentCheckbox.getStatus()) {
@@ -368,6 +465,13 @@ define([
               checkBox.setValue(false);
             }
           }));
+          //Update the feature count based on parent check box state
+          if (parentState) {
+            this._updateParentCheckBoxLabel(parentCheckbox, layerName,
+              this.featureTitlesByLayerId[layerId].length, layerId);
+          } else {
+            this._updateParentCheckBoxLabel(parentCheckbox, layerName, 0, layerId);
+          }
           // on click of layer checkbox, its child features gets checked/unchecked,
           // hence highlight the features accordingly.
           this._highlightFeatures();
@@ -381,28 +485,61 @@ define([
        */
       _childNodeStateChanged: function (evt) {
         var layerId = domAttr.get(evt.currentTarget, "parentLayerId");
+        var layerName = domAttr.get(this.layerCheckBoxNodes[layerId].domNode, "layerName");
         var parentCheckbox = this.layerCheckBoxNodes[layerId];
         var childCheckboxes = this.checkBoxNodes[layerId];
-        var enableParent = true;
+        var enableParent = false;
         //Parent is disabled in case of layer geometry type is point and has unique field
         //Then On checking a new checkbox the previously checked one will be unchecked
         if (!parentCheckbox.getStatus()) {
           array.forEach(this.allChildCheckboxes, lang.hitch(this, function (checkBox) {
             if (checkBox.getValue() && checkBox.domNode !== evt.currentTarget) {
               checkBox.setValue(false);
+              //Once the checkbox is un-checked then we need to update the label 
+              //of its parent check box
+              var layerId = domAttr.get(checkBox.domNode, "parentLayerId");
+              this._updateParentCheckBoxLabel(this.layerCheckBoxNodes[layerId],
+                domAttr.get(this.layerCheckBoxNodes[layerId].domNode, "layerName"), 0,
+                layerId);
             }
           }));
         }
         // highlight individual feature depending upon its selection in the list
         this._highlightFeatures();
+        //Check the parent checkbox if at least one of the child is checked
         array.some(childCheckboxes, lang.hitch(this, function (checkBox) {
-          if (!checkBox.getValue()) {
-            enableParent = false;
+          if (checkBox.getValue()) {
+            enableParent = true;
             return true;
           }
         }));
-        parentCheckbox.setValue(enableParent);
+        parentCheckbox.setValue(enableParent, false);
         this.updateSingleFeatureButtonText();
+        //get all the checked checkboxes count and then update the 
+        //parent checkbox label
+        var checkedBoxes = this.checkBoxNodes[layerId].filter(
+          lang.hitch(this, function (checkbox) {
+            return checkbox.checked === true;
+          }));
+        this._updateParentCheckBoxLabel(parentCheckbox, layerName, checkedBoxes.length, layerId);
+      },
+
+      /**
+      * Update parent check box label and aria-label for accessability
+      */
+      _updateParentCheckBoxLabel: function (parentCheckbox, layerName, selectedFeatureCount, layerId) {
+        parentCheckbox.setLabel(String.substitute(this.nls.copyFeatures.layerLabel, {
+          layerName: layerName,
+          selectedFeatures: selectedFeatureCount,
+          totalFeatures: this.featureTitlesByLayerId[layerId].length
+        }));
+
+        domAttr.set(parentCheckbox.domNode, "aria-label",
+          String.substitute(this.nls.copyFeatures.layerAriaLabel, {
+            layerName: layerName,
+            selectedFeatures: selectedFeatureCount,
+            totalFeatures: this.featureTitlesByLayerId[layerId].length
+          }));
       },
 
       /**
@@ -425,16 +562,15 @@ define([
           domAttr.set(this.createSingleFeatureBtn, "aria-label", this.nls.copyFeatures.createOneSingleFeature);
           domAttr.set(this.createSingleFeatureBtn, "title", this.nls.copyFeatures.createOneSingleFeature);
           domClass.add(this.createMultipleFeaturesBtn, "esriCTCanCreateOnlyOneFeature");
-          if (this.isPointGeometryFeatures) {
+          if (this.targetLayerDetails.featureLayer.geometryType === "esriGeometryPoint") {
             domClass.remove(this.createSingleFeatureBtn, "esriCTHidden");
           }
-
         } else {
           domAttr.set(this.createSingleFeatureBtn, "innerHTML", this.nls.copyFeatures.createSingleFeature);
           domAttr.set(this.createSingleFeatureBtn, "aria-label", this.nls.copyFeatures.createSingleFeature);
           domAttr.set(this.createSingleFeatureBtn, "title", this.nls.copyFeatures.createSingleFeature);
           domClass.remove(this.createMultipleFeaturesBtn, "esriCTCanCreateOnlyOneFeature");
-          if (this.isPointGeometryFeatures) {
+          if (this.targetLayerDetails.featureLayer.geometryType === "esriGeometryPoint") {
             domClass.add(this.createSingleFeatureBtn, "esriCTHidden");
           }
         }
@@ -458,7 +594,7 @@ define([
         allSelectedFeatures = this._getSelectedFeaturesForCopy();
         if (allSelectedFeatures && allSelectedFeatures.length > 0) {
           array.forEach(allSelectedFeatures, lang.hitch(this, function (feature) {
-            if(feature && feature.geometry) {
+            if (feature && feature.geometry) {
               // to fetch attributes later, entire feature is pushed
               allSelectedGeometries.push(feature);
             }
@@ -476,6 +612,72 @@ define([
         if (allSelectedFeatures && allSelectedFeatures.length > 0) {
           this.emit("createSingleFeature", allSelectedFeatures);
         }
+      },
+
+      /**
+      * Callback handler for field matching button clicked event.
+      */
+      _fieldMatchingBtnClicked: function () {
+        //create source layers and target layer details for field mapping
+        var sourceLayersInfo = [];
+        var targetLayerInfo = {
+          id: this.targetLayerDetails.featureLayer.id,
+          fields: this.targetLayerDetails.fieldInfos,
+          fieldValues: this.targetLayerDetails.fieldValues
+        };
+        var matchedLayerId = [];
+        //loop through all source layer and create source layer details
+        //according to layers order in map
+        array.forEach(this.layerInfosObj.getLayerInfoArray(), lang.hitch(this,
+          function (layerInfo) {
+            if (this.featuresByLayerId.hasOwnProperty(layerInfo.id)) {
+              matchedLayerId.push(layerInfo.id);
+              sourceLayersInfo.push(this._getSourceLayerInfo(layerInfo.id));
+            }
+          }));
+        //get source layer info for the layers whose id is not matched with layerInfos id. for e.g.KML layer
+        for (var layerId in this.featuresByLayerId) {
+          if (this.featuresByLayerId.hasOwnProperty(layerId) && matchedLayerId.indexOf(layerId) === -1 &&
+            this.layerInfosObj.getLayerInfoById(layerId)) {
+            sourceLayersInfo.push(this._getSourceLayerInfo(layerId));
+          }
+        }
+        //create new instance of field mapping
+        this.fieldsMappingObj = new fieldsMapping({
+          nls: this.nls,
+          sourceLayerDetails: sourceLayersInfo,
+          targetLayerDetails: targetLayerInfo,
+          fieldMappingDetails: this.fieldMappingDetails,
+          usePresetValues: this.usePresetValues,
+          overrideDefaultsByCopiedFeature: this.config.editor.overrideDefaultsByCopiedFeature
+        });
+        //on field mapping change update details in the objects
+        this.own(on(this.fieldsMappingObj, "field-mapping-changed", lang.hitch(this, function (updatedInfo) {
+          this.fieldMappingDetails = updatedInfo.fieldMappingDetails;
+          this.config.editor.overrideDefaultsByCopiedFeature =
+            updatedInfo.overrideDefaultsByCopiedFeature;
+        })));
+      },
+
+      _getConfiguredFieldInfos: function (layerFieldInfo, configuredFieldInfo) {
+        var fieldInfos = [];
+        array.forEach(configuredFieldInfo, function (field) {
+          var fieldInfoFromLayer = this._getFieldInfoByFieldName(layerFieldInfo, field.fieldName);
+          var fInfo = lang.mixin(lang.clone(fieldInfoFromLayer), field);
+          fieldInfos.push(fInfo);
+        }, this);
+        return fieldInfos;
+      },
+
+      _getFieldInfoByFieldName: function (fieldInfos, fieldName) {
+        var fieldInfo = {};
+        array.some(fieldInfos, function (field) {
+          if (field.name === fieldName) {
+            lang.mixin(fieldInfo, field);
+            return true;
+          }
+        });
+        return fieldInfo;
       },
 
       /**
@@ -523,10 +725,8 @@ define([
        */
       _showHideSingleFeatureButton: function (geometryType) {
         if (geometryType === "esriGeometryPoint") {
-          this.isPointGeometryFeatures = true;
           domClass.add(this.createSingleFeatureBtn, "esriCTHidden");
         } else {
-          this.isPointGeometryFeatures = false;
           domClass.remove(this.createSingleFeatureBtn, "esriCTHidden");
         }
       },
@@ -581,7 +781,7 @@ define([
        * This function is used to highlight features of corresponding layer
        * passed as a parameter to it
        */
-      _highlightSingleLayerFeatures: function(layerId) {
+      _highlightSingleLayerFeatures: function (layerId) {
         var featureLayer, highlightFeatureArr;
         featureLayer = this.map.getLayer(layerId);
         // get all the features which are checked in the list
@@ -624,6 +824,62 @@ define([
           domStyle.set(this.applyEditsProgress.domNode, 'display', 'none');
         } else {
           this.applyEditsProgress.set({ value: value });
+        }
+      },
+
+      /**
+       * This function is used to create feature list UI
+       */
+      _createFeatureListUI: function (currentLayerId, geometryType) {
+        var layer, layerName, groupNode, checkBoxWrapper, layerId;
+        layerId = currentLayerId;
+        //Get layer info by id
+        layer = this.layerInfosObj.getLayerInfoById(layerId);
+        //Get the layer title
+        layerName = layer.title ? layer.title : layer.name;
+        //Create a node for this layer and it's features
+        groupNode = domConstruct.create('div', {}, this.layerListTable);
+        //create parent node to add all the checkboxes in the DOM
+        checkBoxWrapper = domConstruct.create('div', {
+          "class": "esriCTHidden"
+        });
+        //Add the DOM at the last position
+        domConstruct.place(checkBoxWrapper, groupNode, "last");
+        //Create layer(parent) node
+        this.layerCheckBoxNodes[layerId] =
+          this._createListNode(layerName, groupNode, false, layerId, geometryType);
+        if (!this.checkBoxNodes[layerId]) {
+          this.checkBoxNodes[layerId] = [];
+        }
+        //Create list node for each feature in the layer
+        if (this.featureTitlesByLayerId[layerId].length > 0) {
+          this._createFeatureEntries(layerId, groupNode, geometryType,
+            checkBoxWrapper);
+          this.layerOrderSequence.push(this.featureTitlesByLayerId[layerId].length);
+        }
+      },
+
+      /**
+       * This function is used to get source layer info
+       */
+      _getSourceLayerInfo: function (currentLayerId) {
+        var layer, layerName, fields, layerId;
+        layerId = currentLayerId;
+        //Get layer info by id
+        layer = this.layerInfosObj.getLayerInfoById(layerId);
+        //get the source fields from web map
+        //So, irrespective of custom or honor web map settings, the source field will be fetched
+        //from the web map directly
+        fields = this.editUtils.getFieldInfosFromWebmap(layer) || layer.layerObject.fields;
+        //check if layer is valid and have valid layerObject and fields
+        if (layer && layer.layerObject && fields) {
+          //Get the layer title
+          layerName = layer.title ? layer.title : layer.name;
+          return {
+            id: layerId,
+            fields: fields,
+            name: layerName
+          };
         }
       }
     });

@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Rezultati skupinskega iskanja",
     "groupFilteredTemplatesTip": "Možnost za skupinsko iskanje po sloju.",
     "displayShapeSelector": "Pokaži možnosti risanja",
-    "createNewFeaturesFromExisting": "Dovoli uporabniku, da ustvari nove geoobjekte iz obstoječih geoobjektov.",
-    "createNewFeaturesFromExistingTip": "Možnost, ki uporabniku dovoljuje, da kopira obstoječi geoobjekt, da ustvari nove geoobjekte.",
-    "copiedFeaturesOverrideDefaults": "Kopirani geoobjekti preglasijo privzete.",
+    "createNewFeaturesFromExisting": "Dovolite ustvarjanje novih geoobjektov iz obstoječih geoobjektov",
+    "createNewFeaturesFromExistingTip": "Možnost, ki uporabniku dovoljuje, da kopira obstoječi geoobjekt, da ustvari nove geoobjekte",
+    "copiedFeaturesOverrideDefaults": "Vrednosti kopiranih geoobjektov bodo preglasile privzete vrednosti ciljnih polj",
     "copiedFeaturesOverrideDefaultsTip": "Vrednosti kopiranih geoobjektov bodo preglasile privzete vrednosti predlog samo za polja, ki se ujemajo.",
     "displayShapeSelectorTip": "Možnost, ki pokaže seznam veljavnih možnosti risanja za izbrano predlogo.",
     "displayPresetTop": "Prikaži na vrhu seznam prednastavljenih vrednosti",
@@ -46,14 +46,23 @@ define({
     "saveSettingsLegendLabel": "Shrani nastavitve",
     "geometrySettingsLegendLabel": "Nastavitve geometrije",
     "actionsSettingsLegendLabel": "Nastavitve za dejanja",
-    "buttonPositionsLabel": "Položaj gumbov Shrani, Izbriši, Nazaj in Prekliči",
+    "buttonPositionsLabel": "Položaj gumbov Shrani, Izbriši, Nazaj in Zapri",
     "belowEditLabel": "Pod obrazcem za urejanje",
     "aboveEditLabel": "Nad obrazcem za urejanje",
-    "switchToMultilineInput": "Preklopi na večvrstični vnos, ko dolžina polja preseže",
+    "switchToMultilineInput": "Preklopi na mnogolinijski vnos, ko dolžina polja preseže",
     "enableValuePicker": "Omogoči izbirnik vrednosti preseka",
     "enableValuePickerHint": "Prikaži poziv, kadar je na voljo več vrednosti za polje z dejanjem atributa preseka",
     "expandRelatedTable": "Razširi vse sorodne tabele/sloje pri nalaganju",
     "expandMainTable": "Razširi vse nadrejene sloje pri nalaganju",
+    "copyAndAppendFeatureLabel": "Kopirajte in dodajte geoobjekte",
+    "allowCopyPolygonLabel": "Dovolite kopiranje poligona na točko",
+    "allowCopyPolygonTooltip": "Možnost, ki dovoljuje kopiranje poligonskih geoobjektov v točkovni cilj predlog geoobjekta s transformacijami geometrije",
+    "allowCopyLineLabel": "Dovolite kopiranje linije na točko",
+    "allowCopyLineTooltip": "Možnost, ki dovoljuje kopiranje linijskih geoobjektov v točkovni cilj predlog geoobjekta s transformacijami geometrije",
+    "pointAtStartLabel": "Točka na začetku",
+    "pointAtStartTooltip": "Dodajte točko na začetku linije, ki jo kopirate",
+    "pointAtEndLabel": "Točka na koncu",
+    "pointAtEndTooltip": "Dodajte točko na koncu linije, ki jo kopirate",
     "layerSettingsTable": {
       "allowDelete": "Brisanje",
       "allowDeleteTip": "Dovoli brisanje – privzeta je možnost, ki uporabnikom dovoljuje brisanje geoobjektov. V primeru, da sloj ne podpira brisanja, je onemogočena.",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Nastavite toleranco za izbiro geoobjekta (piksli)",
     "featuresSelectionToleranceTooltip": "Uporabnikom omogoči, da s klikom na geoobjekt enostavno odprejo ploščo za urejanje atributa",
     "featuresSelectionToleranceErrorMsg": "Neveljavna vrednost tolerance izbire geoobjekta",
-    "autoSaveAttrUpdates": "Samodejno shrani posodobitve atributov"
+    "autoSaveAttrUpdates": "Samodejno shranite atribute in posodobitve geometrije",
+    "defaultCoordinateSystem": "Privzeti referenčni sistem",
+    "defaultCoordinateSystemTooltip": "Nastavite privzeti referenčni sistem ob premiku izbranega točkovnega geoobjekta na novo lokacijo."
   },
   "editDescriptionPage": {
     "title": "Določite besedilo pregleda atributov za <b>${layername}</b> "
@@ -148,7 +159,7 @@ define({
       "editAttributeGroupHint": "Opozorilo – neodvisno urejanje odstrani dejanje izbranega atributa, povezanega za to polje iz te skupine.",
       "editGroupHint": "Opozorilo – neodvisno urejanje odstrani dejanje izbranega pametnega dejanja, povezanega za to polje iz te skupine.",
       "popupTitle": "Izberi možnost urejanja",
-      "editAttributeGroup": "Izbrano dejanje atributa je določeno iz skupine. Izberite eno izmed naslednjih možnosti za urejanje dejanja atributa:",
+      "editAttributeGroup": "Izbrano dejanje atributa ni določeno iz skupine. Izberite eno izmed naslednjih možnosti za urejanje dejanja atributa:",
       "expression": "Izraz izbranega pametnega dejanja je opredeljen iz skupine. Izberite eno izmed naslednjih možnosti za urejanje izraza pametnega dejanja:",
       "editGroupButton": "Uredi skupino",
       "editIndependentlyButton": "Uredi neodvisno"
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atribut",
     "mapSpatialReferenceOptionLabel": "Določi koordinatni sistem",
     "latLongOptionLabel": "Geografska širina/Geografska dolžina",
-    "MGRS": "MGRS",
+    "MGRS": "Vojaški mrežni referenčni sistem (MGRS)",
     "allGroupsCreatedMsg": "Vse možne skupine so že ustvarjene.",
     "coordinatesSourceTitle": "Vir koordinat",
     "featureLocation": "Lokacija geoobjekta",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Vsa edinstvena imena prednastavljenih polj so navedena tukaj. Odstranitev prednastavljenega polja onemogoči ustrezno polje kot prednastavljeno iz vseh slojev/tabel."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Privzeta toleranca preseka za vse geoobjekte",
-    "pixelsToleranceTitle": "Privzeta toleranca preseka (vrednost piksla), ki bo uporabljena samo za točkovne geoobjekte"
+    "intersectionLabel": "Privzeta toleranca preseka za vse geoobjekte",
+    "intersectionTitle": "Omogočite globalno toleranco za preseke",
+    "pixelsToleranceLabel": "Privzeta toleranca preseka (vrednost piksla), ki bo uporabljena samo za točkovne geoobjekte",
+    "pixelsToleranceTitle": "Če je privzeta toleranca preseka za vse geoobjekte nastavljena na 0, uporabite to nastavitev za točkovne geoobjekte"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfiguriraj Smart Action",

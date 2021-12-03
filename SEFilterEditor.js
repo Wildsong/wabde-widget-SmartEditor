@@ -63,7 +63,11 @@ define([
         });
         domConstruct.place(this.selectDropDown, this.filterEditorDiv);
         this.selectDropDown.onchange = lang.hitch(this, function () {
-          this._onLayerFilterChanged();
+          var canGroupTemplate = true;
+          if (this.filterTextBox.value !== "" && !this.gpFilterTemplates) {
+            canGroupTemplate = false;
+          }
+          this._onLayerFilterChanged(canGroupTemplate);
         });
 
       },
@@ -179,7 +183,7 @@ define([
       /**
        * Updates the template picker based on selection in dropdown
        **/
-      _onLayerFilterChanged: function () {
+      _onLayerFilterChanged: function (groupTemplates) {
         // Clear any selections from previous selection
         var has_layers = true;
         this._templatePicker.clearSelection();
@@ -189,7 +193,7 @@ define([
             var filt_layers = this._filter_layers(utils.sanitizeHTML(this.filterTextBox.value));
             has_layers = filt_layers.length !== 0;
             this._templatePicker.attr("featureLayers", filt_layers);
-            if (this.gpFilterTemplates === true) {
+            if (this.gpFilterTemplates === true || groupTemplates) {
               this._templatePicker.attr("grouping", true);
             }
             else {
@@ -251,7 +255,7 @@ define([
         var val = this.selectDropDown.options[this.selectDropDown.selectedIndex].text;
         var filterText = utils.sanitizeHTML(this.filterTextBox.value);
         var has_layers = true;
-        if (this.gpFilterTemplates === true && val === this.nls.filterEditor.all) {
+        if (val === this.nls.filterEditor.all) {
           var filt_layers = this._filter_layers(filterText)
           this._templatePicker.attr("featureLayers", filt_layers);
           has_layers = filt_layers.length !== 0;
@@ -279,11 +283,38 @@ define([
       },
 
       addNewLayerInEditor: function (layerInfo) {
+        var isOptionExist = false, option, canGroupTemplate = true;
+        //Loop though the options and check if the option already exist
+        array.some(this.selectDropDown.options, lang.hitch(this,
+          function (option) {
+            if (option.value === layerInfo.id) {
+              isOptionExist = true;
+              return true;
+            }
+          }));
+        //If option do not exist, then add it to the dropdown
+        if (!isOptionExist) {
+          option = domConstruct.create("option", {
+            value: layerInfo.id,
+            innerHTML: layerInfo.name
+          });
+          //The option should always be added after the all option
+          //this will make sure the options are in line with the how the layers
+          //are shown in the template picker
+          domConstruct.place(option, this.selectDropDown.options[0], "after");
+        }
         //Add the layer at the beginning of the array
         this._layers.splice(0, 0, layerInfo);
+        if (this.filterTextBox.value !== "" && !this.gpFilterTemplates) {
+          canGroupTemplate = false;
+        }
+        //call the change method to update the template
+        //picker state and grouping attribute
+        this._onLayerFilterChanged(canGroupTemplate);
       },
 
       removeLayerFromEditor: function (layerInfo) {
+        var canGroupTemplate = true;
         //Loop through the layers and removed the deleted layer
         array.some(this._layers, lang.hitch(this, function (layer, index) {
           if (layer.id === layerInfo.id) {
@@ -291,6 +322,20 @@ define([
             return true;
           }
         }));
+        //Remove the deleted layer option from the dropdown
+        array.some(this.selectDropDown.options, lang.hitch(this,
+          function (option, index) {
+            if (option.value === layerInfo.id) {
+              this.selectDropDown.remove(index);
+              if (this.filterTextBox.value !== "") {
+                canGroupTemplate = false;
+              }
+              //call the change method to update the template
+              //picker state and grouping attribute
+              this._onLayerFilterChanged(canGroupTemplate);
+              return true;
+            }
+          }));
       }
     });
   });

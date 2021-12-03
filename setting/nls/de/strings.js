@@ -24,7 +24,7 @@ define({
     "displayShapeSelector": "Darstellungsoptionen anzeigen",
     "createNewFeaturesFromExisting": "Erstellen von neuen Features aus vorhandenen Features zulassen",
     "createNewFeaturesFromExistingTip": "Option, mit der das Kopieren von vorhandenen Features zugelassen wird, um neue Features zu erstellen",
-    "copiedFeaturesOverrideDefaults": "Werte von kopierten Features setzen Standardwerte außer Kraft",
+    "copiedFeaturesOverrideDefaults": "Werte aus kopierten Features setzen die Standardwerte in Zielfeldern außer Kraft",
     "copiedFeaturesOverrideDefaultsTip": "Werte aus den kopierten Features setzen nur für die übereinstimmenden Felder die standardmäßigen Vorlagenwerte außer Kraft",
     "displayShapeSelectorTip": "Option zum Anzeigen einer Liste von Darstellungsoptionen für die ausgewählte Vorlage.",
     "displayPresetTop": "Liste der voreingestellten Werte im Vordergrund anzeigen",
@@ -43,10 +43,10 @@ define({
     "enableMovingSelectedFeatureToGPS": "Verschieben von ausgewähltem Punkt-Feature zur GPS-Position aktivieren",
     "enableMovingSelectedFeatureToXY": "Verschieben von ausgewähltem Punkt-Feature zur XY-Position aktivieren",
     "featureTemplateLegendLabel": "Einstellungen für Feature-Vorlage und Filterwert",
-    "saveSettingsLegendLabel": "Speichereinstellungen",
+    "saveSettingsLegendLabel": "Einstellungen speichern",
     "geometrySettingsLegendLabel": "Geometrieeinstellungen",
     "actionsSettingsLegendLabel": "Aktionseinstellungen",
-    "buttonPositionsLabel": "Position der Schaltflächen \"Speichern\", \"Löschen\", \"Zurück\" und \"Abbrechen\"",
+    "buttonPositionsLabel": "Position der Schaltflächen \"Speichern\", \"Löschen\", \"Zurück\" und \"Schließen\"",
     "belowEditLabel": "Unter Bearbeitungsformular",
     "aboveEditLabel": "Über Bearbeitungsformular",
     "switchToMultilineInput": "Bei Überschreitung des folgenden Wertes für die Feldlänge zu mehrzeiliger Eingabe wechseln:",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Eingabeaufforderung anzeigen, wenn mehrere Werte für ein Feld mit einer Aktion für Überschneidungsattribute verfügbar sind",
     "expandRelatedTable": "Alle zugehörigen Tabellen/Layer beim Laden einblenden",
     "expandMainTable": "Alle übergeordneten Layer beim Laden einblenden",
+    "copyAndAppendFeatureLabel": "Features kopieren und anhängen",
+    "allowCopyPolygonLabel": "Kopieren von Polygonen in Punkte zulassen",
+    "allowCopyPolygonTooltip": "Option, mit der das Kopieren von Polygon-Features in Ziel-Feature-Vorlagen für Punkte zugelassen wird. Es erfolgt eine Transformation der Geometrien.",
+    "allowCopyLineLabel": "Kopieren von Linien in Punkte zulassen",
+    "allowCopyLineTooltip": "Option, mit der das Kopieren von Linien-Features in Ziel-Feature-Vorlagen für Punkte zugelassen wird. Es erfolgt eine Transformation der Geometrien.",
+    "pointAtStartLabel": "Punkt am Anfang",
+    "pointAtStartTooltip": "Einen Punkt am Anfang der zu kopierenden Linie hinzufügen",
+    "pointAtEndLabel": "Punkt am Ende",
+    "pointAtEndTooltip": "Einen Punkt am Ende der zu kopierenden Linie hinzufügen",
     "layerSettingsTable": {
       "allowDelete": "Löschen zulassen",
       "allowDeleteTip": "Löschen zulassen: Option, die Benutzern das Löschen eines Features ermöglicht. Sie wird deaktiviert, wenn der Layer die Löschfunktion nicht unterstützt.",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Toleranz für die Feature-Auswahl festlegen (Pixel)",
     "featuresSelectionToleranceTooltip": "Durch einen Klick auf das Feature können Benutzer das Fenster zum Bearbeiten von Attributen problemlos öffnen.",
     "featuresSelectionToleranceErrorMsg": "Ungültiger Toleranzwert für die Feature-Auswahl",
-    "autoSaveAttrUpdates": "Attributaktualisierungen automatisch speichern"
+    "autoSaveAttrUpdates": "Attribut- und Geometrieaktualisierungen automatisch speichern",
+    "defaultCoordinateSystem": "Standardmäßiges Bezugssystem",
+    "defaultCoordinateSystemTooltip": "Das standardmäßige Bezugssystem festlegen, wenn das ausgewählte Punkt-Feature an eine neue Position verschoben wird"
   },
   "editDescriptionPage": {
     "title": "Übersichtstext für <b>${layername}</b> definieren "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Kriterien: Die Reihenfolge der Regel ändern und die Kriterien für deren Auslösung definieren"
     },
     "copyAction": {
-      "description": "Feldwertquellen werden je nach Aktivierung der Reihenfolge nach verarbeitet, bis ein gültiges Kriterium ausgelöst wird oder die Liste abgeschlossen ist. Verwenden Sie zum Festlegen der Kriterien die Schaltfläche \"Kriterien bearbeiten\".",
+      "description": "Aktivierte Feldwertquellen werden der Reihenfolge nach verarbeitet, bis ein gültiges Kriterium ausgelöst wird oder die Liste abgeschlossen ist. Verwenden Sie zum Festlegen der Kriterien die Schaltfläche \"Kriterien bearbeiten\".",
       "intersection": "Schnittpunkt",
       "coordinates": "Koordinaten",
       "address": "Adresse",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Attribut",
     "mapSpatialReferenceOptionLabel": "Raumbezug der Karte",
     "latLongOptionLabel": "Breitengrad/Längengrad",
-    "MGRS": "MGRS",
+    "MGRS": "Military Grid Reference System (MGRS)",
     "allGroupsCreatedMsg": "Alle möglichen Gruppen werden bereits erstellt",
     "coordinatesSourceTitle": "Koordinatenquelle",
     "featureLocation": "Feature-Position",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Alle eindeutigen voreingestellten Feldnamen sind hier aufgeführt. Durch das Entfernen eines voreingestellten Feldes wird das entsprechende Feld in allen Layern/Tabellen als Voreinstellung deaktiviert."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Standardmäßige Überschneidungstoleranz für alle Features",
-    "pixelsToleranceTitle": "Standardmäßige Überschneidungstoleranz (Pixelwert), die nur auf Punkt-Features angewendet wird"
+    "intersectionLabel": "Standardmäßige Überschneidungstoleranz für alle Features",
+    "intersectionTitle": "Globale Toleranz für Überschneidungen aktivieren",
+    "pixelsToleranceLabel": "Standardmäßige Überschneidungstoleranz (Pixelwert), die nur auf Punkt-Features angewendet wird",
+    "pixelsToleranceTitle": "Wenn die standardmäßige Überschneidungstoleranz für alle Features auf 0 festgelegt ist, wird diese Einstellung auf alle Punkt-Features angewendet."
   },
   "smartActionsPage": {
     "smartActionLabel": "Intelligente Aktion konfigurieren",

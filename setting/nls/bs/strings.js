@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Skupni rezultati pretraživanja",
     "groupFilteredTemplatesTip": "Mogućnost grupiranja rezultata pretraživanja po slojevima.",
     "displayShapeSelector": "Prikaži opcije crtanja",
-    "createNewFeaturesFromExisting": "Omogući korisniku stvaranje novih geoobjekata iz postojećih geoobjekata",
-    "createNewFeaturesFromExistingTip": "Opcija kojom se korisniku omogućuje kopiranje postojećeg geoobjekta kako bi se stvorili novi geoobjekti",
-    "copiedFeaturesOverrideDefaults": "Vrijednosti kopiranih geoobjekata nadjačavaju zadane postavke",
+    "createNewFeaturesFromExisting": "Omogući stvaranje novih geoobjekata iz postojećih geoobjekata",
+    "createNewFeaturesFromExistingTip": "Opcija kojom se korisniku omogućuje kopiranje postojećih geoobjekata kako bi se stvorili novi geoobjekti",
+    "copiedFeaturesOverrideDefaults": "Vrijednosti iz kopiranih geoobjekata nadjačat će zadane vrijednosti u ciljnim poljima",
     "copiedFeaturesOverrideDefaultsTip": "Vrijednosti iz kopiranih geoobjekata nadjačat će zadane vrijednosti predložaka samo za polja koja se podudaraju",
     "displayShapeSelectorTip": "Opcija za prikaz popisa valjanih opcija crtanja za odabrani predložak.",
     "displayPresetTop": "Prikaži prethodno postavljenu vrijednost na vrhu",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Spremi postavke",
     "geometrySettingsLegendLabel": "Postavke geometrije",
     "actionsSettingsLegendLabel": "Postavke radnji",
-    "buttonPositionsLabel": "Položaj gumba za spremanje, brisanje, povratak i poništavanje",
+    "buttonPositionsLabel": "Položaj gumba za spremanje, brisanje, povratak i zatvaranje",
     "belowEditLabel": "Ispod obrasca za uređivanje",
     "aboveEditLabel": "Iznad obrasca za uređivanje",
     "switchToMultilineInput": "Prebaci na unos u više redaka kada se dužina polja prekorači",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Prikaz upita kada je za polje s radnjom atributa presijecanja dostupno više vrijednosti",
     "expandRelatedTable": "Proširi sve povezane tablice/slojeve pri učitavanju",
     "expandMainTable": "Proširi sve nadređene slojeve pri učitavanju",
+    "copyAndAppendFeatureLabel": "Kopiraj i dopuni geoobjekte",
+    "allowCopyPolygonLabel": "Dopusti kopiranje poligona na točku",
+    "allowCopyPolygonTooltip": "Opcija za dopuštenje kopiranja geoobjekata poligona u predloške geoobjekata s transformacijama geometrije",
+    "allowCopyLineLabel": "Dopusti kopiranje linije na točku",
+    "allowCopyLineTooltip": "Opcija za dopuštenje kopiranja linijskih geoobjekata poligona u predloške geoobjekata s transformacijama geometrije",
+    "pointAtStartLabel": "Točka na početku",
+    "pointAtStartTooltip": "Dodaj točku na početak linije koja se kopira",
+    "pointAtEndLabel": "Točka na završetku",
+    "pointAtEndTooltip": "Dodaj točku na završetak linije koja se kopira",
     "layerSettingsTable": {
       "allowDelete": "Omogući brisanje",
       "allowDeleteTip": "Omogući opciju Izbriši - opcija za omogućavanje korisniku brisanje geoobjekta; onemogućeno ako sloj ne podržava brisanje",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Postavite toleranciju za odabir geoobjekta (pikseli)",
     "featuresSelectionToleranceTooltip": "Omogućuje korisnicima lako otvaranje ploče za uređivanje atributa klikom na geoobjekt",
     "featuresSelectionToleranceErrorMsg": "Nevažeća vrijednost tolerancije za odabir geoobjekta",
-    "autoSaveAttrUpdates": "Automatski spremi ažuriranja atributa"
+    "autoSaveAttrUpdates": "Automatski spremi atribut i ažuriranja geometrije",
+    "defaultCoordinateSystem": "Zadani referentni sustav",
+    "defaultCoordinateSystemTooltip": "Postavite zadani referentni sustav pri premještanju odabranog točkastog geoobjekta na novo mjesto"
   },
   "editDescriptionPage": {
     "title": "Definirajte tekst pregleda atributa za <b>${layername}</b> "
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atribut",
     "mapSpatialReferenceOptionLabel": "Prostorna referenca karte",
     "latLongOptionLabel": "Geografska dužina/širina",
-    "MGRS": "MGRS",
+    "MGRS": "Vojni pravokutni koordinatni sustav (MGRS)",
     "allGroupsCreatedMsg": "Sve moguće grupe već su stvorene",
     "coordinatesSourceTitle": "Izvor koordinata",
     "featureLocation": "Lokacija geoobjekta",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Ovdje su navedeni svi jedinstveni prethodno postavljeni nazivi polja. Uklanjanje prethodno postavljenog polja onemogućit će odgovarajuće polje kao prethodno postavljeno iz svih slojeva/tablica."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Zadano dopušteno odstupanje presijecanja za sve geoobjekte",
-    "pixelsToleranceTitle": "Zadano dopušteno odstupanje presijecanja (vrijednost piksela) koje će se primjenjivati samo za točkaste geoobjekte"
+    "intersectionLabel": "Zadano dopušteno odstupanje presijecanja za sve geoobjekte",
+    "intersectionTitle": "Omogućite globalno dopušteno odstupanje za presijecanja",
+    "pixelsToleranceLabel": "Zadano dopušteno odstupanje presijecanja (vrijednost piksela) koje će se primjenjivati samo za točkaste geoobjekte",
+    "pixelsToleranceTitle": "Ako je zadano dopušteno odstupanje presijecanja za sve geoobjekte postavljeno na 0, koristite ovu postavku za točkaste geoobjekte"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfiguriraj opciju Pametna radnja",

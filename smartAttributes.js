@@ -187,7 +187,7 @@ define([
 
         if (results[0] === true) {
 
-          this.toggleFieldOnAttributeInspector(fieldLabel, actionType, results[2], changeDefaultState);
+          this.toggleFieldOnAttributeInspector(fieldLabel, actionType, results[2], changeDefaultState, field.isEditable);
         }
       }));
       return rowsWithError;
@@ -1057,7 +1057,8 @@ define([
         domClass.remove(parent, "hideField");
       }
     },
-    _removeDisableRule: function (fieldName, valueCell) {
+    _removeDisableRule: function (fieldName, valueCell, isEditable) {
+      var widgetNode;
       if (this._notEditableFields.indexOf(fieldName) === -1) {
         if (domClass.contains(valueCell, "dijitTextBoxDisabled")) {
           domClass.remove(valueCell, "dijitTextBoxDisabled");
@@ -1071,16 +1072,23 @@ define([
         if (domClass.contains(valueCell, "dijitDisabled")) {
           domClass.remove(valueCell, "dijitDisabled");
         }
+        widgetNode = registry.getEnclosingWidget(valueCell);
+        //If widget node is found, make it's read only property to  false
+        if (widgetNode) {
+          widgetNode.set("readOnly", false);
+        }
       }
-      this._processChildNodes(valueCell, false);
+      if (isEditable) {
+        this._processChildNodes(valueCell, false);
+      }
     },
-    _remove: function (row, fieldName, valueCell, parent, widget) {
+    _remove: function (row, fieldName, valueCell, parent, widget, isEditable) {
       this._removeRequireFieldMarkings(valueCell, parent, widget);
       this._removeRedAst(row[0], fieldName);
-      this._removeDisableRule(fieldName, valueCell);
+      this._removeDisableRule(fieldName, valueCell, isEditable);
       this._removeHideRule(parent);
     },
-    toggleFieldOnAttributeInspector: function (fieldName, actionType, fieldHasValidValue,changeDefaultState) {
+    toggleFieldOnAttributeInspector: function (fieldName, actionType, fieldHasValidValue, changeDefaultState, isEditable) {
       //optional param to determine if no rule is found, should it reset the state.
       //Required for when a form is disabled and a rule to hide a field is required
       changeDefaultState = typeof changeDefaultState !== 'undefined' && changeDefaultState !== null ? changeDefaultState : true;
@@ -1129,9 +1137,9 @@ define([
                 case 'Hide':
                   this._removeRequireFieldMarkings(valueCell, parent, widget);
                   this._removeRedAst(row[0], fieldName);
-                  this._removeDisableRule(fieldName, valueCell);
-                  if(valueCell2){
-                    this._removeDisableRule(fieldName, valueCell2);
+                  this._removeDisableRule(fieldName, valueCell, isEditable);
+                  if (valueCell2) {
+                    this._removeDisableRule(fieldName, valueCell2, isEditable);
                   }
                   if(valuePickerButton){
                     domClass.remove(valuePickerButton, "disabled");
@@ -1158,9 +1166,9 @@ define([
                   }
                   break;
                 case 'Required':
-                  this._removeDisableRule(fieldName, valueCell);
-                  if(valueCell2){
-                    this._removeDisableRule(fieldName, valueCell2);
+                  this._removeDisableRule(fieldName, valueCell, isEditable);
+                  if (valueCell2) {
+                    this._removeDisableRule(fieldName, valueCell2, isEditable);
                   }
                   if(valuePickerButton){
                     domClass.remove(valuePickerButton, "disabled");
@@ -1230,12 +1238,12 @@ define([
                   break;
                 default:
                   if (changeDefaultState) {
-                    this._remove(row, fieldName, valueCell, parent, widget);
+                    this._remove(row, fieldName, valueCell, parent, widget, isEditable);
                     if (valuePickerButton) {
                       domClass.remove(valuePickerButton, "disabled");
                     }
                     if (valueCell2) {
-                      this._removeDisableRule(fieldName, valueCell2);
+                      this._removeDisableRule(fieldName, valueCell2, isEditable);
                     }
                   }
               }

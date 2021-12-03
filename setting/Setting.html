@@ -152,18 +152,6 @@
 
                         </div>
                         <div class="checkOption">
-                            <input class="check" data-dojo-attach-point="createNewFeaturesFromExisting" id="createNewFeaturesFromExisting"
-                                data-dojo-type="dijit/form/CheckBox" title="${nls.layersPage.createNewFeaturesFromExistingTip}" />
-                            <label class="checkLabel" for="createNewFeaturesFromExisting" title="${nls.layersPage.createNewFeaturesFromExistingTip}">${nls.layersPage.createNewFeaturesFromExisting}</label>
-                        </div>
-
-                        <div class="checkOption" style="text-indent: 25px;">
-                            <input class="check" data-dojo-attach-point="overrideDefaultsByCopiedFeature" id="overrideDefaultsByCopiedFeature"
-                                data-dojo-type="dijit/form/CheckBox" title="${nls.layersPage.copiedFeaturesOverrideDefaultsTip}" />
-                            <label class="checkLabel" for="overrideDefaultsByCopiedFeature" title="${nls.layersPage.copiedFeaturesOverrideDefaultsTip}">${nls.layersPage.copiedFeaturesOverrideDefaults}</label>
-                        </div>
-
-                        <div class="checkOption">
 
                             <input class="check" data-dojo-attach-point="displayPresetTop" id="displayPresetTop"
                                 data-dojo-type="dijit/form/CheckBox" title="${nls.layersPage.displayPresetTopTip}" />
@@ -204,6 +192,68 @@
 
 
                     </fieldset>
+
+                     <!--Copy and Append feature-->
+
+                    <fieldset class="esriCTFieldSet">
+
+                        <legend class="esriCTFieldSetLegend">${nls.layersPage.copyAndAppendFeatureLabel}</legend>
+
+                        <!--Allow copy polygon to point-->
+
+                        <div class="checkOption">
+                            <input class="check" data-dojo-attach-point="createNewFeaturesFromExisting"
+                                id="createNewFeaturesFromExisting" data-dojo-type="dijit/form/CheckBox"
+                                title="${nls.layersPage.createNewFeaturesFromExistingTip}" />
+                            <label class="checkLabel" for="createNewFeaturesFromExisting"
+                                title="${nls.layersPage.createNewFeaturesFromExistingTip}">${nls.layersPage.createNewFeaturesFromExisting}</label>
+                        </div>
+
+                        <div class="checkOption" style="text-indent: 25px;">
+                            <input class="check" data-dojo-attach-point="allowCopyPolygonNode" id="allowCopyPolygonToPoint"
+                                data-dojo-type="dijit/form/CheckBox" title="${nls.layersPage.allowCopyPolygonTooltip}"/>
+                            <label class="checkLabel" for="allowCopyPolygonToPoint"
+                                title="${nls.layersPage.allowCopyPolygonTooltip}">${nls.layersPage.allowCopyPolygonLabel}</label>
+                        </div>
+                        <!--Allow copy line to point-->
+
+                        <div class="checkOption" style="text-indent: 25px;">
+                            <input class="check" data-dojo-attach-point="allowCopyLineNode" id="allowCopyLineToPoint"
+                                data-dojo-type="dijit/form/CheckBox" title="${nls.layersPage.allowCopyLineLabel}" />
+                            <label class="checkLabel" for="allowCopyLineToPoint"
+                                title="${nls.layersPage.allowCopyLineTooltip}">${nls.layersPage.allowCopyLineLabel}</label>
+                        </div>
+
+                        <div class="esriCTRadioBtnContainer esriCTRadioButtonParentContainer">
+                            <div class="esriCTRadioBtn">
+                                <input data-dojo-type="jimu/dijit/RadioBtn" id="copyPointAtStart"
+                                    data-dojo-props="group: 'allowCopyLine'" type="radio" name="allowCopyLine"
+                                    checked="true" data-dojo-attach-point="copyPointAtStart" title="${nls.layersPage.pointAtStartTooltip}">
+                                <label class="esriCTRadioLabel" for="copyPointAtStart" title="${nls.layersPage.pointAtStartTooltip}">
+                                    ${nls.layersPage.pointAtStartLabel}
+                                </label>
+                            </div>
+                            <div class="esriCTRadioBtn">
+                                <input data-dojo-type="jimu/dijit/RadioBtn" id="copyPointAtEnd"
+                                    data-dojo-props="group: 'allowCopyLine'" type="radio" name="allowCopyLine"
+                                    data-dojo-attach-point="copyPointAtEnd" title="${nls.layersPage.pointAtEndTooltip}">
+                                <label class="esriCTRadioLabel" for="copyPointAtEnd" title="${nls.layersPage.pointAtEndTooltip}">
+                                    ${nls.layersPage.pointAtEndLabel}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="checkOption" style="text-indent: 25px;">
+                            <input class="check" data-dojo-attach-point="overrideDefaultsByCopiedFeature"
+                                id="overrideDefaultsByCopiedFeature" data-dojo-type="dijit/form/CheckBox"
+                                title="${nls.layersPage.copiedFeaturesOverrideDefaultsTip}" />
+                            <label class="checkLabel" for="overrideDefaultsByCopiedFeature"
+                                title="${nls.layersPage.copiedFeaturesOverrideDefaultsTip}">${nls.layersPage.copiedFeaturesOverrideDefaults}</label>
+                        </div>
+
+                    </fieldset>
+
+
                     <fieldset class="esriCTFieldSet">
                         <legend class="esriCTFieldSetLegend">${nls.layersPage.saveSettingsLegendLabel}</legend>
 
@@ -311,12 +361,26 @@
                             <label class="checkLabel" for="enableMovingSelectedFeatureToXY" title="${nls.layersPage.enableMovingSelectedFeatureToXY}">${nls.layersPage.enableMovingSelectedFeatureToXY}</label>
 
                         </div>
+                        <div class="checkOption" style="text-indent: 25px;" title="${nls.layersPage.defaultCoordinateSystemTooltip}">
+                            <div class="esriCTGlobalTleranceParentDiv">
+                                <div class="esriCTDefaultCoordSelect">
+                                    <select style="width: 100%;" data-dojo-attach-point="defaultCoordinateSystem"
+                                        data-dojo-type="dijit/form/Select">
+                                        <option value="Map Spatial Reference">${nls.coordinatesPage.mapSpatialReferenceOptionLabel}</option>
+                                        <option value="Latitude/Longitude">${nls.coordinatesPage.latLongOptionLabel}</option>
+                                        <option value="MGRS">${nls.coordinatesPage.MGRS}</option>
+                                    </select>
+                                </div>
+                        
+                                <div style="width: 60%; margin-left: 10px; margin-right: 10px;" class="esriCTLabel">
+                                    ${nls.layersPage.defaultCoordinateSystem}</div>
+                            </div>
+                        </div>
                         <div class="checkOption" title="${nls.layersPage.featuresSelectionToleranceTooltip}">
                             <div class="esriCTGlobalTleranceParentDiv">
                                 <div class="esriCTGlobalToleranceTextbox">
-                                    <div data-dojo-attach-point="featuresSelectionTolerance" value="5"
-                                    data-dojo-type="dijit/form/NumberSpinner"
-                                    data-dojo-props="smallDelta:5, constraints:{min:0,max:1000,places:0}" style="width:100%"></div>
+                                    <div data-dojo-attach-point="featuresSelectionTolerance" value="5" data-dojo-type="dijit/form/NumberSpinner"
+                                        data-dojo-props="smallDelta:5, constraints:{min:0,max:1000,places:0}" style="width:100%"></div>
                                 </div>
                                 <div style="width: 75%; margin-left: 10px; margin-right: 10px;" class="esriCTLabel">
                                     ${nls.layersPage.featuresSelectionTolerance}</div>
@@ -344,7 +408,7 @@
                                 data-dojo-type="dijit/form/CheckBox" title="${nls.layersPage.enableAutomaticAttributeUpdates}" />
                             <label class="checkLabel" for="enableAutomaticAttributeUpdates" title="${nls.layersPage.enableAutomaticAttributeUpdates}">${nls.layersPage.enableAutomaticAttributeUpdates}</label>
                         </div>
-                        <div class="checkOption">
+                        <div class="checkOption" title="${nls.intersectionTolerance.intersectionTitle}">
                             <div class="esriCTGlobalTleranceParentDiv">
                               <div class="esriCTGlobalToleranceTextbox">
                                   <div data-dojo-attach-point="globalTolerance" data-dojo-type="dijit/form/NumberTextBox" trim="true"
@@ -360,17 +424,17 @@
                                   </select>
                               </div>
   
-                              <div class="esriCTLabel esriCTIntersectionToleranceLabel">${nls.intersectionTolerance.intersectionTitle}</div>
+                            <div class="esriCTLabel esriCTIntersectionToleranceLabel">${nls.intersectionTolerance.intersectionLabel}</div>
                             </div>
                           </div>
-                          <div class="checkOption">
+                          <div class="checkOption" title="${nls.intersectionTolerance.pixelsToleranceTitle}">
                             <div class="esriCTGlobalTleranceParentDiv">
                                 <div class="esriCTGlobalToleranceTextbox">
                                     <div data-dojo-attach-point="globalPixelsTolerance" data-dojo-type="dijit/form/NumberTextBox" trim="true"
                                         value="20" data-dojo-props="constraints: {min:0}" required="true" style="width:100%"></div>
                                 </div>
                                 <div style="width: 75%; margin-left: 10px; margin-right: 10px;" class="esriCTLabel">
-                                    ${nls.intersectionTolerance.pixelsToleranceTitle}</div>
+                                    ${nls.intersectionTolerance.pixelsToleranceLabel}</div>
                             </div>
                         </div>
                     </fieldset>

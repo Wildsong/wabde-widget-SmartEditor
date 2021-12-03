@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Gruppera sökresultat",
     "groupFilteredTemplatesTip": "Alternativ för att gruppera sökresultat efter lager.",
     "displayShapeSelector": "Visa ritalternativ",
-    "createNewFeaturesFromExisting": "Tillåt att användaren skapar nya geoobjekt av befintliga geoobjekt",
+    "createNewFeaturesFromExisting": "Tillåt att nya geoobjekt skapas av befintliga geoobjekt",
     "createNewFeaturesFromExistingTip": "Alternativ för att låta användaren kopiera befintliga geoobjekt för att skapa nya geoobjekt",
-    "copiedFeaturesOverrideDefaults": "Kopierade geoobjektvärden åsidosätter standardvärden",
+    "copiedFeaturesOverrideDefaults": "Värden från kopierade geoobjekt åsidosätter standardvärden i målfälten",
     "copiedFeaturesOverrideDefaultsTip": "Värden från de kopierade geoobjekten åsidosätter bara standardmallvärden för de matchade fälten",
     "displayShapeSelectorTip": "Alternativ för att visa en lista med giltiga ritalternativ för den valda mallen.",
     "displayPresetTop": "Visa lista med förinställda värden överst",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Spara inställningarna",
     "geometrySettingsLegendLabel": "Geometriinställningar",
     "actionsSettingsLegendLabel": "Åtgärdsinställningar",
-    "buttonPositionsLabel": "Placering av knapparna Spara, Ta bort, Bakåt och Avbryt",
+    "buttonPositionsLabel": "Placering av knapparna Spara, Ta bort, Bakåt och Stäng",
     "belowEditLabel": "Under redigeringsformulär",
     "aboveEditLabel": "Ovanför redigeringsformulär",
     "switchToMultilineInput": "Växla till indata med flera rader när fältlängden har överskridits",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Visa en uppmaning när flera värden finns tillgängliga för ett fält med en korsningsattributåtgärd",
     "expandRelatedTable": "Visa alla relaterade tabeller/lager vid inläsning",
     "expandMainTable": "Visa alla överordnade lager vid inläsning",
+    "copyAndAppendFeatureLabel": "Kopiera och bifoga geoobjekt",
+    "allowCopyPolygonLabel": "Tillåt kopiering av polygon till punkt",
+    "allowCopyPolygonTooltip": "Alternativ för att tillåta kopiering av polygongeoobjekt till punktmålsgeoobjektmallar med geometritransformationer",
+    "allowCopyLineLabel": "Tillåt kopiering av linje till punkt",
+    "allowCopyLineTooltip": "Alternativ för att tillåta kopiering av linjegeoobjekt till punktmålsgeoobjektmallar med geometritransformationer",
+    "pointAtStartLabel": "Punkt i början",
+    "pointAtStartTooltip": "Lägg till punkt i början av linjen som kopieras",
+    "pointAtEndLabel": "Punkt i slutet",
+    "pointAtEndTooltip": "Lägg till punkt i slutet av linjen som kopieras",
     "layerSettingsTable": {
       "allowDelete": "Tillåt borttagning",
       "allowDeleteTip": "Tillåt borttagning – alternativ för att låta användaren ta bort ett geoobjekt; inaktiverat om lagret inte medger borttagning",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Ange toleransen för val av geoobjekt (pixlar)",
     "featuresSelectionToleranceTooltip": "Gör det möjligt för användare att enkelt öppna attributredigeringsfönstret genom att klicka på geoobjektet",
     "featuresSelectionToleranceErrorMsg": "Ogiltigt värde för tolerans för val av geoobjekt",
-    "autoSaveAttrUpdates": "Spara attributuppdateringar automatiskt"
+    "autoSaveAttrUpdates": "Spara attribut- och geometriuppdateringar automatiskt",
+    "defaultCoordinateSystem": "Standardreferenssystem",
+    "defaultCoordinateSystemTooltip": "Ange standardreferenssystem vid flytt av valt punktgeoobjekt till en ny position"
   },
   "editDescriptionPage": {
     "title": "Definiera attributöversiktstext för <b>${layername}</b> "
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Attribut",
     "mapSpatialReferenceOptionLabel": "Kartans geografiska referens",
     "latLongOptionLabel": "Latitud/longitud",
-    "MGRS": "MGRS",
+    "MGRS": "Military Grid Reference System (MGRS)",
     "allGroupsCreatedMsg": "Alla möjliga grupper har redan skapats",
     "coordinatesSourceTitle": "Koordinatkälla",
     "featureLocation": "Geoobjektplats",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Alla unika förinställda fältnamn visas här. Om förinställda fält tas bort så inaktiveras respektive förinställda fält i alla lager/tabeller."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Tolerans för standardkorsning för alla geoobjekt",
-    "pixelsToleranceTitle": "Tolerans för standardkorsning (pixelvärde) som enbart ska användas för punktgeoobjekt"
+    "intersectionLabel": "Tolerans för standardkorsning för alla geoobjekt",
+    "intersectionTitle": "Aktivera en global tolerans för korsningar",
+    "pixelsToleranceLabel": "Tolerans för standardkorsning (pixelvärde) som enbart ska användas för punktgeoobjekt",
+    "pixelsToleranceTitle": "Om toleransen för standardkorsning för alla geoobjekt är satt till 0, använd inställningen för punktgeoobjekt"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfigurera smart åtgärd",

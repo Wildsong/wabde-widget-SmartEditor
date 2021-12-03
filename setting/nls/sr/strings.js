@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Rezultati grupne pretrage",
     "groupFilteredTemplatesTip": "Opcija za rezultate grupne pretrage po slojevima",
     "displayShapeSelector": "Prikaži opcije za crtanje",
-    "createNewFeaturesFromExisting": "Omogući korisniku da kreira nove geoobjekte iz postojećih geoobjekata",
-    "createNewFeaturesFromExistingTip": "Opcija za omogućavanje korisniku da kopira postojeći geoobjekat radi kreiranja novih geoobjekata",
-    "copiedFeaturesOverrideDefaults": "Vrednosti kopiranih geoobjekata zamenjuju podrazumevane",
+    "createNewFeaturesFromExisting": "Omogući kreiranje novog geoobjekta(geoobjekata) iz postojećeg geoobjekta(geoobjekata)",
+    "createNewFeaturesFromExistingTip": "Opcija da se korisniku dozvoli da kopira postojeće geoobjekte radi kreiranja novih geoobjekata",
+    "copiedFeaturesOverrideDefaults": "Vrednost(i) iz kopiranog geoobjekta(geoobjekata) će zameniti podrazumevanu vrednost(i) iz ciljnog(ciljnih) polja",
     "copiedFeaturesOverrideDefaultsTip": "Vrednosti iz kopiranih geoobjekata će zameniti vrednosti podrazumevanog šablona samo za polja koja se poklapaju",
     "displayShapeSelectorTip": "Opcija za prikaz liste važećih opcija za crtanje za izabrani šablon.",
     "displayPresetTop": "Prikaži listu unapred postavljenih vrednosti na vrhu",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Sačuvaj postavke",
     "geometrySettingsLegendLabel": "Postavke geometrije",
     "actionsSettingsLegendLabel": "Postavke radnji",
-    "buttonPositionsLabel": "Položaj dugmadi Sačuvaj, Izbriši, Nazad i Obriši",
+    "buttonPositionsLabel": "Položaj dugmadi Sačuvaj, Izbriši, Nazad i Zatvori",
     "belowEditLabel": "Ispod Uredi formu",
     "aboveEditLabel": "Iznad Uredi formu",
     "switchToMultilineInput": "Promenite na višelinijski unos kada se premaši dužina polja",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Prikaži upit kada je više vrednosti dostupno za polje uz radnju atributa preseka",
     "expandRelatedTable": "Proširi sve povezane tabele/slojeve pri učitavanju",
     "expandMainTable": "Proširi sve matične slojeve pri učitavanju",
+    "copyAndAppendFeatureLabel": "Kopiraj i dodaj geoobjekte",
+    "allowCopyPolygonLabel": "Dozvoli kopiranje poligona do tačke",
+    "allowCopyPolygonTooltip": "Opcija da se omogući kopiranje poligonalnih geoobjekata u šablone za ciljni tačkasti geoobjekat sa transformacijama geometrije",
+    "allowCopyLineLabel": "Dozvoli kopiranje linije do tačke",
+    "allowCopyLineTooltip": "Opcija da se dozvoli kopiranje linijskih geoobjekata u šablone za ciljni tačkasti geoobjekat sa transformacijom geometrije",
+    "pointAtStartLabel": "Tačka na početku",
+    "pointAtStartTooltip": "Dodajte tačku na početku linije koja se kopira",
+    "pointAtEndLabel": "Tačka na kraju",
+    "pointAtEndTooltip": "Dodajte tačku na kraju linije koja se kopira",
     "layerSettingsTable": {
       "allowDelete": "Dozvoli brisanje",
       "allowDeleteTip": "Omogući brisanje – Opcija da se korisniku dozvoli da obriše geoobjekat; onemogućena je ako sloj ne podržava brisanje",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Podesite toleranciju za selekciju geoobjekata (pikseli)",
     "featuresSelectionToleranceTooltip": "Omogućava korisnicima da lako otvore panel za uređivanje atributa klikom na geoobjekat",
     "featuresSelectionToleranceErrorMsg": "Nevažeća vrednost tolerancije za selekciju geoobjekata",
-    "autoSaveAttrUpdates": "Automatski čuva ažurirane atribute"
+    "autoSaveAttrUpdates": "Automatski sačuvajte ažuriranja atributa i geometrije",
+    "defaultCoordinateSystem": "Podrazumevani referentni sistem",
+    "defaultCoordinateSystemTooltip": "Postavite podrazumevani referentni sistem kada pomerate odabrani tačkasti geoobjekat na novu lokaciju"
   },
   "editDescriptionPage": {
     "title": "Definišite tekst za pregled atributa za <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Kriterijum – Promeni redosled pravila i definiši kriterijum kada je aktivirano"
     },
     "copyAction": {
-      "description": "Izvor vrednosti polja se obrađuje redom, ako je aktiviran, do aktiviranja važećeg kriterijuma ili završetka liste. Koristite dugme za izmenu kriterijuma da biste definisali kriterijum.",
+      "description": "Izvor vrednosti polja se obrađuje redom ako je aktiviran, i to do pokretanja važećeg kriterijuma ili završetka liste. Koristite dugme za izmenu kriterijuma da biste definisali kriterijum.",
       "intersection": "Raskrsnica",
       "coordinates": "Koordinate",
       "address": "Adresa",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Jedinstveni ranije podešeni nazivi polja navedeni su ovde. Uklanjanje ranije podešenog polja isključiće odgovarajuće polje kao ranije podešeno iz svih slojeva/tabela."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Podrazumevana tolerancija preseka za sve funkcije",
-    "pixelsToleranceTitle": "Podrazumevana tolerancija preseka (vrednost piksela) koja će se primeniti samo za funkcije tačke"
+    "intersectionLabel": "Podrazumevana tolerancija preseka za sve funkcije",
+    "intersectionTitle": "Aktivirajte globalnu toleranciju za raskrsnice",
+    "pixelsToleranceLabel": "Podrazumevana tolerancija preseka (vrednost piksela) koja će se primeniti samo za funkcije tačke",
+    "pixelsToleranceTitle": "Ako je podrazumevana tolerancija raskrsnica za sve geoobjekte podešena na 0, iskoristite ovu postavku za tačkaste geoobjekte"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfiguriši pametnu radnju",

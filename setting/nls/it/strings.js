@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Raggruppare i risultati della ricerca",
     "groupFilteredTemplatesTip": "Possibilità di raggruppare i risultati della ricerca per layer.",
     "displayShapeSelector": "Mostra opzioni del disegno",
-    "createNewFeaturesFromExisting": "Consenti all'utente di creare nuove feature da feature esistenti",
-    "createNewFeaturesFromExistingTip": "Opzione per consentire all'utente di copiare la feature esistente per creare nuove feature",
-    "copiedFeaturesOverrideDefaults": "I valori delle feature copiate sostituiscono i valori predefiniti",
+    "createNewFeaturesFromExisting": "Consenti la creazione di nuove feature da feature esistenti",
+    "createNewFeaturesFromExistingTip": "Opzione per consentire all'utente di copiare feature esistenti per creare nuove feature",
+    "copiedFeaturesOverrideDefaults": "I valori delle caratteristiche copiate sovrascrivono i valori predefiniti nei campi di destinazione",
     "copiedFeaturesOverrideDefaultsTip": "I valori delle feature copiate sostituiscono i valori predefiniti del modello solo per i campi corrispondenti",
     "displayShapeSelectorTip": "Opzione per mostrare un elenco di opzioni valide per il disegno per il modello selezionato.",
     "displayPresetTop": "Mostra in alto l'elenco dei valori preimpostati",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Salva Impostazioni",
     "geometrySettingsLegendLabel": "Impostazioni geometria",
     "actionsSettingsLegendLabel": "Impostazioni delle azioni",
-    "buttonPositionsLabel": "Posizione dei pulsanti Salva, Elimina, Indietro e Annulla",
+    "buttonPositionsLabel": "Posizione dei pulsanti Salva, Elimina, Indietro e Chiudi",
     "belowEditLabel": "Sotto il modulo di modifica",
     "aboveEditLabel": "Sopra il modulo di modifica",
     "switchToMultilineInput": "Passare a input multilineari quando viene superata la lunghezza del campo",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Visualizzare un prompt quando sono disponibili più valori per un campo con un'azione attributo di intersezione",
     "expandRelatedTable": "Espandere tutte le tabelle/layer correlati sul carico",
     "expandMainTable": "Espandere tutti i layer padre sul carico",
+    "copyAndAppendFeatureLabel": "Copia e accoda feature",
+    "allowCopyPolygonLabel": "Consenti la copia del poligono da puntare",
+    "allowCopyPolygonTooltip": "Opzione che permette di copiare le caratteristiche poligonali nei modelli di caratteristiche del punto con trasformazioni geometriche",
+    "allowCopyLineLabel": "Consenti la copia della linea da puntare",
+    "allowCopyLineTooltip": "Opzione per permettere di copiare caratteristiche di linea in modelli di caratteristiche di destinazione di punti con trasformazioni di geometria",
+    "pointAtStartLabel": "Punto all’inizio",
+    "pointAtStartTooltip": "Aggiungi un punto all'inizio della linea copiata",
+    "pointAtEndLabel": "Punto alla fine",
+    "pointAtEndTooltip": "Aggiungi un punto alla fine della linea copiata",
     "layerSettingsTable": {
       "allowDelete": "Consenti cancellazione",
       "allowDeleteTip": "Consenti cancellazione: opzione per consentire all'utente di cancellare una feature; disabilitata se il layer non supporta la cancellazione",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Impostare la tolleranza per la selezione della feature (pixel)",
     "featuresSelectionToleranceTooltip": "Consente agli utenti di aprire facilmente il pannello di modifica attributo facendo clic sulla feature",
     "featuresSelectionToleranceErrorMsg": "Valore di tolleranza selezione feature non valido",
-    "autoSaveAttrUpdates": "Salvare gli aggiornamenti attributo automaticamente."
+    "autoSaveAttrUpdates": "Salva aggiornamenti di attributo e geometria automaticamente",
+    "defaultCoordinateSystem": "Sistema di riferimento predefinito",
+    "defaultCoordinateSystemTooltip": "Impostare il sistema di riferimento predefinito quando si sposta un punto selezionato in una nuova posizione"
   },
   "editDescriptionPage": {
     "title": "Definire il testo panoramica attributo per <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Criteri: modificare l'ordine della regola e definire i criteri quando viene attivata"
     },
     "copyAction": {
-      "description": "L'origine del valore del campo viene elaborata in ordine se attivata finché non si attiva un criterio valido o non viene completato l’elenco. Utilizzare il pulsante di modifica dei criteri per definire i criteri.",
+      "description": "La fonte del valore del campo viene processata in ordine se attivata fino a quando un criterio valido viene attivato o l'elenco viene completato. Usa il pulsante Modifica criteri per definire i criteri.",
       "intersection": "Intersezione",
       "coordinates": "Coordinate",
       "address": "Indirizzo",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Attributo",
     "mapSpatialReferenceOptionLabel": "Riferimento spaziale della mappa",
     "latLongOptionLabel": "Latitudine/Longitudine",
-    "MGRS": "MGRS",
+    "MGRS": "Military Grid Reference System (MGRS)",
     "allGroupsCreatedMsg": "Tutti i gruppi possibili sono già stati creati",
     "coordinatesSourceTitle": "Origine coordinate",
     "featureLocation": "Posizione feature",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Tutti i nomi di campo univoci preimpostati sono elencati qui. La rimozione di un campo preimpostato disabiliterà il campo rispettivo come preimpostazione da tutti i layer/tabelle."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Tolleranza di intersezione predefinita per tutte le feature",
-    "pixelsToleranceTitle": "Tolleranza di intersezione predefinita (valore pixel) da applicare solo per feature puntuali"
+    "intersectionLabel": "Tolleranza di intersezione predefinita per tutte le feature",
+    "intersectionTitle": "Attiva una tolleranza globale per le intersezioni",
+    "pixelsToleranceLabel": "Tolleranza di intersezione predefinita (valore pixel) da applicare solo per feature puntuali",
+    "pixelsToleranceTitle": "Se la tolleranza di intersezione di default per tutte le caratteristiche è impostata a 0, usa questa impostazione per le caratteristiche puntuali"
   },
   "smartActionsPage": {
     "smartActionLabel": "Configurare Smart Action",

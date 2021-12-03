@@ -1,4 +1,4 @@
-﻿.jimu-widget-smartEditor .esriTemplatePicker * {
+.jimu-widget-smartEditor .esriTemplatePicker * {
     border: none !important;
     background-color: transparent !important;
 }
@@ -112,4 +112,26 @@
 
 .jimu-widget-smartEditor .esriCTValuePickerButton.disabled {
     opacity: 0.2;
+}
+
+.jimu-widget-smartEditor .esriCTCopyFeaturesListContent .expanded {
+    background-image: url("../images/upArrow-white.png");
+}
+
+.jimu-widget-smartEditor .esriCTCopyFeaturesListContent .collapsed {
+    background-image: url("../images/upArrow-white.png");
+}
+
+.jimu-widget-smartEditor-fieldsMapping .esriCTArrow{
+    background-image: url("../images/downArrow-white.png");
+}
+
+.jimu-widget-smartEditor-fieldsMapping .esriCTResetButton {
+    background-image: url("../images/reset-white.png");
+
+}
+
+.jimu-widget-smartEditor-fieldsMapping .esriCTClearButton {
+    background-image: url("../images/clear-white.png");
+
 }

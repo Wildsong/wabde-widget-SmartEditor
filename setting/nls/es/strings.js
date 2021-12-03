@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Agrupar resultados de búsqueda",
     "groupFilteredTemplatesTip": "Opción para agrupar los resultados de búsqueda por capa.",
     "displayShapeSelector": "Mostrar opciones de dibujo",
-    "createNewFeaturesFromExisting": "Permitir al usuario crear entidades nuevas a partir de entidades existentes",
-    "createNewFeaturesFromExistingTip": "Opción que permite al usuario copiar la entidad existente para crear entidades nuevas",
-    "copiedFeaturesOverrideDefaults": "Los valores de las entidades copiadas invalidan los valores predeterminados",
+    "createNewFeaturesFromExisting": "Permitir la creación de entidades nuevas a partir de entidades existentes",
+    "createNewFeaturesFromExistingTip": "Opción que permite al usuario copiar las entidades existentes para crear entidades nuevas",
+    "copiedFeaturesOverrideDefaults": "Los valores de la entidad o entidades copiados invalidan los valores predeterminados de los campos de destino",
     "copiedFeaturesOverrideDefaultsTip": "Los valores de las entidades copiadas invalidarán los valores predeterminados de la plantilla únicamente para los campos que coincidan.",
     "displayShapeSelectorTip": "Una opción para mostrar una lista de opciones de dibujo válidas para la plantilla seleccionada.",
     "displayPresetTop": "Visualizar lista de valores predefinidos encima",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Guardar configuración",
     "geometrySettingsLegendLabel": "Ajustes de geometría",
     "actionsSettingsLegendLabel": "Configuración de acciones",
-    "buttonPositionsLabel": "Posición de los botones Guardar, Eliminar, Atrás y Cancelar",
+    "buttonPositionsLabel": "Posición de los botones Guardar, Eliminar, Atrás y Cerrar",
     "belowEditLabel": "Por debajo del formulario de edición",
     "aboveEditLabel": "Por encima del formulario de edición",
     "switchToMultilineInput": "Cambiar a la entrada multilínea si el campo excede de longitud",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Mostrar una solicitud cuando existan varios valores disponibles para un campo con una acción de atributo de intersección",
     "expandRelatedTable": "Expandir todas las tablas/capas relacionadas al cargar",
     "expandMainTable": "Expandir todas las capas principales al cargar",
+    "copyAndAppendFeatureLabel": "Copiar e incorporar entidades",
+    "allowCopyPolygonLabel": "Permitir la copia de polígono a punto",
+    "allowCopyPolygonTooltip": "Opción para permitir la copia de entidades de polígono a plantillas de entidades de destino de punto con transformaciones de geometría",
+    "allowCopyLineLabel": "Permitir la copia de línea a punto",
+    "allowCopyLineTooltip": "Opción para permitir la copia de entidades de línea a plantillas de entidades de destino de punto con transformaciones de geometría",
+    "pointAtStartLabel": "Punto en el inicio",
+    "pointAtStartTooltip": "Agregar un punto al principio de la línea que se está copiando",
+    "pointAtEndLabel": "Punto al final",
+    "pointAtEndTooltip": "Agregar un punto al final de la línea que se está copiando",
     "layerSettingsTable": {
       "allowDelete": "Permitir eliminación",
       "allowDeleteTip": "Permitir eliminación - Opción que permite al usuario eliminar una entidad; estará deshabilitada si la capa no admite eliminaciones",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Establecer la tolerancia para la selección de entidades (píxeles)",
     "featuresSelectionToleranceTooltip": "Permite a los usuarios abrir fácilmente el panel de edición de atributos haciendo clic en la entidad",
     "featuresSelectionToleranceErrorMsg": "Valor de tolerancia de selección de entidades no válido",
-    "autoSaveAttrUpdates": "Guardar automáticamente las actualizaciones de atributos"
+    "autoSaveAttrUpdates": "Guardar automáticamente las actualizaciones de atributos y geometría",
+    "defaultCoordinateSystem": "Sistema de referencia predeterminado",
+    "defaultCoordinateSystemTooltip": "Establezca el sistema de referencia predeterminado moviendo una entidad de punto seleccionada a una nueva ubicación"
   },
   "editDescriptionPage": {
     "title": "Definir texto de descripción general de atributo para <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Criterio - Cambie el orden de la regla y defina los criterios cuando se active"
     },
     "copyAction": {
-      "description": "Si se activa, los orígenes de valores de campo se procesan en orden hasta que se dispara un criterio válido o hasta que se completa la lista. Use el botón de edición de criterios para definir los criterios.",
+      "description": "Si se activa, los orígenes de valores de campo se procesan en orden hasta que se dispara un criterio válido o hasta que se completa la lista. Use el botón Edición de criterios para definir los criterios.",
       "intersection": "Intersección",
       "coordinates": "Coordenadas",
       "address": "Dirección",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atributos",
     "mapSpatialReferenceOptionLabel": "Asignar referencia espacial",
     "latLongOptionLabel": "Latitud/longitud",
-    "MGRS": "MGRS",
+    "MGRS": "Sistema de Referencia de Cuadrícula Militar de EE. UU. (MGRS)",
     "allGroupsCreatedMsg": "Ya se han creado todos los grupos posibles",
     "coordinatesSourceTitle": "Fuente de coordenadas",
     "featureLocation": "Ubicación de entidad",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Aquí se enumeran todos los nombres de campos únicos predefinidos. Al eliminar un campo predefinido, se desactiva el campo correspondiente como predefinido de todas las capas/tablas."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Tolerancia de intersección predeterminada para todas las entidades",
-    "pixelsToleranceTitle": "Tolerancia de intersección predeterminada (valor de píxel) que se va a aplicar solo a entidades de puntos"
+    "intersectionLabel": "Tolerancia de intersección predeterminada para todas las entidades",
+    "intersectionTitle": "Habilitar una tolerancia global para intersecciones",
+    "pixelsToleranceLabel": "Tolerancia de intersección predeterminada (valor de píxel) que se va a aplicar solo a entidades de puntos",
+    "pixelsToleranceTitle": "Si la tolerancia de intersección predeterminada para todas las entidades está definida en 0, utilice este ajuste para entidades de puntos"
   },
   "smartActionsPage": {
     "smartActionLabel": "Configurar acción inteligente",

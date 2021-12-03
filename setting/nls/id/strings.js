@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Hasil pencarian grup",
     "groupFilteredTemplatesTip": "Opsi hasil pencarian grup berdasarkan layer.",
     "displayShapeSelector": "Tampilkan opsi menggambar",
-    "createNewFeaturesFromExisting": "Izinkan pengguna untuk membuat fitur baru dari fitur yang ada",
-    "createNewFeaturesFromExistingTip": "Opsi untuk mengizinkan pengguna menyalin fitur yang ada untuk membuat fitur-fitur baru",
-    "copiedFeaturesOverrideDefaults": "Nilai fitur yang disalin menimpa default",
+    "createNewFeaturesFromExisting": "Izinkan membuat fitur baru dari fitur yang sudah ada",
+    "createNewFeaturesFromExistingTip": "Opsi untuk mengizinkan pengguna menyalin fitur yang ada untuk membuat fitur baru",
+    "copiedFeaturesOverrideDefaults": "Nilai dari fitur yang disalin menimpa nilai default di kolom target",
     "copiedFeaturesOverrideDefaultsTip": "Nilai dari fitur-fitur yang disalin akan menimpa nilai template default hanya untuk kolom yang cocok",
     "displayShapeSelectorTip": "Opsi untuk menampilkan daftar opsi menggambar yang valid untuk template terpilih.",
     "displayPresetTop": "Tampilkan daftar nilai prasetel di bagian atas",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Simpan Pengaturan",
     "geometrySettingsLegendLabel": "Pengaturan Geometri",
     "actionsSettingsLegendLabel": "Pengaturan Tindakan",
-    "buttonPositionsLabel": "Posisi tombol Simpan, Hapus, Kembali, dan Batalkan",
+    "buttonPositionsLabel": "Posisi tombol Simpan, Hapus, Kembali, dan Tutup",
     "belowEditLabel": "Di bawah Edit Formulir",
     "aboveEditLabel": "Di atas Edit Formulir",
     "switchToMultilineInput": "Alihkan ke input beberapa baris jika panjang kolom terlampaui",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Tampilkan jendela prompt saat beberapa nilai tersedia untuk kolom dengan tindakan atribut perpotongan",
     "expandRelatedTable": "Perluas semua tabel/layer yang terkait saat memuat",
     "expandMainTable": "Perluas semua layer induk saat memuat",
+    "copyAndAppendFeatureLabel": "Salin dan Tambahkan Fitur",
+    "allowCopyPolygonLabel": "Izinkan menyalin poligon ke titik",
+    "allowCopyPolygonTooltip": "Opsi untuk mengizinkan menyalin fitur poligon ke template fitur target titik dengan transformasi geometri",
+    "allowCopyLineLabel": "Izinkan menyalin garis ke titik",
+    "allowCopyLineTooltip": "Opsi untuk mengizinkan menyalin fitur garis ke template fitur target titik dengan transformasi geometri",
+    "pointAtStartLabel": "Titik di awal",
+    "pointAtStartTooltip": "Tambahkan titik di awal garis yang disalin",
+    "pointAtEndLabel": "Titik di akhir",
+    "pointAtEndTooltip": "Tambahkan titik di akhir garis yang disalin",
     "layerSettingsTable": {
       "allowDelete": "Izinkan Hapus",
       "allowDeleteTip": "Izinkan Penghapusan - Opsi untuk mengizinkan pengguna menghapus satu fitur; nonaktifkan jika layer tidak mendukung penghapusan",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Atur toleransi untuk pilihan fitur (piksel)",
     "featuresSelectionToleranceTooltip": "Memungkinkan pengguna untuk membuka panel pengeditan atribut dengan mengklik fiturnya",
     "featuresSelectionToleranceErrorMsg": "Nilai toleransi pilihan fitur tidak valid",
-    "autoSaveAttrUpdates": "Menyimpan pembaruan atribut secara otomatis"
+    "autoSaveAttrUpdates": "Simpan pembaruan atribut dan geometri secara otomatis",
+    "defaultCoordinateSystem": "Sistem Referensi Default",
+    "defaultCoordinateSystemTooltip": "Atur sistem referensi default saat memindahkan fitur titik yang dipilih ke lokasi baru"
   },
   "editDescriptionPage": {
     "title": "Tentukan overview atribut untuk <b>${layername}</b> "
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atribut",
     "mapSpatialReferenceOptionLabel": "Referensi Spasial Peta",
     "latLongOptionLabel": "Garis Lintang/Garis Bujur",
-    "MGRS": "MGRS",
+    "MGRS": "Sistem Referensi Grid Militer (MGRS)",
     "allGroupsCreatedMsg": "Semua grup yang memungkinkan telah dibuat",
     "coordinatesSourceTitle": "Sumber Koordinat",
     "featureLocation": "Lokasi Fitur",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Semua nama kolom prasetel unik tercantum di sini. Menghapus kolom prasetel akan menonaktifkan setiap kolom sebagai prasetel dari semua layer/tabel."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Toleransi perpotongan default untuk semua fitur",
-    "pixelsToleranceTitle": "Toleransi perpotongan default (nilai piksel) yang ingin diterapkan untuk fitur titik saja"
+    "intersectionLabel": "Toleransi perpotongan default untuk semua fitur",
+    "intersectionTitle": "Aktifkan toleransi global untuk perpotongan",
+    "pixelsToleranceLabel": "Toleransi perpotongan default (nilai piksel) yang ingin diterapkan untuk fitur titik saja",
+    "pixelsToleranceTitle": "Jika toleransi perpotongan default untuk semua fitur diatur ke 0, gunakan pengaturan ini untuk fitur titik"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfigurasikan Tindakan Cerdas",

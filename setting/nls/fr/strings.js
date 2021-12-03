@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Regrouper les résultats de recherche",
     "groupFilteredTemplatesTip": "Option permettant de regrouper les résultats de recherche par couche.",
     "displayShapeSelector": "Afficher les options de dessin",
-    "createNewFeaturesFromExisting": "Autoriser les utilisateurs à créer de nouvelles entités à partir d’entités existantes",
-    "createNewFeaturesFromExistingTip": "Option permettant à l’utilisateur de copier une entité existante pour créer de nouvelles entités",
-    "copiedFeaturesOverrideDefaults": "Les valeurs des entités copiées remplacent les valeurs par défaut",
+    "createNewFeaturesFromExisting": "Autoriser la création de nouvelles entités à partir d’entités existantes",
+    "createNewFeaturesFromExistingTip": "Option permettant à l’utilisateur de copier des entités existantes pour créer de nouvelles entités",
+    "copiedFeaturesOverrideDefaults": "Les valeurs des entités copiées remplacent les valeurs par défaut dans les champs cibles",
     "copiedFeaturesOverrideDefaultsTip": "Les valeurs des entités copiées remplacent les valeurs du modèle par défaut uniquement pour les champs appariés",
     "displayShapeSelectorTip": "Option permettant d’afficher une liste des options de dessin valides pour le modèle sélectionné.",
     "displayPresetTop": "Afficher la liste de valeurs prédéfinies au-dessus",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Enregistrer les paramètres",
     "geometrySettingsLegendLabel": "Paramètres de géométrie",
     "actionsSettingsLegendLabel": "Paramètres des actions",
-    "buttonPositionsLabel": "Position des boutons Enregistrer, Supprimer, Précédent et Annuler",
+    "buttonPositionsLabel": "Position des boutons Enregistrer, Supprimer, Précédent et Fermer",
     "belowEditLabel": "Au-dessous du formulaire de modification",
     "aboveEditLabel": "Au-dessus du formulaire de modification",
     "switchToMultilineInput": "Passer en mode de saisie multiligne lorsque la longueur de champ dépasse",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Afficher une invite lorsque plusieurs valeurs sont disponibles pour un champ avec une action sur les attributs de type Intersection",
     "expandRelatedTable": "Développer toutes les couches/tables associées lors du chargement",
     "expandMainTable": "Développer les couches parentes lors du chargement",
+    "copyAndAppendFeatureLabel": "Copier et ajouter des entités",
+    "allowCopyPolygonLabel": "Autoriser la copie de polygone vers point",
+    "allowCopyPolygonTooltip": "Option permettant de copier des entités surfaciques dans des modèles d’entités cibles ponctuelles avec des transformations géométriques",
+    "allowCopyLineLabel": "Autoriser la copie de ligne vers point",
+    "allowCopyLineTooltip": "Option permettant de copier des entités linéaires dans des modèles d’entités cibles ponctuelles avec des transformations géométriques",
+    "pointAtStartLabel": "Point au début",
+    "pointAtStartTooltip": "Ajouter un point au début de la ligne copiée",
+    "pointAtEndLabel": "Point à la fin",
+    "pointAtEndTooltip": "Ajouter un point à la fin de la ligne copiée",
     "layerSettingsTable": {
       "allowDelete": "Autoriser la suppression",
       "allowDeleteTip": "Autoriser la suppression : option qui permet à l’utilisateur de supprimer une entité. Désactivée si la couche ne prend pas en charge la suppression",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Définir la tolérance pour la sélection d’entités (en pixels)",
     "featuresSelectionToleranceTooltip": "Permet aux utilisateurs d’ouvrir facilement la fenêtre de mise à jour des attributs en cliquant sur l’entité.",
     "featuresSelectionToleranceErrorMsg": "Valeur de tolérance de sélection d’entités non valide",
-    "autoSaveAttrUpdates": "Enregistrer automatiquement les mises à jour des attributs"
+    "autoSaveAttrUpdates": "Enregistrer automatiquement les mises à jour des attributs et de la géométrie",
+    "defaultCoordinateSystem": "Système de référence par défaut",
+    "defaultCoordinateSystemTooltip": "Définir le système de référence par défaut lors du déplacement d’une entité ponctuelle sélectionnée vers un nouvel emplacement"
   },
   "editDescriptionPage": {
     "title": "Définir le texte de vue d'ensemble des attributs de <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Critères : modifier l’ordre de la règle et définir les critères lors de son déclenchement"
     },
     "copyAction": {
-      "description": "Les sources des valeurs de champs sont traitées dans l’ordre si elles sont activées, jusqu’au déclenchement d’un critère valide ou jusqu’à la fin de la liste. Utiliser le bouton de mise à jour des critères pour définir le critère.",
+      "description": "Les sources des valeurs de champs sont traitées dans l’ordre si elles sont activées, jusqu’au déclenchement d’un critère valide ou jusqu’à la fin de la liste. Utilisez le bouton de mise à jour des critères pour définir le critère.",
       "intersection": "Intersection",
       "coordinates": "Coordonnées",
       "address": "Adresse",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Attribut",
     "mapSpatialReferenceOptionLabel": "Référence spatiale de la carte",
     "latLongOptionLabel": "Latitude/Longitude",
-    "MGRS": "MGRS",
+    "MGRS": "Military Grid Reference System (MGRS)",
     "allGroupsCreatedMsg": "Tous les groupes possibles sont déjà créés",
     "coordinatesSourceTitle": "Source des coordonnées",
     "featureLocation": "Localisation de l’entité",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Tous les noms de champs prédéfinis uniques sont répertoriés ici. La suppression d’un champ prédéfini entraîne la désactivation du champ correspondant prédéfini pour toutes les couches/tables."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Tolérance d’intersection par défaut pour toutes les entités",
-    "pixelsToleranceTitle": "Tolérance d’intersection par défaut (valeur de pixel) à appliquer pour les entités ponctuelles uniquement"
+    "intersectionLabel": "Tolérance d’intersection par défaut pour toutes les entités",
+    "intersectionTitle": "Activer une tolérance globale pour les intersections",
+    "pixelsToleranceLabel": "Tolérance d’intersection par défaut (valeur de pixel) à appliquer pour les entités ponctuelles uniquement",
+    "pixelsToleranceTitle": "Si la tolérance d’intersection par défaut de toutes les entités est définie sur 0, utiliser ce paramètre pour les entités ponctuelles"
   },
   "smartActionsPage": {
     "smartActionLabel": "Configurer l’action intelligente",

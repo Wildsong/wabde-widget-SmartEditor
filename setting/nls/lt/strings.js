@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Grupuoti paieškos rezultatus",
     "groupFilteredTemplatesTip": "Galimybė grupuoti paieškos rezultatus pagal sluoksnį",
     "displayShapeSelector": "Rodyti braižymo parinktis",
-    "createNewFeaturesFromExisting": "Leisti naudotojams kurti naujus elementus iš esamų",
-    "createNewFeaturesFromExistingTip": "Parinktis, leidžianti naudotojams kopijuoti esamą elementą norint sukurti naujus elementus",
-    "copiedFeaturesOverrideDefaults": "Nukopijuotų elementų reikšmės pakeičia numatytąsias",
+    "createNewFeaturesFromExisting": "Leisti kurti naują (-us) elementą (-us) iš esamo (-ų)",
+    "createNewFeaturesFromExistingTip": "Parinktis, leidžianti vartotojui kopijuoti esamus elementus, norint sukurti naujus",
+    "copiedFeaturesOverrideDefaults": "Reikšmė(s) iš nukopijuoto (-ų) elemento (-ų) perrašo numatytąją (-sias) reikšmę (-es) tiksliniame (-iuose) lauke (-uose)",
     "copiedFeaturesOverrideDefaultsTip": "Nukopijuotų elementų reikšmės pakeis tik sutampančių laukų numatytąsias šablono reikšmes",
     "displayShapeSelectorTip": "Parinktis, parodanti pasirinkto šablono galimų braižymo parinkčių sąrašą.",
     "displayPresetTop": "Rodyti iš anksto nustatytų reikšmių sąrašą viršuje",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Įrašyti nustatymus",
     "geometrySettingsLegendLabel": "Geometrijos nustatymai",
     "actionsSettingsLegendLabel": "Veiksmų parametrai",
-    "buttonPositionsLabel": "Mygtukų Įrašyti, Naikinti, Atgal ir Atšaukti vieta",
+    "buttonPositionsLabel": "Mygtukų Įrašyti, Naikinti, Atgal ir Uždaryti vieta",
     "belowEditLabel": "Po Redaguoti formą",
     "aboveEditLabel": "Virš Redaguoti formą",
     "switchToMultilineInput": "Perjungti į kelių eilučių įvestį, kai viršijamas lauko ilgis",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Rodyti priminimą, kai naudojant sankirtos atributo veiksmą, laukui galimos kelios vertės",
     "expandRelatedTable": "Išskleisti visas susijusias lenteles / sluoksnius įkėlus",
     "expandMainTable": "Išskleisti visus pagrindinus sluoksnius įkėlus",
+    "copyAndAppendFeatureLabel": "Kopijuoti ir pridėti elementus",
+    "allowCopyPolygonLabel": "Leisti kopijuoti poligoną į tašką",
+    "allowCopyPolygonTooltip": "Parinktis, leidžianti kopijuoti poligono elementus į taško tikslinio elemento šablonus su geometrijos transformacijomis",
+    "allowCopyLineLabel": "Leisti kopijuoti liniją į tašką",
+    "allowCopyLineTooltip": "Parinktis, leidžianti kopijuoti linijos elementus į taško tikslinio elemento šablonus su geometrijos transformacijomis",
+    "pointAtStartLabel": "Pradžios taškas",
+    "pointAtStartTooltip": "Pridėti tašką kopijuojamos linijos pradžioje",
+    "pointAtEndLabel": "Pabaigos taškas",
+    "pointAtEndTooltip": "Pridėti tašką kopijuojamos linijos pabaigoje",
     "layerSettingsTable": {
       "allowDelete": "Leisti ištrinti",
       "allowDeleteTip": "Leisti ištrinti – parinktis, leidžianti naudotojui ištrinti elementą; išjungiama, jei sluoksnio ištrinti negalima",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Nustatyti elemento pasirinkimo toleranciją pikseliais",
     "featuresSelectionToleranceTooltip": "Leidžia naudotojams lengvai atverti atributo redagavimo sritį spustelėjus ant elemento",
     "featuresSelectionToleranceErrorMsg": "Netinkama elemento pasirinkimo tolerancijos reikšmė",
-    "autoSaveAttrUpdates": "Automatiškai įrašyti atributų naujinimus"
+    "autoSaveAttrUpdates": "Automatiškai įrašyti atributų ir geometrijos naujinimus",
+    "defaultCoordinateSystem": "Numatytoji koordinačių sistema",
+    "defaultCoordinateSystemTooltip": "Nustatykite numatytąją koordinačių sistemą, naudojamą perkeliant pasirinktą taškinį elementą į naują padėtį"
   },
   "editDescriptionPage": {
     "title": "Nurodyti <b>${layername}</b> atributų apžvalgos tekstą "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Kriterijai – keisti taisyklių tvarką ir nustatyti kriterijus, kai jie suaktyvinami"
     },
     "copyAction": {
-      "description": "Lauko reikšmės šaltinis apdorojamas, jei jis aktyvinamas iki tinkamo kriterijaus aktyvinimo arba iki sąrašo užbaigimo. Norėdami apibrėžti kriterijus, naudokite kriterijų redagavimo mygtuką.",
+      "description": "Jei suaktyvinta, lauko reikšmės šaltiniai apdorojami eiliškumo tvarka, kol suaktyvinamas tinkamas kriterijus arba baigiasi sąrašas. Norėdami apibrėžti kriterijus, naudokite kriterijų redagavimo mygtuką.",
       "intersection": "Sankirta",
       "coordinates": "Koordinatės",
       "address": "Adresas",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Aprašas",
     "mapSpatialReferenceOptionLabel": "Žemėlapio koordinačių sistema",
     "latLongOptionLabel": "Platuma/Ilguma",
-    "MGRS": "MGRS",
+    "MGRS": "Karinio tinklelio atskaitos sistema (MGRS)",
     "allGroupsCreatedMsg": "Visos galimos grupės jau sukurtos",
     "coordinatesSourceTitle": "Koordinačių šaltinis",
     "featureLocation": "Elemento vieta",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Čia pateikti visi unikalūs iš anksto nustatytų laukų pavadinimai. Pašalinus iš anksto nustatytą lauką, atitinkamas laukas bus pašalintas iš visų sluoksnių / lentelių."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Numatotoji sankirtos tolerancija visiems objektams",
-    "pixelsToleranceTitle": "Numatotoji sankirtos tolerancija (taško vertė), kuri turi būti taikoma tik taškų objektams"
+    "intersectionLabel": "Numatotoji sankirtos tolerancija visiems objektams",
+    "intersectionTitle": "Įjungti visuotinę sankirtų toleranciją",
+    "pixelsToleranceLabel": "Numatotoji sankirtos tolerancija (taško vertė), kuri turi būti taikoma tik taškų objektams",
+    "pixelsToleranceTitle": "Jei visų elementų numatytoji sankirtos tolerancija nustatyta kaip 0, taškiniams elementams taikyti šį nustatymą"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfigūruoti išmanųjį veiksmą",
@@ -298,7 +311,7 @@ define({
     "current": "Dabartinis",
     "past": "Praėjęs",
     "future": "Būsimas",
-    "popupTitle": "Pasirinkite reikšmę",
+    "popupTitle": "Pasirinkti reikšmę",
     "hintForFixedDateType": "Patarimas: nurodyta data ir laikas bus naudojami kaip iš anksto nustatyta numatytoji reikšmė",
     "hintForCurrentDateType": "Patarimas: dabartinė data ir laikas bus naudojami kaip iš anksto nustatyta numatytoji reikšmė",
     "hintForPastDateType": "Patarimas: nurodyta data ir laikas bus atimti iš dabartinės datos ir laiko ir skirti iš anksto nustatytai numatytai reikšmei.",
@@ -309,7 +322,7 @@ define({
   },
   "relativeDomains": {
     "fieldSetTitle": "Sąrašas",
-    "valueText": "Reikšmė",
+    "valueText": "Vertė",
     "defaultText": "Numatytoji",
     "selectedDomainFieldsHint": "Pasirinkti domeno laukai: ${domainFields}",
     "selectDefaultDomainMsg": "Pasirinkite numatytosios reikšmės domeną arba užtikrinkite, kad pasirinkto numatyto domeno žymimasis langelis yra pažymėtas"

@@ -1,4 +1,4 @@
-﻿.claro .jimu-widget-smartEditor .esriAttributeInspector .dijitButton .dijitButtonNode,
+.claro .jimu-widget-smartEditor .esriAttributeInspector .dijitButton .dijitButtonNode,
 .claro .jimu-widget-smartEditor .esriAttributeInspector .dijitDropDownButton .dijitButtonNode,
 .claro .jimu-widget-smartEditor .esriAttributeInspector .dijitComboButton .dijitButtonNode,
 .claro .jimu-widget-smartEditor .esriAttributeInspector .dijitToggleButton .dijitButtonNode {
@@ -43,4 +43,13 @@ div[dijitpopupparent="drawingTool"] .dijitMenuItemIconCell {
 
 .drawingOptionsDiv .dijitButtonText {
     padding-left: 10px !important;
+}
+
+.jimu-widget-smartEditor .esriCTCopyFeaturesListContent .jimu-checkbox,
+.jimu-widget-smartEditor-fieldsMapping .esriCTFieldCheckbox {
+    display: inline-flex;
+}
+.claro .jimu-widget-smartEditor-fieldsMapping .esriCTFieldsMatchingTable .dijitTextBoxDisabled {
+    opacity: 1;
+    background-color: #efefef;
 }

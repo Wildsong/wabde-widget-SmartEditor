@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "نتائج بحث المجموعة",
     "groupFilteredTemplatesTip": "خيار تجميع نتائج البحث حسب الطبقة.",
     "displayShapeSelector": "إظهار خيارات الرسم",
-    "createNewFeaturesFromExisting": "السماح للمستخدم بإنشاء معالم جديدة من المعالم الحالية",
-    "createNewFeaturesFromExistingTip": "خيار يتيح للمستخدم نسخ المعلم الحالي لإنشاء معالم جديدة",
-    "copiedFeaturesOverrideDefaults": "تحل قيم المعالم المنسوخة محل القيم الافتراضية",
+    "createNewFeaturesFromExisting": "السماح بإنشاء معالم جديدة من المعالم الحالية",
+    "createNewFeaturesFromExistingTip": "خيار يتيح للمستخدم نسخ المعالم الحالية لإنشاء معالم جديدة",
+    "copiedFeaturesOverrideDefaults": "تتجاوز القيمة (القيم) من المعالم المنسوخة القيمة (القيم) الافتراضية في الحقل (الحقول) الهدف",
     "copiedFeaturesOverrideDefaultsTip": "ستحل قيم المعالم المنسوخة محل قيم القالب الافتراضية وذلك للحقول المتطابقة فقط",
     "displayShapeSelectorTip": "خيار عرض قائمة من خيارات الرسم الصحيحة للقالب المحدد.",
     "displayPresetTop": "عرض قائمة قيم معينة مسبقًا في المقدمة",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "حفظ الإعدادات",
     "geometrySettingsLegendLabel": "إعدادات الشكل الهندسي",
     "actionsSettingsLegendLabel": "إجراءات الإعدادات",
-    "buttonPositionsLabel": "موضع أزرار \"حفظ\" و\"حذف\" و\"رجوع\" و\"إلغاء\"",
+    "buttonPositionsLabel": "موضع أزرار \"حفظ\" و\"حذف\" و\"رجوع\" و\"إغلاق\"",
     "belowEditLabel": "نموذج التحرير أدناه",
     "aboveEditLabel": "نموذج التحرير أعلاه",
     "switchToMultilineInput": "التبديل إلى الإدخال متعدد الخطوط عند تجاوز طول الحقل",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "عرض طلب عند توافر قيم متعددة لحقل ما باستخدام إجراء سمات التقاطع",
     "expandRelatedTable": "توسيع كل الجداول/الطبقات ذات الصلة عند التحميل",
     "expandMainTable": "توسيع كل الطبقات الأصلية عند التحميل",
+    "copyAndAppendFeatureLabel": "نسخ وإرفاق المعالم",
+    "allowCopyPolygonLabel": "السماح بنسخ المضلع إلى نقطة",
+    "allowCopyPolygonTooltip": "خيار للسماح بنسخ معالم المضلع إلى قوالب معالم الهدف النقطي مع عمليات تحويل الشكل الهندسي",
+    "allowCopyLineLabel": "السماح بنسخ الخط إلى نقطة",
+    "allowCopyLineTooltip": "خيار للسماح بنسخ المعالم الخطية إلى قوالب معالم الهدف النقطي مع عمليات تحويل الشكل الهندسي",
+    "pointAtStartLabel": "نقطة في البداية",
+    "pointAtStartTooltip": "إضافة نقطة في بداية السطر الذي يتم نسخه",
+    "pointAtEndLabel": "نقطة في النهاية",
+    "pointAtEndTooltip": "إضافة نقطة في نهاية السطر الذي يتم نسخه",
     "layerSettingsTable": {
       "allowDelete": "السماح بالحذف",
       "allowDeleteTip": "إتاحة الحذف - خيار يتيح للمستخدم حذف معلم؛ يتم تعطيله إذا كانت الطبقة لا تدعم الحذف.",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "تعيين سماحية اختيار المعلم (وحدات بكسل)",
     "featuresSelectionToleranceTooltip": "يتيح للمستخدمين فتح لوحة تحرير البيانات الجدولية بسهولة من خلال النقر فوق المعلم",
     "featuresSelectionToleranceErrorMsg": "قيمة سماحية تحديد المعلم غير صالحة",
-    "autoSaveAttrUpdates": "حفظ تحديثات السمات تلقائيًا"
+    "autoSaveAttrUpdates": "حفظ تحديثات البيانات الجدولية والشكل الهندسي تلقائيًا",
+    "defaultCoordinateSystem": "نظام الإسناد الافتراضي",
+    "defaultCoordinateSystemTooltip": "عيّن النظام المرجعي الافتراضي عند نقل معلم نقطة محدد إلى موقع جديد"
   },
   "editDescriptionPage": {
     "title": "نص النظرة العامة على تعريف البيانات الجدولية الخاص بـ <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "المعايير - تغيير ترتيب القاعدة وتحديد المعيار عند تشغيله"
     },
     "copyAction": {
-      "description": "تتم معالجة مصدر قيمة الحقل بالترتيب إذا تم تنشيطه حتى يتم تشغيل معيار صحيح أو اكتمال القائمة. استخدم زر \"تحرير المعيار\" لتحديد المعيار.",
+      "description": "تتم معالجة مصدر قيمة الحقل بالترتيب إذا تم تنشيطه حتى يتم تشغيل معيار صحيح أو اكتمال القائمة. استخدم زر \"تحرير المعايير\" لتحديد تلك المعايير.",
       "intersection": "تقاطع",
       "coordinates": "إحداثيات",
       "address": "عنوان",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "جدول البيانات",
     "mapSpatialReferenceOptionLabel": "الإسناد المكاني للخريطة",
     "latLongOptionLabel": "دائرة العرض/خط الطول",
-    "MGRS": "MGRS",
+    "MGRS": "نظام إسناد الشبكة العسكرية (MGRS)",
     "allGroupsCreatedMsg": "جميع المجموعات الممكنة تم إنشاؤها بالفعل",
     "coordinatesSourceTitle": "مصدر الإحداثيات",
     "featureLocation": "موقع المعلم",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "جميع أسماء الحقول الفريدة المحددة مسبقًا مدرجة هنا. ستؤدي إزالة حقل محدد مسبقًا إلى تعطيل الحقل ذي الصلة كإعداد مسبق من جميع الطبقات/الجداول."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "سماحية التقاطع الافتراضية لكل المعالم",
-    "pixelsToleranceTitle": "سماحية التقاطع الافتراضية لكل المعالم (قيمة البكسل) المراد تطبيقها لمعالم النقطة فقط"
+    "intersectionLabel": "سماحية التقاطع الافتراضية لكل المعالم",
+    "intersectionTitle": "تمكين تسامح عام للتقاطعات",
+    "pixelsToleranceLabel": "سماحية التقاطع الافتراضية لكل المعالم (قيمة البكسل) المراد تطبيقها لمعالم النقطة فقط",
+    "pixelsToleranceTitle": "إذا كانت سماحية التقاطع الافتراضية لكل المعالم معينة على 0، فاستخدم هذا الإعداد لمعالم النقطة."
   },
   "smartActionsPage": {
     "smartActionLabel": "تكوين الإجراء الذكي",
@@ -309,7 +322,7 @@ define({
   },
   "relativeDomains": {
     "fieldSetTitle": "قائمة",
-    "valueText": "قيمة",
+    "valueText": "القيمة",
     "defaultText": "الوضع الافتراضي",
     "selectedDomainFieldsHint": "حقول المجال المحددة: ${domainFields}",
     "selectDefaultDomainMsg": "يرجى تحديد نطاق قيمة افتراضية أو التأكد من تأشير خانة اختيار النطاق الافتراضي"

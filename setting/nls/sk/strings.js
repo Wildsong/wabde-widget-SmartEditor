@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Zoskupiť výsledky vyhľadávania",
     "groupFilteredTemplatesTip": "Umožňuje zoskupiť výsledky vyhľadávania podľa vrstvy.",
     "displayShapeSelector": "Zobraziť možnosti kreslenia",
-    "createNewFeaturesFromExisting": "Povoliť užívateľovi vytvoriť nový prvok(y) z existujúceho prvku(ov)",
-    "createNewFeaturesFromExistingTip": "Možnosť povoliť užívateľovi skopírovať existujúci prvok na vytvorenie nových prvkov",
-    "copiedFeaturesOverrideDefaults": "Skopírované hodnoty prvkov obchádzajú predvolené hodnoty",
+    "createNewFeaturesFromExisting": "Povoliť vytvorenie nového prvoku(ov) z existujúceho prvku(ov)",
+    "createNewFeaturesFromExistingTip": "Možnosť povoliť užívateľovi skopírovať existujúce prvky pre vytvorenie nových prvkov",
+    "copiedFeaturesOverrideDefaults": "Hodnota(y) z kopírovaného prvku(ov) prepíše predvolenú hodnotu(y) v cieľovom poli(iach)",
     "copiedFeaturesOverrideDefaultsTip": "Hodnoty zo skopírovaných prvkov obchádzajú predvolené hodnoty šablóny len pre zhodné stĺpce",
     "displayShapeSelectorTip": "Možnosť zobraziť zoznam platných možností kreslenia pre zvolenú šablónu.",
     "displayPresetTop": "Zobraziť zoznam prednastavených hodnôt na vrchu",
@@ -43,17 +43,26 @@ define({
     "enableMovingSelectedFeatureToGPS": "Povoliť posun zvoleného bodového prvku na GPS polohu",
     "enableMovingSelectedFeatureToXY": "Povoliť posun zvoleného bodového prvku na XY polohu",
     "featureTemplateLegendLabel": "Nastavenia hodnoty šablóny prvkov a filtra",
-    "saveSettingsLegendLabel": "Nastavenia uloženia",
+    "saveSettingsLegendLabel": "Uložiť nastavenia",
     "geometrySettingsLegendLabel": "Nastavenia geometrie",
     "actionsSettingsLegendLabel": "Nastavenia akcií",
-    "buttonPositionsLabel": "Pozícia tlačidiel uložiť, zmazať, späť a zrušiť",
-    "belowEditLabel": "Pod formulárom úprav",
-    "aboveEditLabel": "Nad formulárom úprav",
-    "switchToMultilineInput": "Prepnúť na vstup multilínií, keď je prekročená dĺžka stĺpca",
+    "buttonPositionsLabel": "Pozícia tlačidiel uložiť, zmazať, späť a zavrieť",
+    "belowEditLabel": "Pod editačným formulárom",
+    "aboveEditLabel": "Nad editačným formulárom",
+    "switchToMultilineInput": "Prepnúť na vstup multilínií, keď je prekročená dĺžka poľa",
     "enableValuePicker": "Povoliť voľbu hodnoty pretínania",
     "enableValuePickerHint": "Zobraziť výzvu, keď je dostupných viacero hodnôt pre stĺpec s akciou atribútu pretínania",
     "expandRelatedTable": "Rozbaliť všetký súvisiace tabuľky/vrstvy pri načítaní",
     "expandMainTable": "Rozbaliť všetky nadradené vrstvy pri načítaní",
+    "copyAndAppendFeatureLabel": "Kopírovať a pridať prvky",
+    "allowCopyPolygonLabel": "Povoliť kopírovanie polygónov do bodov",
+    "allowCopyPolygonTooltip": "Možnosť kopírovať polygónové prvky do cieľových sáblón bodových prvkov s transformáciami geometrie",
+    "allowCopyLineLabel": "Povoliť kopírovanie línií do bodov",
+    "allowCopyLineTooltip": "Možnosť kopírovať líniové prvky do cieľových šablón bodových prvkov s transformáciami geometrie",
+    "pointAtStartLabel": "Bod na začiatku",
+    "pointAtStartTooltip": "Pridá bod na začiatok kopírovanej línie",
+    "pointAtEndLabel": "Bod na konci",
+    "pointAtEndTooltip": "Pridá bod na koniec kopírovanej línie",
     "layerSettingsTable": {
       "allowDelete": "Povoliť zmazanie",
       "allowDeleteTip": "Povoliť zmazanie - Možnosť povoliť užívateľovi zmazať prvok; deaktivované, ak vrstva nepodporuje mazanie",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Nastaviť toleranciu pre výber prvku (v pixeloch)",
     "featuresSelectionToleranceTooltip": "Umožniť používateľom otvoriť panel editovania atribútov kliknutím na prvok",
     "featuresSelectionToleranceErrorMsg": "Neplatná hodnota tolerancie pre výber prvku",
-    "autoSaveAttrUpdates": "Automaticky uložiť aktualizácie atribútov"
+    "autoSaveAttrUpdates": "Automaticky ukladať aktualizácie atribútov a geometrií",
+    "defaultCoordinateSystem": "Predvolený referenčný systém",
+    "defaultCoordinateSystemTooltip": "Nastaviť predvolený referenčný systém pri presúvaní vybraného bodového prvku na nové miesto"
   },
   "editDescriptionPage": {
     "title": "Definovať text prehľadu atribútov pre <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Kritériá - Zmeniť poradie pravidiel a definovať kritériá, keďsú spustené"
     },
     "copyAction": {
-      "description": "Zdroj hodnoty poľa sú spracované v poradí, ak sú aktivované, pokým sú platné kritéria spustené alebo je zoznam dokončený. Použiť tlačidlo úpravy kritérií na definovanie kritérií.",
+      "description": "Zdroj hodnôt polí sa spracováva v poradí, v akom je aktivovaný, až kým sa nespustí platné kritérium alebo sa zoznam neukončí. Použiť tlačidlo Editácia kritérií na definovanie kritérií.",
       "intersection": "Križovatka",
       "coordinates": "súradnice",
       "address": "Adresa",
@@ -145,11 +156,11 @@ define({
       "disabled": "Deaktivovaný"
     },
     "editOptionsPopup": {
-      "editAttributeGroupHint": "Varovanie: Upraviť nezávisle odstráni zvolenú atribútovú akciu priradenú pre tento stĺpec zo skupiny",
-      "editGroupHint": "Varovanie: Upraviť nezávisle odstráni zvolenú Šikovnú akciu priradenú pre tento stĺpec zo skupiny",
+      "editAttributeGroupHint": "Varovanie: Editovať nezávisle odstráni zvolenú atribútovú akciu priradenú pre toto pole zo skupiny",
+      "editGroupHint": "Varovanie: Editovať nezávisle odstráni zvolenú inteligentnú akciu priradenú pre toto pole zo skupiny",
       "popupTitle": "Zvoliť možnosť editovania",
-      "editAttributeGroup": "Akcia zvolených atribútov je definovaná zo skupiny. Vybrať jednu z nasledujúcich možností na úpravu akcie atribútov:",
-      "expression": "Výraz zvolenej Šikovné akcie je definovaný zo skupiny. Vybrať jednu z nasledujúcich možností na úpravu výrazu šikovnej akcie:",
+      "editAttributeGroup": "Vybraná atribútová akcia je definovaná zo skupiny. Vyberte jednu z nasledujúcich možností na editáciu akcie atribútov:",
+      "expression": "Výraz zvolenej inteligentnej akcie je definovaný zo skupiny. Vyberte jednu z nasledujúcich možností na editáciu výrazu inteligentnej akcie:",
       "editGroupButton": "Skupina úprav",
       "editIndependentlyButton": "Upraviť nezávisle"
     }
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atribút",
     "mapSpatialReferenceOptionLabel": "Súradnicový systém mapy",
     "latLongOptionLabel": "Zemepisná šírka/Zemepisná dĺžka",
-    "MGRS": "MGRS",
+    "MGRS": "Vojenský mriežkový referenčný systém (MGRS)",
     "allGroupsCreatedMsg": "Všetky možné skupiny sú už vytvorené",
     "coordinatesSourceTitle": "Zdroj súradníc",
     "featureLocation": "Poloha prvku",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Všetky unikátne prednastavené názvy stĺpcov sú uvedené tu. Odstránenie prednastaveného stĺpca deaktivuje príslušný stĺpec ako prednastavenie zo všetkých vrstiev/tabuliek."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Predvolená tolerancia priesečníka pre všetky prvky",
-    "pixelsToleranceTitle": "Predvolená tolerancia priesečníka (pixelová hodnota) bude použitá len pre bodové prvky"
+    "intersectionLabel": "Predvolená tolerancia priesečníka pre všetky prvky",
+    "intersectionTitle": "Povoliť všeobecnú toleranciu pre priesečníky",
+    "pixelsToleranceLabel": "Predvolená tolerancia priesečníka (pixelová hodnota) bude použitá len pre bodové prvky",
+    "pixelsToleranceTitle": "Ak je predvolená tolerancia priesečníkov pre všetky prvky nastavená na 0, použite toto nastavenie pre bodové prvky"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfigurovať Šikovnú akciu",
@@ -273,8 +286,8 @@ define({
     "alreadyAppliedActionMsg": "${action} akcia použitá na tomto stĺpci skupiny",
     "alreadyAppliedActionLayerMsg": "${action} akcia použitá na tomto stĺpci z Nastavení vrstvy",
     "appliedGroupName": "${groupName}",
-    "noPresetFieldsMsg": "Táto skupina nemá asociované stĺpce.",
-    "presetNoFieldWarningMsg": "Prosím konfigurujte aspoň jeden stĺpec pre prednastavenú skupinu: ${groupName}"
+    "noPresetFieldsMsg": "Táto skupina nemá asociované polia.",
+    "presetNoFieldWarningMsg": "Prosím konfigurujte aspoň jedno pole pre prednastavenú skupinu: ${groupName}"
   },
   "chooseFromLayer": {
     "fieldLabel": "Stĺpec",
@@ -298,7 +311,7 @@ define({
     "current": "Aktuálna",
     "past": "Minulosť",
     "future": "Budúcnosť",
-    "popupTitle": "Vybrať hodnotu",
+    "popupTitle": "Vyberte hodnotu",
     "hintForFixedDateType": "Tip: Špecifikovaný dátum a čas bude použitý ako prednastavená predvolená hodnota",
     "hintForCurrentDateType": "Tip: Aktuálny dátum a čas bude použitý ako prednastavená predvolená hodnota",
     "hintForPastDateType": "Tip: Špecifikovaná hodnota bude odčítaná od aktuálneho dátumu a času pre predvolenú hodnotu predvoľby.",
@@ -312,6 +325,6 @@ define({
     "valueText": "Hodnota",
     "defaultText": "Predvolené",
     "selectedDomainFieldsHint": "Zvolené stĺpce číselníka: ${domainFields}",
-    "selectDefaultDomainMsg": "Prosím zvoľte predvolenú prednastavenú hodnotu v číselníku alebo sa uistite, že začiarkavacie políčko vybratého predvolenéha číselníka je začiarknuté"
+    "selectDefaultDomainMsg": "Prosím zvoľte predvolenú doménovú hodnotu alebo sa uistite, že je označené zaškrtávacie políčko pre vybranú predvolenú doménu"
   }
 });

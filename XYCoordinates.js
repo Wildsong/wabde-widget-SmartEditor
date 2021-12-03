@@ -52,6 +52,10 @@ define(
                 this._eventListener();
                 //load coordinate formatter
                 coordinateFormatter.load();
+                //set the configured value to coordinates drop down
+                if (this.config.editor.hasOwnProperty("defaultCoordinateSystem")) {
+                    this.coordinatesDropDown.set("value", this.config.editor.defaultCoordinateSystem);
+                }
             },
 
             /**
@@ -90,6 +94,7 @@ define(
                 }
                 else if (this.coordinatesDropDown.value === "MGRS") {
                     domClass.remove(this.mgrsOptions, "esriCTHidden");
+                    this.mgrsTextBox.set("value", "");
                 }
                 else {
                     domClass.remove(this.xyOptions, "esriCTHidden");

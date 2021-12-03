@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Grupați rezultatele căutării",
     "groupFilteredTemplatesTip": "Opțiune de a grupa rezultatele căutării după stratul tematic.",
     "displayShapeSelector": "Afișare opțiuni desenare",
-    "createNewFeaturesFromExisting": "Permite utilizatorului să creeze obiecte spaţiale noi din obiecte spaţiale existente",
+    "createNewFeaturesFromExisting": "Permiteți crearea de obiecte spaţiale noi din obiecte spaţiale existente",
     "createNewFeaturesFromExistingTip": "Opțiune pentru a permite utilizatorului să copieze obiecte spațiale existente pentru a crea obiecte spațiale noi",
-    "copiedFeaturesOverrideDefaults": "Valorile obiectelor spațiale copiate ignoră valorile implicite",
+    "copiedFeaturesOverrideDefaults": "Valoarea(ile) din obiectul(ele) spațial(e) copiat(e) va (vor) ignora valorile implicite din câmpul(rile) țintă",
     "copiedFeaturesOverrideDefaultsTip": "Valorile din obiectele spațiale copiate vor ignora valorile șablon implicite doar pentru câmpurile potrivite",
     "displayShapeSelectorTip": "Opțiune pentru afișarea unei liste cu opțiuni de desenare valabile pentru șablonul selectat.",
     "displayPresetTop": "Afișare listă valori presetate în partea superioară",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Salvați setările",
     "geometrySettingsLegendLabel": "Setări de geometrie",
     "actionsSettingsLegendLabel": "Setări acțiuni",
-    "buttonPositionsLabel": "Poziția butoanelor Salvare, Ștergere, Înapoi și Anulare",
+    "buttonPositionsLabel": "Poziția butoanelor Salvare, Ștergere, Înapoi și Închidere",
     "belowEditLabel": "Formularul Editare de jos",
     "aboveEditLabel": "Formularul Editare de sus",
     "switchToMultilineInput": "Comutare la intrarea pe mai multe rânduri atunci când este depășită lungimea câmpului",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Se afișează un mesaj când sunt disponibile valori multiple pentru un câmp cu o acțiune de atribut de intersectare",
     "expandRelatedTable": "Extindeți toate tabelele/straturile tematice la încărcare",
     "expandMainTable": "Extindeți toate straturile tematice mamă la încărcare",
+    "copyAndAppendFeatureLabel": "Copiați și anexați obiecte spațiale",
+    "allowCopyPolygonLabel": "Permiteți copierea poligonului în punct",
+    "allowCopyPolygonTooltip": "Opțiune pentru a permite copierea obiectelor spațiale poligonale în șabloanele de obiecte spațiale țintă în punct cu transformările geometriei",
+    "allowCopyLineLabel": "Permiteți copierea liniei în punct",
+    "allowCopyLineTooltip": "Opțiune pentru a permite copierea obiectelor spațiale liniare în șabloanele de obiecte spațiale țintă în punct cu transformările geometriei",
+    "pointAtStartLabel": "Punct la pornire",
+    "pointAtStartTooltip": "Adăugați un punct la începutul liniei în curs de copiere",
+    "pointAtEndLabel": "Punct la sfârșit",
+    "pointAtEndTooltip": "Adăugați un punct la sfârșitul liniei în curs de copiere",
     "layerSettingsTable": {
       "allowDelete": "Se permite ştergerea",
       "allowDeleteTip": "Se permite ștergerea - Opţiune care permite utilizatorului să şteargă un obiect spaţial; este dezactivată dacă stratul tematic nu permite ştergerea",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Setaţi toleranţa pentru selecția de obiecte spațiale (pixeli)",
     "featuresSelectionToleranceTooltip": "Permite utilizatorilor să deschidă cu uşurinţă panoul de editare a atributelor prin apăsarea pe obiectul spaţial",
     "featuresSelectionToleranceErrorMsg": "Valoare de toleranță a selecției obiectului spațial nevalabilă",
-    "autoSaveAttrUpdates": "Salvați actualizările atributelor în mod automat"
+    "autoSaveAttrUpdates": "Salvați actualizările atributelor și geometriei în mod automat",
+    "defaultCoordinateSystem": "Sistem de referință implicit",
+    "defaultCoordinateSystemTooltip": "Setați sistemul de referință implicit atunci când deplasați un obiect spațial punctual într-o nouă locație"
   },
   "editDescriptionPage": {
     "title": "Definiţi textul prezentării generale a atributelor pentru <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Criterii - Schimbaţi ordinea regulii şi definiţi criteriile în momentul declanşării acestora"
     },
     "copyAction": {
-      "description": "Sursele valorilor de câmp sunt prelucrate în ordine dacă sunt activate până la declanșarea unui criteriu valabil sau finalizarea listei. Utilizați butonul de Editare a Criteriilor pentru a defini criteriile.",
+      "description": "Sursele valorilor de câmp sunt prelucrate în ordine dacă sunt activate până la declanșarea unui criteriu valabil sau finalizarea listei. Utilizați butonul de Editare a criteriilor pentru a defini criteriile.",
       "intersection": "Intersecţie",
       "coordinates": "Coordonate",
       "address": "Adresă",
@@ -148,7 +159,7 @@ define({
       "editAttributeGroupHint": "Avertizare: editarea independentă va elimina acțiunea atribut selectată asociată acestui câmp de la grup",
       "editGroupHint": "Avertizare: editarea independentă va elimina acțiunea inteligentă selectată asociată acestui câmp de la grup",
       "popupTitle": "Alegeți opţiunea de editare",
-      "editAttributeGroup": "Acțiunea selectată a atributului este definită din grup. Selectați una dintre următoarele opțiuni pentru a edita acțiunea de atribut:",
+      "editAttributeGroup": "Acțiunea atribut selectată este definită de la grup. Selectați una dintre următoarele opțiuni pentru a edita acțiunea de atribut:",
       "expression": "Expresia acțiunii inteligente selectate este definită din grup. Selectați una dintre următoarele opțiuni pentru a edita expresia acțiunii inteligente:",
       "editGroupButton": "Editare grup",
       "editIndependentlyButton": "Editare independentă"
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atribut",
     "mapSpatialReferenceOptionLabel": "Referinţă spaţială de hartă",
     "latLongOptionLabel": "Latitudine/Longitudine",
-    "MGRS": "MGRS",
+    "MGRS": "Military Grid Reference System (MGRS)",
     "allGroupsCreatedMsg": "Toate grupurile posibile au fost deja create",
     "coordinatesSourceTitle": "Coordonează sursa",
     "featureLocation": "Localizarea obiectului spațial",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Toate numele de câmpuri presetate unice sunt listate aici. Eliminarea unui câmp presetat va dezactiva câmpul respectiv ca presetat pentru toate straturile tematice/tabelele."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Toleranță de intersecție implicită pentru toate obiectele spațiale",
-    "pixelsToleranceTitle": "Toleranță de intersecție implicită (valoarea pixelilor) care se va aplica doar obiectelor spațiale de tip punct"
+    "intersectionLabel": "Toleranță de intersecție implicită pentru toate obiectele spațiale",
+    "intersectionTitle": "Activați o toleranță globală pentru intersecții",
+    "pixelsToleranceLabel": "Toleranță de intersecție implicită (valoarea pixelilor) care se va aplica doar obiectelor spațiale de tip punct",
+    "pixelsToleranceTitle": "Toleranța de intersecție implicită pentru toate obiectele spațiale este setată la 0, folosiți această setare pentru obiectele spațiale punctuale"
   },
   "smartActionsPage": {
     "smartActionLabel": "Configurați o acțiune inteligentă",
@@ -298,7 +311,7 @@ define({
     "current": "Curentă",
     "past": "Anterioară",
     "future": "Viitoare",
-    "popupTitle": "Selectați valoarea",
+    "popupTitle": "Selectaţi valoarea",
     "hintForFixedDateType": "Sugestie: Data și ora specificate vor fi utilizate ca valoare implicită presetată",
     "hintForCurrentDateType": "Sugestie: Data și ora curente vor fi utilizate ca valoare implicită presetată",
     "hintForPastDateType": "Sugestie: Valoarea specificată va fi scăzută din data și ora curente pentru valoarea implicită a presetării.",
@@ -308,7 +321,7 @@ define({
     "customLabel": "Personalizare"
   },
   "relativeDomains": {
-    "fieldSetTitle": "Listă",
+    "fieldSetTitle": "Listare",
     "valueText": "Valoare",
     "defaultText": "Implicită",
     "selectedDomainFieldsHint": "Câmpuri de domeniu selectate: ${domainFields}",

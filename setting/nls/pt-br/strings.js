@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Agrupar resultados da pesquisa",
     "groupFilteredTemplatesTip": "Opção de agrupar resultados da pesquisa por camada.",
     "displayShapeSelector": "Mostrar opções de desenho",
-    "createNewFeaturesFromExisting": "Permitir ao usuário criar novas feições a partir de feições existentes",
+    "createNewFeaturesFromExisting": "Permitir a criação de novas feições a partir de feições existentes",
     "createNewFeaturesFromExistingTip": "Opção para permitir ao usuário copiar a feição existente para criar novas feições",
-    "copiedFeaturesOverrideDefaults": "Valores de feições copiadas substituem os padrões",
+    "copiedFeaturesOverrideDefaults": "Os valores das feições copiadas substituem os valores padrão no campo de destino",
     "copiedFeaturesOverrideDefaultsTip": "Os valores das feições copiadas substituirão os valores de modelo padrão somente para os campos correspondentes",
     "displayShapeSelectorTip": "Opção para mostrar uma lista de opções de desenho válidas para o modelo selecionado.",
     "displayPresetTop": "Exibir lista de valores pré-definidos no topo",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Salvar Configurações",
     "geometrySettingsLegendLabel": "Configurações de Geometria",
     "actionsSettingsLegendLabel": "Configurações de Ações",
-    "buttonPositionsLabel": "Botões Posição de Salvar, Excluir, Voltar e Cancelar",
+    "buttonPositionsLabel": "Botões Posição de Salvar, Excluir, Voltar e Fechar",
     "belowEditLabel": "Abaixo de Editar Formulário",
     "aboveEditLabel": "Acima de Editar Formulário",
     "switchToMultilineInput": "Alterne para entrada de múltiplas linhas quando o comprimento do campo exceder",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Exibir um lembrete quando múltiplos valores estiverem disponíveis para um campo com uma ação do atributo de intersecção",
     "expandRelatedTable": "Expandir todas as camadas/tabelas relacionadas ao carregar",
     "expandMainTable": "Expandir todas as camadas principais ao carregar",
+    "copyAndAppendFeatureLabel": "Copiar e Anexar Feições",
+    "allowCopyPolygonLabel": "Permitir copiar polígono para ponto",
+    "allowCopyPolygonTooltip": "Opção para permitir a cópia de feições de polígono em modelos de feição de destino de ponto com transformações de geometria",
+    "allowCopyLineLabel": "Permitir copiar linha para ponto",
+    "allowCopyLineTooltip": "Opção para permitir a cópia de feições de linha em modelos de feição de ponto de destino com transformações de geometria",
+    "pointAtStartLabel": "Ponto no começo",
+    "pointAtStartTooltip": "Adiciona um ponto no início da linha que está sendo copiada",
+    "pointAtEndLabel": "Ponto no final",
+    "pointAtEndTooltip": "Adiciona um ponto no final da linha sendo copiada",
     "layerSettingsTable": {
       "allowDelete": "Permitir Exclusão",
       "allowDeleteTip": "Permitir Excluir - Opção para permitir que o usuário exclua uma feição; desativado se a camada não suportar exclusão",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Defina a tolerância para a seleção de feição (pixels)",
     "featuresSelectionToleranceTooltip": "Permite que os usuários abram facilmente o painel de edição de atributos clicando no elemento",
     "featuresSelectionToleranceErrorMsg": "Valor de tolerância de seleção de feição inválido",
-    "autoSaveAttrUpdates": "Salvar atualizações de atributos automaticamente"
+    "autoSaveAttrUpdates": "Salvar atualizações de atributos e geometria automaticamente",
+    "defaultCoordinateSystem": "Sistema de Referência Padrão",
+    "defaultCoordinateSystemTooltip": "Define o sistema de referência padrão ao mover uma feição de ponto selecionada para uma nova localização"
   },
   "editDescriptionPage": {
     "title": "Defina o texto de visão geral dos atributos para <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Critérios - Altera a ordem da regra e define os critérios quando ela for ativada"
     },
     "copyAction": {
-      "description": "A fonte do valor de campo é processada para que se ativada até que um critério válido seja ativado ou a lista seja completada. Utilize o botão Editar Critérios para definir os critérios.",
+      "description": "A origem do valor de campo é processada em ordem, se ativada, até que um critério válido seja ativado ou a lista seja concluída. Use o botão Editar Critérios para definir os critérios.",
       "intersection": "Intersecção",
       "coordinates": "Coordenadas",
       "address": "Endereço",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atributo",
     "mapSpatialReferenceOptionLabel": "Referência Espacial do Mapa",
     "latLongOptionLabel": "Latitude/Longitude",
-    "MGRS": "MGRS",
+    "MGRS": "Sistema de Referência da Grade Military (MGRS)",
     "allGroupsCreatedMsg": "Todos os grupos possíveis já estão criados",
     "coordinatesSourceTitle": "Origem de coordenadas",
     "featureLocation": "Localização de Feição",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Todos os nomes de campo pré-definidos exclusivos são listados aqui. A remoção de um campo pré-definido desativará o respectivo campo como pré-definido em todas as camadas/tabelas."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Tolerância de intersecção padrão para todas as feições",
-    "pixelsToleranceTitle": "Tolerância de intersecção padrão (valor de pixel) a ser aplicada somente para feiões de ponto"
+    "intersectionLabel": "Tolerância de intersecção padrão para todas as feições",
+    "intersectionTitle": "Habilita uma tolerância global para intersecções",
+    "pixelsToleranceLabel": "Tolerância de intersecção padrão (valor de pixel) a ser aplicada somente para feiões de ponto",
+    "pixelsToleranceTitle": "Se a tolerância de intersecção padrão para todas as feições for definida como 0, use esta configuração para feições de ponto"
   },
   "smartActionsPage": {
     "smartActionLabel": "Configurar Ação Inteligente",

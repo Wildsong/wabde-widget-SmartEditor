@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Agrupa els resultats de la cerca",
     "groupFilteredTemplatesTip": "Opció per agrupar els resultats de la cerca per capa.",
     "displayShapeSelector": "Mostra les opcions de dibuix",
-    "createNewFeaturesFromExisting": "Permet que l'usuari creï noves entitats a partir d'entitats existents",
-    "createNewFeaturesFromExistingTip": "Opció per permetre que l'usuari copiï una entitat existent per crear entitats noves",
-    "copiedFeaturesOverrideDefaults": "Els valors de les entitats copiades invaliden els valors per defecte",
+    "createNewFeaturesFromExisting": "Permet crear entitats noves a partir d'entitats existents",
+    "createNewFeaturesFromExistingTip": "Opció per permetre que l'usuari copiï entitats existents per crear entitats noves",
+    "copiedFeaturesOverrideDefaults": "Els valors de les entitats copiades invaliden els valors per defecte als camps de destinació",
     "copiedFeaturesOverrideDefaultsTip": "Els valors de les entitats copiades invalidaran els valors de la plantilla per defecte només per als camps coincidents",
     "displayShapeSelectorTip": "Opció per mostrar una llista d'opcions de dibuix vàlides per a la plantilla seleccionada.",
     "displayPresetTop": "Mostra la llista de valors predefinits a sobre",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Desa la configuració",
     "geometrySettingsLegendLabel": "Configuració de la geometria",
     "actionsSettingsLegendLabel": "Configuració de les accions",
-    "buttonPositionsLabel": "Posició dels botons Desa, Suprimeix, Enrere i Cancel·la",
+    "buttonPositionsLabel": "Posició dels botons Desa, Suprimeix, Enrere i Tanca",
     "belowEditLabel": "A sota d'Edita el formulari",
     "aboveEditLabel": "A sobre d'Edita el formulari",
     "switchToMultilineInput": "Canvieu a l'entrada de diverses línies si la longitud del camp supera",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Mostra un indicador quan hi ha diversos valors disponibles per a un camp amb una acció d'atribut d'interacció",
     "expandRelatedTable": "Expandeix totes les taules/capes relacionades en pujar",
     "expandMainTable": "Expandeix totes les capes pare en pujar",
+    "copyAndAppendFeatureLabel": "Copiar i afegir entitats",
+    "allowCopyPolygonLabel": "Permet copiar polígons en punts",
+    "allowCopyPolygonTooltip": "Opció per permetre copiar entitats de polígon en plantilles d'entitats de destinació de punt amb transformacions de geometria",
+    "allowCopyLineLabel": "Permet copiar línies en punts",
+    "allowCopyLineTooltip": "Opció per permetre copiar entitats de línia en plantilles d'entitats de destinació de punt amb transformacions de geometria",
+    "pointAtStartLabel": "Punt a l'inici",
+    "pointAtStartTooltip": "Afegiu un punt a l'inici de la línia que es copia",
+    "pointAtEndLabel": "Punt al final",
+    "pointAtEndTooltip": "Afegiu un punt al final de la línia que es copia",
     "layerSettingsTable": {
       "allowDelete": "Permet la supressió",
       "allowDeleteTip": "Permet la supressió: opció que permet que l'usuari suprimeixi una entitat; està deshabilitada si la capa no admet supressions",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Establiu la tolerància per a la selecció de característiques (píxels)",
     "featuresSelectionToleranceTooltip": "Permet als usuaris obrir fàcilment el panell d’edició d’atributs fent clic a la característica",
     "featuresSelectionToleranceErrorMsg": "Valor de tolerància de selecció de característica no vàlid",
-    "autoSaveAttrUpdates": "Desa actualitzacions d'atributs automàticament"
+    "autoSaveAttrUpdates": "Desa automàticament els canvis en els atributs i la geometria",
+    "defaultCoordinateSystem": "Sistema de referència per defecte",
+    "defaultCoordinateSystemTooltip": "Definiu el sistema de referència per defecte en moure una entitat de punt seleccionada a una ubicació nova"
   },
   "editDescriptionPage": {
     "title": "Defineix el text de descripció general de l'atribut de <b>${layername}</b> "
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atribut",
     "mapSpatialReferenceOptionLabel": "Referència espacial del mapa",
     "latLongOptionLabel": "Latitud/longitud",
-    "MGRS": "MGRS",
+    "MGRS": "Military Grid Reference System (MGRS)",
     "allGroupsCreatedMsg": "Tots els grups possibles ja s'han creat",
     "coordinatesSourceTitle": "Font de coordinades",
     "featureLocation": "Ubicación de entidad",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Els noms de tots els camps predefinits únics s'enumeren aquí. L'eliminació d'un camp predefinit deshabilitarà el camp respectiu com a valor predefinit de totes les capes o taules."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Tolerància d'intersecció per defecte per a totes les entitats",
-    "pixelsToleranceTitle": "Tolerància d'intersecció per defecte (valor del píxel) que s'aplicarà només a les entitats de punts"
+    "intersectionLabel": "Tolerància d'intersecció per defecte per a totes les entitats",
+    "intersectionTitle": "Habilita una tolerància global per a les interseccions",
+    "pixelsToleranceLabel": "Tolerància d'intersecció per defecte (valor del píxel) que s'aplicarà només a les entitats de punts",
+    "pixelsToleranceTitle": "Si la tolerància d'intersecció per defecte per a totes les entitats està definida en 0, feu servir aquesta configuració per a les entitats de punt"
   },
   "smartActionsPage": {
     "smartActionLabel": "Configura l'acció intel·ligent",

@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Nhóm các kết quả tìm kiếm",
     "groupFilteredTemplatesTip": "Tùy chọn nhóm các kết quả tìm kiếm theo lớp.",
     "displayShapeSelector": "Hiện các tùy chọn vẽ",
-    "createNewFeaturesFromExisting": "Cho phép người dùng tạo đối tượng mới từ đối tượng hiện có",
+    "createNewFeaturesFromExisting": "Cho phép tạo (các) đối tượng mới từ (các) đối tượng hiện có",
     "createNewFeaturesFromExistingTip": "Tùy chọn cho phép người dùng sao chép đối tượng hiện có để tạo đối tượng mới",
-    "copiedFeaturesOverrideDefaults": "Các giá trị đối tượng được sao chép sẽ ghi đè mục mặc định",
+    "copiedFeaturesOverrideDefaults": "(Các) giá trị từ (các) đối tượng được sao chép ghi đè lên (các) giá trị mặc định trong (các) trường đích",
     "copiedFeaturesOverrideDefaultsTip": "Các giá trị từ đối tượng được sao chép sẽ chỉ ghi đè các giá trị biểu mẫu mặc định với (các) trường phù hợp",
     "displayShapeSelectorTip": "Tùy chọn hiển thị danh sách các tùy chọn vẽ hợp lệ dành cho biểu mẫu được chọn.",
     "displayPresetTop": "Hiển thị danh sách các giá trị được thiết lập trước trên cùng",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Lưu Thiết lập",
     "geometrySettingsLegendLabel": "Thiết lập Thông tin hình học",
     "actionsSettingsLegendLabel": "Thiết lập Hành động",
-    "buttonPositionsLabel": "Vị trí của các nút Lưu, Xóa, Quay lại và Hủy bỏ",
+    "buttonPositionsLabel": "Vị trí của các nút Lưu, Xóa, Quay lại và Đóng",
     "belowEditLabel": "Bên dưới chức năng Chỉnh sửa Biểu mẫu",
     "aboveEditLabel": "Bên trên chức năng Chỉnh sửa Biểu mẫu",
     "switchToMultilineInput": "Chuyển sang đầu vào nhiều dòng khi vượt quá độ dài trường",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Hiển thị lời nhắc khi nhiều giá trị có sẵn cho một trường có hành động thuộc tính giao cắt",
     "expandRelatedTable": "Mở rộng tất cả bảng/lớp khi tải",
     "expandMainTable": "Mở rộng tất cả lớp chính khi tải",
+    "copyAndAppendFeatureLabel": "Sao chép và Thêm Đối tượng",
+    "allowCopyPolygonLabel": "Cho phép sao chép vùng thành điểm",
+    "allowCopyPolygonTooltip": "Tùy chọn cho phép sao chép các đối tượng dạng vùng vào các biểu mẫu đối tượng đích dạng điểm bằng các phép biến đổi hình học",
+    "allowCopyLineLabel": "Cho phép sao chép đường thành điểm",
+    "allowCopyLineTooltip": "Tùy chọn cho phép sao chép các đối tượng đường vào các biểu mẫu đối tượng đích dạng điểm bằng các phép biến đổi hình học",
+    "pointAtStartLabel": "Điểm tại vị trí bắt đầu",
+    "pointAtStartTooltip": "Thêm một điểm vào vị trí đầu của đường được sao chép",
+    "pointAtEndLabel": "Điểm tại vị trí kết thúc",
+    "pointAtEndTooltip": "Thêm một điểm vào vị trí kết thúc của đường được sao chép",
     "layerSettingsTable": {
       "allowDelete": "Cho phép Xóa",
       "allowDeleteTip": "Cho phép Xóa - Tùy chọn để cho phép người dùng xóa đối tượng; tắt nếu lớp không hỗ trợ xóa",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Đặt sai số cho lựa chọn đối tượng (pixel)",
     "featuresSelectionToleranceTooltip": "Cho phép người dùng dễ dàng mở bảng chỉnh sửa thuộc tính bằng cách nhấp vào đối tượng địa lý",
     "featuresSelectionToleranceErrorMsg": "Giá trị sai số lựa chọn đối tượng không hợp lệ",
-    "autoSaveAttrUpdates": "Tự động lưu các bản cập nhật thuộc tính"
+    "autoSaveAttrUpdates": "Tự động lưu các thông tin cập nhật thuộc tính và dạng hình học",
+    "defaultCoordinateSystem": "Hệ Tham chiếu Mặc định",
+    "defaultCoordinateSystemTooltip": "Thiết lập hệ tham chiếu mặc định khi di chuyển một đối tượng điểm đã chọn đến vị trí mới"
   },
   "editDescriptionPage": {
     "title": "Xác định văn bản tổng quan của thuộc tính cho <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Tiêu chí - Thay đổi thứ tự của quy tắc và xác định tiêu chí khi kích hoạt"
     },
     "copyAction": {
-      "description": "Nguồn giá trị của trường được xử lý để nếu được kích hoạt cho đến khi một tiêu chí hợp lệ được kích hoạt hoặc danh sách hoàn chỉnh. Sử dụng nút Chỉnh sửa Tiêu chí để xác định tiêu chí.",
+      "description": "Nguồn giá trị của trường được xử lý theo thứ tự nếu được bật cho đến khi một tiêu chí hợp lệ được kích hoạt hoặc danh sách được hoàn tất. Sử dụng nút Chỉnh sửa Tiêu chí để xác định tiêu chí.",
       "intersection": "Giao lộ",
       "coordinates": "Tọa độ",
       "address": "Địa chỉ",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Thuộc tính",
     "mapSpatialReferenceOptionLabel": "Tham chiếu Không gian Bản đồ",
     "latLongOptionLabel": "Vĩ độ/Kinh độ",
-    "MGRS": "MGRS",
+    "MGRS": "Hệ thống Tham chiếu Không gian Quân sự (MGRS)",
     "allGroupsCreatedMsg": "Tất cả các nhóm có thể có đã được tạo",
     "coordinatesSourceTitle": "Nguồn Tọa độ",
     "featureLocation": "Vị trí Đối tượng",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Ở đây liệt kê tất cả các tên trường đặt trước duy nhất. Xóa một trường đặt trước sẽ vô hiệu hóa trường tương ứng được đặt làm giá trị thiết lập sẵn từ tất cả các lớp/bảng."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Dung sai giao cắt mặc định cho tất cả đối tượng",
-    "pixelsToleranceTitle": "Dung sai giao cắt mặc định (giá trị pixel) chỉ được áp dụng cho các đối tượng điểm"
+    "intersectionLabel": "Dung sai giao cắt mặc định cho tất cả đối tượng",
+    "intersectionTitle": "Bật dung sai toàn cầu cho các giao điểm",
+    "pixelsToleranceLabel": "Dung sai giao cắt mặc định (giá trị pixel) chỉ được áp dụng cho các đối tượng điểm",
+    "pixelsToleranceTitle": "Nếu dung sai giao cắt mặc định cho tất cả các đối tượng được thiết lập thành 0, hãy sử dụng thiết lập này cho các đối tượng điểm"
   },
   "smartActionsPage": {
     "smartActionLabel": "Cấu hình Hoạt động Thông minh",

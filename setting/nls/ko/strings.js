@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "검색 결과 그룹화",
     "groupFilteredTemplatesTip": "레이어별로 검색 결과를 그룹화하는 옵션입니다.",
     "displayShapeSelector": "그리기 옵션 표시",
-    "createNewFeaturesFromExisting": "사용자가 기존 피처에서 새 피처를 생성할 수 있음",
+    "createNewFeaturesFromExisting": "기존 피처에서 새 피처를 생성할 수 있음",
     "createNewFeaturesFromExistingTip": "사용자가 기존 피처를 복사하여 새 피처를 생성할 수 있는 옵션",
-    "copiedFeaturesOverrideDefaults": "복사된 피처 값은 기본값을 재정의함",
+    "copiedFeaturesOverrideDefaults": "복사된 피처의 값은 대상 필드의 기본 값을 재정의함",
     "copiedFeaturesOverrideDefaultsTip": "복사된 피처의 값은 일치된 필드에 대해서만 기본 템플릿 값을 재정의함",
     "displayShapeSelectorTip": "선택한 템플릿에 유효한 그리기 옵션 목록을 표시하는 옵션입니다.",
     "displayPresetTop": "상단에 프리셋 값 목록 표시",
@@ -38,7 +38,7 @@ define({
     "geometryEditDefault": "기본 설정에 따라 지오메트리 편집 활성화",
     "autoSaveEdits": "자동으로 새 피처 저장",
     "enableAttributeUpdates": "속성 작업 업데이트 버튼 표시",
-    "enableAutomaticAttributeUpdates": "지오메트리 업데이트 후 속성 작업 자동 호출",
+    "enableAutomaticAttributeUpdates": "지오메트리 갱신 후 속성 작업 자동 호출",
     "enableLockingMapNavigation": "맵 탐색의 잠금 활성화",
     "enableMovingSelectedFeatureToGPS": "선택한 포인트 피처를 GPS 위치로 이동 활성화",
     "enableMovingSelectedFeatureToXY": "선택한 포인트 피처를 XY 위치로 이동 활성화",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "설정 저장",
     "geometrySettingsLegendLabel": "지오메트리 설정",
     "actionsSettingsLegendLabel": "작업 설정",
-    "buttonPositionsLabel": "저장, 삭제, 뒤로, 취소 버튼의 위치",
+    "buttonPositionsLabel": "저장, 삭제, 뒤로, 닫기 버튼의 위치",
     "belowEditLabel": "편집 양식 아래",
     "aboveEditLabel": "편집 양식 위",
     "switchToMultilineInput": "필드 길이를 초과할 경우 여러 줄 입력으로 전환",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "인터섹트 속성 작업이 있는 필드에 다중 값을 사용할 수 있는 경우 메시지가 표시됨",
     "expandRelatedTable": "불러올 경우 모든 릴레이트 테이블/레이어 확장",
     "expandMainTable": "불러올 경우 모든 상위 레이어 확장",
+    "copyAndAppendFeatureLabel": "피처 복사 및 추가",
+    "allowCopyPolygonLabel": "포인트에 폴리곤을 복사할 수 있음",
+    "allowCopyPolygonTooltip": "지오메트리 변환을 사용하여 폴리곤 피처를 포인트 대상 피처 템플릿으로 복사할 수 있는 옵션",
+    "allowCopyLineLabel": "포인트에 라인을 복사할 수 있음",
+    "allowCopyLineTooltip": "지오메트리 변환을 사용하여 라인 피처를 포인트 대상 피처 템플릿으로 복사할 수 있는 옵션",
+    "pointAtStartLabel": "시작 부분에 포인트",
+    "pointAtStartTooltip": "복사할 라인의 시작 부분에 포인트 추가",
+    "pointAtEndLabel": "끝 부분에 포인트",
+    "pointAtEndTooltip": "복사할 라인의 끝 부분에 포인트 추가",
     "layerSettingsTable": {
       "allowDelete": "삭제 허용",
       "allowDeleteTip": "삭제 허용 - 사용자가 피처를 삭제하도록 허용하는 옵션입니다. 레이어가 삭제를 지원하지 않는 경우 비활성화됩니다.",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "피처 선택(픽셀)에 대한 허용오차 설정",
     "featuresSelectionToleranceTooltip": "사용자가 피처를 클릭하여 패널을 편집하는 속성을 쉽게 열 수 있도록 합니다.",
     "featuresSelectionToleranceErrorMsg": "유효하지 않은 피처 선택 허용오차 값",
-    "autoSaveAttrUpdates": "속성 업데이트를 자동으로 저장"
+    "autoSaveAttrUpdates": "속성과 지오메트리 업데이트를 자동으로 저장",
+    "defaultCoordinateSystem": "기본 참조 체계",
+    "defaultCoordinateSystemTooltip": "선택한 포인트 피처를 새 위치로 이동할 때 기본 참조 체계를 설정합니다."
   },
   "editDescriptionPage": {
     "title": "<b>${layername}</b>에 대한 속성 개요 텍스트 정의 "
@@ -148,8 +159,8 @@ define({
       "editAttributeGroupHint": "경고: 독립적으로 편집할 경우 이 필드와 연관된 선택된 속성 작업이 그룹에서 제거됩니다.",
       "editGroupHint": "경고: 독립적으로 편집할 경우 이 필드와 연관된 선택된 스마트 작업이 그룹에서 제거됩니다.",
       "popupTitle": "편집 옵션 선택",
-      "editAttributeGroup": "선택한 속성 작업은 그룹에서 정의되었습니다. 다음 옵션 중 하나를 선택하여 속성 작업을 편집할 수 있습니다.",
-      "expression": "선택한 스마트 작업의 식은 그룹에서 정의되었습니다. 다음 옵션 중 하나를 선택하여 스마트 작업 식을 편집할 수 있습니다.",
+      "editAttributeGroup": "선택한 속성 작업은 그룹에서 정의되었습니다. 다음 옵션 중 하나를 선택하여 속성 수행을 편집할 수 있습니다:",
+      "expression": "선택한 스마트 수행의 수식은 그룹에서 정의되었습니다. 다음 옵션 중 하나를 선택하여 스마트 수행 수식을 편집할 수 있습니다.",
       "editGroupButton": "그룹 편집",
       "editIndependentlyButton": "별도로 편집"
     }
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "속성",
     "mapSpatialReferenceOptionLabel": "맵 공간 참조",
     "latLongOptionLabel": "위도/경도",
-    "MGRS": "MGRS",
+    "MGRS": "Military Grid Reference System (MGRS)",
     "allGroupsCreatedMsg": "해당되는 모든 그룹이 이미 생성되었음",
     "coordinatesSourceTitle": "좌표 원본",
     "featureLocation": "피처 위치",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "모든 고유 프리셋 필드 이름이 여기에 나열됩니다. 프리셋 필드를 제거하면 모든 레이어/테이블에서 프리셋으로 해당 필드가 비활성화됩니다."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "모든 피처에 대한 기본 인터섹트 허용 오차",
-    "pixelsToleranceTitle": "포인트 피처에만 적용되는 기본 인터섹트 허용 오차(픽셀값)"
+    "intersectionLabel": "모든 피처에 대한 기본 인터섹트 허용 오차",
+    "intersectionTitle": "인터섹트에 대한 전역 허용오차 활성화",
+    "pixelsToleranceLabel": "포인트 피처에만 적용되는 기본 인터섹트 허용 오차(픽셀값)",
+    "pixelsToleranceTitle": "모든 피처의 기본 인터섹트 허용오차가 0으로 설정되어 있으면 포인트 피처에 이 설정을 사용합니다."
   },
   "smartActionsPage": {
     "smartActionLabel": "스마트 작업 구성",

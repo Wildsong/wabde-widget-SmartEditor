@@ -101,6 +101,7 @@ define(
         layerChooserFromMapArgs = {
           multiple: false,
           createMapResponse: this.map.webMapResponse,
+          onlyShowWebMapLayers: true,
           filter: this._createFiltersForLayerSelector()
         };
         return layerChooserFromMapArgs;

@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Arama sonuçlarını gruplandır",
     "groupFilteredTemplatesTip": "Sonuçları katmana göre gruplandırma seçeneği.",
     "displayShapeSelector": "Çizim seçeneklerini göster",
-    "createNewFeaturesFromExisting": "Kullanıcının mevcut detaylardan yeni detaylar oluşturmasına izin ver",
-    "createNewFeaturesFromExistingTip": "Kullanıcının yeni detaylar oluşturma için mevcut detayı kopyalamasına olanak tanıyan seçenek",
-    "copiedFeaturesOverrideDefaults": "Kopyalanan detay değerleri varsayılanları geçersiz kılar",
+    "createNewFeaturesFromExisting": "Mevcut detaylardan yeni detaylar oluşturmaya izin ver",
+    "createNewFeaturesFromExistingTip": "Kullanıcının yeni detaylar oluşturmak için mevcut detayları kopyalamasına olanak tanıyan seçenek",
+    "copiedFeaturesOverrideDefaults": "Kopyalanan detayların değerleri hedef alandaki varsayılan değerleri geçersiz kılar",
     "copiedFeaturesOverrideDefaultsTip": "Kopyalanan detaylardaki değerler, yalnızca eşleşen alanlar için varsayılan şablon değerlerini geçersiz kılar",
     "displayShapeSelectorTip": "Seçilen şablon için geçerli çizim seçeneklerinin listesini gösterme seçeneği.",
     "displayPresetTop": "Önceden ayarlanmış değer listesini yukarıda göster",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Ayarları Kaydet",
     "geometrySettingsLegendLabel": "Geometri Ayarları",
     "actionsSettingsLegendLabel": "Eylem Ayarları",
-    "buttonPositionsLabel": "Kaydet, Sil, Geri ve İptal düğmelerinin konumu",
+    "buttonPositionsLabel": "Kaydet, Sil, Geri ve Kapat butonlarının konumu",
     "belowEditLabel": "Düzenleme Formunun Altı",
     "aboveEditLabel": "Düzenleme Formunun Üstü",
     "switchToMultilineInput": "Alan uzunluğu aşıldığında çok satırlı girdiye geçin",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Kesişim özniteliği eylemine sahip bir alan için birden fazla değer bulunduğunda bir uyarı göster",
     "expandRelatedTable": "Yükteki tüm ilgili tabloları/katmanları genişlet",
     "expandMainTable": "Yükteki tüm ana katmanları genişlet",
+    "copyAndAppendFeatureLabel": "Detayları Kopyala ve Ekle",
+    "allowCopyPolygonLabel": "Çokgeni noktaya kopyalamaya izin ver",
+    "allowCopyPolygonTooltip": "Geometri dönüşümleriyle çokgen detaylarının nokta hedef detay şablonlarına kopyalanmasına izin veren seçenek",
+    "allowCopyLineLabel": "Çizgiyi noktaya kopyalamaya izin ver",
+    "allowCopyLineTooltip": "Geometri dönüşümleriyle çizgi detayların nokta hedef detay şablonlarına kopyalanmasına izin veren seçenek",
+    "pointAtStartLabel": "Nokta başlangıçta",
+    "pointAtStartTooltip": "Kopyalanacak çizginin başlangıcına bir nokta ekle",
+    "pointAtEndLabel": "Nokta sonda",
+    "pointAtEndTooltip": "Kopyalanacak çizginin sonuna bir nokta ekle",
     "layerSettingsTable": {
       "allowDelete": "Silmeye İzin Ver",
       "allowDeleteTip": "Silmeye İzin Ver - Kullanıcının bir detayı silmesine izin veren seçenektir; katman silmeyi desteklemiyorsa devre dışı bırakılır",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Detay seçimi (piksel) için toleransı ayarla",
     "featuresSelectionToleranceTooltip": "Kullanıcıların, detaya tıklayarak öznitelik düzenleme panelini kolaylıkla açmasını sağlar",
     "featuresSelectionToleranceErrorMsg": "Geçersiz detay seçim toleransı değeri",
-    "autoSaveAttrUpdates": "Öznitelik güncellemelerini otomatik olarak kaydet"
+    "autoSaveAttrUpdates": "Öznitelik ve geometri güncellemelerini otomatik olarak kaydet",
+    "defaultCoordinateSystem": "Varsayılan Referans Sistemi",
+    "defaultCoordinateSystemTooltip": "Seçili bir nokta detayını yeni bir konuma taşırken varsayılan referans sistemini ayarlayın"
   },
   "editDescriptionPage": {
     "title": "<b>${layername}</b> için öznitelik genel görünüm metnini tanımlayın "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Kriterler - Kural sırasını değiştirin ve tetiklendiğinde kriteri tanımlayın"
     },
     "copyAction": {
-      "description": "Alan değeri kaynağı, geçerli bir kriter tetiklenene veya liste tamamlanana kadar etkinleştirilirse işlenir. Kriterleri tanımlamak için Kriter Düzenleme düğmesini kullanın.",
+      "description": "Alan değeri kaynağı, geçerli bir kriter tetiklenene veya liste tamamlanana kadar etkinleştirilirse işlenir. Kriterleri tanımlamak için Kriter Düzenleme butonunu kullanın.",
       "intersection": "Kesişim",
       "coordinates": "Koordinatlar",
       "address": "Adres",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Öznitelik",
     "mapSpatialReferenceOptionLabel": "Harita Mekansal Referansı",
     "latLongOptionLabel": "Enlem/Boylam",
-    "MGRS": "MGRS",
+    "MGRS": "Askeri Kafes Başvuru Sistemi (MGRS)",
     "allGroupsCreatedMsg": "Olası tüm gruplar önceden oluşturuldu",
     "coordinatesSourceTitle": "Koordinatlar Kaynağı",
     "featureLocation": "Detay Konumu",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Tüm önceden ayarlanmış benzersiz alan adları burada listelenmiştir. Önceden ayarlanmış bir alanın kaldırılması, ilgili alanı ön ayar olarak tüm katmanlarda/tablolarda devre dışı bırakır."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Tüm detaylar için varsayılan kesişim toleransı",
-    "pixelsToleranceTitle": "Yalnızca nokta detayları için uygulanacak varsayılan kesişim toleransı (piksel değeri)"
+    "intersectionLabel": "Tüm detaylar için varsayılan kesişim toleransı",
+    "intersectionTitle": "Kesişimler için bir küresel tolerans etkinleştirin",
+    "pixelsToleranceLabel": "Yalnızca nokta detayları için uygulanacak varsayılan kesişim toleransı (piksel değeri)",
+    "pixelsToleranceTitle": "Tüm detaylar için varsayılan kesişim toleransı 0 olarak ayarlanmışsa, nokta detayları için bu ayarı kullanın."
   },
   "smartActionsPage": {
     "smartActionLabel": "Akıllı Eylem Yapılandırma",

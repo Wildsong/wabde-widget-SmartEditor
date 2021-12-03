@@ -23,9 +23,9 @@ define({
       groupFilteredTemplates: "Group search results",
       groupFilteredTemplatesTip: "Option to group search results by layer.",
       displayShapeSelector: "Show drawing options",
-      createNewFeaturesFromExisting: "Allow user to create new feature(s) from existing feature(s)",
-      createNewFeaturesFromExistingTip: "Option to allow user to copy existing feature to create new features",
-      copiedFeaturesOverrideDefaults: "Copied features values override defaults",
+      createNewFeaturesFromExisting: "Allow creating new feature(s) from existing feature(s)",
+      createNewFeaturesFromExistingTip: "Option to allow user to copy existing features to create new features",
+      copiedFeaturesOverrideDefaults: "Value(s) from copied feature(s) override default value(s) in target field(s)",
       copiedFeaturesOverrideDefaultsTip: "Values from the copied features will override the default template values only for the matched field(s)",
       displayShapeSelectorTip: "Option to show a list of valid drawing options for the selected template.",
       displayPresetTop: "Display preset value list on top",
@@ -38,23 +38,32 @@ define({
       keepTemplateActiveTip: "When the template picker is shown, if a template was previously selected, reselect it.",
       geometryEditDefault: "Enable geometry edit by default",
       autoSaveEdits: "Save new features automatically",
-      enableAttributeUpdates : "Show Attribute Actions update button",
-      enableAutomaticAttributeUpdates : "Automatically call Attribute Actions after geometry update",
-      enableLockingMapNavigation : "Enable locking of map navigation",
-      enableMovingSelectedFeatureToGPS : "Enable moving of selected point feature to GPS location",
-      enableMovingSelectedFeatureToXY : "Enable moving of selected point feature to XY location",
-      featureTemplateLegendLabel : "Feature Template and Filter value Settings",
-      saveSettingsLegendLabel : "Save Settings",
-      geometrySettingsLegendLabel : "Geometry Settings",
-      actionsSettingsLegendLabel : "Actions Settings",
-      buttonPositionsLabel : "Position of Save, Delete, Back and Cancel buttons",
-      belowEditLabel : "Below Edit Form",
-      aboveEditLabel : "Above Edit Form",
-      switchToMultilineInput : "Switch to multiline input when field length exceeds",
+      enableAttributeUpdates: "Show Attribute Actions update button",
+      enableAutomaticAttributeUpdates: "Automatically call Attribute Actions after geometry update",
+      enableLockingMapNavigation: "Enable locking of map navigation",
+      enableMovingSelectedFeatureToGPS: "Enable moving of selected point feature to GPS location",
+      enableMovingSelectedFeatureToXY: "Enable moving of selected point feature to XY location",
+      featureTemplateLegendLabel: "Feature Template and Filter value Settings",
+      saveSettingsLegendLabel: "Save Settings",
+      geometrySettingsLegendLabel: "Geometry Settings",
+      actionsSettingsLegendLabel: "Actions Settings",
+      buttonPositionsLabel: "Position of Save, Delete, Back and Close buttons",
+      belowEditLabel: "Below Edit Form",
+      aboveEditLabel: "Above Edit Form",
+      switchToMultilineInput: "Switch to multiline input when field length exceeds",
       enableValuePicker: "Enable intersection value picker",
       enableValuePickerHint: "Display a prompt when multiple values are available for a field with an intersection attribute action",
       expandRelatedTable: "Expand all related tables/layers on load",
       expandMainTable: "Expand all parent layers on load",
+      copyAndAppendFeatureLabel: "Copy and Append Features",
+      allowCopyPolygonLabel: "Allow copy polygon to point",
+      allowCopyPolygonTooltip: "Option to allow copying polygon features into point target feature templates with geometry transformations",
+      allowCopyLineLabel: "Allow copy line to point",
+      allowCopyLineTooltip: "Option to allow copying line features into point target feature templates with geometry transformations",
+      pointAtStartLabel: "Point at start",
+      pointAtStartTooltip: "Add a point at the start of the line being copied",
+      pointAtEndLabel: "Point at end",
+      pointAtEndTooltip: "Add a point at the end of the line being copied",
       layerSettingsTable: {
         allowDelete: "Allow Delete",
         allowDeleteTip: "Allow Delete - Option to allow the user to delete a feature; disabled if the layer does not support delete",
@@ -80,7 +89,9 @@ define({
       featuresSelectionTolerance: "Set the tolerance for feature selection (pixels)",
       featuresSelectionToleranceTooltip: "Enables users to easily open the attribute editing panel by clicking the feature",
       featuresSelectionToleranceErrorMsg: "Invalid feature selection tolerance value",
-      autoSaveAttrUpdates: "Save attribute updates automatically"
+      autoSaveAttrUpdates: "Save attribute and geometry updates automatically",
+      defaultCoordinateSystem: "Default Reference System",
+      defaultCoordinateSystemTooltip: "Set the default reference system when moving a selected point feature to a new location"
     },
     editDescriptionPage: {
       title: "Define attribute overview text for <b>${layername}</b> "
@@ -93,7 +104,7 @@ define({
       fieldsNotes: "* is a required field.  If you uncheck Display for this field, and the edit template does not populate that field value, you will not be able to save a new record.",
       smartAttachmentText: "Configure Smart Actions for attachments",
       smartAttachmentPopupTitle: "Configure Smart Actions for attachments in <b>${layername}</b>",
-      noDisplayFieldWarningMsg: "Please select at least one display field for layer ${layerName}" ,
+      noDisplayFieldWarningMsg: "Please select at least one display field for layer ${layerName}",
       fieldsSettingsTable: {
         display: "Display",
         displayTip: "Display - Determine whether the field is not visible",
@@ -131,7 +142,7 @@ define({
         actionsTip: "Criteria - Change the order of the rule and define the criteria when it is triggered"
       },
       copyAction: {
-        description : "Field value source are processed in order if activated until a valid criteria is triggered or the list is completed. Use the Criteria Edit button to define the criteria.",
+        description: "Field value source are processed in order if activated until a valid criteria is triggered or the list is completed. Use the Criteria Edit button to define the criteria.",
         intersection: "Intersection",
         coordinates: "Coordinates",
         address: "Address",
@@ -146,11 +157,11 @@ define({
         disabled: "Disabled"
       },
       editOptionsPopup: {
-        editAttributeGroupHint : "Warning: Edit independently will remove the selected attribute action associated for this field from the group",
-        editGroupHint : "Warning: Edit independently will remove the selected smart action associated for this field from the group",
+        editAttributeGroupHint: "Warning: Edit independently will remove the selected attribute action associated for this field from the group",
+        editGroupHint: "Warning: Edit independently will remove the selected smart action associated for this field from the group",
         popupTitle: "Choose editing option",
-        editAttributeGroup : "The selected attribute action is defined from the group. Choose one of the following options to edit the attribute action:",
-        expression : "The expression of the selected smart action is defined from the group. Choose one of the following options to edit the smart action expression:",
+        editAttributeGroup: "The selected attribute action is defined from the group. Choose one of the following options to edit the attribute action:",
+        expression: "The expression of the selected smart action is defined from the group. Choose one of the following options to edit the smart action expression:",
         editGroupButton: "Edit Group",
         editIndependentlyButton: "Edit Independently"
       }
@@ -182,7 +193,7 @@ define({
       coordinatesAttributeTitle: "Attribute",
       mapSpatialReferenceOptionLabel: "Map Spatial Reference",
       latLongOptionLabel: "Latitude/Longitude",
-      MGRS: "MGRS",
+      MGRS: "Military Grid Reference System (MGRS)",
       allGroupsCreatedMsg: "All possible groups are already created",
       coordinatesSourceTitle: "Coordinates Source",
       featureLocation: "Feature Location",
@@ -205,7 +216,7 @@ define({
       checkboxLabel: "Field will be preset",
       showOnlyDomainFields: "Show only domain fields",
       hideInPresetDisplay: "Hide in preset value display",
-      presetValueLabel : "Current preset value is:",
+      presetValueLabel: "Current preset value is:",
       changePresetValueHint: "To change this preset value go to 'Define Preset Values' button in general settings"
     },
     intersectionPage: {
@@ -213,7 +224,7 @@ define({
       dataTypeLabel: "Data Type",
       ignoreLayerRankingCheckboxLabel: "Ignore layer ranking and find closest feature across all defined layers",
       intersectingLayersLabel: "Layer(s) to extract a value",
-      layerAndFieldsApplyLabel:"Layer(s) and field(s) to apply extracted value",
+      layerAndFieldsApplyLabel: "Layer(s) and field(s) to apply extracted value",
       checkboxLabel: "Get value from intersection layer's field",
       layerText: "Layers",
       fieldText: "Fields",
@@ -231,11 +242,13 @@ define({
     presetAll: {
       popupTitle: "Define the default preset values",
       deleteTitle: "Delete preset value",
-      hintMsg:"All unique preset field names are listed here. Removing a preset field will disable the respective field as preset from all layers/tables."
+      hintMsg: "All unique preset field names are listed here. Removing a preset field will disable the respective field as preset from all layers/tables."
     },
     intersectionTolerance: {
-      intersectionTitle: "Default intersection tolerance for all features",
-      pixelsToleranceTitle: "Default intersection tolerance (pixel value) to be applied for point features only"
+      intersectionLabel: "Default intersection tolerance for all features",
+      intersectionTitle: "Enable a global tolerance for intersections",
+      pixelsToleranceLabel: "Default intersection tolerance (pixel value) to be applied for point features only",
+      pixelsToleranceTitle: "If the default intersection tolerance for all features is set to 0, use this setting for point features"
     },
     smartActionsPage: {
       smartActionLabel: "Configure Smart Action",
@@ -275,8 +288,8 @@ define({
       alreadyAppliedActionMsg: "${action} action applied on this field in group",
       alreadyAppliedActionLayerMsg: "${action} action applied on this field from Layer Settings",
       appliedGroupName: "${groupName}",
-      noPresetFieldsMsg :"This group has no associated fields.",
-      presetNoFieldWarningMsg :"Please configure at least one field for the preset group : ${groupName}"
+      noPresetFieldsMsg: "This group has no associated fields.",
+      presetNoFieldWarningMsg: "Please configure at least one field for the preset group : ${groupName}"
     },
     chooseFromLayer: {
       fieldLabel: "Field",
@@ -300,7 +313,7 @@ define({
       current: "Current",
       past: "Past",
       future: "Future",
-      popupTitle : "Select Value",
+      popupTitle: "Select Value",
       hintForFixedDateType: "Hint: Specified date and time will be used as preset default value",
       hintForCurrentDateType: "Hint: Current date and time will be used as preset default value",
       hintForPastDateType: "Hint: The specified value will be subtracted from the current date and time for the default value of the preset.",
@@ -310,11 +323,11 @@ define({
       customLabel: "Custom"
     },
     relativeDomains: {
-      fieldSetTitle : "List",
-      valueText : "Value",
+      fieldSetTitle: "List",
+      valueText: "Value",
       defaultText: "Default",
       selectedDomainFieldsHint: "Selected domain field(s): ${domainFields}",
-      selectDefaultDomainMsg : "Please select a default value domain or make sure the selected default domain checkbox is checked"
+      selectDefaultDomainMsg: "Please select a default value domain or make sure the selected default domain checkbox is checked"
     }
   }),
   "ar": 1,

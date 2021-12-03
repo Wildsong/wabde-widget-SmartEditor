@@ -14,6 +14,7 @@
         "editGeometryDefault": false,
         "autoSaveEdits": false,
         "showValuePicker": false,
-        "featuresSelectionTolerance": 5
+        "featuresSelectionTolerance": 5,
+        "defaultCoordinateSystem": "Latitude/Longitude"
     }
 }

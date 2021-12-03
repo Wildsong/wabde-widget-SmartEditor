@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Keresési eredmények csoportosítása",
     "groupFilteredTemplatesTip": "A keresési eredmények réteg szerinti csoportosítására szolgáló lehetőség.",
     "displayShapeSelector": "Rajzolási beállítások mutatása",
-    "createNewFeaturesFromExisting": "Új vektoros elemek meglévő vektoros elemekből történő létrehozásának engedélyezése a felhasználó számára",
+    "createNewFeaturesFromExisting": "Új vektoros elemek meglévő vektoros elemekből történő létrehozásának engedélyezése",
     "createNewFeaturesFromExistingTip": "Ezzel a beállítással engedélyezhető a felhasználónak, hogy meglévő vektoros elemet másoljon új vektoros elemek létrehozásához",
-    "copiedFeaturesOverrideDefaults": "A másolt vektoros elemek értéke felülírja az alapértelmezett értékeket",
+    "copiedFeaturesOverrideDefaults": "A másolt vektoros elem(ek)ből származó érték(ek) felülírják a cél mező(k)ben lévő alapértelmezett értéke(ke)t",
     "copiedFeaturesOverrideDefaultsTip": "A másolt vektoros elemekből származó értékek csak az egyező mező(k) esetében írják felül az alapértelmezett értékeket",
     "displayShapeSelectorTip": "Ezzel a lehetőséggel a kiválasztott sablon érvényes rajzolási beállításainak listája jeleníthető meg.",
     "displayPresetTop": "Előre beállított értékek listájának megjelenítése felül",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Beállítások mentése",
     "geometrySettingsLegendLabel": "Geometriabeállítások",
     "actionsSettingsLegendLabel": "Műveleti beállítások",
-    "buttonPositionsLabel": "A Mentés, Törlés, Vissza és a Mégse gombok helye",
+    "buttonPositionsLabel": "A Mentés, Törlés, Vissza és a Bezár gombok helye",
     "belowEditLabel": "Szerkesztés űrlap alatt",
     "aboveEditLabel": "Szerkesztés űrlap felett",
     "switchToMultilineInput": "Váltson többsoros bevitelre, ha a mező hosszúsága meghaladja a következőt:",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Rákérdezés ha egy metszéspont attribútum művelettel rendelkező mezőhöz több érték áll rendelkezésre",
     "expandRelatedTable": "Betöltéskor az összes kapcsolódó tábla/réteg kibontása",
     "expandMainTable": "Betöltéskor az összes szülő réteg kibontása",
+    "copyAndAppendFeatureLabel": "Vektoros elemek másolása és hozzáfűzése",
+    "allowCopyPolygonLabel": "Sokszög pontra másolásának engedélyezése",
+    "allowCopyPolygonTooltip": "Lehetőség a sokszög vektoros elemek másolásának engedélyezésére pont cél vektoros elem sablonokba geometriai transzformációkkal",
+    "allowCopyLineLabel": "Vonal pontra másolásának engedélyezése",
+    "allowCopyLineTooltip": "Lehetőség a vonalas vektoros elemek másolásának engedélyezésére pont cél vektoros elem sablonokba geometriai transzformációkkal",
+    "pointAtStartLabel": "Pont a kezdőpontra",
+    "pointAtStartTooltip": "Pontot ad hozzá a másolt vonal kezdőpontjához",
+    "pointAtEndLabel": "Pont a végpontra",
+    "pointAtEndTooltip": "Pontot ad hozzá a másolt vonal végpontjához",
     "layerSettingsTable": {
       "allowDelete": "Törlés engedélyezése",
       "allowDeleteTip": "Törlés engedélyezése – Ezzel a beállítással engedélyezhető a felhasználónak a vektoros elemek törlése; le van tiltva, ha a réteg nem támogatja a törlést",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Vektoros elem kiválasztási toleranciájának beállítása pixelben",
     "featuresSelectionToleranceTooltip": "Lehetővé teszi a felhasználó számára, hogy a vektoros elemre történő kattintással egyszerűen megnyithassa az attribútum szerkesztő panelt",
     "featuresSelectionToleranceErrorMsg": "Érvénytelen vektoros elem kiválasztási tolerancia érték",
-    "autoSaveAttrUpdates": "Attribútumfrissítések automatikus mentése"
+    "autoSaveAttrUpdates": "Attribútum- és geometriafrissítések automatikus mentése",
+    "defaultCoordinateSystem": "Alapértelmezett referenciarendszer",
+    "defaultCoordinateSystemTooltip": "Alapértelmezett referenciarendszer beállítása, amikor egy kijelölt ponttípusú vektoros elemet új helyre helyez át."
   },
   "editDescriptionPage": {
     "title": "Adja meg az attribútum-áttekintési szöveget a(z) <b>${layername}</b> réteghez "
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Attribútum",
     "mapSpatialReferenceOptionLabel": "Térkép koordináta-rendszere",
     "latLongOptionLabel": "Hosszúság/szélesség",
-    "MGRS": "MGRS",
+    "MGRS": "Katonai keresőhálózati rendeszer (MGRS)",
     "allGroupsCreatedMsg": "Már valamennyi lehetséges csoportot létrehozták",
     "coordinatesSourceTitle": "Koordináta forrás",
     "featureLocation": "Vektoros elem helye",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Itt szerepel az összes előre beállított egyedi mezőnév. Előre beállított mező eltávolítása esetén a rendszer letiltja a mező előre beállított értékét minden rétegben/táblában."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Alapértelmezett metszéspont-tolerancia valamennyi vektoros elemre vonatkozóan",
-    "pixelsToleranceTitle": "A csak a pontszerű térképobjektumokra alkalmazandó alapértelmezett metszéspont-tolerancia (pixelérték)."
+    "intersectionLabel": "Alapértelmezett metszéspont-tolerancia valamennyi vektoros elemre vonatkozóan",
+    "intersectionTitle": "Globális tolerancia engedélyezése a kereszteződéseknél",
+    "pixelsToleranceLabel": "A csak a pontszerű térképobjektumokra alkalmazandó alapértelmezett metszéspont-tolerancia (pixelérték).",
+    "pixelsToleranceTitle": "Ha az alapértelmezett metszési tolerancia minden jellemzőnél 0-ra van állítva, akkor ezt a beállítást használja a ponttípusú vektoros elemek esetében."
   },
   "smartActionsPage": {
     "smartActionLabel": "Intelligens művelet konfigurálása",

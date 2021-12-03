@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Agrupar resultados da pesquisa",
     "groupFilteredTemplatesTip": "Opção para agrupar os resultados da pesquisa por camada.",
     "displayShapeSelector": "Exibir opções de desenho",
-    "createNewFeaturesFromExisting": "Permitir ao utilizador criar novo(s) elemento(s) a partir de elemento(s) existente(s)",
-    "createNewFeaturesFromExistingTip": "Opção para permitir ao utilizador copiar um elemento existente para criar novos elementos",
-    "copiedFeaturesOverrideDefaults": "Os valores de elementos copiados substituem as predefinições",
+    "createNewFeaturesFromExisting": "Permitir a criação de novos elementos a partir de elementos existentes",
+    "createNewFeaturesFromExistingTip": "Opção para permitir ao utilizador copiar elementos existentes para criar novos elementos",
+    "copiedFeaturesOverrideDefaults": "Os valores dos elementos copiados substituem os valores predefinidos nos campos de destino",
     "copiedFeaturesOverrideDefaultsTip": "Os valores de elementos copiados substituirão os valores do modelo predefinido apenas para o(s) campo(s) que corresponda(m)",
     "displayShapeSelectorTip": "Opção para exibir uma lista de opções de desenho válidas para o modelo selecionado.",
     "displayPresetTop": "Exibir lista de valores predefinidos no topo",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Guardar Definições",
     "geometrySettingsLegendLabel": "Definições de Geometria",
     "actionsSettingsLegendLabel": "Definições de Ações",
-    "buttonPositionsLabel": "Posição dos botões Guardar, Eliminar, Regressar e Cancelar",
+    "buttonPositionsLabel": "Posição dos botões Guardar, Eliminar, Regressar e Fechar",
     "belowEditLabel": "Abaixo do Formulário de Edição",
     "aboveEditLabel": "Acima do Formulário de Edição",
     "switchToMultilineInput": "Mudar para entrada multilinha quando o comprimento do campo exceder",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Exibir uma mensagem quando vários valores estão disponíveis para um campo com uma ação de atributo de intersecção",
     "expandRelatedTable": "Expandir todas as tabelas/camadas relacionadas ao carregar",
     "expandMainTable": "Expandir todas as camadas principais ao carregar",
+    "copyAndAppendFeatureLabel": "Copiar e Acrescentar Elementos",
+    "allowCopyPolygonLabel": "Permitir cópia de polígono para ponto",
+    "allowCopyPolygonTooltip": "Opção para permitir a cópia de elementos de polígono para modelos de elementos de destino de ponto com transformações de geometria",
+    "allowCopyLineLabel": "Permitir cópia de linha para ponto",
+    "allowCopyLineTooltip": "Opção para permitir a cópia de elementos de linha para modelos de elementos de destino de ponto com transformações de geometria",
+    "pointAtStartLabel": "Ponto no início",
+    "pointAtStartTooltip": "Adicionar um ponto ao início da linha que está a ser copiada",
+    "pointAtEndLabel": "Ponto no fim",
+    "pointAtEndTooltip": "Adicionar um ponto ao fim da linha que está a ser copiada",
     "layerSettingsTable": {
       "allowDelete": "Permitir Eliminação",
       "allowDeleteTip": "Permitir Eliminação: opção que permite ao utilizador eliminar um elemento; é desativada caso a camada não suporte eliminação",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Definir a tolerância para a seleção do elemento (píxeis)",
     "featuresSelectionToleranceTooltip": "Permite aos utilizadores abrir facilmente a janela pop-up de edição de atributos ao clicar no elemento",
     "featuresSelectionToleranceErrorMsg": "Valor de tolerância de seleção do elemento inválido",
-    "autoSaveAttrUpdates": "Guardar atualizações de atributos automaticamente"
+    "autoSaveAttrUpdates": "Guardar atualizações de atributos e geometrias automaticamente",
+    "defaultCoordinateSystem": "Sistema de Referência Padrão",
+    "defaultCoordinateSystemTooltip": "Defina o sistema de referência padrão ao mover um elemento de ponto selecionado para uma nova localização"
   },
   "editDescriptionPage": {
     "title": "Defina o texto de vista geral de atributos para <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Critério: altera a ordem da regra e define os critérios quando este é ativado"
     },
     "copyAction": {
-      "description": "A fonte de dados dos valores de um campo é processada por ordem se estiver activa até que um critério válido seja despoletado ou a lista esteja completa.",
+      "description": "As fontes de valor de campo são processadas por ordem se ativadas até que um critério válido seja acionado ou até que a lista seja completada. Use o botão Editar Critérios para definir os critérios.",
       "intersection": "Intersecção",
       "coordinates": "Coordenadas",
       "address": "Endereço",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atributo",
     "mapSpatialReferenceOptionLabel": "Referência Espacial do Mapa",
     "latLongOptionLabel": "Latitude/Longitude",
-    "MGRS": "MGRS",
+    "MGRS": "Sistema de Referência da Rede Militar (MGRS)",
     "allGroupsCreatedMsg": "Já foram criados todos os grupos possíveis",
     "coordinatesSourceTitle": "Fonte de Coordenadas",
     "featureLocation": "Localização do Elemento",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Todos os nomes de campos predefinidos únicos são apresentados aqui. A remoção de um campo predefinido irá desativar o respetivo campo enquanto predefinição de todas as camadas/tabelas."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Tolerância de intersecção predefinida para todos os elementos",
-    "pixelsToleranceTitle": "Tolerância de intersecção predefinida (valor de píxeis) a ser aplicada apenas a elementos de ponto"
+    "intersectionLabel": "Tolerância de intersecção predefinida para todos os elementos",
+    "intersectionTitle": "Ativar uma tolerância global para interseções",
+    "pixelsToleranceLabel": "Tolerância de interseção predefinida (valor de píxeis) a ser aplicada apenas a elementos de ponto",
+    "pixelsToleranceTitle": "Se a tolerância de interseção padrão para todos os elementos estiver definida para 0, use a definição para elementos de ponto"
   },
   "smartActionsPage": {
     "smartActionLabel": "Configurar uma Ação Inteligente",

@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Resultater for gruppesøgning",
     "groupFilteredTemplatesTip": "Indstilling for at gruppere resulater efter lag",
     "displayShapeSelector": "Vis tegnefunktioner",
-    "createNewFeaturesFromExisting": "Gør det muligt for brugeren at oprette et nyt/nye objekt(er) ud fra et eksisterende objekt(er)",
-    "createNewFeaturesFromExistingTip": "En indstilling, der gør det muligt for brugeren at kopiere et eksisterende objekt med henblik på at oprette nye objekter",
-    "copiedFeaturesOverrideDefaults": "Kopierede objektværdier tilsidesætter standardværdierne",
+    "createNewFeaturesFromExisting": "Gør det muligt at oprette nyt/nye objekt(er) ud fra eksisterende objekt(er)",
+    "createNewFeaturesFromExistingTip": "En indstilling, der gør det muligt for brugeren at kopiere eksisterende objekter med henblik på at oprette nye objekter",
+    "copiedFeaturesOverrideDefaults": "Værdi(er) fra kopieret/kopierede objekt(er) tilsidesætter standardværdi(er) i målfelt(er)",
     "copiedFeaturesOverrideDefaultsTip": "Værdier fra kopierede objekter vil kun tilsidesætte standard-skabelonværdier for det/de matchede felt(er)",
     "displayShapeSelectorTip": "Indstilling, der viser en liste med gyldige tegnefunktioner for den valgte skabelon.",
     "displayPresetTop": "Vis en liste med forudindstillede værdier øverst",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Gem indstillinger",
     "geometrySettingsLegendLabel": "Geometri-indstillinger",
     "actionsSettingsLegendLabel": "Handlingsindstillinger",
-    "buttonPositionsLabel": "Placering af knapperne Gem, Slet, Tilbage og Annuller",
+    "buttonPositionsLabel": "Placering af knapperne Gem, Slet, Tilbage og Luk",
     "belowEditLabel": "Under redigeringsformular",
     "aboveEditLabel": "Over redigeringsformular",
     "switchToMultilineInput": "Skift til input med flere linjer, når feltets længde overskrider",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Vis en prompt, når flere værdier er tilgængelige for et felt med en gennemskærings-attributhandling",
     "expandRelatedTable": "Udvid alle relaterede tabeller/lag ved indlæsning",
     "expandMainTable": "Udvid alle overordnede lag ved indlæsning",
+    "copyAndAppendFeatureLabel": "Kopiér og tilknyt objekter",
+    "allowCopyPolygonLabel": "Tillad, at polygon kopieres til punkt",
+    "allowCopyPolygonTooltip": "En indstilling, der gør det muligt at kopiere polygonobjekter til punktmål-objektskabeloner med geometri-transformationer",
+    "allowCopyLineLabel": "Tillad, at linje kopieres til punkt",
+    "allowCopyLineTooltip": "En indstilling, der gør det muligt at kopiere linjeobjekter til punktmål-objektskabeloner med geometri-transformationer",
+    "pointAtStartLabel": "Punktum i begyndelse",
+    "pointAtStartTooltip": "Tilføj et punktum i begyndelsen af den linje, der kopieres",
+    "pointAtEndLabel": "Punktum i slutning",
+    "pointAtEndTooltip": "Tilføj et punktum i slutningen af den linje, der kopieres",
     "layerSettingsTable": {
       "allowDelete": "Tillad sletning",
       "allowDeleteTip": "Tillad sletning – Indstilling, der gør det muligt for brugeren at slette et objekt. Indstillingen deaktiveres, hvis laget ikke understøtter sletning",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Indstil tolerancen for objektvalg (pixels)",
     "featuresSelectionToleranceTooltip": "Gør det muligt og nemt for brugerne at åbne panelet for attributredigering ved at klikke på objektet",
     "featuresSelectionToleranceErrorMsg": "Ugyldig toleranceværdi for objektvalg",
-    "autoSaveAttrUpdates": "Gem attributopdateringer automatisk"
+    "autoSaveAttrUpdates": "Gem attribut- og geometriopdateringer automatisk",
+    "defaultCoordinateSystem": "Standardreferencesystem",
+    "defaultCoordinateSystemTooltip": "Angiv standardreferencesystemet, når du flytter et valgt punktobjekt til en ny placering"
   },
   "editDescriptionPage": {
     "title": "Definér attributoversigtsteksten for <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Kriterier – Redigér rækkefølgen for reglerne, og definér kriterierne for, hvornår de udløses"
     },
     "copyAction": {
-      "description": "Kilder til feltværdier behandles i rækkefølge, hvis dette er aktiveret, indtil et gyldigt kriterium udløses, eller listen er afsluttet. Brug knappen til redigering af kriterier til at definere kriterierne.",
+      "description": "Kilde til feltværdier behandles i rækkefølge, hvis dette er aktiveret, indtil et gyldigt kriterium udløses, eller listen er afsluttet. Brug knappen til redigering af kriterier til at definere kriterierne.",
       "intersection": "Vejkryds",
       "coordinates": "Koordinater",
       "address": "Adresse",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Attribut",
     "mapSpatialReferenceOptionLabel": "Kort-spatial reference",
     "latLongOptionLabel": "Breddegrad/længdegrad",
-    "MGRS": "MGRS",
+    "MGRS": "Military Grid Reference System (MGRS)",
     "allGroupsCreatedMsg": "Alle mulige grupper er allerede oprettet",
     "coordinatesSourceTitle": "Koordinater Kilde",
     "featureLocation": "Objektposition",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Alle unikke forudindstillede feltnavne vises her. Fjernelse af et forudindstillet felt deaktiverer det respektive felt som forudindstillet fra alle lag/tabeller."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Standard-gennemskæringstolerance for alle objekter",
-    "pixelsToleranceTitle": "Standard-gennemskæringstolerance (pixel-værdi) skal kun anvendes på punktobjekter"
+    "intersectionLabel": "Standard-gennemskæringstolerance for alle objekter",
+    "intersectionTitle": "Angiv en global tolerance for skæringer",
+    "pixelsToleranceLabel": "Standard-gennemskæringstolerance (pixel-værdi) skal kun anvendes på punktobjekter",
+    "pixelsToleranceTitle": "Hvis standardtolerancen for skæring for alle objekter er angivet til 0, kan du bruge denne indstilling til punktobjekter"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfigurér smart handling",

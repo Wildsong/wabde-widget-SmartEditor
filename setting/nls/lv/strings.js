@@ -22,9 +22,9 @@ define({
     "groupFilteredTemplates": "Meklēšanas rezultātu grupēšana",
     "groupFilteredTemplatesTip": "Iespēja grupēt meklēšanas rezultātus pēc slāņa.",
     "displayShapeSelector": "Parādīt zīmēšanas veidus",
-    "createNewFeaturesFromExisting": "Atļaut lietotājam izveidot jaunus elementus no esošajiem elementiem",
+    "createNewFeaturesFromExisting": "Atļaut izveidot jaunu(s) elementu(s) no esošā(ajiem) elementa(iem)",
     "createNewFeaturesFromExistingTip": "Iespēja, kas ļauj lietotājam kopēt esošos elementus, lai izveidotu jaunus elementus",
-    "copiedFeaturesOverrideDefaults": "Kopēto elementu vērtības apiet noklusējuma vērtības",
+    "copiedFeaturesOverrideDefaults": "Vērtība(s) no kopētā(ajiem) elementa(iem) pārraksta noklusējuma vērtību(as) mērķa laukā(os)",
     "copiedFeaturesOverrideDefaultsTip": "Kopēto elementu vērtības apies noklusējuma veidnes vērtības tikai atbilstošajiem laukiem",
     "displayShapeSelectorTip": "Iespēja parādīt sarakstu ar zīmēšanas veidiem, kas derīgi izvēlētajai veidnei.",
     "displayPresetTop": "Rādīt iepriekš iestatītu vērtību sarakstu augšpusē",
@@ -46,7 +46,7 @@ define({
     "saveSettingsLegendLabel": "Saglabāt iestatījumus",
     "geometrySettingsLegendLabel": "Ģeometrijas iestatījumi",
     "actionsSettingsLegendLabel": "Darbību iestatījumi",
-    "buttonPositionsLabel": "Pogas Saglabāt, Dzēst, Atpakaļ un Atcelt atrašanās vieta",
+    "buttonPositionsLabel": "Pogas Saglabāt, Dzēst, Atpakaļ un Aizvērt novietojums",
     "belowEditLabel": "Zem Rediģēt veidlapu",
     "aboveEditLabel": "Virs Rediģēt veidlapu",
     "switchToMultilineInput": "Pārslēdzieties uz vairākrindu ievadi, ja lauka garums pārsniedz",
@@ -54,6 +54,15 @@ define({
     "enableValuePickerHint": "Parādīt uzvedni, ja laukam ar šķelšanas (intersect) atribūta darbību ir pieejamas vairākas vērtības",
     "expandRelatedTable": "Izvērst visas saistītās tabulas/slāņus ielādēšanas laikā",
     "expandMainTable": "Izvērst visus vecākelementa slāņus ielādēšanas laikā",
+    "copyAndAppendFeatureLabel": "Kopēt un pievienot elementus",
+    "allowCopyPolygonLabel": "Ļaut kopēt poligonu pēc punktiem",
+    "allowCopyPolygonTooltip": "Iespēja, kas ļauj kopēt poligona elementus par punktveida mērķa elementu veidnēm ar ģeometrijas transformācijām",
+    "allowCopyLineLabel": "Ļaut kopēt līniju pēc punktiem",
+    "allowCopyLineTooltip": "Iespēja, kas ļauj kopēt līnijas elementus par punktveida mērķa elementu veidnēm ar ģeometrijas transformācijām",
+    "pointAtStartLabel": "Sākuma punkts",
+    "pointAtStartTooltip": "Pievienot punktu kopējamās līnijas sākumā",
+    "pointAtEndLabel": "Beigu punkts",
+    "pointAtEndTooltip": "Pievienot punktu kopējamās līnijas beigās",
     "layerSettingsTable": {
       "allowDelete": "Atļaut dzēšanu",
       "allowDeleteTip": "Atļaut dzēšanu — opcija atļaut lietotājam izdzēst elementu; ja slānī dzēšana nav atbalstīta, opcija tiek atspējota",
@@ -79,7 +88,9 @@ define({
     "featuresSelectionTolerance": "Iestatiet pielaidi elementu atlasei (pikseļos)",
     "featuresSelectionToleranceTooltip": "Ļaujiet lietotājiem ērti atvērt atribūtu rediģēšanas paneli, noklikšķinot uz elementa",
     "featuresSelectionToleranceErrorMsg": "Nederīga elementa atlases pielaides vērtība",
-    "autoSaveAttrUpdates": "Automātiski saglabāt atribūtu atjauninājumus"
+    "autoSaveAttrUpdates": "Automātiski saglabāt atribūta un ģeometrijas atjauninājumus",
+    "defaultCoordinateSystem": "Noklusējuma atskaites sistēma",
+    "defaultCoordinateSystemTooltip": "Iestatīt noklusējuma atskaites sistēmu, pārvietojot izvēlēto punkta elementu uz jaunu novietojumu"
   },
   "editDescriptionPage": {
     "title": "Definēt atribūtu pārskata tekstu slānim <b>${layername}</b> "
@@ -130,7 +141,7 @@ define({
       "actionsTip": "Kritēriji — mainiet noteikuma secību un definējiet kritērijus, kad tā tiek aktivizēta"
     },
     "copyAction": {
-      "description": "Ja aktivizēts, lauka vērtības avots tiek apstrādāts norādītajā secībā, līdz tiek izraisīts derīgs kritērijs vai beidzas saraksts. Izmantojiet kritērija labošanas pogu, lai definētu kritēriju.",
+      "description": "Lauka vērtības avots tiek apstrādāts secīgi, ja tas ir aktivizēts, līdz derīgu kritēriju aktivizēšanai vai saraksta pabeigšanai. Izmantojiet pogu Kritēriju rediģēšana, lai definētu kritērijus.",
       "intersection": "Krustpunkts",
       "coordinates": "Koordinātas",
       "address": "Adrese",
@@ -181,7 +192,7 @@ define({
     "coordinatesAttributeTitle": "Atribūti",
     "mapSpatialReferenceOptionLabel": "Kartes telpiskā atskaite",
     "latLongOptionLabel": "Platums/Garums",
-    "MGRS": "MGRS",
+    "MGRS": "Militārā režģa atsauces sistēma (Military Grid Reference System, MGRS)",
     "allGroupsCreatedMsg": "Visas iespējamās grupas jau ir izveidotas",
     "coordinatesSourceTitle": "Koordinātu avots",
     "featureLocation": "Elementa atrašanās vieta",
@@ -233,8 +244,10 @@ define({
     "hintMsg": "Šeit ir uzskaitīti visu unikālo iepriekš iestatīto lauku nosaukumi. Noņemot iepriekš iestatīto lauku, visos slāņos/tabulās attiecīgais lauks tiks atspējots kā iepriekš iestatītais lauks."
   },
   "intersectionTolerance": {
-    "intersectionTitle": "Noklusējuma šķelšanas pielaide visiem elementiem",
-    "pixelsToleranceTitle": "Noklusējuma šķelšanas pielaide (pikseļu vērtība), kas jālieto tikai punktu elementiem"
+    "intersectionLabel": "Noklusējuma šķelšanas pielaide visiem elementiem",
+    "intersectionTitle": "Iespējot globālu pielaidi krustpunktiem",
+    "pixelsToleranceLabel": "Noklusējuma šķelšanas pielaide (pikseļu vērtība), kas jālieto tikai punktu elementiem",
+    "pixelsToleranceTitle": "Ja visu elementu noklusējuma krustpunktu pielaide ir iestatīta kā 0, izmantojiet šo iestatījumu punktu elementiem"
   },
   "smartActionsPage": {
     "smartActionLabel": "Konfigurēt viedo darbību",
